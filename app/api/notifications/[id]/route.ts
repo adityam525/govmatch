@@ -1,0 +1,53 @@
+import { NextResponse } from 'next/server';
+import { prisma } from '@/lib/prisma';
+
+interface Params { params: Promise<{ id: string }> }
+
+export async function GET(request: Request, { params }: Params) {
+  const { id } = await params;
+  try {
+    const notification = await prisma.notification.findUnique({
+      where: { id },
+      include: { organization: true, posts: { include: { qualification: true } }, categories: true, states: true },
+    });
+    if (!notification) return NextResponse.json({ message: 'Not found' }, { status: 404 });
+    return NextResponse.json(notification);
+  } catch (error) {
+    console.error('Failed to fetch notification:', error);
+    return NextResponse.json({ message: 'Failed to fetch notification' }, { status: 500 });
+  }
+}
+
+export async function PATCH(request: Request, { params }: Params) {
+  const { id } = await params;
+  try {
+    const body = await request.json();
+    const { posts, categoryIds, stateIds, ...notificationData } = body;
+
+    const notification = await prisma.notification.update({
+      where: { id },
+      data: {
+        ...notificationData,
+        categories: categoryIds ? { set: categoryIds.map((cid: string) => ({ id: cid })) } : undefined,
+        states: stateIds ? { set: stateIds.map((sid: string) => ({ id: sid })) } : undefined,
+      },
+      include: { posts: true, organization: true },
+    });
+
+    return NextResponse.json(notification);
+  } catch (error) {
+    console.error('Failed to update notification:', error);
+    return NextResponse.json({ message: 'Failed to update notification' }, { status: 500 });
+  }
+}
+
+export async function DELETE(request: Request, { params }: Params) {
+  const { id } = await params;
+  try {
+    await prisma.notification.delete({ where: { id } });
+    return NextResponse.json({ deleted: true });
+  } catch (error) {
+    console.error('Failed to delete notification:', error);
+    return NextResponse.json({ message: 'Failed to delete notification' }, { status: 500 });
+  }
+}

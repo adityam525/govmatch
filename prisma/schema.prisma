@@ -1,0 +1,342 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ---------------- LOOKUP TABLES ----------------
+
+model Organization {
+  id        String   @id @default(cuid())
+  name      String
+  shortName String   @unique
+  logoUrl   String?
+  website   String?
+  type      OrgType
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  notifications Notification[]
+
+  @@index([type])
+}
+
+enum OrgType {
+  CENTRAL_GOVT
+  STATE_GOVT
+  BANKING
+  RAILWAY
+  DEFENCE_POLICE
+  TEACHING
+  PSU
+  ENGINEERING
+  OTHER
+}
+
+model State {
+  id   String @id @default(cuid())
+  name String @unique
+  code String @unique
+
+  notifications Notification[] @relation("NotificationStates")
+}
+
+model Category {
+  id   String @id @default(cuid())
+  name String @unique
+  slug String @unique
+  icon String?
+
+  notifications Notification[] @relation("NotificationCategories")
+}
+
+model Qualification {
+  id    String @id @default(cuid())
+  name  String @unique
+  slug  String @unique
+  level Int
+
+  posts Post[]
+
+  @@index([level])
+}
+
+// ---------------- CORE ENTITIES ----------------
+
+model Notification {
+  id             String   @id @default(cuid())
+  title          String
+  slug           String   @unique
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id])
+
+  advertisementNo String?
+  totalVacancies  Int      @default(0)
+  applicationMode ApplicationMode @default(ONLINE)
+  officialLink    String
+
+  notificationDate     DateTime?
+  applicationStartDate DateTime?
+  applicationEndDate   DateTime?
+  examDate             DateTime?
+
+  status     NotificationStatus @default(LIVE)
+  isFeatured Boolean @default(false)
+
+  categories Category[] @relation("NotificationCategories")
+  states     State[]    @relation("NotificationStates")
+
+  posts      Post[]
+  admitCards AdmitCard[]
+  results    Result[]
+  answerKeys AnswerKey[]
+  documents  Document[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([applicationEndDate])
+  @@index([status])
+  @@index([organizationId])
+  @@index([isFeatured])
+}
+
+enum ApplicationMode {
+  ONLINE
+  OFFLINE
+  BOTH
+}
+
+enum NotificationStatus {
+  UPCOMING
+  LIVE
+  CLOSED
+  CANCELLED
+}
+
+model Post {
+  id             String   @id @default(cuid())
+  notificationId String
+  notification   Notification @relation(fields: [notificationId], references: [id], onDelete: Cascade)
+
+  title     String
+  vacancies Int    @default(0)
+
+  qualificationId String
+  qualification   Qualification @relation(fields: [qualificationId], references: [id])
+
+  minAge Int?
+  maxAge Int?
+  ageRelaxationNotes String?
+  payScale String?
+
+  categoryWiseVacancies Json?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([notificationId])
+  @@index([qualificationId])
+}
+
+model AdmitCard {
+  id             String   @id @default(cuid())
+  notificationId String
+  notification   Notification @relation(fields: [notificationId], references: [id], onDelete: Cascade)
+
+  title        String
+  releaseDate  DateTime?
+  examDate     DateTime?
+  downloadLink String
+  createdAt    DateTime @default(now())
+
+  @@index([notificationId])
+  @@index([releaseDate])
+}
+
+model Result {
+  id             String   @id @default(cuid())
+  notificationId String
+  notification   Notification @relation(fields: [notificationId], references: [id], onDelete: Cascade)
+
+  title       String
+  resultType  ResultType @default(FINAL)
+  releaseDate DateTime?
+  resultLink  String
+  createdAt   DateTime @default(now())
+
+  @@index([notificationId])
+  @@index([releaseDate])
+}
+
+enum ResultType {
+  PRELIMS
+  MAINS
+  MERIT_LIST
+  FINAL
+  INTERVIEW
+}
+
+model AnswerKey {
+  id               String   @id @default(cuid())
+  notificationId   String
+  notification     Notification @relation(fields: [notificationId], references: [id], onDelete: Cascade)
+
+  title            String
+  keyType          AnswerKeyType @default(PROVISIONAL)
+  releaseDate      DateTime?
+  downloadLink     String
+  objectionEndDate DateTime?
+  createdAt        DateTime @default(now())
+
+  @@index([notificationId])
+}
+
+enum AnswerKeyType {
+  PROVISIONAL
+  FINAL
+}
+
+model Document {
+  id             String   @id @default(cuid())
+  notificationId String?
+  notification   Notification? @relation(fields: [notificationId], references: [id], onDelete: SetNull)
+
+  title     String
+  docType   DocumentType
+  fileUrl   String
+  createdAt DateTime @default(now())
+
+  @@index([docType])
+}
+
+enum DocumentType {
+  SYLLABUS
+  EXAM_PATTERN
+  SELECTION_PROCESS
+  PREVIOUS_PAPER
+  EXAM_CALENDAR
+  OTHER
+}
+
+// ---------------- USER-SIDE ENTITIES ----------------
+
+enum AuthProvider {
+  EMAIL
+  GOOGLE
+}
+
+model UserProfile {
+  id     String @id @default(cuid())
+  userId String @unique
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  dateOfBirth DateTime?
+  gender      String?
+  category    String?
+  stateId     String?
+
+  qualificationId String?
+  degreeName      String?
+  yearOfPassing   Int?
+  percentage      Float?
+
+  resumeUrl       String?
+  profileStrength Int    @default(0)
+
+  updatedAt DateTime @updatedAt
+}
+
+model SavedJob {
+  id             String   @id @default(cuid())
+  userId         String
+  user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  notificationId String
+  createdAt      DateTime @default(now())
+
+  @@unique([userId, notificationId])
+}
+
+model Application {
+  id             String   @id @default(cuid())
+  userId         String
+  user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  notificationId String
+
+  status    ApplicationStatus @default(APPLIED)
+  appliedAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([userId, notificationId])
+  @@index([status])
+}
+
+enum ApplicationStatus {
+  APPLIED
+  EXAM_SCHEDULED
+  RESULT_AWAITED
+  SELECTED
+  REJECTED
+}
+
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+model User {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  name         String?
+  avatarUrl    String?
+  authProvider AuthProvider @default(EMAIL)
+  passwordHash String?
+
+  accounts     Account[]
+  sessions     Session[]
+
+  profile      UserProfile?
+  savedJobs    SavedJob[]
+  applications Application[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
