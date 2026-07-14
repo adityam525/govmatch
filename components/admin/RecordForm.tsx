@@ -10,7 +10,7 @@ interface RecordFormProps {
   title: string;
   fields: FieldConfig[];
   initialValues?: Record<string, any>;
-  onSubmit: (values: Record<string, any>) => Promise<void>;
+  onSubmit: (values: Record<string, any>) => Promise<unknown>;
   backHref: string;
 }
 

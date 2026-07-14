@@ -1,11 +1,22 @@
-import Link from "next/link";
-import Card from "@/components/ui/Card";
-import Button from "@/components/ui/Button";
-import { useAuth } from "@/features/auth/hooks";
+'use client';
+
+import { useState, useEffect } from 'react';
+import Link from 'next/link';
+import Card from '@/components/ui/Card';
+import Button from '@/components/ui/Button';
+import { useAuth } from '@/features/auth/hooks';
 
 export default function ProfileStrengthCard() {
   const { user } = useAuth();
-  const strength = user?.profileStrength ?? 0;
+  const [strength, setStrength] = useState(0);
+
+  useEffect(() => {
+    if (!user?.id) return;
+    fetch(`/api/users/${user.id}/profile`)
+      .then((r) => r.json())
+      .then((data) => setStrength(data?.profileStrength ?? 0))
+      .catch(() => {});
+  }, [user?.id]);
 
   const radius = 28;
   const circumference = 2 * Math.PI * radius;
@@ -22,14 +33,7 @@ export default function ProfileStrengthCard() {
         </div>
         <div className="relative w-16 h-16 shrink-0">
           <svg className="w-full h-full -rotate-90" viewBox="0 0 64 64">
-            <circle
-              cx="32"
-              cy="32"
-              r={radius}
-              fill="none"
-              stroke="#e2e8f0"
-              strokeWidth="6"
-            />
+            <circle cx="32" cy="32" r={radius} fill="none" stroke="#e2e8f0" strokeWidth="6" />
             <circle
               cx="32"
               cy="32"
@@ -43,9 +47,7 @@ export default function ProfileStrengthCard() {
             />
           </svg>
           <div className="absolute inset-0 flex items-center justify-center">
-            <span className="text-sm font-bold text-neutral-900">
-              {strength}%
-            </span>
+            <span className="text-sm font-bold text-neutral-900">{strength}%</span>
           </div>
         </div>
       </div>
