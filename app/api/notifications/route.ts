@@ -4,7 +4,11 @@ import { prisma } from '@/lib/prisma';
 export async function GET() {
   try {
     const notifications = await prisma.notification.findMany({
-      include: { organization: true, posts: true },
+      include: {
+        organization: true,
+        posts: { include: { qualification: true } },
+        links: { orderBy: { order: 'asc' } },
+      },
       orderBy: { createdAt: 'desc' },
     });
     return NextResponse.json(notifications);
@@ -17,7 +21,7 @@ export async function GET() {
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const { posts, categoryIds, stateIds, ...notificationData } = body;
+    const { posts, categoryIds, stateIds, links, ...notificationData } = body;
 
     const notification = await prisma.notification.create({
       data: {
@@ -39,8 +43,18 @@ export async function POST(request: Request) {
               })),
             }
           : undefined,
+        links: links?.length
+          ? {
+              create: links.map((l: any, i: number) => ({
+                label: l.label,
+                url: l.url,
+                linkType: l.linkType || 'OTHER',
+                order: i,
+              })),
+            }
+          : undefined,
       },
-      include: { posts: true, organization: true },
+      include: { posts: true, organization: true, links: true },
     });
 
     return NextResponse.json(notification, { status: 201 });

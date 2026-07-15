@@ -80,6 +80,36 @@ async function main() {
     skipDuplicates: true,
   });
 
+  await prisma.document.createMany({
+    data: [
+      {
+        title: "SSC CGL 2026 Syllabus",
+        docType: "SYLLABUS",
+        fileUrl: "https://ssc.nic.in",
+      },
+      {
+        title: "SSC CGL 2026 Exam Pattern",
+        docType: "EXAM_PATTERN",
+        fileUrl: "https://ssc.nic.in",
+      },
+      {
+        title: "IBPS PO 2026 Selection Process",
+        docType: "SELECTION_PROCESS",
+        fileUrl: "https://www.ibps.in",
+      },
+      {
+        title: "RRB Technician Previous Year Paper 2023",
+        docType: "PREVIOUS_PAPER",
+        fileUrl: "https://www.rrbapply.gov.in",
+      },
+      {
+        title: "SSC Exam Calendar 2026-27",
+        docType: "EXAM_CALENDAR",
+        fileUrl: "https://ssc.nic.in",
+      },
+    ],
+  });
+
   const orgList = await prisma.organization.findMany();
   const orgs: Record<string, (typeof orgList)[number]> = {};
   for (const o of orgList) {

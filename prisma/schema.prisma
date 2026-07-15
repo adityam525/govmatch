@@ -1,8 +1,6 @@
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
-// Get a free hosted Postgres database in seconds: `npx create-db`
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -82,6 +80,11 @@ model Notification {
   applicationMode ApplicationMode @default(ONLINE)
   officialLink    String
 
+  applicationFeeGeneral String?
+  applicationFeeScSt    String?
+  selectionProcess      String[] @default([])
+  howToApply            String?
+
   notificationDate     DateTime?
   applicationStartDate DateTime?
   applicationEndDate   DateTime?
@@ -98,6 +101,7 @@ model Notification {
   results    Result[]
   answerKeys AnswerKey[]
   documents  Document[]
+  links      NotificationLink[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -135,6 +139,9 @@ model Post {
   minAge Int?
   maxAge Int?
   ageRelaxationNotes String?
+  ageRelaxation      Json?
+  physicalCriteria   Json?
+  educationDetails   String?
   payScale String?
 
   categoryWiseVacancies Json?
@@ -228,6 +235,25 @@ enum DocumentType {
 
 // ---------------- USER-SIDE ENTITIES ----------------
 
+model User {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  name         String?
+  avatarUrl    String?
+  authProvider AuthProvider @default(EMAIL)
+  passwordHash String?
+
+  accounts     Account[]
+  sessions     Session[]
+
+  profile      UserProfile?
+  savedJobs    SavedJob[]
+  applications Application[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
 enum AuthProvider {
   EMAIL
   GOOGLE
@@ -286,7 +312,6 @@ enum ApplicationStatus {
   REJECTED
 }
 
-
 model Account {
   id                String  @id @default(cuid())
   userId            String
@@ -322,21 +347,28 @@ model VerificationToken {
   @@unique([identifier, token])
 }
 
-model User {
-  id           String   @id @default(cuid())
-  email        String   @unique
-  name         String?
-  avatarUrl    String?
-  authProvider AuthProvider @default(EMAIL)
-  passwordHash String?
+model NotificationLink {
+  id             String   @id @default(cuid())
+  notificationId String
+  notification   Notification @relation(fields: [notificationId], references: [id], onDelete: Cascade)
 
-  accounts     Account[]
-  sessions     Session[]
-
-  profile      UserProfile?
-  savedJobs    SavedJob[]
-  applications Application[]
+  label    String   // "Apply Online", "Download Notification", "Official Website", etc.
+  url      String
+  linkType LinkType @default(OTHER)
+  order    Int      @default(0)
 
   createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+
+  @@index([notificationId])
+}
+
+enum LinkType {
+  APPLY_ONLINE
+  NOTIFICATION_PDF
+  OFFICIAL_WEBSITE
+  ADMIT_CARD
+  RESULT
+  SYLLABUS
+  SHORT_NOTICE
+  OTHER
 }

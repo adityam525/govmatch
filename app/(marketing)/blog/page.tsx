@@ -1,2 +1,5 @@
 import ComingSoon from '@/components/shared/ComingSoon';
-export default function BlogPage() { return <ComingSoon title="Blog" />; }
+
+export default function BlogPage() {
+  return <ComingSoon title="Blog" />;
+}

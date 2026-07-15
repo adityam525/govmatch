@@ -5,14 +5,18 @@ import { useRouter } from 'next/navigation';
 import Card from '@/components/ui/Card';
 import Button from '@/components/ui/Button';
 import PostsFieldArray, { PostDraft } from '@/components/admin/PostsFieldArray';
+import LinksFieldArray, { LinkDraft } from '@/components/admin/LinksFieldArray';
 import { adminApi } from '@/features/admin/api';
 
 interface OrgOption { id: string; name: string; }
+
+const SELECTION_STEPS = ['Written Exam', 'Skill Test', 'Physical Test', 'Document Verification', 'Medical Examination', 'Interview'];
 
 export default function NewNotificationPage() {
   const router = useRouter();
   const [organizations, setOrganizations] = useState<OrgOption[]>([]);
   const [submitting, setSubmitting] = useState(false);
+  const [selectedSteps, setSelectedSteps] = useState<string[]>([]);
 
   const [form, setForm] = useState({
     title: '',
@@ -27,15 +31,23 @@ export default function NewNotificationPage() {
     applicationEndDate: '',
     examDate: '',
     isFeatured: false,
+    applicationFeeGeneral: '',
+    applicationFeeScSt: '',
+    howToApply: '',
   });
 
   const [posts, setPosts] = useState<PostDraft[]>([]);
+  const [links, setLinks] = useState<LinkDraft[]>([]);
 
   useEffect(() => {
     adminApi.list<OrgOption>('organizations').then(setOrganizations).catch(() => {});
   }, []);
 
   const updateField = (key: string, value: any) => setForm((prev) => ({ ...prev, [key]: value }));
+
+  const toggleStep = (step: string) => {
+    setSelectedSteps((prev) => (prev.includes(step) ? prev.filter((s) => s !== step) : [...prev, step]));
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -44,7 +56,9 @@ export default function NewNotificationPage() {
       await adminApi.create('notifications', {
         ...form,
         slug: form.slug || form.title.toLowerCase().replace(/[^a-z0-9]+/g, '-'),
+        selectionProcess: selectedSteps,
         posts: posts.filter((p) => p.title && p.qualificationId),
+        links: links.filter((l) => l.url),
       });
       router.push('/admin/notifications');
     } catch (err) {
@@ -124,7 +138,51 @@ export default function NewNotificationPage() {
             <input type="date" value={form.examDate} onChange={(e) => updateField('examDate', e.target.value)} className={inputClass} />
           </div>
 
+          <div>
+            <label className="block text-xs font-medium text-neutral-600 mb-1.5">Application Fee (General/OBC/EWS)</label>
+            <input value={form.applicationFeeGeneral} onChange={(e) => updateField('applicationFeeGeneral', e.target.value)} placeholder="e.g. Rs 500" className={inputClass} />
+          </div>
+
+          <div>
+            <label className="block text-xs font-medium text-neutral-600 mb-1.5">Application Fee (SC/ST/PwD)</label>
+            <input value={form.applicationFeeScSt} onChange={(e) => updateField('applicationFeeScSt', e.target.value)} placeholder="e.g. Rs 250" className={inputClass} />
+          </div>
+
+          <div className="md:col-span-2">
+            <label className="block text-xs font-medium text-neutral-600 mb-1.5">Selection Process</label>
+            <div className="flex flex-wrap gap-2">
+              {SELECTION_STEPS.map((step) => (
+                <button
+                  key={step}
+                  type="button"
+                  onClick={() => toggleStep(step)}
+                  className={`text-xs px-3 py-1.5 rounded-full border ${
+                    selectedSteps.includes(step)
+                      ? 'bg-primary-600 text-white border-primary-600'
+                      : 'bg-white text-neutral-600 border-neutral-200'
+                  }`}
+                >
+                  {step}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <div className="md:col-span-2">
+            <label className="block text-xs font-medium text-neutral-600 mb-1.5">How to Apply (notes)</label>
+            <textarea value={form.howToApply} onChange={(e) => updateField('howToApply', e.target.value)} rows={3} className={inputClass} />
+          </div>
+
+          <div className="md:col-span-2">
+            <label className="flex items-center gap-2">
+              <input type="checkbox" checked={form.isFeatured} onChange={(e) => updateField('isFeatured', e.target.checked)} />
+              <span className="text-sm text-neutral-600">Featured on Homepage</span>
+            </label>
+          </div>
+
           <PostsFieldArray posts={posts} onChange={setPosts} />
+
+          <LinksFieldArray links={links} onChange={setLinks} />
 
           <div className="md:col-span-2 flex gap-3 pt-4 border-t border-neutral-100 mt-2">
             <Button type="submit" variant="primary" disabled={submitting}>
