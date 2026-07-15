@@ -6,7 +6,7 @@ import Button from '@/components/ui/Button';
 const plans = [
   {
     name: 'Free',
-    price: '₹0',
+    price: '\u20b90',
     period: 'forever',
     features: ['Personalized job matching', 'Save unlimited jobs', 'Application tracker', 'Email alerts for new matches'],
     cta: 'Get Started',
@@ -15,7 +15,7 @@ const plans = [
   },
   {
     name: 'Pro',
-    price: '₹99',
+    price: '\u20b999',
     period: '/month',
     features: ['Everything in Free', 'Full mock test access', 'Downloadable mock papers', 'Priority deadline alerts', 'Detailed performance analytics'],
     cta: 'Coming Soon',
@@ -29,7 +29,7 @@ export default function PricingPage() {
     <div className="max-w-3xl mx-auto px-6 py-12">
       <div className="text-center">
         <h1 className="text-2xl font-bold text-neutral-900">Simple, transparent pricing</h1>
-        <pssName="text-sm text-neutral-600 mt-2">Start free. Upgrade when you need more prep resources.</p>
+        <p className="text-sm text-neutral-600 mt-2">Start free. Upgrade when you need more prep resources.</p>
       </div>
 
       <div className="grid md:grid-cols-2 gap-6 mt-8">
