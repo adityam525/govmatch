@@ -1,30 +1,32 @@
-'use client';
+"use client";
 
-import SearchBar from './SearchBar';
-import PopularSearchTags from './PopularSearchTags';
-import MatchScoreCard from './MatchScoreCard';
-import { useJobMatches } from '@/features/matching/hooks';
+import SearchBar from "./SearchBar";
+import PopularSearchTags from "./PopularSearchTags";
+import MatchScoreCard from "./MatchScoreCard";
+import { useJobMatches } from "@/features/matching/hooks";
 
 interface SearchHeroProps {
   title?: string;
+  highlight?: string;
   subtitle?: string;
   showMatchScore?: boolean;
 }
 
 export default function SearchHero({
-  title = 'Find Government Jobs That Match Your Profile',
-  subtitle = 'Get personalized job recommendations, timely alerts, exam updates, study resources and everything you need to build a successful government career.',
+  title = "Find Government Jobs That",
+  highlight = "Match Your Profile",
+  subtitle = "Get personalized job recommendations, timely alerts, exam updates, study resources and everything you need to build a successful government career.",
   showMatchScore = false,
 }: SearchHeroProps) {
   const { matches, loading } = useJobMatches();
   const topScore = matches.length > 0 ? matches[0].matchScore : null;
 
   return (
-    <div className="min-h-[640px] flex items-center py-10 md:py-16">
-      <div className="grid md:grid-cols-3 gap-6 items-center w-full">
-        <div className="md:col-span-2">
-          <h1 className="text-3xl md:text-4xl font-bold text-neutral-900 leading-tight">
-            {title}
+    <div className="min-h-[540px] flex items-center py-10 md:py-16">
+      <div className="grid md:grid-cols-2 gap-6 items-center w-full">
+        <div className="md:col-span-1">
+          <h1 className="text-3xl md:text-5xl font-bold text-neutral-900 leading-tight">
+            {title} <span className="text-[#3A6BEE]">{highlight}</span>
           </h1>
           <p className="text-neutral-600 mt-3 max-w-xl">{subtitle}</p>
 
@@ -38,7 +40,7 @@ export default function SearchHero({
           <img
             src="/illustrations/government-building.png"
             alt="Government building"
-            className="w-full max-w-[420px] object-contain"
+            className="w-full object-contain"
           />
           {showMatchScore && !loading && topScore !== null && (
             <div className="absolute -bottom-6 -left-4">
