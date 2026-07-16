@@ -64,6 +64,7 @@ export default function LatestUpdatesGrid() {
           title="Admission"
           icon={GraduationCap}
           items={[]}
+          emptyMessage="No admission notices published yet"
           viewAllHref="/admission"
         />
       </div>

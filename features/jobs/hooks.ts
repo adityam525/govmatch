@@ -9,6 +9,23 @@ interface UseJobSearchOptions {
   category?: string;
 }
 
+const SEARCH_ALIASES: Record<string, string[]> = {
+  'bank po': ['probationary officer', 'management trainee', 'po'],
+  po: ['probationary officer', 'management trainee'],
+  clerk: ['clerk', 'office assistant'],
+  je: ['junior engineer'],
+  ae: ['assistant engineer'],
+  technician: ['technician'],
+  teacher: ['teacher', 'tgt', 'pgt'],
+  officer: ['officer'],
+};
+
+function expandQuery(q: string): string[] {
+  const lower = q.toLowerCase().trim();
+  const aliasMatches = SEARCH_ALIASES[lower] ?? [];
+  return [lower, ...aliasMatches];
+}
+
 export function useJobSearch({ query, category }: UseJobSearchOptions) {
   const [notifications, setNotifications] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
@@ -40,13 +57,11 @@ export function useJobSearch({ query, category }: UseJobSearchOptions) {
     }
 
     if (query && query.trim()) {
-      const q = query.trim().toLowerCase();
-      allJobs = allJobs.filter(
-        (job) =>
-          job.title.toLowerCase().includes(q) ||
-          job.org.toLowerCase().includes(q) ||
-          job.category.toLowerCase().includes(q)
-      );
+      const terms = expandQuery(query);
+      allJobs = allJobs.filter((job) => {
+        const haystack = (job.title + ' ' + job.org + ' ' + job.category).toLowerCase();
+        return terms.some((term) => haystack.includes(term));
+      });
     }
 
     return allJobs;

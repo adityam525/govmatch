@@ -35,13 +35,13 @@ export default function CategoryStrip() {
   return (
     <section>
       <h2 className="text-xl font-bold text-neutral-900 mb-1">
-        Browse Jobs by Qualification
+        Browse Jobs by Category
       </h2>
       <p className="text-sm text-neutral-600 mb-4">
-        Find jobs that match your education level
+        Explore openings across every government sector
       </p>
 
-      <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-4">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         {categories.map((cat) => {
           const Icon = iconMap[cat.iconName];
           return (

@@ -16,6 +16,7 @@ interface InfoListCardProps {
   icon: LucideIcon;
   items: InfoListCardItem[];
   viewAllHref: string;
+  emptyMessage?: string;
 }
 
 export default function InfoListCard({
@@ -23,6 +24,7 @@ export default function InfoListCard({
   icon,
   items,
   viewAllHref,
+  emptyMessage,
 }: InfoListCardProps) {
   return (
     <Card padding="lg">
@@ -32,16 +34,22 @@ export default function InfoListCard({
         viewAllLabel="View All"
       />
       <div>
-        {items.map((item) => (
-          <InfoListItem
-            key={item.id}
-            icon={icon}
-            title={item.title}
-            subtitle={item.subtitle}
-            date={item.date}
-            href={item.href}
-          />
-        ))}
+        {items.length === 0 ? (
+          <p className="text-xs text-neutral-400 py-6 text-center">
+            {emptyMessage ?? "Nothing here yet"}
+          </p>
+        ) : (
+          items.map((item) => (
+            <InfoListItem
+              key={item.id}
+              icon={icon}
+              title={item.title}
+              subtitle={item.subtitle}
+              date={item.date}
+              href={item.href}
+            />
+          ))
+        )}
       </div>
     </Card>
   );
