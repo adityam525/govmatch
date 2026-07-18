@@ -9,7 +9,18 @@ import { adminApi } from '@/features/admin/api';
 import { Plus, Trash2 } from 'lucide-react';
 
 interface QualificationOption { id: string; name: string; }
+interface BranchOption { id: string; name: string; qualificationGroup: string; }
+interface RoleOption { id: string; name: string; }
 type KeyValuePair = { key: string; value: string };
+
+const EMPLOYMENT_TYPES = [
+  { value: 'PERMANENT', label: 'Permanent' },
+  { value: 'CONTRACT', label: 'Contract' },
+  { value: 'APPRENTICE', label: 'Apprentice' },
+  { value: 'INTERNSHIP', label: 'Internship' },
+  { value: 'TEMPORARY', label: 'Temporary' },
+  { value: 'DEPUTATION', label: 'Deputation' },
+];
 
 function jsonToPairs(obj: Record<string, string> | null | undefined): KeyValuePair[] {
   if (!obj) return [];
@@ -64,18 +75,48 @@ function KeyValueEditor({ label, pairs, onChange }: { label: string; pairs: KeyV
   );
 }
 
+function MultiSelectChips({ label, options, selected, onToggle }: { label: string; options: { id: string; name: string }[]; selected: string[]; onToggle: (id: string) => void }) {
+  return (
+    <div className="md:col-span-2">
+      <label className="block text-xs font-medium text-neutral-600 mb-2">{label}</label>
+      <div className="flex flex-wrap gap-2">
+        {options.map((opt) => (
+          <button
+            key={opt.id}
+            type="button"
+            onClick={() => onToggle(opt.id)}
+            className={`text-xs px-3 py-1.5 rounded-full border transition-colors ${
+              selected.includes(opt.id)
+                ? 'bg-primary-600 text-white border-primary-600'
+                : 'bg-white text-neutral-600 border-neutral-200 hover:border-neutral-300'
+            }`}
+          >
+            {opt.name}
+          </button>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 export default function EditPostPage() {
   const { id } = useParams<{ id: string }>();
   const router = useRouter();
   const { data, loading, save } = useAdminRecord<any>('posts', id);
   const [qualifications, setQualifications] = useState<QualificationOption[]>([]);
+  const [branches, setBranches] = useState<BranchOption[]>([]);
+  const [roles, setRoles] = useState<RoleOption[]>([]);
   const [submitting, setSubmitting] = useState(false);
   const [form, setForm] = useState<any>(null);
   const [ageRelaxationPairs, setAgeRelaxationPairs] = useState<KeyValuePair[]>([]);
   const [physicalPairs, setPhysicalPairs] = useState<KeyValuePair[]>([]);
+  const [selectedBranchIds, setSelectedBranchIds] = useState<string[]>([]);
+  const [selectedRoleIds, setSelectedRoleIds] = useState<string[]>([]);
 
   useEffect(() => {
     adminApi.list<QualificationOption>('qualifications').then(setQualifications).catch(() => {});
+    adminApi.list<BranchOption>('branches').then(setBranches).catch(() => {});
+    adminApi.list<RoleOption>('roles').then(setRoles).catch(() => {});
   }, []);
 
   useEffect(() => {
@@ -89,12 +130,23 @@ export default function EditPostPage() {
       maxAge: data.maxAge ?? '',
       payScale: data.payScale ?? '',
       educationDetails: data.educationDetails ?? '',
+      employmentType: data.employmentType ?? 'PERMANENT',
     });
     setAgeRelaxationPairs(jsonToPairs(data.ageRelaxation));
     setPhysicalPairs(jsonToPairs(data.physicalCriteria));
+    setSelectedBranchIds((data.branches ?? []).map((b: any) => b.id));
+    setSelectedRoleIds((data.roles ?? []).map((r: any) => r.id));
   }, [data]);
 
   const updateField = (key: string, value: any) => setForm((prev: any) => ({ ...prev, [key]: value }));
+
+  const toggleBranch = (branchId: string) => {
+    setSelectedBranchIds((prev) => (prev.includes(branchId) ? prev.filter((b) => b !== branchId) : [...prev, branchId]));
+  };
+
+  const toggleRole = (roleId: string) => {
+    setSelectedRoleIds((prev) => (prev.includes(roleId) ? prev.filter((r) => r !== roleId) : [...prev, roleId]));
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -104,6 +156,8 @@ export default function EditPostPage() {
         ...form,
         ageRelaxation: pairsToJson(ageRelaxationPairs),
         physicalCriteria: pairsToJson(physicalPairs),
+        branchIds: selectedBranchIds,
+        roleIds: selectedRoleIds,
       });
       router.push('/admin/posts');
     } catch (err) {
@@ -157,6 +211,13 @@ export default function EditPostPage() {
           </div>
 
           <div className="md:col-span-2">
+            <label className="block text-xs font-medium text-neutral-600 mb-1.5">Employment Type</label>
+            <select value={form.employmentType} onChange={(e) => updateField('employmentType', e.target.value)} className={inputClass}>
+              {EMPLOYMENT_TYPES.map((t) => <option key={t.value} value={t.value}>{t.label}</option>)}
+            </select>
+          </div>
+
+          <div className="md:col-span-2">
             <label className="block text-xs font-medium text-neutral-600 mb-1.5">Pay Scale</label>
             <input value={form.payScale} onChange={(e) => updateField('payScale', e.target.value)} className={inputClass} />
           </div>
@@ -165,6 +226,9 @@ export default function EditPostPage() {
             <label className="block text-xs font-medium text-neutral-600 mb-1.5">Education Details</label>
             <textarea value={form.educationDetails} onChange={(e) => updateField('educationDetails', e.target.value)} rows={2} className={inputClass} placeholder="e.g. Graduate in any discipline from a recognized university" />
           </div>
+
+          <MultiSelectChips label="Branches (leave empty if branch-agnostic)" options={branches} selected={selectedBranchIds} onToggle={toggleBranch} />
+          <MultiSelectChips label="Roles" options={roles} selected={selectedRoleIds} onToggle={toggleRole} />
 
           <KeyValueEditor label="Age Relaxation (by category)" pairs={ageRelaxationPairs} onChange={setAgeRelaxationPairs} />
           <KeyValueEditor label="Physical Criteria" pairs={physicalPairs} onChange={setPhysicalPairs} />

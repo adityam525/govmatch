@@ -15,15 +15,18 @@ export function notificationToJobs(notification: any): Job[] {
   };
 
   const categoryMap: Record<string, Job['category']> = {
-    CENTRAL_GOVT: 'central',
-    STATE_GOVT: 'state',
-    BANKING: 'banking',
-    RAILWAY: 'central',
-    DEFENCE_POLICE: 'defence',
-    TEACHING: 'teaching',
-    PSU: 'psu',
-    ENGINEERING: 'central',
-    OTHER: 'central',
+    ssc: 'central',
+    railway: 'central',
+    banking: 'banking',
+    upsc: 'central',
+    'state-government': 'state',
+    defence: 'defence',
+    psu: 'psu',
+    'police-security': 'defence',
+    teaching: 'teaching',
+    healthcare: 'central',
+    'judiciary-law': 'central',
+    agriculture: 'central',
   };
 
   const lastDate = notification.applicationEndDate
@@ -31,7 +34,7 @@ export function notificationToJobs(notification: any): Job[] {
     : 'TBA';
 
   const orgIconName = orgIconMap[notification.organization?.shortName] ?? 'shield';
-  const category = categoryMap[notification.organization?.type] ?? 'central';
+  const category = categoryMap[notification.organization?.category?.slug] ?? 'central';
 
   if (!notification.posts || notification.posts.length === 0) {
     return [{

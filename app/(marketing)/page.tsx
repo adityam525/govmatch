@@ -50,7 +50,7 @@ export default function HomePage() {
           <LatestUpdatesGrid />
           <HowItWorks />
           <MockTestPromo />
-          <TakeWithYou />
+          {/* <TakeWithYou /> */}
           <WhyChooseUs />
         </div>
       </div>
@@ -78,7 +78,7 @@ export default function HomePage() {
         <LatestUpdatesGrid />
         <HowItWorks />
         <MockTestPromo />
-        <TakeWithYou />
+        {/* <TakeWithYou /> */}
         <WhyChooseUs />
       </div>
     </div>

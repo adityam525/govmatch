@@ -5,10 +5,10 @@ import {
   Award,
   Briefcase,
 } from "lucide-react";
-import QualificationCard from "@/components/jobs/QualificationCard";
 import { qualifications } from "@/data/qualifications";
 import { colors } from "@/styles/tokens";
 import ViewAllCard from "@/components/shared/ViewAllCard";
+import CategoryCard from "@/components/jobs/CategoryCard";
 
 const iconMap = {
   book: BookOpen,
@@ -37,11 +37,11 @@ export default function QualificationStrip() {
         Find jobs that match your education level
       </p>
 
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 md:grid-cols-6 gap-4">
         {qualifications.map((q) => {
           const Icon = iconMap[q.iconName];
           return (
-            <QualificationCard
+            <CategoryCard
               key={q.id}
               icon={<Icon size={20} />}
               iconBg={colorMap[q.colorKey]}

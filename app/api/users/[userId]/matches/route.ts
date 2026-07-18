@@ -6,11 +6,10 @@ interface Params { params: Promise<{ userId: string }> }
 
 export async function GET(request: Request, { params }: Params) {
   const { userId } = await params;
-
   try {
     const profile = await prisma.userProfile.findUnique({
       where: { userId },
-      include: { }, // qualificationId is a plain field; fetch its level separately below
+      include: { preferredRoles: true },
     });
 
     if (!profile) {
@@ -23,7 +22,10 @@ export async function GET(request: Request, { params }: Params) {
 
     const notifications = await prisma.notification.findMany({
       where: { status: 'LIVE' },
-      include: { organization: true, posts: { include: { qualification: true } } },
+      include: {
+        organization: true,
+        posts: { include: { qualification: true, branches: true, roles: true } },
+      },
     });
 
     const matches = notifications.flatMap((notification) =>
@@ -33,11 +35,17 @@ export async function GET(request: Request, { params }: Params) {
             dateOfBirth: profile.dateOfBirth,
             category: profile.category,
             qualificationLevel: userQualification?.level ?? null,
+            branchId: profile.branchId,
+            preferredRoleIds: profile.preferredRoles.map((r) => r.id),
+            preferredEmploymentTypes: profile.preferredEmploymentTypes,
           },
           {
             minAge: post.minAge,
             maxAge: post.maxAge,
             qualificationLevel: post.qualification?.level ?? null,
+            branchIds: post.branches.map((b) => b.id),
+            roleIds: post.roles.map((r) => r.id),
+            employmentType: post.employmentType,
           }
         );
 
@@ -57,8 +65,11 @@ export async function GET(request: Request, { params }: Params) {
       })
     );
 
-    // Highest match first
-    matches.sort((a, b) => b.matchScore - a.matchScore);
+    // Eligible + highest match first
+    matches.sort((a, b) => {
+      if (a.eligible !== b.eligible) return a.eligible ? -1 : 1;
+      return b.matchScore - a.matchScore;
+    });
 
     return NextResponse.json(matches);
   } catch (error) {

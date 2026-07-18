@@ -7,6 +7,8 @@ import { notificationToJobs } from './adapters';
 interface UseJobSearchOptions {
   query?: string;
   category?: string;
+  qualificationSlugs?: string[];
+  organizationIds?: string[];
 }
 
 const SEARCH_ALIASES: Record<string, string[]> = {
@@ -26,7 +28,7 @@ function expandQuery(q: string): string[] {
   return [lower, ...aliasMatches];
 }
 
-export function useJobSearch({ query, category }: UseJobSearchOptions) {
+export function useJobSearch({ query, category, qualificationSlugs, organizationIds }: UseJobSearchOptions) {
   const [notifications, setNotifications] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -50,7 +52,19 @@ export function useJobSearch({ query, category }: UseJobSearchOptions) {
   }, []);
 
   const jobs: Job[] = useMemo(() => {
-    let allJobs = notifications.flatMap(notificationToJobs);
+    let filtered = notifications;
+
+    if (organizationIds && organizationIds.length > 0) {
+      filtered = filtered.filter((n) => organizationIds.includes(n.organizationId));
+    }
+
+    if (qualificationSlugs && qualificationSlugs.length > 0) {
+      filtered = filtered.filter((n) =>
+        (n.posts ?? []).some((p: any) => qualificationSlugs.includes(p.qualification?.slug))
+      );
+    }
+
+    let allJobs = filtered.flatMap(notificationToJobs);
 
     if (category && category !== 'all') {
       allJobs = allJobs.filter((job) => job.category === category);
@@ -65,7 +79,7 @@ export function useJobSearch({ query, category }: UseJobSearchOptions) {
     }
 
     return allJobs;
-  }, [notifications, query, category]);
+  }, [notifications, query, category, JSON.stringify(qualificationSlugs), JSON.stringify(organizationIds)]);
 
   return { jobs, loading };
 }

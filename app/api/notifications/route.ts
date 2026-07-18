@@ -5,7 +5,7 @@ export async function GET() {
   try {
     const notifications = await prisma.notification.findMany({
       include: {
-        organization: true,
+        organization: { include: { category: true } },
         posts: { include: { qualification: true } },
         links: { orderBy: { order: 'asc' } },
       },
@@ -54,7 +54,7 @@ export async function POST(request: Request) {
             }
           : undefined,
       },
-      include: { posts: true, organization: true, links: true },
+      include: { posts: true, organization: { include: { category: true } }, links: true },
     });
 
     return NextResponse.json(notification, { status: 201 });

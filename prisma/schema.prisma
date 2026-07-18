@@ -12,30 +12,19 @@ datasource db {
 // ---------------- LOOKUP TABLES ----------------
 
 model Organization {
-  id        String   @id @default(cuid())
-  name      String
-  shortName String   @unique
-  logoUrl   String?
-  website   String?
-  type      OrgType
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id         String   @id @default(cuid())
+  name       String
+  shortName  String   @unique
+  logoUrl    String?
+  website    String?
+  categoryId String?
+  category   Category? @relation(fields: [categoryId], references: [id])
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
 
   notifications Notification[]
 
-  @@index([type])
-}
-
-enum OrgType {
-  CENTRAL_GOVT
-  STATE_GOVT
-  BANKING
-  RAILWAY
-  DEFENCE_POLICE
-  TEACHING
-  PSU
-  ENGINEERING
-  OTHER
+  @@index([categoryId])
 }
 
 model State {
@@ -46,24 +35,59 @@ model State {
   notifications Notification[] @relation("NotificationStates")
 }
 
+// Sector / recruiting-body category — e.g. SSC, Railway, Banking, UPSC,
+// State Govt, Defence, PSU, Police & Security, Teaching, Healthcare,
+// Judiciary & Law, Agriculture. Drivesrganization.category and lets
+// admins add new sectors without a code deploy.
 model Category {
   id   String @id @default(cuid())
   name String @unique
   slug String @unique
   icon String?
 
+  organizations Organization[]
   notifications Notification[] @relation("NotificationCategories")
 }
 
+// Education level — 10th, 12th, ITI, Diploma, Graduate, Post Graduate.
+// `level` is used for ordering AND for eligibility comparison
+// (user's level must be >= post's required level).
 model Qualification {
   id    String @id @default(cuid())
   name  String @unique
   slug  String @unique
   level Int
 
-  posts Post[]
+  posts        Post[]
+  userProfiles UserProfile[]
 
   @@index([level])
+}
+
+// Branch/stream WITHIN a qualification level — e.g. Computer Science,
+// Civil, Mechanical (under Engineering); MBBS, Nursing (under Medical);
+// B.Com, BCA (under Graduate). Independent of Qualification so a Post
+// can require "Graduate + Computer Science" as two separate facts.
+model Branch {
+  id             String   @id @default(cuid())
+  name           String   @unique
+  slug           String   @unique
+  qualificationGroup String // e.g. "Engineering", "Medical", "Graduate" - for UI grouping only
+
+  posts        Post[]           @relation("PostBranches")
+  userProfiles UserProfile[]
+}
+
+// What the job actually IS — Clerk, Officer, Engineer, Teacher, Doctor,
+// Technician, Manager, etc. Independent of qualification; used as a soft
+// preference signal in matching (bonus score), never a hard filter.
+model Role {
+  id   String @id @default(cuid())
+  name String @unique
+  slug String @unique
+
+  posts             Post[]        @relation("PostRoles")
+  preferredByUsers  UserProfile[] @relation("PreferredRoles")
 }
 
 // ---------------- CORE ENTITIES ----------------
@@ -125,6 +149,15 @@ enum NotificationStatus {
   CANCELLED
 }
 
+enum EmploymentType {
+  PERMANENT
+  CONTRACT
+  APPRENTICE
+  INTERNSHIP
+  TEMPORARY
+  DEPUTATION
+}
+
 model Post {
   id             String   @id @default(cuid())
   notificationId String
@@ -135,6 +168,15 @@ model Post {
 
   qualificationId String
   qualification   Qualification @relation(fields: [qualificationId], references: [id])
+
+  // A post may require/accept one or more branches (e.g. "any engineering
+  // branch"); empty = branch-agnostic, doesn't penalize match score.
+  branches Branch[] @relation("PostBranches")
+
+  // What this post actually is - used for soft role-preference matching.
+  roles Role[] @relation("PostRoles")
+
+  employmentType EmploymentType @default(PERMANENT)
 
   minAge Int?
   maxAge Int?
@@ -270,6 +312,14 @@ model UserProfile {
   stateId     String?
 
   qualificationId String?
+  qualification   Qualification? @relation(fields: [qualificationId], references: [id])
+
+  branchId String?
+  branch   Branch? @relation(fields: [branchId], references: [id])
+
+  preferredRoles Role[] @relation("PreferredRoles")
+  preferredEmploymentTypes EmploymentType[] @default([])
+
   degreeName      String?
   yearOfPassing   Int?
   percentage      Float?
@@ -278,6 +328,9 @@ model UserProfile {
   profileStrength Int    @default(0)
 
   updatedAt DateTime @updatedAt
+
+  @@index([qualificationId])
+  @@index([branchId])
 }
 
 model SavedJob {
@@ -352,7 +405,7 @@ model NotificationLink {
   notificationId String
   notification   Notification @relation(fields: [notificationId], references: [id], onDelete: Cascade)
 
-  label    String   // "Apply Online", "Download Notification", "Official Website", etc.
+  label    String
   url      String
   linkType LinkType @default(OTHER)
   order    Int      @default(0)
