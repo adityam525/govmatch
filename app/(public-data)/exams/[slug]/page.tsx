@@ -1,23 +1,19 @@
-'use client';
-
-import { useEffect, useState } from 'react';
-import { useParams } from 'next/navigation';
 import Card from '@/components/ui/Card';
 import Button from '@/components/ui/Button';
+import { prisma } from '@/lib/prisma';
 
-export default function ExamDetailPage() {
-  const { slug } = useParams<{ slug: string }>();
-  const [notification, setNotification] = useState<any>(null);
-  const [loading, setLoading] = useState(true);
+interface PageProps {
+  params: Promise<{ slug: string }>;
+}
 
-  useEffect(() => {
-    fetch('/api/notifications')
-      .then((res) => res.json())
-      .then((all) => setNotification(Array.isArray(all) ? all.find((n: any) => n.slug === slug) : null))
-      .finally(() => setLoading(false));
-  }, [slug]);
+export default async function ExamDetailPage({ params }: PageProps) {
+  const { slug } = await params;
 
-  if (loading) return <div className="max-w-3xl mx-auto px-6 py-8 text-sm text-neutral-600">Loading...</div>;
+  const notification = await prisma.notification.findUnique({
+    where: { slug },
+    include: { organization: true },
+  });
+
   if (!notification || !notification.examDate) {
     return <div className="max-w-3xl mx-auto px-6 py-8 text-sm text-neutral-600">Exam details not available.</div>;
   }
@@ -27,7 +23,6 @@ export default function ExamDetailPage() {
       <Card padding="lg">
         <h1 className="text-xl font-bold text-neutral-900">{notification.title}</h1>
         <p className="text-sm text-neutral-600 mt-1">{notification.organization?.name}</p>
-
         <div className="grid grid-cols-2 gap-4 mt-6">
           <div>
             <p className="text-xs text-neutral-400">Exam Date</p>
@@ -42,7 +37,6 @@ export default function ExamDetailPage() {
             </p>
           </div>
         </div>
-
         <div className="flex gap-3 mt-6">
           <a href={`/jobs/${notification.slug}`}>
             <Button variant="secondary">View Job Details</Button>

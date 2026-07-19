@@ -1,26 +1,20 @@
-'use client';
-
-import { useEffect, useState } from 'react';
 import { KeyRound } from 'lucide-react';
 import Card from '@/components/ui/Card';
 import SectionHeader from '@/components/ui/SectionHeader';
 import InfoListItem from '@/components/shared/InfoListItem';
+import { prisma } from '@/lib/prisma';
 
-export default function AnswerKeyPage() {
-  const [items, setItems] = useState<any[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    fetch('/api/answer-keys').then((r) => r.json()).then((d) => setItems(Array.isArray(d) ? d : [])).catch(() => {}).finally(() => setLoading(false));
-  }, []);
+export default async function AnswerKeyPage() {
+  const items = await prisma.answerKey.findMany({
+    include: { notification: true },
+    orderBy: { createdAt: 'desc' },
+  });
 
   return (
     <div className="max-w-4xl mx-auto px-6 py-8">
       <Card padding="lg">
         <SectionHeader title="Answer Keys" />
-        {loading ? (
-          <p className="text-sm text-neutral-600 py-8 text-center">Loading...</p>
-        ) : items.length === 0 ? (
+        {items.length === 0 ? (
           <p className="text-sm text-neutral-600 py-8 text-center">No answer keys published yet.</p>
         ) : (
           <div>
