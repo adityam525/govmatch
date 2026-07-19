@@ -1,20 +1,12 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
 import Card from '@/components/ui/Card';
 
 interface FilterOption {
   id: string;
   label: string;
-}
-
-interface JobFiltersSidebarProps {
-  selectedCategory: string;
-  onCategoryChange: (category: string) => void;
-  selectedQualifications: string[];
-  onQualificationsChange: (slugs: string[]) => void;
-  selectedOrganizations: string[];
-  onOrganizationsChange: (ids: string[]) => void;
 }
 
 const CATEGORIES = [
@@ -27,14 +19,14 @@ const CATEGORIES = [
   { id: 'psu', label: 'PSU' },
 ];
 
-export default function JobFiltersSidebar({
-  selectedCategory,
-  onCategoryChange,
-  selectedQualifications,
-  onQualificationsChange,
-  selectedOrganizations,
-  onOrganizationsChange,
-}: JobFiltersSidebarProps) {
+export default function JobFiltersSidebar() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
+  const selectedCategory = searchParams.get('category') ?? 'all';
+  const selectedQualifications = searchParams.get('qualifications')?.split(',').filter(Boolean) ?? [];
+  const selectedOrganizations = searchParams.get('organizations')?.split(',').filter(Boolean) ?? [];
+
   const [qualifications, setQualifications] = useState<FilterOption[]>([]);
   const [organizations, setOrganizations] = useState<FilterOption[]>([]);
 
@@ -50,26 +42,31 @@ export default function JobFiltersSidebar({
       .catch(() => {});
   }, []);
 
+  const updateParams = (updates: Record<string, string>) => {
+    const params = new URLSearchParams(searchParams.toString());
+    Object.entries(updates).forEach(([key, value]) => {
+      if (value) params.set(key, value);
+      else params.delete(key);
+    });
+    router.push(`/jobs?${params.toString()}`);
+  };
+
   const toggleQualification = (slug: string) => {
-    onQualificationsChange(
-      selectedQualifications.includes(slug)
-        ? selectedQualifications.filter((s) => s !== slug)
-        : [...selectedQualifications, slug]
-    );
+    const next = selectedQualifications.includes(slug)
+      ? selectedQualifications.filter((s) => s !== slug)
+      : [...selectedQualifications, slug];
+    updateParams({ qualifications: next.join(',') });
   };
 
   const toggleOrganization = (id: string) => {
-    onOrganizationsChange(
-      selectedOrganizations.includes(id)
-        ? selectedOrganizations.filter((o) => o !== id)
-        : [...selectedOrganizations, id]
-    );
+    const next = selectedOrganizations.includes(id)
+      ? selectedOrganizations.filter((o) => o !== id)
+      : [...selectedOrganizations, id];
+    updateParams({ organizations: next.join(',') });
   };
 
   const clearAll = () => {
-    onCategoryChange('all');
-    onQualificationsChange([]);
-    onOrganizationsChange([]);
+    router.push('/jobs');
   };
 
   const hasActiveFilters = selectedCategory !== 'all' || selectedQualifications.length > 0 || selectedOrganizations.length > 0;
@@ -94,7 +91,7 @@ export default function JobFiltersSidebar({
                 type="radio"
                 name="category"
                 checked={selectedCategory === cat.id}
-                onChange={() => onCategoryChange(cat.id)}
+                onChange={() => updateParams({ category: cat.id === 'all' ? '' : cat.id })}
                 className="w-3.5 h-3.5 text-primary-600"
               />
               <span className="text-xs text-neutral-600">{cat.label}</span>
