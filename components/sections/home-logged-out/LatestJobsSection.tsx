@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import SectionHeader from '@/components/ui/SectionHeader';
 import JobCard, { JobCardData } from '@/components/jobs/JobCard';
 import TabFilterBar from './TabFilterBar';
@@ -13,7 +13,8 @@ const orgIconMap: Record<string, string> = {
 
 const categoryMap: Record<string, string> = {
   ssc: 'central', railway: 'central', banking: 'banking', upsc: 'central',
-  'state-government': 'state', defence: 'defence', psu: 'psu', 'police-security': 'defence', teaching: 'teaching', healthcare: 'central', 'judiciary-law': 'central', agriculture: 'central',
+  'state-government': 'state', defence: 'defence', psu: 'psu', 'police-security': 'defence',
+  teaching: 'teaching', healthcare: 'central', 'judiciary-law': 'central', agriculture: 'central',
 };
 
 function daysUntil(dateStr: string | null): number | null {
@@ -24,23 +25,17 @@ function daysUntil(dateStr: string | null): number | null {
 
 function isRecentlyPosted(createdAt: string): boolean {
   const diff = Date.now() - new Date(createdAt).getTime();
-  return diff < 1000 * 60 * 60 * 24 * 14; // within 14 days
+  return diff < 1000 * 60 * 60 * 24 * 14;
 }
 
-export default function LatestJobsSection() {
+interface LatestJobsSectionProps {
+  initialNotifications: any[];
+}
+
+export default function LatestJobsSection({ initialNotifications }: LatestJobsSectionProps) {
   const [activeTab, setActiveTab] = useState('all');
-  const [notifications, setNotifications] = useState<any[]>([]);
-  const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    fetch('/api/notifications')
-      .then((res) => res.json())
-      .then((data) => setNotifications(Array.isArray(data) ? data : []))
-      .catch(() => setNotifications([]))
-      .finally(() => setLoading(false));
-  }, []);
-
-  const cards: JobCardData[] = notifications.flatMap((n) => {
+  const cards: JobCardData[] = initialNotifications.flatMap((n) => {
     const category = categoryMap[n.organization?.category?.slug] ?? 'central';
     if (activeTab !== 'all' && category !== activeTab) return [];
 
@@ -96,9 +91,7 @@ export default function LatestJobsSection() {
       <TabFilterBar activeTab={activeTab} onChange={setActiveTab} />
 
       <div className="mt-4 overflow-y-auto" style={{ maxHeight: '1088px' }}>
-        {loading ? (
-          <p className="text-sm text-neutral-400 py-6 text-center">Loading...</p>
-        ) : cards.length === 0 ? (
+        {cards.length === 0 ? (
           <p className="text-sm text-neutral-400 py-6 text-center">No jobs found.</p>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 pb-1">

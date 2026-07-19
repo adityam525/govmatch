@@ -1,26 +1,20 @@
-"use client";
-
 import SearchBar from "./SearchBar";
 import PopularSearchTags from "./PopularSearchTags";
 import MatchScoreCard from "./MatchScoreCard";
-import { useJobMatches } from "@/features/matching/hooks";
 
 interface SearchHeroProps {
   title?: string;
   highlight?: string;
   subtitle?: string;
-  showMatchScore?: boolean;
+  matchScore?: number | null;
 }
 
 export default function SearchHero({
   title = "Find Government Jobs That",
   highlight = "Match Your Profile",
   subtitle = "Get personalized job recommendations, timely alerts, exam updates, study resources and everything you need to build a successful government career.",
-  showMatchScore = false,
+  matchScore,
 }: SearchHeroProps) {
-  const { matches, loading } = useJobMatches();
-  const topScore = matches.length > 0 ? matches[0].matchScore : null;
-
   return (
     <div className="min-h-[540px] flex items-center py-10 md:py-16">
       <div className="grid md:grid-cols-2 gap-6 items-center w-full">
@@ -29,22 +23,20 @@ export default function SearchHero({
             {title} <span className="text-[#3A6BEE]">{highlight}</span>
           </h1>
           <p className="text-neutral-600 mt-3 max-w-xl">{subtitle}</p>
-
           <div className="mt-5">
             <SearchBar />
             <PopularSearchTags />
           </div>
         </div>
-
         <div className="flex justify-center md:justify-end relative">
           <img
             src="/illustrations/government-building.png"
             alt="Government building"
             className="w-full object-contain"
           />
-          {showMatchScore && !loading && topScore !== null && (
+          {matchScore != null && (
             <div className="absolute -bottom-6 -left-4">
-              <MatchScoreCard score={topScore} />
+              <MatchScoreCard score={matchScore} />
             </div>
           )}
         </div>

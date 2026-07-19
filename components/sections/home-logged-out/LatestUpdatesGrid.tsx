@@ -1,8 +1,5 @@
-'use client';
-
 import { CalendarDays, Trophy, FileCheck2, KeyRound, FileText, GraduationCap } from 'lucide-react';
 import InfoListCard from '@/components/shared/InfoListCard';
-import { useUpdatesList } from '@/features/updates/hooks';
 
 function toItems(records: any[], titleKey: string, dateKey: string, hrefBuilder: (r: any) => string) {
   return records.slice(0, 4).map((r) => ({
@@ -14,13 +11,21 @@ function toItems(records: any[], titleKey: string, dateKey: string, hrefBuilder:
   }));
 }
 
-export default function LatestUpdatesGrid() {
-  const { items: notifications } = useUpdatesList('notifications');
-  const { items: admitCards } = useUpdatesList('admit-cards');
-  const { items: results } = useUpdatesList('results');
-  const { items: answerKeys } = useUpdatesList('answer-keys');
-  const { items: documents } = useUpdatesList('documents');
+interface LatestUpdatesGridProps {
+  notifications: any[];
+  admitCards: any[];
+  results: any[];
+  answerKeys: any[];
+  documents: any[];
+}
 
+export default function LatestUpdatesGrid({
+  notifications,
+  admitCards,
+  results,
+  answerKeys,
+  documents,
+}: LatestUpdatesGridProps) {
   const examItems = notifications
     .filter((n) => n.examDate)
     .slice(0, 4)

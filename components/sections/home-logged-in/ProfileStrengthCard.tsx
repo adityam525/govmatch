@@ -1,23 +1,12 @@
-'use client';
-
-import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Card from '@/components/ui/Card';
 import Button from '@/components/ui/Button';
-import { useAuth } from '@/features/auth/hooks';
 
-export default function ProfileStrengthCard() {
-  const { user } = useAuth();
-  const [strength, setStrength] = useState(0);
+interface ProfileStrengthCardProps {
+  strength: number;
+}
 
-  useEffect(() => {
-    if (!user?.id) return;
-    fetch(`/api/users/${user.id}/profile`)
-      .then((r) => r.json())
-      .then((data) => setStrength(data?.profileStrength ?? 0))
-      .catch(() => {});
-  }, [user?.id]);
-
+export default function ProfileStrengthCard({ strength }: ProfileStrengthCardProps) {
   const radius = 28;
   const circumference = 2 * Math.PI * radius;
   const offset = circumference - (strength / 100) * circumference;
@@ -51,7 +40,6 @@ export default function ProfileStrengthCard() {
           </div>
         </div>
       </div>
-
       <Link href="/profile">
         <Button variant="primary" size="md" fullWidth className="mt-4">
           Complete Profile
