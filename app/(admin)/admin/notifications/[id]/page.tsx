@@ -7,6 +7,7 @@ import { adminApi } from '@/features/admin/api';
 import Card from '@/components/ui/Card';
 import Button from '@/components/ui/Button';
 import LinksFieldArray, { LinkDraft } from '@/components/admin/LinksFieldArray';
+import { validateNotificationDates } from '@/features/jobs/validation';
 
 interface OrgOption { id: string; name: string; }
 
@@ -21,6 +22,7 @@ export default function EditNotificationPage() {
   const [selectedSteps, setSelectedSteps] = useState<string[]>([]);
   const [links, setLinks] = useState<LinkDraft[]>([]);
   const [form, setForm] = useState<any>(null);
+  const [formError, setFormError] = useState('');
 
   useEffect(() => {
     adminApi.list<OrgOption>('organizations').then(setOrganizations).catch(() => {});
@@ -40,6 +42,7 @@ export default function EditNotificationPage() {
       applicationEndDate: data.applicationEndDate ? data.applicationEndDate.slice(0, 10) : '',
       examDate: data.examDate ? data.examDate.slice(0, 10) : '',
       isFeatured: data.isFeatured ?? false,
+      published: data.published ?? false,
       applicationFeeGeneral: data.applicationFeeGeneral ?? '',
       applicationFeeScSt: data.applicationFeeScSt ?? '',
       howToApply: data.howToApply ?? '',
@@ -58,7 +61,10 @@ export default function EditNotificationPage() {
       .catch(() => {});
   }, [data, id]);
 
-  const updateField = (key: string, value: any) => setForm((prev: any) => ({ ...prev, [key]: value }));
+  const updateField = (key: string, value: any) => {
+    setForm((prev: any) => ({ ...prev, [key]: value }));
+    setFormError('');
+  };
 
   const toggleStep = (step: string) => {
     setSelectedSteps((prev) => (prev.includes(step) ? prev.filter((s) => s !== step) : [...prev, step]));
@@ -66,11 +72,17 @@ export default function EditNotificationPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    const dateError = validateNotificationDates(form);
+    if (dateError) {
+      setFormError(dateError);
+      return;
+    }
+
     setSubmitting(true);
     try {
       await save({ ...form, selectionProcess: selectedSteps });
 
-      // Replace links: delete existing, recreate from current state
       const existingLinks = await fetch(`/api/notification-links?notificationId=${id}`).then((r) => r.json());
       if (Array.isArray(existingLinks)) {
         await Promise.all(existingLinks.map((l: any) => adminApi.remove('notification-links', l.id)));
@@ -84,7 +96,7 @@ export default function EditNotificationPage() {
       router.push('/admin/notifications');
     } catch (err) {
       console.error(err);
-      alert('Failed to save. Check console.');
+      setFormError('Failed to save. Check console for details.');
     } finally {
       setSubmitting(false);
     }
@@ -97,7 +109,14 @@ export default function EditNotificationPage() {
   return (
     <div className="p-6 max-w-3xl">
       <Card padding="lg">
-        <h2 className="text-lg font-bold text-neutral-900 mb-6">Edit Notification</h2>
+        <h2 className="text-lg font-bold text-neutral-900 mb-6">Edit Job</h2>
+
+        {formError && (
+          <div className="mb-4 p-3 rounded-md bg-red-50 border border-red-100 text-xs text-danger">
+            {formError}
+          </div>
+        )}
+
         <form onSubmit={handleSubmit} className="grid md:grid-cols-2 gap-5">
           <div className="md:col-span-2">
             <label className="block text-xs font-medium text-neutral-600 mb-1.5">Title *</label>
@@ -196,10 +215,16 @@ export default function EditNotificationPage() {
             <textarea value={form.howToApply} onChange={(e) => updateField('howToApply', e.target.value)} rows={3} className={inputClass} />
           </div>
 
-          <div className="md:col-span-2">
+          <div className="md:col-span-2 flex flex-col gap-2 border-t border-neutral-100 pt-4">
             <label className="flex items-center gap-2">
               <input type="checkbox" checked={form.isFeatured} onChange={(e) => updateField('isFeatured', e.target.checked)} />
               <span className="text-sm text-neutral-600">Featured on Homepage</span>
+            </label>
+            <label className="flex items-center gap-2">
+              <input type="checkbox" checked={form.published} onChange={(e) => updateField('published', e.target.checked)} />
+              <span className="text-sm text-neutral-600">
+                Published <span className="text-neutral-400">(visible to the public - uncheck to unpublish/save as draft)</span>
+              </span>
             </label>
           </div>
 

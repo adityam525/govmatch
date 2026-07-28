@@ -6,7 +6,7 @@ import { prisma } from '@/lib/prisma';
 
 export default async function ExamsPage() {
   const notifications = await prisma.notification.findMany({
-    where: { examDate: { not: null } },
+    where: { examDate: { not: null }, published: true },
     include: { organization: true },
     orderBy: { examDate: 'asc' },
   });

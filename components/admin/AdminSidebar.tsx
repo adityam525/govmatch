@@ -10,7 +10,7 @@ import {
 
 const navItems = [
   { label: 'Dashboard', href: '/admin', icon: LayoutDashboard },
-  { label: 'Notifications', href: '/admin/notifications', icon: Bell },
+  { label: 'Jobs', href: '/admin/notifications', icon: Bell },
   { label: 'Posts', href: '/admin/posts', icon: Briefcase },
   { label: 'Organizations', href: '/admin/organizations', icon: Building2 },
   { label: 'States', href: '/admin/states', icon: MapPin },

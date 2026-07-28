@@ -7,6 +7,7 @@ import Button from '@/components/ui/Button';
 import PostsFieldArray, { PostDraft } from '@/components/admin/PostsFieldArray';
 import LinksFieldArray, { LinkDraft } from '@/components/admin/LinksFieldArray';
 import { adminApi } from '@/features/admin/api';
+import { validateNotificationDates } from '@/features/jobs/validation';
 
 interface OrgOption { id: string; name: string; }
 
@@ -17,6 +18,7 @@ export default function NewNotificationPage() {
   const [organizations, setOrganizations] = useState<OrgOption[]>([]);
   const [submitting, setSubmitting] = useState(false);
   const [selectedSteps, setSelectedSteps] = useState<string[]>([]);
+  const [formError, setFormError] = useState('');
 
   const [form, setForm] = useState({
     title: '',
@@ -31,6 +33,7 @@ export default function NewNotificationPage() {
     applicationEndDate: '',
     examDate: '',
     isFeatured: false,
+    published: false,
     applicationFeeGeneral: '',
     applicationFeeScSt: '',
     howToApply: '',
@@ -43,7 +46,10 @@ export default function NewNotificationPage() {
     adminApi.list<OrgOption>('organizations').then(setOrganizations).catch(() => {});
   }, []);
 
-  const updateField = (key: string, value: any) => setForm((prev) => ({ ...prev, [key]: value }));
+  const updateField = (key: string, value: any) => {
+    setForm((prev) => ({ ...prev, [key]: value }));
+    setFormError('');
+  };
 
   const toggleStep = (step: string) => {
     setSelectedSteps((prev) => (prev.includes(step) ? prev.filter((s) => s !== step) : [...prev, step]));
@@ -51,6 +57,13 @@ export default function NewNotificationPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    const dateError = validateNotificationDates(form);
+    if (dateError) {
+      setFormError(dateError);
+      return;
+    }
+
     setSubmitting(true);
     try {
       await adminApi.create('notifications', {
@@ -63,7 +76,7 @@ export default function NewNotificationPage() {
       router.push('/admin/notifications');
     } catch (err) {
       console.error(err);
-      alert('Failed to save. Check console.');
+      setFormError('Failed to save. Check console for details.');
     } finally {
       setSubmitting(false);
     }
@@ -74,7 +87,14 @@ export default function NewNotificationPage() {
   return (
     <div className="p-6 max-w-3xl">
       <Card padding="lg">
-        <h2 className="text-lg font-bold text-neutral-900 mb-6">Add New Notification</h2>
+        <h2 className="text-lg font-bold text-neutral-900 mb-6">Add New Job</h2>
+
+        {formError && (
+          <div className="mb-4 p-3 rounded-md bg-red-50 border border-red-100 text-xs text-danger">
+            {formError}
+          </div>
+        )}
+
         <form onSubmit={handleSubmit} className="grid md:grid-cols-2 gap-5">
           <div className="md:col-span-2">
             <label className="block text-xs font-medium text-neutral-600 mb-1.5">Title *</label>
@@ -173,10 +193,16 @@ export default function NewNotificationPage() {
             <textarea value={form.howToApply} onChange={(e) => updateField('howToApply', e.target.value)} rows={3} className={inputClass} />
           </div>
 
-          <div className="md:col-span-2">
+          <div className="md:col-span-2 flex flex-col gap-2 border-t border-neutral-100 pt-4">
             <label className="flex items-center gap-2">
               <input type="checkbox" checked={form.isFeatured} onChange={(e) => updateField('isFeatured', e.target.checked)} />
               <span className="text-sm text-neutral-600">Featured on Homepage</span>
+            </label>
+            <label className="flex items-center gap-2">
+              <input type="checkbox" checked={form.published} onChange={(e) => updateField('published', e.target.checked)} />
+              <span className="text-sm text-neutral-600">
+                Published <span className="text-neutral-400">(visible to the public - leave unchecked to save as draft)</span>
+              </span>
             </label>
           </div>
 
@@ -186,7 +212,7 @@ export default function NewNotificationPage() {
 
           <div className="md:col-span-2 flex gap-3 pt-4 border-t border-neutral-100 mt-2">
             <Button type="submit" variant="primary" disabled={submitting}>
-              {submitting ? 'Saving...' : 'Save Notification'}
+              {submitting ? 'Saving...' : 'Save Job'}
             </Button>
             <Button type="button" variant="secondary" onClick={() => router.push('/admin/notifications')}>
               Cancel

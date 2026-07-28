@@ -46,7 +46,7 @@ export default function NotificationsAdminPage() {
   return (
     <div className="p-6">
       <DataTable
-        title="Notifications"
+        title="Jobs"
         basePath="/admin/notifications"
         columns={columns}
         rows={data}

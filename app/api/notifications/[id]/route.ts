@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
+import { validateNotificationDates } from '@/features/jobs/validation';
 
 interface Params { params: Promise<{ id: string }> }
 
@@ -23,6 +24,11 @@ export async function PATCH(request: Request, { params }: Params) {
   try {
     const body = await request.json();
     const { posts, categoryIds, stateIds, ...notificationData } = body;
+
+    const dateError = validateNotificationDates(notificationData);
+    if (dateError) {
+      return NextResponse.json({ message: dateError }, { status: 400 });
+    }
 
     const notification = await prisma.notification.update({
       where: { id },

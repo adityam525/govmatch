@@ -1,47 +1,70 @@
-import { auth } from '@/lib/auth';
-import { prisma } from '@/lib/prisma';
-import { computeMatch } from '@/features/matching/engine';
+import { auth } from "@/lib/auth";
+import { prisma } from "@/lib/prisma";
+import { computeMatch } from "@/features/matching/engine";
 
-import QuickStatsBar from '@/components/sections/home-logged-in/QuickStatsBar';
-import LatestJobsSection from '@/components/sections/home-logged-out/LatestJobsSection';
-import CategoryStrip from '@/components/sections/home-logged-out/CategoryStrip';
-import QualificationStrip from '@/components/sections/home-logged-out/QualificationStrip';
-import LatestUpdatesGrid from '@/components/sections/home-logged-out/LatestUpdatesGrid';
-import HowItWorks from '@/components/sections/shared/HowItWorks';
-import MockTestPromo from '@/components/sections/shared/MockTestPromo';
-import WhyChooseUs from '@/components/sections/home-logged-out/WhyChooseUs/WhyChooseUs';
+import QuickStatsBar from "@/components/sections/home-logged-in/QuickStatsBar";
+import LatestJobsSection from "@/components/sections/home-logged-out/LatestJobsSection";
+import CategoryStrip from "@/components/sections/home-logged-out/CategoryStrip";
+import QualificationStrip from "@/components/sections/home-logged-out/QualificationStrip";
+import LatestUpdatesGrid from "@/components/sections/home-logged-out/LatestUpdatesGrid";
+import HowItWorks from "@/components/sections/shared/HowItWorks";
+import MockTestPromo from "@/components/sections/shared/MockTestPromo";
+import WhyChooseUs from "@/components/sections/home-logged-out/WhyChooseUs/WhyChooseUs";
 
-import SearchHero from '@/components/sections/home-logged-in/SearchHero/SearchHero';
-import RecommendedJobsSidebar from '@/components/sections/home-logged-in/RecommendedJobsSidebar';
-import ProfileStrengthCard from '@/components/sections/home-logged-in/ProfileStrengthCard';
-import NotificationPromptCard from '@/components/sections/home-logged-in/NotificationPromptCard';
-import MockTestPromoCard from '@/components/sections/home-logged-in/MockTestPromoCard';
+import SearchHero from "@/components/sections/home-logged-in/SearchHero/SearchHero";
+import RecommendedJobsSidebar from "@/components/sections/home-logged-in/RecommendedJobsSidebar";
+import ProfileStrengthCard from "@/components/sections/home-logged-in/ProfileStrengthCard";
+import NotificationPromptCard from "@/components/sections/home-logged-in/NotificationPromptCard";
+import MockTestPromoCard from "@/components/sections/home-logged-in/MockTestPromoCard";
 
-function serialize(data) {
+function serialize<T>(data: T): T {
   return JSON.parse(JSON.stringify(data));
 }
 
 async function getHomePageData() {
-  const [notifications, admitCards, results, answerKeys, documents] = await Promise.all([
-    prisma.notification.findMany({
-      where: { status: 'LIVE' },
-      include: {
-        organization: { include: { category: true } },
-        posts: { include: { qualification: true } },
-      },
-      orderBy: { createdAt: 'desc' },
-      take: 40,
-    }),
-    prisma.admitCard.findMany({ include: { notification: true }, orderBy: { createdAt: 'desc' }, take: 4 }),
-    prisma.result.findMany({ include: { notification: true }, orderBy: { createdAt: 'desc' }, take: 4 }),
-    prisma.answerKey.findMany({ include: { notification: true }, orderBy: { createdAt: 'desc' }, take: 4 }),
-    prisma.document.findMany({ include: { notification: true }, orderBy: { createdAt: 'desc' }, take: 4 }),
-  ]);
+  const [notifications, admitCards, results, answerKeys, documents] =
+    await Promise.all([
+      prisma.notification.findMany({
+        where: { status: "LIVE", published: true },
+        include: {
+          organization: { include: { category: true } },
+          posts: { include: { qualification: true } },
+        },
+        orderBy: { createdAt: "desc" },
+        take: 40,
+      }),
+      prisma.admitCard.findMany({
+        include: { notification: true },
+        orderBy: { createdAt: "desc" },
+        take: 4,
+      }),
+      prisma.result.findMany({
+        include: { notification: true },
+        orderBy: { createdAt: "desc" },
+        take: 4,
+      }),
+      prisma.answerKey.findMany({
+        include: { notification: true },
+        orderBy: { createdAt: "desc" },
+        take: 4,
+      }),
+      prisma.document.findMany({
+        include: { notification: true },
+        orderBy: { createdAt: "desc" },
+        take: 4,
+      }),
+    ]);
 
-  return serialize({ notifications, admitCards, results, answerKeys, documents });
+  return serialize({
+    notifications,
+    admitCards,
+    results,
+    answerKeys,
+    documents,
+  });
 }
 
-async function getUserMatchesAndStrength(userId) {
+async function getUserMatchesAndStrength(userId: string) {
   const profile = await prisma.userProfile.findUnique({
     where: { userId },
     include: { preferredRoles: true },
@@ -50,11 +73,13 @@ async function getUserMatchesAndStrength(userId) {
   if (!profile) return { matches: [], strength: 0 };
 
   const userQualification = profile.qualificationId
-    ? await prisma.qualification.findUnique({ where: { id: profile.qualificationId } })
+    ? await prisma.qualification.findUnique({
+        where: { id: profile.qualificationId },
+      })
     : null;
 
   const liveNotifications = await prisma.notification.findMany({
-    where: { status: 'LIVE' },
+    where: { status: "LIVE", published: true },
     include: {
       organization: true,
       posts: { include: { qualification: true, branches: true, roles: true } },
@@ -79,7 +104,7 @@ async function getUserMatchesAndStrength(userId) {
           branchIds: post.branches.map((b) => b.id),
           roleIds: post.roles.map((r) => r.id),
           employmentType: post.employmentType,
-        }
+        },
       );
 
       return {
@@ -94,7 +119,7 @@ async function getUserMatchesAndStrength(userId) {
         matchScore: result.score,
         eligible: result.eligible,
       };
-    })
+    }),
   );
 
   matches.sort((a, b) => {
