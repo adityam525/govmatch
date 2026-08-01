@@ -1,0 +1,9 @@
+export const DEFAULT_NEGATIVE_MARKS = 0.5;
+
+export const DEFAULT_POSITIVE_MARKS = 2;
+
+export const DEFAULT_EXAM_DURATION = 60;
+
+export const DAILY_CHALLENGE_QUESTION_COUNT = 10;
+
+export const MOCK_TEST_PAGE_SIZE = 20;
