@@ -6,7 +6,7 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider  = "postgresql"
 }
 
 // ---------------- LOOKUP TABLES ----------------
@@ -52,15 +52,25 @@ model Category {
 // Education level — 10th, 12th, ITI, Diploma, Graduate, Post Graduate.
 // `level` is used for ordering AND for eligibility comparison
 // (user's level must be >= post's required level).
+model QualificationCategory {
+  id    String @id @default(cuid())
+  name  String @unique
+  slug  String @unique
+  order Int    @default(0)
+
+  qualifications Qualification[]
+}
+
 model Qualification {
   id    String @id @default(cuid())
   name  String @unique
   slug  String @unique
   level Int
 
+  categories   QualificationCategory[]
+  branches     Branch[]
   posts        Post[]
   userProfiles UserProfile[]
-
   @@index([level])
 }
 
@@ -74,8 +84,13 @@ model Branch {
   slug           String   @unique
   qualificationGroup String // e.g. "Engineering", "Medical", "Graduate" - for UI grouping only
 
+  qualificationId String
+  qualification   Qualification @relation(fields: [qualificationId], references: [id])
+
   posts        Post[]           @relation("PostBranches")
   userProfiles UserProfile[]
+
+  @@index([qualificationId])
 }
 
 // What the job actually IS — Clerk, Officer, Engineer, Teacher, Doctor,
@@ -127,6 +142,8 @@ model Notification {
   answerKeys AnswerKey[]
   documents  Document[]
   links      NotificationLink[]
+  importantDates ImportantDate[]
+  faqs           NotificationFAQ[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -196,7 +213,6 @@ model Post {
   updatedAt DateTime @updatedAt
 
   @@index([notificationId])
-  @@index([qualificationId])
 }
 
 model AdmitCard {
@@ -333,7 +349,6 @@ model UserProfile {
 
   updatedAt DateTime @updatedAt
 
-  @@index([qualificationId])
   @@index([branchId])
 }
 
@@ -428,4 +443,32 @@ enum LinkType {
   SYLLABUS
   SHORT_NOTICE
   OTHER
+}
+
+model ImportantDate {
+  id             String   @id @default(cuid())
+  notificationId String
+  notification   Notification @relation(fields: [notificationId], references: [id], onDelete: Cascade)
+
+  label String   // "Application Start", "Pre-Exam Training", "Main Exam Date", etc.
+  date  DateTime
+  order Int      @default(0)
+
+  createdAt DateTime @default(now())
+
+  @@index([notificationId])
+}
+
+model NotificationFAQ {
+  id             String   @id @default(cuid())
+  notificationId String
+  notification   Notification @relation(fields: [notificationId], references: [id], onDelete: Cascade)
+
+  question String
+  answer   String
+  order    Int    @default(0)
+
+  createdAt DateTime @default(now())
+
+  @@index([notificationId])
 }
