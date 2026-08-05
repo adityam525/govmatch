@@ -16,6 +16,8 @@ import RecommendedJobsSidebar from "@/components/sections/home-logged-in/Recomme
 import ProfileStrengthCard from "@/components/sections/home-logged-in/ProfileStrengthCard";
 import NotificationPromptCard from "@/components/sections/home-logged-in/NotificationPromptCard";
 import MockTestPromoCard from "@/components/sections/home-logged-in/MockTestPromoCard";
+import OrganizationStrip from "@/components/sections/home-logged-out/OrganizationStrip";
+import StateStrip from "@/components/sections/home-logged-out/StateStrip";
 
 function serialize<T>(data: T): T {
   return JSON.parse(JSON.stringify(data));
@@ -170,7 +172,9 @@ export default async function HomePage() {
         </div>
         <div className="max-w-7xl mx-auto px-6 space-y-16 py-16">
           <CategoryStrip />
+          <OrganizationStrip />
           <QualificationStrip />
+          <StateStrip />
           {updatesGrid}
           <HowItWorks />
           <MockTestPromo />
@@ -191,7 +195,9 @@ export default async function HomePage() {
       <div className="max-w-7xl mx-auto px-6 space-y-16 py-16">
         <LatestJobsSection initialNotifications={data.notifications} />
         <CategoryStrip />
+        <OrganizationStrip />
         <QualificationStrip />
+        <StateStrip />
         {updatesGrid}
         <HowItWorks />
         <MockTestPromo />

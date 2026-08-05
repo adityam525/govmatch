@@ -1,8 +1,17 @@
-import { NextResponse } from 'next/server';
-import { prisma } from '@/lib/prisma';
+import { NextResponse } from "next/server";
+import { prisma } from "@/lib/prisma";
+
+// Without this, Next.js can cache this route's response at build time and
+// keep serving a stale list even after Category rows change -- the same
+// issue we hit with /api/qualification-categories.
+export const dynamic = "force-dynamic";
 
 export async function GET() {
-  const categories = await prisma.category.findMany({ orderBy: { name: 'asc' } });
+  const categories = await prisma.category.findMany({
+    orderBy: { name: "asc" },
+    select: { id: true, name: true, slug: true },
+  });
+
   return NextResponse.json(categories);
 }
 

@@ -3,9 +3,11 @@ import { prisma } from "@/lib/prisma";
 import { computeMatch } from "@/features/matching/engine";
 import { notificationToJobs } from "@/features/jobs/adapters";
 import JobListItem from "@/components/jobs/JobListItem";
-import JobFiltersSidebar from "@/components/jobs/JobFiltersSidebar";
+import JobFiltersBar from "@/components/jobs/JobFiltersBar";
 import Card from "@/components/ui/Card";
 import SectionHeader from "@/components/ui/SectionHeader";
+import { Prisma } from "@prisma/client";
+import { resolveCategoryFilter } from "@/lib/category-filters";
 
 const SEARCH_ALIASES: Record<string, string[]> = {
   "bank po": ["probationary officer", "management trainee", "po"],
@@ -30,56 +32,83 @@ interface JobsPageProps {
 export default async function JobsPage({ searchParams }: JobsPageProps) {
   const params = await searchParams;
   const query = params.search ?? "";
-  const category = params.category ?? "all";
+  const categorySlug = params.category ?? "";
+  // Organization now filters by its dedicated `slug` field (added via the
+  // Organization slug migration), matching Category/QualificationCategory/
+  // Qualification/Branch, which all filter by slug rather than raw id.
+  const organizationSlugs =
+    params.organizations?.split(",").filter(Boolean) ?? [];
+  const stateCodes = params.states?.split(",").filter(Boolean) ?? [];
+
+  // Qualification is now a 3-level cascade: QualificationCategory (high
+  // level) -> Qualification (mid level) -> Branch (specific stream). Any
+  // combination can be applied at once; each also works independently.
+  // All three (plus Category and State) filter by slug/code rather than raw
+  // id, matching how `search` already uses readable text instead of an id.
+  const qualificationCategorySlugs =
+    params.qualificationCategories?.split(",").filter(Boolean) ?? [];
   const qualificationSlugs =
     params.qualifications?.split(",").filter(Boolean) ?? [];
-  const organizationIds =
-    params.organizations?.split(",").filter(Boolean) ?? [];
+  const branchSlugs = params.branches?.split(",").filter(Boolean) ?? [];
+
+  const sort = params.sort === "oldest" ? "oldest" : "newest";
 
   const session = await auth();
   const userId = (session?.user as any)?.id;
+
+  const qualificationFilter: Prisma.QualificationWhereInput = {
+    ...(qualificationSlugs.length > 0
+      ? { slug: { in: qualificationSlugs } }
+      : {}),
+    ...(qualificationCategorySlugs.length > 0
+      ? { categories: { some: { slug: { in: qualificationCategorySlugs } } } }
+      : {}),
+  };
+  const hasQualificationFilter = Object.keys(qualificationFilter).length > 0;
+  const categoryFilter = resolveCategoryFilter(categorySlug);
+
+  const postFilter: Prisma.PostWhereInput = {
+    ...(hasQualificationFilter ? { qualification: qualificationFilter } : {}),
+    ...(branchSlugs.length > 0
+      ? { branches: { some: { slug: { in: branchSlugs } } } }
+      : {}),
+    ...(categoryFilter.post ?? {}),
+  };
+  const hasPostLevelFilter = Object.keys(postFilter).length > 0;
+
+  const organizationFilter: Prisma.OrganizationWhereInput = {
+    ...(organizationSlugs.length > 0
+      ? { slug: { in: organizationSlugs } }
+      : {}),
+    // Category is filtered here against the real sector Category.slug (SSC,
+    // Railway, Banking, ...) via the organization it belongs to -- not
+    // against the coarse bucket value notificationToJobs derives for
+    // display/icon purposes. This is what was actually broken before: the
+    // filter bar sends a real category slug, but job.category is a
+    // 6-bucket display value, so they could never match.
+    ...(categoryFilter.organization ?? {}),
+  };
+
+  const hasOrganizationFilter = Object.keys(organizationFilter).length > 0;
 
   let notifications = await prisma.notification.findMany({
     where: {
       status: "LIVE",
       published: true,
-      ...(organizationIds.length > 0
-        ? { organizationId: { in: organizationIds } }
+      ...(hasOrganizationFilter ? { organization: organizationFilter } : {}),
+      ...(stateCodes.length > 0
+        ? { states: { some: { code: { in: stateCodes } } } }
         : {}),
-      ...(qualificationSlugs.length > 0
-        ? {
-            posts: {
-              some: { qualification: { slug: { in: qualificationSlugs } } },
-            },
-          }
-        : {}),
+      ...(hasPostLevelFilter ? { posts: { some: postFilter } } : {}),
     },
     include: {
       organization: { include: { category: true } },
-      posts: { include: { qualification: true } },
+      posts: { include: { qualification: true, branches: true } },
     },
-    orderBy: { createdAt: "desc" },
+    orderBy: { createdAt: sort === "oldest" ? "asc" : "desc" },
   });
 
   let jobs = notifications.flatMap(notificationToJobs);
-
-  const categoryMap: Record<string, string> = {
-    ssc: "central",
-    railway: "central",
-    banking: "banking",
-    upsc: "central",
-    "state-government": "state",
-    defence: "defence",
-    psu: "psu",
-    "police-security": "defence",
-    teaching: "teaching",
-    healthcare: "central",
-    "judiciary-law": "central",
-    agriculture: "central",
-  };
-  if (category !== "all") {
-    jobs = jobs.filter((job) => job.category === category);
-  }
 
   if (query.trim()) {
     const terms = expandQuery(query);
@@ -137,40 +166,36 @@ export default async function JobsPage({ searchParams }: JobsPageProps) {
 
   return (
     <div className="max-w-7xl mx-auto px-6 py-8">
-      <div className="grid lg:grid-cols-10 gap-6 items-start">
-        <div className="lg:col-span-3 lg:sticky lg:top-20">
-          <JobFiltersSidebar />
-        </div>
-
-        <div className="lg:col-span-7">
-          <Card padding="lg">
-            <SectionHeader
-              title={
-                query ? `Search results for "${query}"` : "All Government Jobs"
-              }
-              description={`${jobs.length} job${jobs.length !== 1 ? "s" : ""} found`}
-            />
-
-            {jobs.length === 0 ? (
-              <p className="text-sm text-neutral-600 py-8 text-center">
-                No jobs found. Try adjusting your filters.
-              </p>
-            ) : (
-              <div>
-                {jobs.map((job) => (
-                  <div key={job.id} className="relative">
-                    <JobListItem
-                      key={job.id}
-                      job={job}
-                      matchPercentage={matchByJobId.get(job.id)}
-                    />
-                  </div>
-                ))}
-              </div>
-            )}
-          </Card>
-        </div>
+      <div className="mb-6">
+        <JobFiltersBar />
       </div>
+
+      <Card padding="lg">
+        <SectionHeader
+          title={
+            query ? `Search results for "${query}"` : "All Government Jobs"
+          }
+          description={`${jobs.length} job${jobs.length !== 1 ? "s" : ""} found`}
+        />
+
+        {jobs.length === 0 ? (
+          <p className="text-sm text-neutral-600 py-8 text-center">
+            No jobs found. Try adjusting your filters.
+          </p>
+        ) : (
+          <div>
+            {jobs.map((job) => (
+              <div key={job.id} className="relative">
+                <JobListItem
+                  key={job.id}
+                  job={job}
+                  matchPercentage={matchByJobId.get(job.id)}
+                />
+              </div>
+            ))}
+          </div>
+        )}
+      </Card>
     </div>
   );
 }
