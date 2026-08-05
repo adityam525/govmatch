@@ -1,62 +1,20 @@
-import {
-  Crown,
-  TrainFront,
-  Landmark,
-  ShieldCheck,
-  Building2,
-  Shield,
-  Factory,
-} from "lucide-react";
-import CategoryCard from "@/components/jobs/CategoryCard";
-import ViewAllCard from "@/components/shared/ViewAllCard";
-import { categories } from "@/data/categories";
-import { colors } from "@/styles/tokens";
+import BrowseSection from "@/components/ui/browse/BrowseSection";
+import { accentColorMap } from "@/components/ui/browse/color-map";
+import { categoryIconMap } from "@/components/ui/browse/icon-maps";
+import { getCategories } from "@/data/categories";
 
-const iconMap = {
-  crown: Crown,
-  train: TrainFront,
-  landmark: Landmark,
-  ashoka: ShieldCheck,
-  building: Building2,
-  shield: Shield,
-  factory: Factory,
-};
+export default async function CategoryStrip() {
+  const categories = await getCategories();
 
-const colorMap = {
-  amber: colors.accent.amber,
-  red: colors.accent.red,
-  sky: colors.accent.sky,
-  purple: colors.accent.purple,
-  green: colors.accent.green,
-  orange: colors.accent.orange,
-};
-
-export default function CategoryStrip() {
   return (
-    <section>
-      <h2 className="text-xl font-bold text-neutral-900 mb-1">
-        Browse Jobs by Category
-      </h2>
-      <p className="text-sm text-neutral-600 mb-4">
-        Explore openings across every government sector
-      </p>
-
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        {categories.map((cat) => {
-          const Icon = iconMap[cat.iconName];
-          return (
-            <CategoryCard
-              key={cat.id}
-              icon={<Icon size={20} />}
-              iconBg={colorMap[cat.colorKey]}
-              title={cat.title}
-              description={cat.description}
-              href={`/jobs?search=${encodeURIComponent(cat.searchKeyword)}`}
-            />
-          );
-        })}
-        <ViewAllCard href="/jobs" label="View All Categories" />
-      </div>
-    </section>
+    <BrowseSection
+      title="Browse Jobs by Category"
+      description="Explore openings across every government sector"
+      items={categories}
+      iconMap={categoryIconMap}
+      colorMap={accentColorMap}
+      columns="grid-cols-2 md:grid-cols-4 lg:grid-cols-6"
+      getHref={(c) => `/jobs?category=${c.slug}`}
+    />
   );
 }

@@ -15,6 +15,7 @@ model Organization {
   id         String   @id @default(cuid())
   name       String
   shortName  String   @unique
+  slug       String   @unique
   logoUrl    String?
   website    String?
   categoryId String?

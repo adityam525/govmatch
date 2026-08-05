@@ -1,3 +1,6 @@
+import { unstable_cache } from "next/cache";
+import { prisma } from "@/lib/prisma";
+
 export interface Category {
   id: string;
   title: string;
@@ -11,120 +14,136 @@ export interface Category {
     | "shield"
     | "factory";
   colorKey: "amber" | "red" | "sky" | "purple" | "green" | "orange";
-  searchKeyword: string; // matched against job title/org text
+  searchKeyword: string;
+  slug: string;
 }
 
-export const categories: Category[] = [
-  {
-    id: "ssc",
-    title: "SSC",
+type CategoryMeta = Pick<Category, "description" | "iconName" | "colorKey">;
+
+const DEFAULT_META: CategoryMeta = {
+  description: "Government job opportunities",
+  iconName: "building",
+  colorKey: "amber",
+};
+
+const CATEGORY_META: Record<string, CategoryMeta> = {
+  ssc: {
     description: "Staff Selection Commission jobs",
     iconName: "crown",
     colorKey: "amber",
-    searchKeyword: "SSC",
   },
-  {
-    id: "rrb",
-    title: "RRB",
+  rrb: {
     description: "Railway Recruitment Board jobs",
     iconName: "train",
     colorKey: "red",
-    searchKeyword: "RRB",
   },
-  {
-    id: "banking",
-    title: "Banking",
+  banking: {
     description: "IBPS, SBI, RBI & banking jobs",
     iconName: "landmark",
     colorKey: "sky",
-    searchKeyword: "IBPS",
   },
-  {
-    id: "upsc",
-    title: "UPSC",
-    description: "Union Public Service Commission",
+  upsc: {
+    description: "Union Public Service Commission jobs",
     iconName: "ashoka",
     colorKey: "amber",
-    searchKeyword: "UPSC",
   },
-  {
-    id: "state-govt",
-    title: "State Govt.",
+  "state govt": {
     description: "State PSC & government jobs",
     iconName: "building",
     colorKey: "purple",
-    searchKeyword: "State",
   },
-  {
-    id: "defence",
-    title: "Defence",
+  "state government": {
+    description: "State PSC & government jobs",
+    iconName: "building",
+    colorKey: "purple",
+  },
+  defence: {
     description: "Army, Navy, Air Force & Defence jobs",
     iconName: "shield",
     colorKey: "green",
-    searchKeyword: "Army",
   },
-  {
-    id: "psu",
-    title: "PSU",
+  defense: {
+    description: "Army, Navy, Air Force & Defence jobs",
+    iconName: "shield",
+    colorKey: "green",
+  },
+  psu: {
     description: "Public Sector Undertaking jobs",
     iconName: "factory",
     colorKey: "orange",
-    searchKeyword: "PSU",
   },
-  {
-    id: "police",
-    title: "Police",
+  police: {
     description: "Police, CAPF & security jobs",
     iconName: "shield",
     colorKey: "red",
-    searchKeyword: "Police",
   },
-  {
-    id: "teaching",
-    title: "Teaching",
+  teaching: {
     description: "Teacher & education department jobs",
     iconName: "ashoka",
     colorKey: "purple",
-    searchKeyword: "Teacher",
   },
-  {
-    id: "medical",
-    title: "Medical",
+  medical: {
     description: "Doctor, Nursing & healthcare jobs",
     iconName: "building",
     colorKey: "green",
-    searchKeyword: "Medical",
   },
-  {
-    id: "engineering",
-    title: "Engineering",
+  engineering: {
     description: "Technical & engineering jobs",
     iconName: "factory",
     colorKey: "orange",
-    searchKeyword: "Engineer",
   },
-  {
-    id: "insurance",
-    title: "Insurance",
+  insurance: {
     description: "LIC, NIACL & insurance jobs",
     iconName: "landmark",
     colorKey: "sky",
-    searchKeyword: "Insurance",
   },
-  {
-    id: "judiciary",
-    title: "Judiciary",
+  judiciary: {
     description: "Court & legal department jobs",
     iconName: "building",
     colorKey: "purple",
-    searchKeyword: "Court",
   },
-  {
-    id: "agriculture",
-    title: "Agriculture",
+  agriculture: {
     description: "Agriculture & rural development jobs",
     iconName: "factory",
     colorKey: "green",
-    searchKeyword: "Agriculture",
   },
-];
+};
+
+const getCachedCategories = unstable_cache(
+  async () => {
+    return prisma.category.findMany({
+      orderBy: {
+        name: "asc", // or slug: "asc"
+      },
+      select: {
+        id: true,
+        name: true,
+        slug: true,
+      },
+    });
+  },
+  ["categories"],
+  {
+    revalidate: 3600,
+    tags: ["categories"],
+  },
+);
+
+export async function getCategories(): Promise<Category[]> {
+  const categories = await getCachedCategories();
+
+  return categories.map((category) => {
+    const key = category.name.trim().toLowerCase();
+    const meta = CATEGORY_META[key] ?? DEFAULT_META;
+    console.log(category);
+    return {
+      id: category.id,
+      slug: category.slug,
+      title: category.name,
+      searchKeyword: category.name,
+      description: meta.description,
+      iconName: meta.iconName,
+      colorKey: meta.colorKey,
+    };
+  });
+}
