@@ -35,9 +35,6 @@ export default async function StateStrip() {
       items={states}
       iconMap={iconMap}
       getHref={(state) => `/jobs?states=${state.id}`}
-      viewAllHref="/jobs"
-      viewAllLabel="View All States"
-      columns="md:grid-cols-4"
     />
   );
 }

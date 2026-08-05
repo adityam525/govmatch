@@ -13,7 +13,6 @@ export default async function CategoryStrip() {
       items={categories}
       iconMap={categoryIconMap}
       colorMap={accentColorMap}
-      columns="grid-cols-2 md:grid-cols-4 lg:grid-cols-6"
       getHref={(c) => `/jobs?category=${c.slug}`}
     />
   );

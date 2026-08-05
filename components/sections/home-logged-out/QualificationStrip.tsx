@@ -13,8 +13,6 @@ export default async function QualificationStrip() {
       items={qualifications}
       iconMap={qualificationIconMap}
       colorMap={accentColorMap}
-      columns="grid-cols-2 md:grid-cols-6"
-      viewAllLabel="View All Qualifications"
       getHref={(q) => `/jobs?qualificationCategories=${q.id}`}
     />
   );

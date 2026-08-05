@@ -10,10 +10,6 @@ export default async function OrganizationStrip() {
       description="Recruitment boards and government departments"
       items={organizations}
       iconMap={organizationIconMap}
-      columns="grid-cols-2 md:grid-cols-5"
-      viewAllLabel="View All Organizations"
-      // o.slug is the Organization's dedicated slug field, the same value
-      // JobFiltersBar and the /jobs query now filter by.
       getHref={(o) => `/jobs?organizations=${encodeURIComponent(o.slug)}`}
     />
   );

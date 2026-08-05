@@ -20,9 +20,6 @@ interface BrowseSectionProps<T extends BrowseItem> {
   colorMap?: Record<string, string>;
 
   getHref: (item: T) => string;
-
-  viewAllHref?: string;
-  viewAllLabel?: string;
 }
 
 export default function BrowseSection<T extends BrowseItem>({
@@ -31,8 +28,6 @@ export default function BrowseSection<T extends BrowseItem>({
   items,
   colorMap = accentColorMap,
   getHref,
-  viewAllHref = "/jobs",
-  viewAllLabel = "View All",
 }: BrowseSectionProps<T>) {
   const tableItems = items.map((item) => ({
     id: item.id,
@@ -45,19 +40,7 @@ export default function BrowseSection<T extends BrowseItem>({
 
   return (
     <section>
-      {/* <h2 className="mb-1 text-xl font-bold text-neutral-900">{title}</h2>
-
-      <p className="mb-4 text-sm text-neutral-600">{description}</p> */}
-
-      <section>
-        <BrowseTable
-          title={title}
-          description={description}
-          items={tableItems}
-          viewAllHref={viewAllHref}
-          viewAllLabel={viewAllLabel}
-        />
-      </section>
+      <BrowseTable title={title} description={description} items={tableItems} />
     </section>
   );
 }
