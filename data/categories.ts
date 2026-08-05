@@ -135,7 +135,6 @@ export async function getCategories(): Promise<Category[]> {
   return categories.map((category) => {
     const key = category.name.trim().toLowerCase();
     const meta = CATEGORY_META[key] ?? DEFAULT_META;
-    console.log(category);
     return {
       id: category.id,
       slug: category.slug,
