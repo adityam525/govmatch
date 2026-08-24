@@ -2,6 +2,8 @@ import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { validateNotificationDates } from '@/features/jobs/validation';
 
+const DATE_FIELDS = ['notificationDate', 'applicationStartDate', 'applicationEndDate', 'examDate'];
+
 export async function GET() {
   try {
     const notifications = await prisma.notification.findMany({
@@ -29,14 +31,22 @@ export async function POST(request: Request) {
       return NextResponse.json({ message: dateError }, { status: 400 });
     }
 
+    for (const field of DATE_FIELDS) {
+      if (notificationData[field] === '' || notificationData[field] == null) {
+        notificationData[field] = null;
+      } else {
+        notificationData[field] = new Date(notificationData[field]);
+      }
+    }
+
     const notification = await prisma.notification.create({
       data: {
         ...notificationData,
         totalVacancies: Array.isArray(posts)
           ? posts.reduce((sum: number, p: any) => sum + (Number(p.vacancies) || 0), 0)
           : 0,
-        categories: categoryIds ? { connect: categoryIds.map((id: string) => ({ id })) } : undefined,
-        states: stateIds ? { connect: stateIds.map((id: string) => ({ id })) } : undefined,
+        categories: categoryIds?.length ? { connect: categoryIds.map((id: string) => ({ id })) } : undefined,
+        states: stateIds?.length ? { connect: stateIds.map((id: string) => ({ id })) } : undefined,
         posts: posts?.length
           ? {
               create: posts.map((p: any) => ({

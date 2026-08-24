@@ -19,6 +19,8 @@ export async function GET(request: Request, { params }: Params) {
   }
 }
 
+const DATE_FIELDS = ['notificationDate', 'applicationStartDate', 'applicationEndDate', 'examDate'];
+
 export async function PATCH(request: Request, { params }: Params) {
   const { id } = await params;
   try {
@@ -28,6 +30,15 @@ export async function PATCH(request: Request, { params }: Params) {
     const dateError = validateNotificationDates(notificationData);
     if (dateError) {
       return NextResponse.json({ message: dateError }, { status: 400 });
+    }
+
+    // Convert empty-string dates to null, and valid date strings to Date objects
+    for (const field of DATE_FIELDS) {
+      if (notificationData[field] === '') {
+        notificationData[field] = null;
+      } else if (notificationData[field]) {
+        notificationData[field] = new Date(notificationData[field]);
+      }
     }
 
     const notification = await prisma.notification.update({

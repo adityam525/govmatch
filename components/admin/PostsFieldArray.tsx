@@ -4,38 +4,59 @@ import { useState, useEffect } from 'react';
 import { Plus, Trash2 } from 'lucide-react';
 import Button from '@/components/ui/Button';
 import { adminApi } from '@/features/admin/api';
+import PostQualificationCascade from './PostQualificationCascade';
 
 export interface PostDraft {
+  id?: string;
   title: string;
   vacancies: string;
+  qualificationCategorySlug: string;
   qualificationId: string;
+  branchIds: string[];
   minAge: string;
   maxAge: string;
   payScale: string;
+  employmentType: string;
+  roleId: string;
 }
 
-interface QualificationOption {
-  id: string;
-  name: string;
-}
+interface RoleOption { id: string; name: string; }
 
 interface PostsFieldArrayProps {
   posts: PostDraft[];
   onChange: (posts: PostDraft[]) => void;
 }
 
-const emptyPost: PostDraft = { title: '', vacancies: '', qualificationId: '', minAge: '', maxAge: '', payScale: '' };
+const EMPLOYMENT_TYPES = [
+  { value: 'PERMANENT', label: 'Permanent' },
+  { value: 'CONTRACT', label: 'Contract' },
+  { value: 'APPRENTICE', label: 'Apprentice' },
+  { value: 'INTERNSHIP', label: 'Internship' },
+  { value: 'TEMPORARY', label: 'Temporary' },
+  { value: 'DEPUTATION', label: 'Deputation' },
+];
+
+export const emptyPost: PostDraft = {
+  title: '', vacancies: '', qualificationCategorySlug: '', qualificationId: '', branchIds: [],
+  minAge: '18', maxAge: '21', payScale: '', employmentType: 'PERMANENT', roleId: '',
+};
 
 export default function PostsFieldArray({ posts, onChange }: PostsFieldArrayProps) {
-  const [qualifications, setQualifications] = useState<QualificationOption[]>([]);
+  const [roles, setRoles] = useState<RoleOption[]>([]);
 
   useEffect(() => {
-    adminApi.list<QualificationOption>('qualifications').then(setQualifications).catch(() => {});
+    adminApi.list<RoleOption>('roles').then(setRoles).catch(() => {});
   }, []);
 
-  const updatePost = (index: number, key: keyof PostDraft, value: string) => {
+  const updatePost = (index: number, key: keyof PostDraft, value: any) => {
     const next = [...posts];
     next[index] = { ...next[index], [key]: value };
+    onChange(next);
+  };
+
+  const updatePostFields = (index: number, updates: Partial<PostDraft>) => {
+    const next = [...posts];
+    next[index] = { ...next[index], ...updates };
     onChange(next);
   };
 
@@ -67,7 +88,7 @@ export default function PostsFieldArray({ posts, onChange }: PostsFieldArrayProp
             </button>
 
             <div className="grid md:grid-cols-2 gap-3 pr-6">
-              <div>
+              <div className="md:col-span-2">
                 <label className="block text-xs font-medium text-neutral-600 mb-1">Post Title</label>
                 <input
                   type="text"
@@ -89,18 +110,34 @@ export default function PostsFieldArray({ posts, onChange }: PostsFieldArrayProp
               </div>
 
               <div>
-                <label className="block text-xs font-medium text-neutral-600 mb-1">Qualification</label>
+                <label className="block text-xs font-medium text-neutral-600 mb-1">Employee Role</label>
                 <select
-                  value={post.qualificationId}
-                  onChange={(e) => updatePost(index, 'qualificationId', e.target.value)}
+                  value={post.roleId}
+                  onChange={(e) => updatePost(index, 'roleId', e.target.value)}
                   className="w-full text-sm border border-neutral-200 rounded-md px-3 py-2 outline-none focus:border-primary-500"
                 >
                   <option value="">Select...</option>
-                  {qualifications.map((q) => (
-                    <option key={q.id} value={q.id}>{q.name}</option>
-                  ))}
+                  {roles.map((r) => <option key={r.id} value={r.id}>{r.name}</option>)}
                 </select>
               </div>
+
+              <div>
+                <label className="block text-xs font-medium text-neutral-600 mb-1">Employment Type</label>
+                <select
+                  value={post.employmentType}
+                  onChange={(e) => updatePost(index, 'employmentType', e.target.value)}
+                  className="w-full text-sm border border-neutral-200 rounded-md px-3 py-2 outline-none focus:border-primary-500"
+                >
+                  {EMPLOYMENT_TYPES.map((t) => <option key={t.value} value={t.value}>{t.label}</option>)}
+                </select>
+              </div>
+
+              <PostQualificationCascade
+                qualificationCategorySlug={post.qualificationCategorySlug}
+                qualificationId={post.qualificationId}
+                branchIds={post.branchIds}
+                onCascadeChange={(updates) => updatePostFields(index, updates)}
+              />
 
               <div>
                 <label className="block text-xs font-medium text-neutral-600 mb-1">Pay Scale</label>
@@ -108,28 +145,30 @@ export default function PostsFieldArray({ posts, onChange }: PostsFieldArrayProp
                   type="text"
                   value={post.payScale}
                   onChange={(e) => updatePost(index, 'payScale', e.target.value)}
-                  placeholder="e.g. Level 6 (₹35,400-1,12,400)"
+                  placeholder="e.g. Level 6"
                   className="w-full text-sm border border-neutral-200 rounded-md px-3 py-2 outline-none focus:border-primary-500"
                 />
               </div>
 
-              <div>
-                <label className="block text-xs font-medium text-neutral-600 mb-1">Min Age</label>
-                <input
-                  type="number"
-                  value={post.minAge}
-                  onChange={(e) => updatePost(index, 'minAge', e.target.value)}
-                  className="w-full text-sm border border-neutral-200 rounded-md px-3 py-2 outline-none focus:border-primary-500"
-                />
-              </div>
-
-              <div>
-                <label className="block text-xs font-medium text-neutral-600 mb-1">Max Age</label>               <input
-                  type="number"
-                  value={post.maxAge}
-                  onChange={(e) => updatePost(index, 'maxAge', e.target.value)}
-                  className="w-full text-sm border border-neutral-200 rounded-md px-3 py-2 outline-none focus:border-primary-500"
-                />
+              <div className="grid grid-cols-2 gap-2">
+                <div>
+                  <label className="block text-xs font-medium text-neutral-600 mb-1">Min Age</label>
+                  <input
+                    type="number"
+                    value={post.minAge}
+                    onChange={(e) => updatePost(index, 'minAge', e.target.value)}
+                    className="w-full text-sm border border-neutral-200 rounded-md px-3 py-2 outline-none focus:border-primary-500"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs font-medium text-neutral-600 mb-1">Max Age</label>
+                  <input
+                    type="number"
+                    value={post.maxAge}
+                    onChange={(e) => updatePost(index, 'maxAge', e.target.value)}
+                    className="w-full text-sm border border-neutral-200 rounded-md px-3 py-2 outline-none focus:border-primary-500"
+                  />
+                </div>
               </div>
             </div>
           </div>

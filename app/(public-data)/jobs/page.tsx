@@ -4,7 +4,6 @@ import { computeMatch } from "@/features/matching/engine";
 import { notificationToJobs } from "@/features/jobs/adapters";
 import JobListItem from "@/components/jobs/JobListItem";
 import JobFiltersBar from "@/components/jobs/JobFiltersBar";
-import Card from "@/components/ui/Card";
 import SectionHeader from "@/components/ui/SectionHeader";
 import { Prisma } from "@prisma/client";
 import { resolveCategoryFilter } from "@/lib/category-filters";
@@ -91,7 +90,7 @@ export default async function JobsPage({ searchParams }: JobsPageProps) {
 
   const hasOrganizationFilter = Object.keys(organizationFilter).length > 0;
 
-  let notifications = await prisma.notification.findMany({
+  const notifications = await prisma.notification.findMany({
     where: {
       status: "LIVE",
       published: true,
@@ -165,37 +164,33 @@ export default async function JobsPage({ searchParams }: JobsPageProps) {
   }
 
   return (
-    <div className="max-w-7xl mx-auto px-6 py-8">
+    <div className="mx-auto max-w-7xl px-6 py-8">
       <div className="mb-6">
         <JobFiltersBar />
       </div>
 
-      <Card padding="lg">
-        <SectionHeader
-          title={
-            query ? `Search results for "${query}"` : "All Government Jobs"
-          }
-          description={`${jobs.length} job${jobs.length !== 1 ? "s" : ""} found`}
-        />
+      <SectionHeader
+        title={query ? `Search results for "${query}"` : "All Government Jobs"}
+        description={`${jobs.length} job${jobs.length !== 1 ? "s" : ""} found`}
+      />
 
-        {jobs.length === 0 ? (
-          <p className="text-sm text-neutral-600 py-8 text-center">
+      {jobs.length === 0 ? (
+        <div className="mt-8 rounded-xl border border-dashed border-neutral-300 bg-white py-16 text-center">
+          <p className="text-sm text-neutral-600">
             No jobs found. Try adjusting your filters.
           </p>
-        ) : (
-          <div>
-            {jobs.map((job) => (
-              <div key={job.id} className="relative">
-                <JobListItem
-                  key={job.id}
-                  job={job}
-                  matchPercentage={matchByJobId.get(job.id)}
-                />
-              </div>
-            ))}
-          </div>
-        )}
-      </Card>
+        </div>
+      ) : (
+        <div className="mt-6 space-y-4">
+          {jobs.map((job) => (
+            <JobListItem
+              key={job.id}
+              job={job}
+              matchPercentage={matchByJobId.get(job.id)}
+            />
+          ))}
+        </div>
+      )}
     </div>
   );
 }

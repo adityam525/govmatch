@@ -1,0 +1,1 @@
+-- No-op: schema already applied via prisma db push

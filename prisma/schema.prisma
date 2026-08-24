@@ -6,22 +6,22 @@ generator client {
 }
 
 datasource db {
-  provider  = "postgresql"
+  provider = "postgresql"
 }
 
 // ---------------- LOOKUP TABLES ----------------
 
 model Organization {
-  id         String   @id @default(cuid())
+  id         String    @id @default(cuid())
   name       String
-  shortName  String   @unique
-  slug       String   @unique
+  shortName  String    @unique
+  slug       String    @unique
   logoUrl    String?
   website    String?
   categoryId String?
   category   Category? @relation(fields: [categoryId], references: [id])
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
 
   notifications Notification[]
 
@@ -41,9 +41,9 @@ model State {
 // Judiciary & Law, Agriculture. Drivesrganization.category and lets
 // admins add new sectors without a code deploy.
 model Category {
-  id   String @id @default(cuid())
-  name String @unique
-  slug String @unique
+  id   String  @id @default(cuid())
+  name String  @unique
+  slug String  @unique
   icon String?
 
   organizations Organization[]
@@ -72,6 +72,7 @@ model Qualification {
   branches     Branch[]
   posts        Post[]
   userProfiles UserProfile[]
+
   @@index([level])
 }
 
@@ -80,15 +81,15 @@ model Qualification {
 // B.Com, BCA (under Graduate). Independent of Qualification so a Post
 // can require "Graduate + Computer Science" as two separate facts.
 model Branch {
-  id             String   @id @default(cuid())
-  name           String   @unique
-  slug           String   @unique
+  id                 String @id @default(cuid())
+  name               String @unique
+  slug               String @unique
   qualificationGroup String // e.g. "Engineering", "Medical", "Graduate" - for UI grouping only
 
   qualificationId String
   qualification   Qualification @relation(fields: [qualificationId], references: [id])
 
-  posts        Post[]           @relation("PostBranches")
+  posts        Post[]        @relation("PostBranches")
   userProfiles UserProfile[]
 
   @@index([qualificationId])
@@ -102,22 +103,22 @@ model Role {
   name String @unique
   slug String @unique
 
-  posts             Post[]        @relation("PostRoles")
-  preferredByUsers  UserProfile[] @relation("PreferredRoles")
+  posts            Post[]        @relation("PostRoles")
+  preferredByUsers UserProfile[] @relation("PreferredRoles")
 }
 
 // ---------------- CORE ENTITIES ----------------
 
 model Notification {
-  id             String   @id @default(cuid())
+  id             String       @id @default(cuid())
   title          String
-  slug           String   @unique
-  published      Boolean  @default(false)
+  slug           String       @unique
+  published      Boolean      @default(false)
   organizationId String
   organization   Organization @relation(fields: [organizationId], references: [id])
 
   advertisementNo String?
-  totalVacancies  Int      @default(0)
+  totalVacancies  Int             @default(0)
   applicationMode ApplicationMode @default(ONLINE)
   officialLink    String
 
@@ -132,19 +133,21 @@ model Notification {
   examDate             DateTime?
 
   status     NotificationStatus @default(LIVE)
-  isFeatured Boolean @default(false)
+  isFeatured Boolean            @default(false)
 
   categories Category[] @relation("NotificationCategories")
   states     State[]    @relation("NotificationStates")
 
-  posts      Post[]
-  admitCards AdmitCard[]
-  results    Result[]
-  answerKeys AnswerKey[]
-  documents  Document[]
-  links      NotificationLink[]
-  importantDates ImportantDate[]
-  faqs           NotificationFAQ[]
+  posts           Post[]
+  admitCards      AdmitCard[]
+  results         Result[]
+  answerKeys      AnswerKey[]
+  documents       Document[]
+  links           NotificationLink[]
+  importantDates  ImportantDate[]
+  faqs            NotificationFAQ[]
+  examLevels      ExamLevel[]
+  applicationFees ApplicationFee[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -178,12 +181,12 @@ enum EmploymentType {
 }
 
 model Post {
-  id             String   @id @default(cuid())
+  id             String @id @default(cuid())
   notificationId String
 
-  payScaleMin Int?
-  payScaleMax Int?
-  notification   Notification @relation(fields: [notificationId], references: [id], onDelete: Cascade)
+  payScaleMin  Int?
+  payScaleMax  Int?
+  notification Notification @relation(fields: [notificationId], references: [id], onDelete: Cascade)
 
   title     String
   vacancies Int    @default(0)
@@ -200,13 +203,13 @@ model Post {
 
   employmentType EmploymentType @default(PERMANENT)
 
-  minAge Int?
-  maxAge Int?
+  minAge             Int?
+  maxAge             Int?
   ageRelaxationNotes String?
   ageRelaxation      Json?
   physicalCriteria   Json?
   educationDetails   String?
-  payScale String?
+  payScale           String?
 
   categoryWiseVacancies Json?
 
@@ -217,30 +220,34 @@ model Post {
 }
 
 model AdmitCard {
-  id             String   @id @default(cuid())
+  id             String       @id @default(cuid())
   notificationId String
   notification   Notification @relation(fields: [notificationId], references: [id], onDelete: Cascade)
+  examLevelId    String?
+  examLevel      ExamLevel?   @relation(fields: [examLevelId], references: [id])
 
   title        String
   releaseDate  DateTime?
   examDate     DateTime?
   downloadLink String
-  createdAt    DateTime @default(now())
+  createdAt    DateTime  @default(now())
 
   @@index([notificationId])
   @@index([releaseDate])
 }
 
 model Result {
-  id             String   @id @default(cuid())
+  id             String       @id @default(cuid())
   notificationId String
   notification   Notification @relation(fields: [notificationId], references: [id], onDelete: Cascade)
+  examLevelId    String?
+  examLevel      ExamLevel?   @relation(fields: [examLevelId], references: [id])
 
   title       String
   resultType  ResultType @default(FINAL)
   releaseDate DateTime?
   resultLink  String
-  createdAt   DateTime @default(now())
+  createdAt   DateTime   @default(now())
 
   @@index([notificationId])
   @@index([releaseDate])
@@ -255,16 +262,18 @@ enum ResultType {
 }
 
 model AnswerKey {
-  id               String   @id @default(cuid())
-  notificationId   String
-  notification     Notification @relation(fields: [notificationId], references: [id], onDelete: Cascade)
+  id             String       @id @default(cuid())
+  notificationId String
+  notification   Notification @relation(fields: [notificationId], references: [id], onDelete: Cascade)
+  examLevelId    String?
+  examLevel      ExamLevel?   @relation(fields: [examLevelId], references: [id])
 
   title            String
   keyType          AnswerKeyType @default(PROVISIONAL)
   releaseDate      DateTime?
   downloadLink     String
   objectionEndDate DateTime?
-  createdAt        DateTime @default(now())
+  createdAt        DateTime      @default(now())
 
   @@index([notificationId])
 }
@@ -275,14 +284,14 @@ enum AnswerKeyType {
 }
 
 model Document {
-  id             String   @id @default(cuid())
+  id             String        @id @default(cuid())
   notificationId String?
   notification   Notification? @relation(fields: [notificationId], references: [id], onDelete: SetNull)
 
   title     String
   docType   DocumentType
   fileUrl   String
-  createdAt DateTime @default(now())
+  createdAt DateTime     @default(now())
 
   @@index([docType])
 }
@@ -299,15 +308,15 @@ enum DocumentType {
 // ---------------- USER-SIDE ENTITIES ----------------
 
 model User {
-  id           String   @id @default(cuid())
-  email        String   @unique
+  id           String       @id @default(cuid())
+  email        String       @unique
   name         String?
   avatarUrl    String?
   authProvider AuthProvider @default(EMAIL)
   passwordHash String?
 
-  accounts     Account[]
-  sessions     Session[]
+  accounts Account[]
+  sessions Session[]
 
   profile      UserProfile?
   savedJobs    SavedJob[]
@@ -338,15 +347,15 @@ model UserProfile {
   branchId String?
   branch   Branch? @relation(fields: [branchId], references: [id])
 
-  preferredRoles Role[] @relation("PreferredRoles")
+  preferredRoles           Role[]           @relation("PreferredRoles")
   preferredEmploymentTypes EmploymentType[] @default([])
 
-  degreeName      String?
-  yearOfPassing   Int?
-  percentage      Float?
+  degreeName    String?
+  yearOfPassing Int?
+  percentage    Float?
 
   resumeUrl       String?
-  profileStrength Int    @default(0)
+  profileStrength Int     @default(0)
 
   updatedAt DateTime @updatedAt
 
@@ -364,14 +373,14 @@ model SavedJob {
 }
 
 model Application {
-  id             String   @id @default(cuid())
+  id             String @id @default(cuid())
   userId         String
-  user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user           User   @relation(fields: [userId], references: [id], onDelete: Cascade)
   notificationId String
 
   status    ApplicationStatus @default(APPLIED)
-  appliedAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  appliedAt DateTime          @default(now())
+  updatedAt DateTime          @updatedAt
 
   @@unique([userId, notificationId])
   @@index([status])
@@ -421,7 +430,7 @@ model VerificationToken {
 }
 
 model NotificationLink {
-  id             String   @id @default(cuid())
+  id             String       @id @default(cuid())
   notificationId String
   notification   Notification @relation(fields: [notificationId], references: [id], onDelete: Cascade)
 
@@ -447,11 +456,11 @@ enum LinkType {
 }
 
 model ImportantDate {
-  id             String   @id @default(cuid())
+  id             String       @id @default(cuid())
   notificationId String
   notification   Notification @relation(fields: [notificationId], references: [id], onDelete: Cascade)
 
-  label String   // "Application Start", "Pre-Exam Training", "Main Exam Date", etc.
+  label String // "Application Start", "Pre-Exam Training", "Main Exam Date", etc.
   date  DateTime
   order Int      @default(0)
 
@@ -461,13 +470,44 @@ model ImportantDate {
 }
 
 model NotificationFAQ {
-  id             String   @id @default(cuid())
+  id             String       @id @default(cuid())
   notificationId String
   notification   Notification @relation(fields: [notificationId], references: [id], onDelete: Cascade)
 
   question String
   answer   String
   order    Int    @default(0)
+
+  createdAt DateTime @default(now())
+
+  @@index([notificationId])
+}
+
+model ExamLevel {
+  id             String       @id @default(cuid())
+  notificationId String
+  notification   Notification @relation(fields: [notificationId], references: [id], onDelete: Cascade)
+
+  name  String
+  order Int    @default(0)
+
+  admitCards AdmitCard[]
+  results    Result[]
+  answerKeys AnswerKey[]
+
+  createdAt DateTime @default(now())
+
+  @@index([notificationId])
+}
+
+model ApplicationFee {
+  id             String       @id @default(cuid())
+  notificationId String
+  notification   Notification @relation(fields: [notificationId], references: [id], onDelete: Cascade)
+
+  categoryLabel String
+  amount        String
+  order         Int    @default(0)
 
   createdAt DateTime @default(now())
 
