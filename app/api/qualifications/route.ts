@@ -24,6 +24,7 @@ export async function GET(request: NextRequest) {
         ? { categories: { some: { slug: { in: categorySlugs } } } }
         : {},
     orderBy: { level: "asc" },
+    include: { categories: true },
   });
   return NextResponse.json(qualifications);
 }

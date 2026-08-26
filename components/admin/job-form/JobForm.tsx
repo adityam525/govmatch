@@ -226,28 +226,42 @@ export default function JobForm({ mode, jobId }: JobFormProps) {
         ),
       )
       .catch(() => {});
-
     fetch(`/api/posts?notificationId=${jobId}`)
       .then((r) => r.json())
-      .then((e) =>
+      .then(async (e) => {
+        const postsArray = Array.isArray(e) ? e : [];
+        const qualIds = [
+          ...new Set(
+            postsArray.map((p: any) => p.qualificationId).filter(Boolean),
+          ),
+        ];
+        const qualMap: Record<string, string> = {};
+        if (qualIds.length > 0) {
+          const allQuals = await fetch("/api/qualifications")
+            .then((r) => r.json())
+            .catch(() => []);
+          if (Array.isArray(allQuals)) {
+            for (const q of allQuals) {
+              if (q.categories?.[0]?.slug) qualMap[q.id] = q.categories[0].slug;
+            }
+          }
+        }
         setPosts(
-          Array.isArray(e)
-            ? e.map((p: any) => ({
-                id: p.id,
-                title: p.title,
-                vacancies: String(p.vacancies ?? ""),
-                qualificationCategorySlug: "",
-                qualificationId: p.qualificationId ?? "",
-                branchIds: (p.branches ?? []).map((b: any) => b.id),
-                minAge: p.minAge != null ? String(p.minAge) : "18",
-                maxAge: p.maxAge != null ? String(p.maxAge) : "",
-                payScale: p.payScale ?? "",
-                employmentType: p.employmentType ?? "PERMANENT",
-                roleId: (p.roles ?? [])[0]?.id ?? "",
-              }))
-            : [],
-        ),
-      )
+          postsArray.map((p: any) => ({
+            id: p.id,
+            title: p.title,
+            vacancies: String(p.vacancies ?? ""),
+            qualificationCategorySlug: qualMap[p.qualificationId] ?? "",
+            qualificationId: p.qualificationId ?? "",
+            branchIds: (p.branches ?? []).map((b: any) => b.id),
+            minAge: p.minAge != null ? String(p.minAge) : "18",
+            maxAge: p.maxAge != null ? String(p.maxAge) : "21",
+            payScale: p.payScale ?? "",
+            employmentType: p.employmentType ?? "PERMANENT",
+            roleId: (p.roles ?? [])[0]?.id ?? "",
+          })),
+        );
+      })
       .catch(() => {});
 
     fetch(`/api/admit-cards?notificationId=${jobId}`)
