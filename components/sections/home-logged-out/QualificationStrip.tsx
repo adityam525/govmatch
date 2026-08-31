@@ -13,7 +13,7 @@ export default async function QualificationStrip() {
       items={qualifications}
       iconMap={qualificationIconMap}
       colorMap={accentColorMap}
-      getHref={(q) => `/jobs?qualificationCategories=${q.id}`}
+      getHref={(q) => `/jobs?qualificationCategories=${q.slug}`}
     />
   );
 }

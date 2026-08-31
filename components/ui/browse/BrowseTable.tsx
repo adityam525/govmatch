@@ -172,6 +172,10 @@ export default function BrowseTable({
 
               return (
                 <tr
+                  onClick={() => {
+                    window.location.href = item.href;
+                  }}
+                  style={{ cursor: "pointer" }}
                   key={item.id}
                   className="
                     h-16

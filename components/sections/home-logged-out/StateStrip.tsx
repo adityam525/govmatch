@@ -34,7 +34,7 @@ export default async function StateStrip() {
       description="Explore Central & State Government jobs across India"
       items={states}
       iconMap={iconMap}
-      getHref={(state) => `/jobs?states=${state.id}`}
+      getHref={(state) => `/jobs?states=${state.code}`}
     />
   );
 }
