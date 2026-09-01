@@ -7,7 +7,7 @@ export async function GET(request: Request) {
 
   const posts = await prisma.post.findMany({
     where: notificationId ? { notificationId } : undefined,
-    include: { qualification: true, notification: true, branches: true, roles: true },
+    include: { qualification: true, qualifications: true, notification: true, branches: true, roles: true },
     orderBy: { createdAt: 'desc' },
   });
   return NextResponse.json(posts);

@@ -71,6 +71,7 @@ model Qualification {
   categories   QualificationCategory[]
   branches     Branch[]
   posts        Post[]
+  postsMultiQual Post[]         @relation("PostQualifications")
   userProfiles UserProfile[]
 
   @@index([level])
@@ -201,6 +202,9 @@ model Post {
   // What this post actually is - used for soft role-preference matching.
   roles Role[] @relation("PostRoles")
 
+  // New multi-qualification support - being migrated from single qualificationId above.
+  qualifications Qualification[] @relation("PostQualifications")
+
   employmentType EmploymentType @default(PERMANENT)
 
   minAge             Int?
@@ -314,9 +318,12 @@ model User {
   avatarUrl    String?
   authProvider AuthProvider @default(EMAIL)
   passwordHash String?
+  role         UserRole     @default(ASPIRANT)
+  isActive     Boolean      @default(true)
 
   accounts Account[]
   sessions Session[]
+  subscription Subscription?
 
   profile      UserProfile?
   savedJobs    SavedJob[]
@@ -512,4 +519,30 @@ model ApplicationFee {
   createdAt DateTime @default(now())
 
   @@index([notificationId])
+}
+
+enum UserRole {
+  ASPIRANT
+  ADMIN
+}
+
+enum SubscriptionPlan {
+  FREE
+  PREMIUM
+}
+
+enum SubscriptionStatus {
+  ACTIVE
+  EXPIRED
+  CANCELLED
+}
+
+model Subscription {
+  id        String   @id @default(cuid())
+  userId    String   @unique
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  plan      SubscriptionPlan @default(FREE)
+  status    SubscriptionStatus @default(ACTIVE)
+  startedAt DateTime @default(now())
+  expiresAt DateTime?
 }
