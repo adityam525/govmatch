@@ -19,9 +19,62 @@ const SEARCH_ALIASES: Record<string, string[]> = {
   officer: ["officer"],
 };
 
+const VALID_SORTS = [
+  "newest",
+  "oldest",
+  "relevance",
+  "salary_high",
+  "salary_low",
+  "deadline_soon",
+  "deadline_late",
+  "posts_high",
+  "posts_low",
+] as const;
+
+type SortType = (typeof VALID_SORTS)[number];
+
 function expandQuery(q: string): string[] {
   const lower = q.toLowerCase().trim();
+
   return [lower, ...(SEARCH_ALIASES[lower] ?? [])];
+}
+
+function getSortType(value?: string): SortType {
+  if (value && VALID_SORTS.includes(value as SortType)) {
+    return value as SortType;
+  }
+
+  return "newest";
+}
+
+function getSalaryValue(job: any): number {
+  return Number(job.salaryMax ?? job.salaryMin ?? job.salary ?? 0);
+}
+
+function getDeadlineValue(job: any): number {
+  if (!job.deadline) {
+    return Number.POSITIVE_INFINITY;
+  }
+
+  const timestamp = new Date(job.deadline).getTime();
+
+  return Number.isNaN(timestamp) ? Number.POSITIVE_INFINITY : timestamp;
+}
+
+function getPostsValue(job: any): number {
+  return Number(
+    job.numberOfPosts ?? job.totalPosts ?? job.vacancies ?? job.posts ?? 0,
+  );
+}
+
+function getCreatedAtValue(job: any): number {
+  if (!job.createdAt) {
+    return 0;
+  }
+
+  const timestamp = new Date(job.createdAt).getTime();
+
+  return Number.isNaN(timestamp) ? 0 : timestamp;
 }
 
 interface JobsPageProps {
@@ -30,87 +83,190 @@ interface JobsPageProps {
 
 export default async function JobsPage({ searchParams }: JobsPageProps) {
   const params = await searchParams;
+
   const query = params.search ?? "";
   const categorySlug = params.category ?? "";
-  // Organization now filters by its dedicated `slug` field (added via the
-  // Organization slug migration), matching Category/QualificationCategory/
-  // Qualification/Branch, which all filter by slug rather than raw id.
+
   const organizationSlugs =
     params.organizations?.split(",").filter(Boolean) ?? [];
+
   const stateCodes = params.states?.split(",").filter(Boolean) ?? [];
 
-  // Qualification is now a 3-level cascade: QualificationCategory (high
-  // level) -> Qualification (mid level) -> Branch (specific stream). Any
-  // combination can be applied at once; each also works independently.
-  // All three (plus Category and State) filter by slug/code rather than raw
-  // id, matching how `search` already uses readable text instead of an id.
   const qualificationCategorySlugs =
     params.qualificationCategories?.split(",").filter(Boolean) ?? [];
+
   const qualificationSlugs =
     params.qualifications?.split(",").filter(Boolean) ?? [];
+
   const branchSlugs = params.branches?.split(",").filter(Boolean) ?? [];
 
-  const sort = params.sort === "oldest" ? "oldest" : "newest";
+  const selectedSort = getSortType(params.sort);
 
   const session = await auth();
   const userId = (session?.user as any)?.id;
 
+  /*
+   * Qualification filters
+   *
+   * Qualification hierarchy:
+   *
+   * QualificationCategory
+   *        ↓
+   * Qualification
+   *        ↓
+   * Branch
+   */
+
   const qualificationFilter: Prisma.QualificationWhereInput = {
     ...(qualificationSlugs.length > 0
-      ? { slug: { in: qualificationSlugs } }
+      ? {
+          slug: {
+            in: qualificationSlugs,
+          },
+        }
       : {}),
+
     ...(qualificationCategorySlugs.length > 0
-      ? { categories: { some: { slug: { in: qualificationCategorySlugs } } } }
+      ? {
+          categories: {
+            some: {
+              slug: {
+                in: qualificationCategorySlugs,
+              },
+            },
+          },
+        }
       : {}),
   };
+
   const hasQualificationFilter = Object.keys(qualificationFilter).length > 0;
+
+  /*
+   * Category filter
+   */
+
   const categoryFilter = resolveCategoryFilter(categorySlug);
 
+  /*
+   * Post-level filters
+   */
+
   const postFilter: Prisma.PostWhereInput = {
-    ...(hasQualificationFilter ? { qualification: qualificationFilter } : {}),
-    ...(branchSlugs.length > 0
-      ? { branches: { some: { slug: { in: branchSlugs } } } }
+    ...(hasQualificationFilter
+      ? {
+          qualification: qualificationFilter,
+        }
       : {}),
+
+    ...(branchSlugs.length > 0
+      ? {
+          branches: {
+            some: {
+              slug: {
+                in: branchSlugs,
+              },
+            },
+          },
+        }
+      : {}),
+
     ...(categoryFilter.post ?? {}),
   };
+
   const hasPostLevelFilter = Object.keys(postFilter).length > 0;
+
+  /*
+   * Organization filters
+   */
 
   const organizationFilter: Prisma.OrganizationWhereInput = {
     ...(organizationSlugs.length > 0
-      ? { slug: { in: organizationSlugs } }
+      ? {
+          slug: {
+            in: organizationSlugs,
+          },
+        }
       : {}),
-    // Category is filtered here against the real sector Category.slug (SSC,
-    // Railway, Banking, ...) via the organization it belongs to -- not
-    // against the coarse bucket value notificationToJobs derives for
-    // display/icon purposes. This is what was actually broken before: the
-    // filter bar sends a real category slug, but job.category is a
-    // 6-bucket display value, so they could never match.
+
     ...(categoryFilter.organization ?? {}),
   };
 
   const hasOrganizationFilter = Object.keys(organizationFilter).length > 0;
 
+  /*
+   * Fetch notifications.
+   *
+   * Always fetch newest first from the database.
+   * Other sorting is performed after notificationToJobs()
+   * because salary/deadline/vacancy data belongs to the
+   * final job representation.
+   */
+
   const notifications = await prisma.notification.findMany({
     where: {
       status: "LIVE",
       published: true,
-      ...(hasOrganizationFilter ? { organization: organizationFilter } : {}),
-      ...(stateCodes.length > 0
-        ? { states: { some: { code: { in: stateCodes } } } }
+
+      ...(hasOrganizationFilter
+        ? {
+            organization: organizationFilter,
+          }
         : {}),
-      ...(hasPostLevelFilter ? { posts: { some: postFilter } } : {}),
+
+      ...(stateCodes.length > 0
+        ? {
+            states: {
+              some: {
+                code: {
+                  in: stateCodes,
+                },
+              },
+            },
+          }
+        : {}),
+
+      ...(hasPostLevelFilter
+        ? {
+            posts: {
+              some: postFilter,
+            },
+          }
+        : {}),
     },
+
     include: {
-      organization: { include: { category: true } },
-      posts: { include: { qualification: true, branches: true } },
+      organization: {
+        include: {
+          category: true,
+        },
+      },
+
+      posts: {
+        include: {
+          qualification: true,
+          branches: true,
+        },
+      },
     },
-    orderBy: { createdAt: sort === "oldest" ? "asc" : "desc" },
+
+    orderBy: {
+      createdAt: "desc",
+    },
   });
+
+  /*
+   * Convert notifications to jobs
+   */
 
   let jobs = notifications.flatMap(notificationToJobs);
 
+  /*
+   * Search
+   */
+
   if (query.trim()) {
     const terms = expandQuery(query);
+
     jobs = jobs.filter((job) => {
       const haystack = (
         job.title +
@@ -119,22 +275,36 @@ export default async function JobsPage({ searchParams }: JobsPageProps) {
         " " +
         job.category
       ).toLowerCase();
+
       return terms.some((term) => haystack.includes(term));
     });
   }
 
-  // Compute match scores if logged in
+  /*
+   * Compute match scores for logged-in users.
+   *
+   * These scores are used by "Most Relevant".
+   */
+
   const matchByJobId = new Map<string, number>();
+
   if (userId) {
     const profile = await prisma.userProfile.findUnique({
-      where: { userId },
-      include: { preferredRoles: true },
+      where: {
+        userId,
+      },
+
+      include: {
+        preferredRoles: true,
+      },
     });
 
     if (profile) {
       const userQualification = profile.qualificationId
         ? await prisma.qualification.findUnique({
-            where: { id: profile.qualificationId },
+            where: {
+              id: profile.qualificationId,
+            },
           })
         : null;
 
@@ -146,9 +316,10 @@ export default async function JobsPage({ searchParams }: JobsPageProps) {
               category: profile.category,
               qualificationLevel: userQualification?.level ?? null,
               branchId: profile.branchId,
-              preferredRoleIds: profile.preferredRoles.map((r) => r.id),
+              preferredRoleIds: profile.preferredRoles.map((role) => role.id),
               preferredEmploymentTypes: profile.preferredEmploymentTypes,
             },
+
             {
               minAge: post.minAge,
               maxAge: post.maxAge,
@@ -156,12 +327,131 @@ export default async function JobsPage({ searchParams }: JobsPageProps) {
               employmentType: post.employmentType,
             },
           );
+
+          /*
+           * Store score against both the post and notification
+           * because notificationToJobs() may expose either ID
+           * as the final job ID.
+           */
+
           matchByJobId.set(post.id, result.score);
+
           matchByJobId.set(notification.id, result.score);
         }
       }
     }
   }
+
+  /*
+   * Sort final jobs
+   *
+   * Sorting happens after:
+   *
+   * 1. Database filtering
+   * 2. notificationToJobs()
+   * 3. Search filtering
+   * 4. Match-score calculation
+   */
+
+  jobs.sort((a: any, b: any) => {
+    switch (selectedSort) {
+      /*
+       * Newest
+       */
+
+      case "newest":
+        return getCreatedAtValue(b) - getCreatedAtValue(a);
+
+      /*
+       * Oldest
+       */
+
+      case "oldest":
+        return getCreatedAtValue(a) - getCreatedAtValue(b);
+
+      /*
+       * Most relevant
+       *
+       * For logged-out users, relevance isn't available,
+       * so fall back to newest.
+       */
+
+      case "relevance": {
+        if (!userId) {
+          return getCreatedAtValue(b) - getCreatedAtValue(a);
+        }
+
+        return (matchByJobId.get(b.id) ?? 0) - (matchByJobId.get(a.id) ?? 0);
+      }
+
+      /*
+       * Highest salary
+       */
+
+      case "salary_high":
+        return getSalaryValue(b) - getSalaryValue(a);
+
+      /*
+       * Lowest salary
+       */
+
+      case "salary_low":
+        return getSalaryValue(a) - getSalaryValue(b);
+
+      /*
+       * Deadline soonest
+       *
+       * Jobs without a deadline go to the bottom.
+       */
+
+      case "deadline_soon":
+        return getDeadlineValue(a) - getDeadlineValue(b);
+
+      /*
+       * Deadline latest
+       *
+       * Jobs without a deadline go to the bottom.
+       */
+
+      case "deadline_late": {
+        const aDeadline = getDeadlineValue(a);
+        const bDeadline = getDeadlineValue(b);
+
+        if (
+          aDeadline === Number.POSITIVE_INFINITY &&
+          bDeadline !== Number.POSITIVE_INFINITY
+        ) {
+          return 1;
+        }
+
+        if (
+          bDeadline === Number.POSITIVE_INFINITY &&
+          aDeadline !== Number.POSITIVE_INFINITY
+        ) {
+          return -1;
+        }
+
+        return bDeadline - aDeadline;
+      }
+
+      /*
+       * Most vacancies
+       */
+
+      case "posts_high":
+        return getPostsValue(b) - getPostsValue(a);
+
+      /*
+       * Fewest vacancies
+       */
+
+      case "posts_low":
+        return getPostsValue(a) - getPostsValue(b);
+
+      default:
+        return 0;
+    }
+  });
 
   return (
     <div className="mx-auto max-w-7xl px-6 py-8">

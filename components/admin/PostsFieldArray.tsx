@@ -4,15 +4,13 @@ import { useState, useEffect } from 'react';
 import { Plus, Trash2 } from 'lucide-react';
 import Button from '@/components/ui/Button';
 import { adminApi } from '@/features/admin/api';
-import PostQualificationCascade from './PostQualificationCascade';
+import PostQualificationCascade, { QualificationBlock } from './PostQualificationCascade';
 
 export interface PostDraft {
   id?: string;
   title: string;
   vacancies: string;
-  qualificationCategorySlug: string;
-  qualificationId: string;
-  branchIds: string[];
+  qualificationBlocks: QualificationBlock[];
   minAge: string;
   maxAge: string;
   payScale: string;
@@ -37,7 +35,8 @@ const EMPLOYMENT_TYPES = [
 ];
 
 export const emptyPost: PostDraft = {
-  title: '', vacancies: '', qualificationCategorySlug: '', qualificationId: '', branchIds: [],
+  title: '', vacancies: '',
+  qualificationBlocks: [{ qualificationCategorySlug: '', qualificationId: '', branchIds: [] }],
   minAge: '18', maxAge: '21', payScale: '', employmentType: 'PERMANENT', roleId: '',
 };
 
@@ -54,13 +53,7 @@ export default function PostsFieldArray({ posts, onChange }: PostsFieldArrayProp
     onChange(next);
   };
 
-  const updatePostFields = (index: number, updates: Partial<PostDraft>) => {
-    const next = [...posts];
-    next[index] = { ...next[index], ...updates };
-    onChange(next);
-  };
-
-  const addPost = () => onChange([...posts, { ...emptyPost }]);
+  const addPost = () => onChange([...posts, { ...emptyPost, qualificationBlocks: [{ qualificationCategorySlug: '', qualificationId: '', branchIds: [] }] }]);
   const removePost = (index: number) => onChange(posts.filter((_, i) => i !== index));
 
   return (
@@ -133,10 +126,8 @@ export default function PostsFieldArray({ posts, onChange }: PostsFieldArrayProp
               </div>
 
               <PostQualificationCascade
-                qualificationCategorySlug={post.qualificationCategorySlug}
-                qualificationId={post.qualificationId}
-                branchIds={post.branchIds}
-                onCascadeChange={(updates) => updatePostFields(index, updates)}
+                blocks={post.qualificationBlocks}
+                onChange={(blocks) => updatePost(index, 'qualificationBlocks', blocks)}
               />
 
               <div>

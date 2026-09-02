@@ -247,19 +247,39 @@ export default function JobForm({ mode, jobId }: JobFormProps) {
           }
         }
         setPosts(
-          postsArray.map((p: any) => ({
-            id: p.id,
-            title: p.title,
-            vacancies: String(p.vacancies ?? ""),
-            qualificationCategorySlug: qualMap[p.qualificationId] ?? "",
-            qualificationId: p.qualificationId ?? "",
-            branchIds: (p.branches ?? []).map((b: any) => b.id),
-            minAge: p.minAge != null ? String(p.minAge) : "18",
-            maxAge: p.maxAge != null ? String(p.maxAge) : "21",
-            payScale: p.payScale ?? "",
-            employmentType: p.employmentType ?? "PERMANENT",
-            roleId: (p.roles ?? [])[0]?.id ?? "",
-          })),
+          postsArray.map((p: any) => {
+            const branchIds = (p.branches ?? []).map((b: any) => b.id);
+            const quals = p.qualifications?.length
+              ? p.qualifications
+              : p.qualificationId
+                ? [{ id: p.qualificationId }]
+                : [];
+            const qualificationBlocks =
+              quals.length > 0
+                ? quals.map((q: any) => ({
+                    qualificationCategorySlug: qualMap[q.id] ?? "",
+                    qualificationId: q.id,
+                    branchIds,
+                  }))
+                : [
+                    {
+                      qualificationCategorySlug: "",
+                      qualificationId: "",
+                      branchIds: [],
+                    },
+                  ];
+            return {
+              id: p.id,
+              title: p.title,
+              vacancies: String(p.vacancies ?? ""),
+              qualificationBlocks,
+              minAge: p.minAge != null ? String(p.minAge) : "18",
+              maxAge: p.maxAge != null ? String(p.maxAge) : "21",
+              payScale: p.payScale ?? "",
+              employmentType: p.employmentType ?? "PERMANENT",
+              roleId: (p.roles ?? [])[0]?.id ?? "",
+            };
+          }),
         );
       })
       .catch(() => {});
@@ -418,21 +438,35 @@ export default function JobForm({ mode, jobId }: JobFormProps) {
     }
     await Promise.all(
       posts
-        .filter((p) => p.title && p.qualificationId)
-        .map((p) =>
-          adminApi.create("posts", {
+        .filter(
+          (p) =>
+            p.title &&
+            p.qualificationBlocks?.some((b: any) => b.qualificationId),
+        )
+        .map((p) => {
+          const validBlocks = p.qualificationBlocks.filter(
+            (b: any) => b.qualificationId,
+          );
+          const qualificationIds = validBlocks.map(
+            (b: any) => b.qualificationId,
+          );
+          const branchIds = [
+            ...new Set(validBlocks.flatMap((b: any) => b.branchIds)),
+          ];
+          return adminApi.create("posts", {
             title: p.title,
             notificationId,
             vacancies: Number(p.vacancies) || 0,
-            qualificationId: p.qualificationId,
+            qualificationId: qualificationIds[0],
+            qualificationIds,
             minAge: p.minAge ? Number(p.minAge) : 18,
             maxAge: p.maxAge ? Number(p.maxAge) : null,
             payScale: p.payScale || null,
             employmentType: p.employmentType,
-            branchIds: p.branchIds,
+            branchIds,
             roleIds: p.roleId ? [p.roleId] : [],
-          }),
-        ),
+          });
+        }),
     );
   };
 

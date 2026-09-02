@@ -16,7 +16,7 @@ export async function GET(request: Request) {
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const { branchIds, roleIds, ...postData } = body;
+    const { branchIds, roleIds, qualificationIds, ...postData } = body;
 
     const post = await prisma.post.create({
       data: {
@@ -26,8 +26,9 @@ export async function POST(request: Request) {
         maxAge: postData.maxAge ? Number(postData.maxAge) : null,
         branches: branchIds?.length ? { connect: branchIds.map((id: string) => ({ id })) } : undefined,
         roles: roleIds?.length ? { connect: roleIds.map((id: string) => ({ id })) } : undefined,
+        qualifications: qualificationIds?.length ? { connect: qualificationIds.map((id: string) => ({ id })) } : undefined,
       },
-      include: { branches: true, roles: true },
+      include: { branches: true, roles: true, qualifications: true },
     });
     return NextResponse.json(post, { status: 201 });
   } catch (error) {

@@ -10,6 +10,13 @@ const ALL_CATEGORIES_OPTION: FilterOption = { id: "", label: "All Categories" };
 const SORT_OPTIONS: FilterOption[] = [
   { id: "newest", label: "Newest First" },
   { id: "oldest", label: "Oldest First" },
+  { id: "relevance", label: "Most Relevant" },
+  { id: "salary_high", label: "Highest Salary" },
+  { id: "salary_low", label: "Lowest Salary" },
+  { id: "deadline_soon", label: "Deadline: Soonest" },
+  { id: "deadline_late", label: "Deadline: Latest" },
+  { id: "posts_high", label: "Most Vacancies" },
+  { id: "posts_low", label: "Fewest Vacancies" },
 ];
 
 interface ApiCategory {

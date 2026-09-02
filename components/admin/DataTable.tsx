@@ -1,8 +1,9 @@
-'use client';
+"use client";
 
-import Link from 'next/link';
-import { Pencil, Trash2, Plus } from 'lucide-react';
-import Button from '@/components/ui/Button';
+import Link from "next/link";
+import { Pencil, Trash2, Plus } from "lucide-react";
+import Button from "@/components/ui/Button";
+import { useRouter } from "next/navigation";
 
 export interface ColumnConfig<T> {
   key: keyof T | string;
@@ -27,6 +28,7 @@ export default function DataTable<T extends { id: string }>({
   loading,
   onDelete,
 }: DataTableProps<T>) {
+  const router = useRouter();
   return (
     <div className="bg-white border border-neutral-200 rounded-lg">
       <div className="flex items-center justify-between p-4 border-b border-neutral-100">
@@ -42,28 +44,52 @@ export default function DataTable<T extends { id: string }>({
           <thead>
             <tr className="border-b border-neutral-100 bg-neutral-50">
               {columns.map((col) => (
-                <th key={String(col.key)} className="text-left px-4 py-2.5 font-medium text-neutral-600">
+                <th
+                  key={String(col.key)}
+                  className="text-left px-4 py-2.5 font-medium text-neutral-600"
+                >
                   {col.label}
                 </th>
               ))}
-              <th className="text-right px-4 py-2.5 font-medium text-neutral-600">Actions</th>
+              <th className="text-right px-4 py-2.5 font-medium text-neutral-600">
+                Actions
+              </th>
             </tr>
           </thead>
           <tbody>
             {loading ? (
               <tr>
-                <td colSpan={columns.length + 1} className="text-center py-8 text-neutral-400">Loading...</td>
+                <td
+                  colSpan={columns.length + 1}
+                  className="text-center py-8 text-neutral-400"
+                >
+                  Loading...
+                </td>
               </tr>
             ) : rows.length === 0 ? (
               <tr>
-                <td colSpan={columns.length + 1} className="text-center py-8 text-neutral-400">No records found.</td>
+                <td
+                  colSpan={columns.length + 1}
+                  className="text-center py-8 text-neutral-400"
+                >
+                  No records found.
+                </td>
               </tr>
             ) : (
               rows.map((row) => (
-                <tr key={row.id} className="border-b border-neutral-50 hover:bg-neutral-50">
+                <tr
+                  key={row.id}
+                  className=" cursor-pointer border-b border-neutral-50 hover:bg-neutral-50"
+                  onClick={() => router.push(`${basePath}/${row.id}`)}
+                >
                   {columns.map((col) => (
-                    <td key={String(col.key)} className="px-4 py-2.5 text-neutral-900">
-                      {col.render ? col.render(row) : String((row as any)[col.key] ?? '-')}
+                    <td
+                      key={String(col.key)}
+                      className="px-4 py-2.5 text-neutral-900"
+                    >
+                      {col.render
+                        ? col.render(row)
+                        : String((row as any)[col.key] ?? "-")}
                     </td>
                   ))}
                   <td className="px-4 py-2.5">
@@ -75,7 +101,10 @@ export default function DataTable<T extends { id: string }>({
                       </Link>
                       {onDelete && (
                         <button
-                          onClick={() => onDelete(row.id)}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            onDelete(row.id);
+                          }}
                           className="p-1.5 text-neutral-500 hover:text-danger hover:bg-red-50 rounded-md"
                         >
                           <Trash2 size={14} />
