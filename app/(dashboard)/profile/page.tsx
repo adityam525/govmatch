@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import Card from '@/components/ui/Card';
 import Button from '@/components/ui/Button';
+import DeleteAccountButton from '@/components/profile/DeleteAccountButton';
 import { useAuth } from '@/features/auth/hooks';
 
 interface QualificationOption { id: string; name: string; }
@@ -178,6 +179,14 @@ export default function ProfilePage() {
             {saved && <span className="text-xs text-success">Saved!</span>}
           </div>
         </form>
+      </Card>
+
+      <Card padding="lg" className="mt-6 border-red-100">
+        <p className="text-sm font-bold text-danger">Danger Zone</p>
+        <p className="text-xs text-neutral-600 mt-1">
+          Deleting your account is permanent and cannot be undone. All your saved jobs, applications, and profile data will be removed.
+        </p>
+        <DeleteAccountButton />
       </Card>
     </div>
   );

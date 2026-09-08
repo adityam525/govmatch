@@ -4,13 +4,14 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import clsx from 'clsx';
 import {
-  LayoutDashboard, Bell, Briefcase, Building2, MapPin, Tags,
+  LayoutDashboard, Bell, Briefcase, Building2, MapPin, Tags, Users,
   GraduationCap, FileCheck2, Trophy, KeyRound, FileText,
 } from 'lucide-react';
 
 const navItems = [
   { label: 'Dashboard', href: '/admin', icon: LayoutDashboard },
   { label: 'Jobs', href: '/admin/notifications', icon: Bell },
+  { label: 'Users', href: '/admin/users', icon: Users },
   { label: 'Posts', href: '/admin/posts', icon: Briefcase },
   { label: 'Organizations', href: '/admin/organizations', icon: Building2 },
   { label: 'States', href: '/admin/states', icon: MapPin },

@@ -39,6 +39,8 @@ export async function POST(request: Request) {
         email,
         passwordHash,
         authProvider: 'EMAIL',
+        role: 'ASPIRANT',
+        isActive: true,
         profile: {
           create: {
             dateOfBirth: dateOfBirth ? new Date(dateOfBirth) : null,

@@ -1,0 +1,328 @@
+{
+  "newOrganization": {
+    "name": "Madhya Pradesh Employees Selection Board",
+    "shortName": "MPESB",
+    "website": "https://esb.mp.gov.in/",
+    "categorySlug": "police-security"
+  },
+  "notification": {
+    "title": "MPESB Subedar & Sub-Inspector Recruitment Test 2026",
+    "slug": "mpesb-subedar-sub-inspector-recruitment-test-2026",
+    "published": false,
+    "organizationShortName": "MPESB",
+    "advertisementNo": null,
+    "applicationMode": "ONLINE",
+    "officialLink": "https://esb.mp.gov.in/",
+    "applicationFeeGeneral": "Rs 500",
+    "applicationFeeScSt": "Rs 250 for eligible MP-domicile reserved candidates",
+    "selectionProcess": [
+      "Preliminary Written Examination",
+      "Main Written Examination",
+      "Physical Proficiency Test (PPT)",
+      "Document Verification",
+      "Personality Interview",
+      "Final Selection"
+    ],
+    "howToApply": "Candidates must apply online through the Madhya Pradesh Employees Selection Board recruitment portal. Complete the required candidate profile/registration, select the applicable Subedar/Sub-Inspector recruitment examination and post preferences, enter the required personal and educational details, upload documents as prescribed, pay the applicable examination/application fee and submit the application before the prescribed closing date. Candidates should verify all eligibility, domicile, physical and post-specific qualification requirements from the official rulebook before submission.",
+    "notificationDate": "2026-09-02",
+    "applicationStartDate": "2026-09-09",
+    "applicationEndDate": "2026-09-23",
+    "examDate": "2026-10-28",
+    "status": "UPCOMING",
+    "isFeatured": false,
+    "categorySlugs": ["police-security"],
+    "stateCodes": ["MP"],
+    "totalVacancies": 507
+  },
+  "posts": [
+    {
+      "title": "Subedar",
+      "vacancies": 81,
+      "qualificationSlugs": ["any-graduate"],
+      "branchSlugs": [],
+      "roleSlugs": ["officer"],
+      "employmentType": "PERMANENT",
+      "minAge": 18,
+      "maxAge": 33,
+      "ageRelaxationNotes": "Age is reckoned as prescribed in the recruitment rules. The maximum age is generally 33 years for male candidates in the applicable unreserved/other-state category and 38 years for eligible MP-domicile female and reserved-category male candidates. Certain specified categories, including eligible inter-caste-married candidates, government employees/Nagar Sainik and Vikram Award winners, may receive additional relaxation under the applicable rules. Other-state candidates do not receive MP domicile reservation or age-relaxation benefits.",
+      "ageRelaxation": {
+        "OBC": "+5 years for eligible MP-domicile male candidates",
+        "SC": "+5 years for eligible MP-domicile male candidates",
+        "ST": "+5 years for eligible MP-domicile male candidates",
+        "EWS": "No general additional age relaxation",
+        "Ex-Servicemen": "As per applicable recruitment rules"
+      },
+      "physicalCriteria": {
+        "Height (Male)": "167.5 cm minimum",
+        "Height (Female)": "152.4 cm minimum",
+        "Chest (Male)": "81 cm unexpanded and 86 cm expanded, with at least 5 cm expansion",
+        "Vision": "Without glasses: 6/9 in better eye and 6/12 in other eye; colour vision must satisfy the prescribed Ishihara test",
+        "Other": "No knock-knee or flat feet; medical fitness as prescribed"
+      },
+      "educationDetails": "Bachelor's degree/graduation from a recognized university or an equivalent qualification. Candidates must also satisfy the prescribed MP domicile, age, physical, medical and other conditions applicable to the Subedar cadre.",
+      "payScale": "Level-9 (Rs 36,200 - Rs 1,14,800)",
+      "payScaleMin": 36200,
+      "payScaleMax": 114800,
+      "categoryWiseVacancies": null
+    },
+    {
+      "title": "Sub Inspector (Special Armed Force)",
+      "vacancies": 69,
+      "qualificationSlugs": ["any-graduate"],
+      "branchSlugs": [],
+      "roleSlugs": ["inspector"],
+      "employmentType": "PERMANENT",
+      "minAge": 18,
+      "maxAge": 33,
+      "ageRelaxationNotes": "Male-only cadre. Age is reckoned as prescribed in the recruitment rules. Eligible MP-domicile reserved-category male candidates and specified special categories may receive relaxation under the applicable rules. Other-state candidates are restricted to applicable unreserved/open vacancies and do not receive MP domicile reservation or age-relaxation benefits.",
+      "ageRelaxation": {
+        "OBC": "+5 years for eligible MP-domicile male candidates",
+        "SC": "+5 years for eligible MP-domicile male candidates",
+        "ST": "+5 years for eligible MP-domicile male candidates",
+        "EWS": "No general additional age relaxation",
+        "Ex-Servicemen": "As per applicable recruitment rules"
+      },
+      "physicalCriteria": {
+        "Height (Male)": "167.5 cm minimum",
+        "Chest (Male)": "81 cm unexpanded and 86 cm expanded, with at least 5 cm expansion",
+        "Vision": "Without glasses: 6/9 in better eye and 6/12 in other eye; colour vision must satisfy the prescribed Ishihara test",
+        "Other": "No knock-knee or flat feet; medical fitness as prescribed"
+      },
+      "educationDetails": "Bachelor's degree/graduation from a recognized university or an equivalent qualification. Only male candidates are eligible for the Special Armed Force Sub-Inspector cadre, subject to the prescribed domicile, age, physical, medical and other recruitment conditions.",
+      "payScale": "Level-9 (Rs 36,200 - Rs 1,14,800)",
+      "payScaleMin": 36200,
+      "payScaleMax": 114800,
+      "categoryWiseVacancies": null
+    },
+    {
+      "title": "Sub Inspector (District Police Force)",
+      "vacancies": 312,
+      "qualificationSlugs": ["any-graduate"],
+      "branchSlugs": [],
+      "roleSlugs": ["inspector"],
+      "employmentType": "PERMANENT",
+      "minAge": 18,
+      "maxAge": 33,
+      "ageRelaxationNotes": "Age is reckoned as prescribed in the recruitment rules. Eligible MP-domicile female candidates and reserved-category male candidates may have a maximum age of 38 years, while specified special categories can receive additional relaxation under the applicable rules. Other-state candidates do not receive MP domicile reservation or age-relaxation benefits.",
+      "ageRelaxation": {
+        "OBC": "+5 years for eligible MP-domicile male candidates",
+        "SC": "+5 years for eligible MP-domicile male candidates",
+        "ST": "+5 years for eligible MP-domicile male candidates",
+        "EWS": "No general additional age relaxation",
+        "Ex-Servicemen": "As per applicable recruitment rules"
+      },
+      "physicalCriteria": {
+        "Height (Male)": "167.5 cm minimum",
+        "Height (Female)": "152.4 cm minimum",
+        "Chest (Male)": "81 cm unexpanded and 86 cm expanded, with at least 5 cm expansion",
+        "Vision": "Without glasses: 6/9 in better eye and 6/12 in other eye; colour vision must satisfy the prescribed Ishihara test",
+        "Other": "No knock-knee or flat feet; medical fitness as prescribed"
+      },
+      "educationDetails": "Bachelor's degree/graduation from a recognized university or an equivalent qualification. Candidates must satisfy the prescribed domicile, age, physical, medical and other conditions for the District Police Force Sub-Inspector cadre.",
+      "payScale": "Level-9 (Rs 36,200 - Rs 1,14,800)",
+      "payScaleMin": 36200,
+      "payScaleMax": 114800,
+      "categoryWiseVacancies": null
+    },
+    {
+      "title": "Sub Inspector (Arms)",
+      "vacancies": 10,
+      "qualificationSlugs": ["diploma"],
+      "branchSlugs": ["mechanical-engineering"],
+      "roleSlugs": ["inspector"],
+      "employmentType": "PERMANENT",
+      "minAge": 18,
+      "maxAge": 33,
+      "ageRelaxationNotes": "Age and relaxation are governed by the MPESB Police Headquarters recruitment rules. Eligible MP-domicile reserved and specified special-category candidates may receive applicable relaxation. Other-state candidates do not receive MP domicile reservation or age-relaxation benefits.",
+      "ageRelaxation": {
+        "OBC": "+5 years for eligible MP-domicile male candidates",
+        "SC": "+5 years for eligible MP-domicile male candidates",
+        "ST": "+5 years for eligible MP-domicile male candidates",
+        "EWS": "No general additional age relaxation",
+        "Ex-Servicemen": "As per applicable recruitment rules"
+      },
+      "physicalCriteria": {
+        "Height (Male)": "167.5 cm minimum",
+        "Height (Female)": "152.4 cm minimum",
+        "Chest (Male)": "81 cm unexpanded and 86 cm expanded",
+        "Vision": "Without glasses: 6/9 in better eye and 6/12 in other eye; colour vision as prescribed",
+        "Other": "No knock-knee or flat feet; medical fitness as prescribed"
+      },
+      "educationDetails": "Three-year Diploma in Mechanical Engineering from a recognized technical university/institution or equivalent qualification as prescribed for the technical Sub-Inspector (Arms) cadre.",
+      "payScale": "Level-9 (Rs 36,200 - Rs 1,14,800)",
+      "payScaleMin": 36200,
+      "payScaleMax": 114800,
+      "categoryWiseVacancies": null
+    },
+    {
+      "title": "Sub Inspector (Photo)",
+      "vacancies": 9,
+      "qualificationSlugs": ["bsc"],
+      "branchSlugs": ["physics-bsc", "chemistry-bsc", "maths-bsc"],
+      "roleSlugs": ["inspector"],
+      "employmentType": "PERMANENT",
+      "minAge": 18,
+      "maxAge": 33,
+      "ageRelaxationNotes": "Age and relaxation are governed by the MPESB Police Headquarters recruitment rules. Eligible MP-domicile reserved and specified special-category candidates may receive applicable relaxation. Other-state candidates do not receive MP domicile reservation or age-relaxation benefits.",
+      "ageRelaxation": {
+        "OBC": "+5 years for eligible MP-domicile male candidates",
+        "SC": "+5 years for eligible MP-domicile male candidates",
+        "ST": "+5 years for eligible MP-domicile male candidates",
+        "EWS": "No general additional age relaxation",
+        "Ex-Servicemen": "As per applicable recruitment rules"
+      },
+      "physicalCriteria": {
+        "Height (Male)": "167.5 cm minimum",
+        "Height (Female)": "152.4 cm minimum",
+        "Chest (Male)": "81 cm unexpanded and 86 cm expanded",
+        "Vision": "Without glasses: 6/9 in better eye and 6/12 in other eye; colour vision as prescribed",
+        "Other": "No knock-knee or flat feet; medical fitness as prescribed"
+      },
+      "educationDetails": "Bachelor's degree/graduation with Mathematics, Physics and Chemistry as prescribed subjects from a recognized university or equivalent qualification.",
+      "payScale": "Level-9 (Rs 36,200 - Rs 1,14,800)",
+      "payScaleMin": 36200,
+      "payScaleMax": 114800,
+      "categoryWiseVacancies": null
+    },
+    {
+      "title": "Sub Inspector (Questioned Documents)",
+      "vacancies": 4,
+      "qualificationSlugs": ["bsc"],
+      "branchSlugs": ["physics-bsc", "chemistry-bsc", "maths-bsc"],
+      "roleSlugs": ["inspector"],
+      "employmentType": "PERMANENT",
+      "minAge": 18,
+      "maxAge": 33,
+      "ageRelaxationNotes": "Age and relaxation are governed by the MPESB Police Headquarters recruitment rules. Eligible MP-domicile reserved and specified special-category candidates may receive applicable relaxation. Other-state candidates do not receive MP domicile reservation or age-relaxation benefits.",
+      "ageRelaxation": {
+        "OBC": "+5 years for eligible MP-domicile male candidates",
+        "SC": "+5 years for eligible MP-domicile male candidates",
+        "ST": "+5 years for eligible MP-domicile male candidates",
+        "EWS": "No general additional age relaxation",
+        "Ex-Servicemen": "As per applicable recruitment rules"
+      },
+      "physicalCriteria": {
+        "Height (Male)": "167.5 cm minimum",
+        "Height (Female)": "152.4 cm minimum",
+        "Chest (Male)": "81 cm unexpanded and 86 cm expanded",
+        "Vision": "Without glasses: 6/9 in better eye and 6/12 in other eye; colour vision as prescribed",
+        "Other": "No knock-knee or flat feet; medical fitness as prescribed"
+      },
+      "educationDetails": "Bachelor's degree/graduation with Mathematics, Physics and Chemistry as prescribed subjects from a recognized university or equivalent qualification.",
+      "payScale": "Level-9 (Rs 36,200 - Rs 1,14,800)",
+      "payScaleMin": 36200,
+      "payScaleMax": 114800,
+      "categoryWiseVacancies": null
+    },
+    {
+      "title": "Sub Inspector (Finger Print)",
+      "vacancies": 22,
+      "qualificationSlugs": ["bsc"],
+      "branchSlugs": ["physics-bsc", "chemistry-bsc", "maths-bsc"],
+      "roleSlugs": ["inspector"],
+      "employmentType": "PERMANENT",
+      "minAge": 18,
+      "maxAge": 33,
+      "ageRelaxationNotes": "Age and relaxation are governed by the MPESB Police Headquarters recruitment rules. Eligible MP-domicile reserved and specified special-category candidates may receive applicable relaxation. Other-state candidates do not receive MP domicile reservation or age-relaxation benefits.",
+      "ageRelaxation": {
+        "OBC": "+5 years for eligible MP-domicile male candidates",
+        "SC": "+5 years for eligible MP-domicile male candidates",
+        "ST": "+5 years for eligible MP-domicile male candidates",
+        "EWS": "No general additional age relaxation",
+        "Ex-Servicemen": "As per applicable recruitment rules"
+      },
+      "physicalCriteria": {
+        "Height (Male)": "167.5 cm minimum",
+        "Height (Female)": "152.4 cm minimum",
+        "Chest (Male)": "81 cm unexpanded and 86 cm expanded",
+        "Vision": "Without glasses: 6/9 in better eye and 6/12 in other eye; colour vision as prescribed",
+        "Other": "No knock-knee or flat feet; medical fitness as prescribed"
+      },
+      "educationDetails": "Bachelor's degree/graduation with Mathematics, Physics and Chemistry as prescribed subjects from a recognized university or equivalent qualification.",
+      "payScale": "Level-9 (Rs 36,200 - Rs 1,14,800)",
+      "payScaleMin": 36200,
+      "payScaleMax": 114800,
+      "categoryWiseVacancies": null
+    }
+  ],
+  "links": [
+    {
+      "label": "Apply Online",
+      "url": "https://esb.mponline.gov.in/",
+      "linkType": "APPLY_ONLINE",
+      "order": 0
+    },
+    {
+      "label": "Official Website",
+      "url": "https://esb.mp.gov.in/",
+      "linkType": "OFFICIAL_WEBSITE",
+      "order": 1
+    },
+    {
+      "label": "Rulebook / Notification",
+      "url": "https://esb.mp.gov.in/Rulebooks/rule_books_ESB26.htm",
+      "linkType": "NOTIFICATION_PDF",
+      "order": 2
+    }
+  ],
+  "importantDates": [
+    { "label": "Notification / Rulebook Date", "date": "2026-09-02", "order": 0 },
+    { "label": "Application Start", "date": "2026-09-09", "order": 1 },
+    { "label": "Application Last Date", "date": "2026-09-23", "order": 2 },
+    { "label": "Application Correction Last Date", "date": "2026-09-28", "order": 3 },
+    { "label": "Preliminary Examination Start", "date": "2026-10-28", "order": 4 }
+  ],
+  "faqs": [
+    {
+      "question": "What is the total number of vacancies in MPESB Subedar and Sub-Inspector Recruitment 2026?",
+      "answer": "There are 507 advertised vacancies: 81 Subedar, 69 Sub Inspector (Special Armed Force), 312 Sub Inspector (District Police Force), 10 Sub Inspector (Arms), 9 Sub Inspector (Photo), 4 Sub Inspector (Questioned Documents) and 22 Sub Inspector (Finger Print).",
+      "order": 0
+    },
+    {
+      "question": "What is the minimum qualification for the non-technical posts?",
+      "answer": "Subedar, Sub Inspector (Special Armed Force) and Sub Inspector (District Police Force) require a Bachelor's degree/graduation from a recognized university or equivalent qualification.",
+      "order": 1
+    },
+    {
+      "question": "What qualification is required for Sub Inspector (Arms)?",
+      "answer": "A three-year Diploma in Mechanical Engineering from a recognized technical university/institution or equivalent prescribed qualification is required.",
+      "order": 2
+    },
+    {
+      "question": "What qualification is required for Sub Inspector (Photo), Questioned Documents and Finger Print?",
+      "answer": "A Bachelor's degree/graduation with Mathematics, Physics and Chemistry as prescribed subjects is required.",
+      "order": 3
+    },
+    {
+      "question": "When does the application process start?",
+      "answer": "Online applications are scheduled to start on 9 September 2026 and close on 23 September 2026. Application correction is available up to 28 September 2026.",
+      "order": 4
+    },
+    {
+      "question": "When is the preliminary examination?",
+      "answer": "The preliminary examination is scheduled to start from 28 October 2026.",
+      "order": 5
+    },
+    {
+      "question": "Can candidates from other states apply?",
+      "answer": "Candidates from other states may apply subject to the recruitment rules, but they do not receive MP-domicile reservation or MP-domicile age-relaxation benefits and are considered under the applicable unreserved/open provisions.",
+      "order": 6
+    }
+  ],
+  "examLevels": [
+    { "name": "Preliminary Written Examination", "order": 0 },
+    { "name": "Main Written Examination", "order": 1 },
+    { "name": "Technical Paper", "order": 2 },
+    { "name": "Physical Proficiency Test", "order": 3 },
+    { "name": "Personality Interview", "order": 4 }
+  ],
+  "applicationFees": [
+    { "categoryLabel": "General / Other State", "amount": "Rs 500", "order": 0 },
+    { "categoryLabel": "SC / ST / OBC / EWS eligible MP domicile candidates", "amount": "Rs 250", "order": 1 },
+    { "categoryLabel": "Departmental Examination", "amount": "Rs 200 for General; Rs 100 for eligible SC/ST/OBC/EWS candidates", "order": 2 },
+    { "categoryLabel": "MP Online / Portal Charges", "amount": "Additional applicable portal/kiosk charges", "order": 3 }
+  ],
+  "admitCards": [],
+  "results": [],
+  "answerKeys": []
+}
