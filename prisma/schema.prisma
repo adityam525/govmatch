@@ -127,6 +127,7 @@ model Notification {
   applicationFeeScSt    String?
   selectionProcess      String[] @default([])
   howToApply            String?
+  directEligibility     String?
 
   notificationDate     DateTime?
   applicationStartDate DateTime?

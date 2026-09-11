@@ -63,6 +63,7 @@ const emptyForm = {
   examDate: today,
   published: false,
   howToApply: "",
+  directEligibility: "",
 };
 
 async function syncCollection<T extends Record<string, any>>(
@@ -151,6 +152,7 @@ export default function JobForm({ mode, jobId }: JobFormProps) {
           examDate: data.examDate ? data.examDate.slice(0, 10) : today,
           published: data.published ?? false,
           howToApply: data.howToApply ?? "",
+          directEligibility: data.directEligibility ?? "",
         });
         setSelectedSteps(data.selectionProcess ?? []);
       })
@@ -785,6 +787,19 @@ export default function JobForm({ mode, jobId }: JobFormProps) {
               value={form.howToApply}
               onChange={(e) => updateField("howToApply", e.target.value)}
               rows={3}
+              className={inputClass}
+            />
+          </div>
+
+          <div className="md:col-span-2 border-t border-neutral-100 pt-4">
+            <label className="block text-xs font-medium text-neutral-600 mb-1.5">
+              General Eligibility (only needed if this job has no specific Posts below - e.g. a qualifying exam like PET/CET)
+            </label>
+            <textarea
+              value={form.directEligibility}
+              onChange={(e) => updateField("directEligibility", e.target.value)}
+              rows={2}
+              placeholder="e.g. Class 10th Pass or equivalent from a recognized board"
               className={inputClass}
             />
           </div>

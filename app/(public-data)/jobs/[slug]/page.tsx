@@ -230,173 +230,216 @@ export default async function JobDetailPage({ params }: PageProps) {
               Vacancy and Eligibility Details
             </h2>
           </div>
-          <p className="text-xs text-neutral-600 mb-4">
-            Total Vacancies:{" "}
-            <span className="font-semibold text-neutral-900">
-              {notification.totalVacancies}
-            </span>
-          </p>
 
-          <div className="space-y-4">
-            {posts.map((post) => {
-              const ageRelaxation = post.ageRelaxation as Record<
-                string,
-                string
-              > | null;
-              const physicalCriteria = post.physicalCriteria as Record<
-                string,
-                string
-              > | null;
-              const branches = post.branches ?? [];
-              const roles = post.roles ?? [];
-
-              return (
-                <div
-                  key={post.id}
-                  className="border border-neutral-200 rounded-lg p-4"
-                >
-                  <p className="text-sm font-semibold text-neutral-900">
-                    {post.title}
+          {posts.length === 0 ? (
+            <div>
+              <p className="text-xs text-neutral-600 mb-3">
+                Total Vacancies:{" "}
+                <span className="font-semibold text-neutral-900">
+                  {notification.totalVacancies > 0
+                    ? notification.totalVacancies
+                    : "N/A"}
+                </span>
+              </p>
+              {notification.directEligibility ? (
+                <div className="border border-neutral-200 rounded-lg p-4">
+                  <p className="text-[10px] text-neutral-400 mb-1.5">
+                    Eligibility Criteria
                   </p>
+                  <p className="text-sm text-neutral-900">
+                    {notification.directEligibility}
+                  </p>
+                </div>
+              ) : (
+                <p className="text-sm text-neutral-500">
+                  Eligibility details will be updated soon.
+                </p>
+              )}
+            </div>
+          ) : (
+            <>
+              <p className="text-xs text-neutral-600 mb-4">
+                Total Vacancies:{" "}
+                <span className="font-semibold text-neutral-900">
+                  {notification.totalVacancies}
+                </span>
+              </p>
 
-                  <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mt-3">
-                    <div>
-                      <p className="text-[10px] text-neutral-400">Vacancies</p>
-                      <p className="text-xs font-medium text-neutral-900">
-                        {post.vacancies}
-                      </p>
-                    </div>
-                    <div>
-                      <p className="text-[10px] text-neutral-400">
-                        Qualification
-                      </p>
-                      <p className="text-xs font-medium text-neutral-900">
-                        {post.qualification?.name ?? "N/A"}
-                      </p>
-                    </div>
-                    <div>
-                      <p className="text-[10px] text-neutral-400">Age Limit</p>
-                      <p className="text-xs font-medium text-neutral-900">
-                        {post.minAge && post.maxAge
-                          ? post.minAge + " - " + post.maxAge + " years"
-                          : "N/A"}
-                      </p>
-                    </div>
-                    <div>
-                      <p className="text-[10px] text-neutral-400">Pay Scale</p>
-                      <p className="text-xs font-medium text-neutral-900">
-                        {post.payScale ?? "N/A"}
-                      </p>
-                    </div>
-                  </div>
+              <div className="space-y-4">
+                {posts.map((post) => {
+                  const ageRelaxation = post.ageRelaxation as Record<
+                    string,
+                    string
+                  > | null;
+                  const physicalCriteria = post.physicalCriteria as Record<
+                    string,
+                    string
+                  > | null;
+                  const branches = post.branches ?? [];
+                  const roles = post.roles ?? [];
 
-                  <div className="flex flex-wrap gap-2 mt-3">
-                    {post.employmentType && (
-                      <span className="flex items-center gap-1 text-[10px] bg-sky-50 text-sky-700 px-2 py-1 rounded-full">
-                        <Briefcase size={10} />{" "}
-                        {post.employmentType.charAt(0) +
-                          post.employmentType.slice(1).toLowerCase()}
-                      </span>
-                    )}
-                    {roles.map((role: any) => (
-                      <span
-                        key={role.id}
-                        className="flex items-center gap-1 text-[10px] bg-purple-50 text-purple-700 px-2 py-1 rounded-full"
-                      >
-                        <Award size={10} /> {role.name}
-                      </span>
-                    ))}
-                    {branches.map((branch: any) => (
-                      <span
-                        key={branch.id}
-                        className="text-[10px] bg-green-50 text-success px-2 py-1 rounded-full"
-                      >
-                        {branch.name}
-                      </span>
-                    ))}
-                  </div>
-
-                  {post.educationDetails && (
-                    <div className="mt-3 pt-3 border-t border-neutral-100">
-                      <div className="flex items-center gap-1.5 mb-1">
-                        <GraduationCap size={12} className="text-neutral-400" />
-                        <p className="text-[10px] text-neutral-400">
-                          Education Criteria
-                        </p>
-                      </div>
-                      <p className="text-xs text-neutral-600">
-                        {post.educationDetails}
+                  return (
+                    <div
+                      key={post.id}
+                      className="border border-neutral-200 rounded-lg p-4"
+                    >
+                      <p className="text-sm font-semibold text-neutral-900">
+                        {post.title}
                       </p>
-                    </div>
-                  )}
 
-                  {ageRelaxation && Object.keys(ageRelaxation).length > 0 && (
-                    <div className="mt-3 pt-3 border-t border-neutral-100">
-                      <p className="text-[10px] text-neutral-400 mb-1.5">
-                        Age Relaxation
-                      </p>
-                      <div className="flex flex-wrap gap-2">
-                        {Object.entries(ageRelaxation).map(
-                          ([category, relaxation]) => (
-                            <span
-                              key={category}
-                              className="text-[10px] bg-primary-50 text-primary-600 px-2 py-1 rounded-full"
-                            >
-                              {category}: {relaxation}
-                            </span>
-                          ),
-                        )}
-                      </div>
-                    </div>
-                  )}
-
-                  {physicalCriteria &&
-                    Object.keys(physicalCriteria).length > 0 && (
-                      <div className="mt-3 pt-3 border-t border-neutral-100">
-                        <div className="flex items-center gap-1.5 mb-1.5">
-                          <Ruler size={12} className="text-neutral-400" />
+                      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mt-3">
+                        <div>
                           <p className="text-[10px] text-neutral-400">
-                            Physical Criteria
+                            Vacancies
+                          </p>
+                          <p className="text-xs font-medium text-neutral-900">
+                            {post.vacancies}
                           </p>
                         </div>
-                        <div className="flex flex-wrap gap-2">
-                          {Object.entries(physicalCriteria).map(
-                            ([label, value]) => (
-                              <span
-                                key={label}
-                                className="text-[10px] bg-orange-50 text-accent-orange px-2 py-1 rounded-full"
-                              >
-                                {label}: {value}
-                              </span>
-                            ),
-                          )}
+                        <div>
+                          <p className="text-[10px] text-neutral-400">
+                            Qualification
+                          </p>
+                          <p className="text-xs font-medium text-neutral-900">
+                            {post.qualification?.name ?? "N/A"}
+                          </p>
+                        </div>
+                        <div>
+                          <p className="text-[10px] text-neutral-400">
+                            Age Limit
+                          </p>
+                          <p className="text-xs font-medium text-neutral-900">
+                            {post.minAge && post.maxAge
+                              ? post.minAge + " - " + post.maxAge + " years"
+                              : "N/A"}
+                          </p>
+                        </div>
+                        <div>
+                          <p className="text-[10px] text-neutral-400">
+                            Pay Scale
+                          </p>
+                          <p className="text-xs font-medium text-neutral-900">
+                            {post.payScale ?? "N/A"}
+                          </p>
                         </div>
                       </div>
-                    )}
 
-                  {post.categoryWiseVacancies && (
-                    <div className="mt-3 pt-3 border-t border-neutral-100">
-                      <p className="text-[10px] text-neutral-400 mb-1.5">
-                        Category-wise Vacancies
-                      </p>
-                      <div className="flex flex-wrap gap-2">
-                        {Object.entries(
-                          post.categoryWiseVacancies as Record<string, number>,
-                        ).map(([cat, count]) => (
+                      <div className="flex flex-wrap gap-2 mt-3">
+                        {post.employmentType && (
+                          <span className="flex items-center gap-1 text-[10px] bg-sky-50 text-sky-700 px-2 py-1 rounded-full">
+                            <Briefcase size={10} />{" "}
+                            {post.employmentType.charAt(0) +
+                              post.employmentType.slice(1).toLowerCase()}
+                          </span>
+                        )}
+                        {roles.map((role: any) => (
                           <span
-                            key={cat}
-                            className="text-[10px] bg-neutral-100 text-neutral-600 px-2 py-1 rounded-full"
+                            key={role.id}
+                            className="flex items-center gap-1 text-[10px] bg-purple-50 text-purple-700 px-2 py-1 rounded-full"
                           >
-                            {cat}: {count}
+                            <Award size={10} /> {role.name}
+                          </span>
+                        ))}
+                        {branches.map((branch: any) => (
+                          <span
+                            key={branch.id}
+                            className="text-[10px] bg-green-50 text-success px-2 py-1 rounded-full"
+                          >
+                            {branch.name}
                           </span>
                         ))}
                       </div>
+
+                      {post.educationDetails && (
+                        <div className="mt-3 pt-3 border-t border-neutral-100">
+                          <div className="flex items-center gap-1.5 mb-1">
+                            <GraduationCap
+                              size={12}
+                              className="text-neutral-400"
+                            />
+                            <p className="text-[10px] text-neutral-400">
+                              Education Criteria
+                            </p>
+                          </div>
+                          <p className="text-xs text-neutral-600">
+                            {post.educationDetails}
+                          </p>
+                        </div>
+                      )}
+
+                      {ageRelaxation &&
+                        Object.keys(ageRelaxation).length > 0 && (
+                          <div className="mt-3 pt-3 border-t border-neutral-100">
+                            <p className="text-[10px] text-neutral-400 mb-1.5">
+                              Age Relaxation
+                            </p>
+                            <div className="flex flex-wrap gap-2">
+                              {Object.entries(ageRelaxation).map(
+                                ([category, relaxation]) => (
+                                  <span
+                                    key={category}
+                                    className="text-[10px] bg-primary-50 text-primary-600 px-2 py-1 rounded-full"
+                                  >
+                                    {category}: {relaxation}
+                                  </span>
+                                ),
+                              )}
+                            </div>
+                          </div>
+                        )}
+
+                      {physicalCriteria &&
+                        Object.keys(physicalCriteria).length > 0 && (
+                          <div className="mt-3 pt-3 border-t border-neutral-100">
+                            <div className="flex items-center gap-1.5 mb-1.5">
+                              <Ruler size={12} className="text-neutral-400" />
+                              <p className="text-[10px] text-neutral-400">
+                                Physical Criteria
+                              </p>
+                            </div>
+                            <div className="flex flex-wrap gap-2">
+                              {Object.entries(physicalCriteria).map(
+                                ([label, value]) => (
+                                  <span
+                                    key={label}
+                                    className="text-[10px] bg-orange-50 text-accent-orange px-2 py-1 rounded-full"
+                                  >
+                                    {label}: {value}
+                                  </span>
+                                ),
+                              )}
+                            </div>
+                          </div>
+                        )}
+
+                      {post.categoryWiseVacancies && (
+                        <div className="mt-3 pt-3 border-t border-neutral-100">
+                          <p className="text-[10px] text-neutral-400 mb-1.5">
+                            Category-wise Vacancies
+                          </p>
+                          <div className="flex flex-wrap gap-2">
+                            {Object.entries(
+                              post.categoryWiseVacancies as Record<
+                                string,
+                                number
+                              >,
+                            ).map(([cat, count]) => (
+                              <span
+                                key={cat}
+                                className="text-[10px] bg-neutral-100 text-neutral-600 px-2 py-1 rounded-full"
+                              >
+                                {cat}: {count}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                      )}
                     </div>
-                  )}
-                </div>
-              );
-            })}
-          </div>
+                  );
+                })}
+              </div>
+            </>
+          )}
         </Card>
 
         {selectionSteps.length > 0 && (
