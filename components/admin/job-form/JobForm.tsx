@@ -28,6 +28,7 @@ import ApplicationFeeFieldArray, {
 } from "@/components/admin/ApplicationFeeFieldArray";
 import { validateNotificationDates } from "@/features/jobs/validation";
 import { Trash2 } from "lucide-react";
+import AdminCreatableSelect from "@/components/admin/AdminCreatableSelect";
 
 interface OrgOption {
   id: string;
@@ -607,19 +608,14 @@ export default function JobForm({ mode, jobId }: JobFormProps) {
             <label className="block text-xs font-medium text-neutral-600 mb-1.5">
               Organization *
             </label>
-            <select
-              required
+            <AdminCreatableSelect
               value={form.organizationId}
-              onChange={(e) => handleOrganizationChange(e.target.value)}
-              className={inputClass}
-            >
-              <option value="">Select...</option>
-              {organizations.map((org) => (
-                <option key={org.id} value={org.id}>
-                  {org.name}
-                </option>
-              ))}
-            </select>
+              onChange={handleOrganizationChange}
+              options={organizations}
+              entity="organizations"
+              labelKey="name"
+              onCreated={(created) => setOrganizations((prev) => [...prev, created])}
+            />
           </div>
 
           <div className="md:col-span-2">

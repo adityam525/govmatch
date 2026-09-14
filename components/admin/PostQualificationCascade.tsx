@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import AdminCreatableSelect from './AdminCreatableSelect';
 import { Plus, X } from 'lucide-react';
 
 interface QualCategoryOption { id: string; name: string; slug: string; }
@@ -93,14 +94,15 @@ function SingleQualificationRow({
         {qualifications.length > 0 && (
           <div>
             <label className="block text-xs font-medium text-neutral-600 mb-1">Qualification</label>
-            <select
+            <AdminCreatableSelect
               value={block.qualificationId}
-              onChange={(e) => onUpdate({ qualificationId: e.target.value, branchIds: [] })}
-              className={inputClass}
-            >
-              <option value="">Select...</option>
-              {qualifications.map((q) => <option key={q.id} value={q.id}>{q.name}</option>)}
-            </select>
+              onChange={(v) => onUpdate({ qualificationId: v, branchIds: [] })}
+              options={qualifications}
+              entity="qualifications"
+              labelKey="name"
+              extraFields={{ level: 5 }}
+              onCreated={(created) => setQualifications((prev) => [...prev, created])}
+            />
           </div>
         )}
 
