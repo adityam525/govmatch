@@ -6,11 +6,15 @@ import Link from 'next/link';
 import Card from '@/components/ui/Card';
 import Button from '@/components/ui/Button';
 
-interface QualificationOption { id: string; name: string; }
+interface CategoryOption { id: string; name: string; slug: string; }
+interface QualificationOption { id: string; name: string; slug: string; }
+interface BranchOption { id: string; name: string; slug: string; }
 
 export default function SignupPage() {
   const router = useRouter();
+  const [qualCategories, setQualCategories] = useState<CategoryOption[]>([]);
   const [qualifications, setQualifications] = useState<QualificationOption[]>([]);
+  const [branches, setBranches] = useState<BranchOption[]>([]);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
@@ -21,15 +25,40 @@ export default function SignupPage() {
     dateOfBirth: '',
     gender: '',
     category: '',
+    qualificationCategorySlug: '',
     qualificationId: '',
+    branchId: '',
     degreeName: '',
     yearOfPassing: '',
     percentage: '',
   });
 
   useEffect(() => {
-    fetch('/api/qualifications').then((r) => r.json()).then(setQualifications).catch(() => {});
+    fetch('/api/qualification-categories').then((r) => r.json()).then(setQualCategories).catch(() => {});
   }, []);
+
+  useEffect(() => {
+    if (!form.qualificationCategorySlug) {
+      setQualifications([]);
+      return;
+    }
+    fetch(`/api/qualifications?categorySlugs=${form.qualificationCategorySlug}`)
+      .then((r) => r.json())
+      .then(setQualifications)
+      .catch(() => {});
+  }, [form.qualificationCategorySlug]);
+
+  useEffect(() => {
+    const selectedQual = qualifications.find((q) => q.id === form.qualificationId);
+    if (!selectedQual) {
+      setBranches([]);
+      return;
+    }
+    fetch(`/api/branches?qualificationSlugs=${selectedQual.slug}`)
+      .then((r) => r.json())
+      .then((data) => setBranches(Array.isArray(data) ? data : []))
+      .catch(() => {});
+  }, [form.qualificationId, qualifications]);
 
   const updateField = (key: string, value: string) => setForm((prev) => ({ ...prev, [key]: value }));
 
@@ -140,12 +169,40 @@ export default function SignupPage() {
           </div>
 
           <div>
-            <label className="block text-xs font-medium text-neutral-600 mb-1.5">Highest Qualification</label>
-            <select value={form.qualificationId} onChange={(e) => updateField('qualificationId', e.target.value)} className={inputClass}>
+            <label className="block text-xs font-medium text-neutral-600 mb-1.5">Qualification Category</label>
+            <select
+              value={form.qualificationCategorySlug}
+              onChange={(e) => { updateField('qualificationCategorySlug', e.target.value); updateField('qualificationId', ''); updateField('branchId', ''); }}
+              className={inputClass}
+            >
               <option value="">Select...</option>
-              {qualifications.map((q) => <option key={q.id} value={q.id}>{q.name}</option>)}
+              {qualCategories.map((c) => <option key={c.id} value={c.slug}>{c.name}</option>)}
             </select>
           </div>
+
+          {qualifications.length > 0 && (
+            <div>
+              <label className="block text-xs font-medium text-neutral-600 mb-1.5">Qualification</label>
+              <select
+                value={form.qualificationId}
+                onChange={(e) => { updateField('qualificationId', e.target.value); updateField('branchId', ''); }}
+                className={inputClass}
+              >
+                <option value="">Select...</option>
+                {qualifications.map((q) => <option key={q.id} value={q.id}>{q.name}</option>)}
+              </select>
+            </div>
+          )}
+
+          {branches.length > 0 && (
+            <div className="md:col-span-2">
+              <label className="block text-xs font-medium text-neutral-600 mb-1.5">Branch / Stream</label>
+              <select value={form.branchId} onChange={(e) => updateField('branchId', e.target.value)} className={inputClass}>
+                <option value="">Select...</option>
+                {branches.map((b) => <option key={b.id} value={b.id}>{b.name}</option>)}
+              </select>
+            </div>
+          )}
 
           <div className="md:col-span-2">
             <label className="block text-xs font-medium text-neutral-600 mb-1.5">Degree Name</label>

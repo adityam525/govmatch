@@ -13,6 +13,7 @@ export async function POST(request: Request) {
       gender,
       category,
       qualificationId,
+      branchId,
       degreeName,
       yearOfPassing,
       percentage,
@@ -29,7 +30,7 @@ export async function POST(request: Request) {
 
     const passwordHash = await bcrypt.hash(password, 10);
 
-    const fields = [dateOfBirth, gender, category, qualificationId, degreeName, yearOfPassing, percentage];
+    const fields = [dateOfBirth, gender, category, qualificationId, branchId, degreeName, yearOfPassing, percentage];
     const filledCount = fields.filter((f) => f !== undefined && f !== null && f !== '').length;
     const profileStrength = Math.round((filledCount / fields.length) * 100);
 
@@ -47,6 +48,7 @@ export async function POST(request: Request) {
             gender: gender || null,
             category: category || null,
             qualificationId: qualificationId || null,
+            branchId: branchId || null,
             degreeName: degreeName || null,
             yearOfPassing: yearOfPassing ? Number(yearOfPassing) : null,
             percentage: percentage ? Number(percentage) : null,
