@@ -1,20 +1,13 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import Card from '@/components/ui/Card';
 import Button from '@/components/ui/Button';
 
-interface CategoryOption { id: string; name: string; slug: string; }
-interface QualificationOption { id: string; name: string; slug: string; }
-interface BranchOption { id: string; name: string; slug: string; }
-
 export default function SignupPage() {
   const router = useRouter();
-  const [qualCategories, setQualCategories] = useState<CategoryOption[]>([]);
-  const [qualifications, setQualifications] = useState<QualificationOption[]>([]);
-  const [branches, setBranches] = useState<BranchOption[]>([]);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
@@ -22,56 +15,30 @@ export default function SignupPage() {
     name: '',
     email: '',
     password: '',
-    dateOfBirth: '',
-    gender: '',
-    category: '',
-    qualificationCategorySlug: '',
-    qualificationId: '',
-    branchId: '',
-    degreeName: '',
-    yearOfPassing: '',
-    percentage: '',
+    confirmPassword: '',
   });
-
-  useEffect(() => {
-    fetch('/api/qualification-categories').then((r) => r.json()).then(setQualCategories).catch(() => {});
-  }, []);
-
-  useEffect(() => {
-    if (!form.qualificationCategorySlug) {
-      setQualifications([]);
-      return;
-    }
-    fetch(`/api/qualifications?categorySlugs=${form.qualificationCategorySlug}`)
-      .then((r) => r.json())
-      .then(setQualifications)
-      .catch(() => {});
-  }, [form.qualificationCategorySlug]);
-
-  useEffect(() => {
-    const selectedQual = qualifications.find((q) => q.id === form.qualificationId);
-    if (!selectedQual) {
-      setBranches([]);
-      return;
-    }
-    fetch(`/api/branches?qualificationSlugs=${selectedQual.slug}`)
-      .then((r) => r.json())
-      .then((data) => setBranches(Array.isArray(data) ? data : []))
-      .catch(() => {});
-  }, [form.qualificationId, qualifications]);
 
   const updateField = (key: string, value: string) => setForm((prev) => ({ ...prev, [key]: value }));
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
-    setLoading(true);
 
+    if (form.password !== form.confirmPassword) {
+      setError('Passwords do not match.');
+      return;
+    }
+    if (form.password.length < 8) {
+      setError('Password must be at least 8 characters.');
+      return;
+    }
+
+    setLoading(true);
     try {
       const res = await fetch('/api/auth/signup', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(form),
+        body: JSON.stringify({ name: form.name, email: form.email, password: form.password }),
       });
 
       if (!res.ok) {
@@ -80,7 +47,7 @@ export default function SignupPage() {
         return;
       }
 
-      router.push('/login?signedUp=true');
+      router.push('/login?signedUp=true&completeProfile=true');
     } catch (err) {
       setError('Something went wrong. Please try again.');
     } finally {
@@ -92,14 +59,14 @@ export default function SignupPage() {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-neutral-50 py-12 px-6">
-      <Card padding="lg" className="w-full max-w-xl">
+      <Card padding="lg" className="w-full max-w-md">
         <h1 className="text-xl font-bold text-neutral-900 mb-1">Create your GovMatch account</h1>
         <p className="text-sm text-neutral-600 mb-6">
-          Fill in your details once - this powers your personalized job matches from day one.
+          Get started in seconds. You can complete your profile right after.
         </p>
 
-        <form onSubmit={handleSubmit} className="grid md:grid-cols-2 gap-4">
-          <div className="md:col-span-2">
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div>
             <label className="block text-xs font-medium text-neutral-600 mb-1.5">Full Name *</label>
             <input
               required
@@ -109,7 +76,7 @@ export default function SignupPage() {
             />
           </div>
 
-          <div className="md:col-span-2">
+          <div>
             <label className="block text-xs font-medium text-neutral-600 mb-1.5">Email *</label>
             <input
               required
@@ -120,7 +87,7 @@ export default function SignupPage() {
             />
           </div>
 
-          <div className="md:col-span-2">
+          <div>
             <label className="block text-xs font-medium text-neutral-600 mb-1.5">Password *</label>
             <input
               required
@@ -132,116 +99,23 @@ export default function SignupPage() {
             />
           </div>
 
-          <div className="md:col-span-2 border-t border-neutral-100 pt-4 mt-1">
-            <p className="text-xs font-semibold text-neutral-900 mb-3">Education & Eligibility (optional, improves matches)</p>
-          </div>
-
           <div>
-            <label className="block text-xs font-medium text-neutral-600 mb-1.5">Date of Birth</label>
+            <label className="block text-xs font-medium text-neutral-600 mb-1.5">Confirm Password *</label>
             <input
-              type="date"
-              value={form.dateOfBirth}
-              onChange={(e) => updateField('dateOfBirth', e.target.value)}
+              required
+              type="password"
+              minLength={8}
+              value={form.confirmPassword}
+              onChange={(e) => updateField('confirmPassword', e.target.value)}
               className={inputClass}
             />
           </div>
 
-          <div>
-            <label className="block text-xs font-medium text-neutral-600 mb-1.5">Gender</label>
-            <select value={form.gender} onChange={(e) => updateField('gender', e.target.value)} className={inputClass}>
-              <option value="">Select...</option>
-              <option value="Male">Male</option>
-              <option value="Female">Female</option>
-              <option value="Other">Other</option>
-            </select>
-          </div>
+          {error && <p className="text-xs text-danger">{error}</p>}
 
-          <div>
-            <label className="block text-xs font-medium text-neutral-600 mb-1.5">Category</label>
-            <select value={form.category} onChange={(e) => updateField('category', e.target.value)} className={inputClass}>
-              <option value="">Select...</option>
-              <option value="General">General</option>
-              <option value="OBC">OBC</option>
-              <option value="SC">SC</option>
-              <option value="ST">ST</option>
-              <option value="EWS">EWS</option>
-            </select>
-          </div>
-
-          <div>
-            <label className="block text-xs font-medium text-neutral-600 mb-1.5">Qualification Category</label>
-            <select
-              value={form.qualificationCategorySlug}
-              onChange={(e) => { updateField('qualificationCategorySlug', e.target.value); updateField('qualificationId', ''); updateField('branchId', ''); }}
-              className={inputClass}
-            >
-              <option value="">Select...</option>
-              {qualCategories.map((c) => <option key={c.id} value={c.slug}>{c.name}</option>)}
-            </select>
-          </div>
-
-          {qualifications.length > 0 && (
-            <div>
-              <label className="block text-xs font-medium text-neutral-600 mb-1.5">Qualification</label>
-              <select
-                value={form.qualificationId}
-                onChange={(e) => { updateField('qualificationId', e.target.value); updateField('branchId', ''); }}
-                className={inputClass}
-              >
-                <option value="">Select...</option>
-                {qualifications.map((q) => <option key={q.id} value={q.id}>{q.name}</option>)}
-              </select>
-            </div>
-          )}
-
-          {branches.length > 0 && (
-            <div className="md:col-span-2">
-              <label className="block text-xs font-medium text-neutral-600 mb-1.5">Branch / Stream</label>
-              <select value={form.branchId} onChange={(e) => updateField('branchId', e.target.value)} className={inputClass}>
-                <option value="">Select...</option>
-                {branches.map((b) => <option key={b.id} value={b.id}>{b.name}</option>)}
-              </select>
-            </div>
-          )}
-
-          <div className="md:col-span-2">
-            <label className="block text-xs font-medium text-neutral-600 mb-1.5">Degree Name</label>
-            <input
-              value={form.degreeName}
-              onChange={(e) => updateField('degreeName', e.target.value)}
-              placeholder="e.g. B.E. Computer Science"
-              className={inputClass}
-            />
-          </div>
-
-          <div>
-            <label className="block text-xs font-medium text-neutral-600 mb-1.5">Year of Passing</label>
-            <input
-              type="number"
-              value={form.yearOfPassing}
-              onChange={(e) => updateField('yearOfPassing', e.target.value)}
-              className={inputClass}
-            />
-          </div>
-
-          <div>
-            <label className="block text-xs font-medium text-neutral-600 mb-1.5">Percentage / CGPA</label>
-            <input
-              type="number"
-              step="0.01"
-              value={form.percentage}
-              onChange={(e) => updateField('percentage', e.target.value)}
-              className={inputClass}
-            />
-          </div>
-
-          {error && <p className="md:col-span-2 text-xs text-danger">{error}</p>}
-
-          <div className="md:col-span-2 pt-2">
-            <Button type="submit" variant="primary" fullWidth disabled={loading}>
-              {loading ? 'Creating account...' : 'Create Account'}
-            </Button>
-          </div>
+          <Button type="submit" variant="primary" fullWidth disabled={loading}>
+            {loading ? 'Creating account...' : 'Create Account'}
+          </Button>
         </form>
 
         <p className="text-xs text-neutral-600 text-center mt-4">

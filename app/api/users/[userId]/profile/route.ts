@@ -17,6 +17,7 @@ export async function PATCH(request: Request, { params }: Params) {
     const data = {
       dateOfBirth: body.dateOfBirth ? new Date(body.dateOfBirth) : null,
       gender: body.gender || null,
+      phoneNumber: body.phoneNumber || null,
       category: body.category || null,
       qualificationId: body.qualificationId || null,
       degreeName: body.degreeName || null,

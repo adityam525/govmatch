@@ -346,6 +346,7 @@ model UserProfile {
 
   dateOfBirth DateTime?
   gender      String?
+  phoneNumber String?
   category    String?
   stateId     String?
 
