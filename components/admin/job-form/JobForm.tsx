@@ -29,6 +29,7 @@ import ApplicationFeeFieldArray, {
 import { validateNotificationDates } from "@/features/jobs/validation";
 import { Trash2 } from "lucide-react";
 import AdminCreatableSelect from "@/components/admin/AdminCreatableSelect";
+import FilterDropdown from "@/components/ui/FilterDropdown";
 
 interface OrgOption {
   id: string;
@@ -637,50 +638,54 @@ export default function JobForm({ mode, jobId }: JobFormProps) {
             <label className="block text-xs font-medium text-neutral-600 mb-1.5">
               State
             </label>
-            <select
-              value={form.stateId}
-              onChange={(e) => updateField("stateId", e.target.value)}
-              className={inputClass}
-            >
-              <option value="">All India</option>
-              {states.map((s) => (
-                <option key={s.id} value={s.id}>
-                  {s.name}
-                </option>
-              ))}
-            </select>
+            <FilterDropdown
+              label="All India"
+              options={states.map((s: any) => ({ id: s.id, label: s.name }))}
+              selected={form.stateId ? [form.stateId] : []}
+              onChange={(ids) => updateField("stateId", ids[0] ?? "")}
+              multi={false}
+              allowClear
+              widthClass="w-full"
+            />
           </div>
 
           <div>
             <label className="block text-xs font-medium text-neutral-600 mb-1.5">
               Status *
             </label>
-            <select
-              required
-              value={form.status}
-              onChange={(e) => updateField("status", e.target.value)}
-              className={inputClass}
-            >
-              <option value="UPCOMING">Upcoming</option>
-              <option value="LIVE">Live</option>
-              <option value="CLOSED">Closed</option>
-              <option value="CANCELLED">Cancelled</option>
-            </select>
+            <FilterDropdown
+              label="Select status"
+              options={[
+                { id: "UPCOMING", label: "Upcoming" },
+                { id: "LIVE", label: "Live" },
+                { id: "CLOSED", label: "Closed" },
+                { id: "CANCELLED", label: "Cancelled" },
+              ]}
+              selected={[form.status]}
+              onChange={(ids) => updateField("status", ids[0] ?? "LIVE")}
+              multi={false}
+              searchable={false}
+              widthClass="w-full"
+            />
           </div>
 
           <div>
             <label className="block text-xs font-medium text-neutral-600 mb-1.5">
               Application Mode
             </label>
-            <select
-              value={form.applicationMode}
-              onChange={(e) => updateField("applicationMode", e.target.value)}
-              className={inputClass}
-            >
-              <option value="ONLINE">Online</option>
-              <option value="OFFLINE">Offline</option>
-              <option value="BOTH">Both</option>
-            </select>
+            <FilterDropdown
+              label="Select mode"
+              options={[
+                { id: "ONLINE", label: "Online" },
+                { id: "OFFLINE", label: "Offline" },
+                { id: "BOTH", label: "Both" },
+              ]}
+              selected={[form.applicationMode]}
+              onChange={(ids) => updateField("applicationMode", ids[0] ?? "ONLINE")}
+              multi={false}
+              searchable={false}
+              widthClass="w-full"
+            />
           </div>
 
           <ExamLevelsFieldArray levels={examLevels} onChange={setExamLevels} />
