@@ -30,9 +30,14 @@ export default function DataTable<T extends { id: string }>({
 }: DataTableProps<T>) {
   const router = useRouter();
   return (
-    <div className="bg-white border border-neutral-200 rounded-lg">
-      <div className="flex items-center justify-between p-4 border-b border-neutral-100">
-        <h2 className="text-lg font-bold text-neutral-900">{title}</h2>
+    <div className="bg-white border border-neutral-200 rounded-xl shadow-sm overflow-hidden">
+      <div className="flex items-center justify-between px-5 py-4 border-b border-neutral-100">
+        <div>
+          <h2 className="text-lg font-bold text-neutral-900">{title}</h2>
+          {!loading && (
+            <p className="text-xs text-neutral-400 mt-0.5">{rows.length} total</p>
+          )}
+        </div>
         <Link href={`${basePath}/new`}>
           <Button variant="primary" size="sm" icon={<Plus size={16} />}>
             Add New
@@ -46,12 +51,12 @@ export default function DataTable<T extends { id: string }>({
               {columns.map((col) => (
                 <th
                   key={String(col.key)}
-                  className="text-left px-4 py-2.5 font-medium text-neutral-600"
+                  className="text-left px-5 py-3 font-semibold text-neutral-500 text-xs uppercase tracking-wide"
                 >
                   {col.label}
                 </th>
               ))}
-              <th className="text-right px-4 py-2.5 font-medium text-neutral-600">
+              <th className="text-right px-5 py-3 font-semibold text-neutral-500 text-xs uppercase tracking-wide">
                 Actions
               </th>
             </tr>
@@ -61,7 +66,7 @@ export default function DataTable<T extends { id: string }>({
               <tr>
                 <td
                   colSpan={columns.length + 1}
-                  className="text-center py-8 text-neutral-400"
+                  className="text-center py-12 text-neutral-400 text-sm"
                 >
                   Loading...
                 </td>
@@ -70,32 +75,35 @@ export default function DataTable<T extends { id: string }>({
               <tr>
                 <td
                   colSpan={columns.length + 1}
-                  className="text-center py-8 text-neutral-400"
+                  className="text-center py-12 text-neutral-400 text-sm"
                 >
-                  No records found.
+                  No records found. Click "Add New" to create one.
                 </td>
               </tr>
             ) : (
               rows.map((row) => (
                 <tr
                   key={row.id}
-                  className=" cursor-pointer border-b border-neutral-50 hover:bg-neutral-50"
+                  className="cursor-pointer border-b border-neutral-50 last:border-0 hover:bg-neutral-50 transition-colors"
                   onClick={() => router.push(`${basePath}/${row.id}`)}
                 >
                   {columns.map((col) => (
                     <td
                       key={String(col.key)}
-                      className="px-4 py-2.5 text-neutral-900"
+                      className="px-5 py-3 text-neutral-900"
                     >
                       {col.render
                         ? col.render(row)
                         : String((row as any)[col.key] ?? "-")}
                     </td>
                   ))}
-                  <td className="px-4 py-2.5">
-                    <div className="flex items-center justify-end gap-2">
+                  <td className="px-5 py-3">
+                    <div className="flex items-center justify-end gap-1.5">
                       <Link href={`${basePath}/${row.id}`}>
-                        <button className="p-1.5 text-neutral-500 hover:text-primary-600 hover:bg-primary-50 rounded-md">
+                        <button
+                          onClick={(e) => e.stopPropagation()}
+                          className="p-1.5 text-neutral-400 hover:text-primary-600 hover:bg-primary-50 rounded-md transition-colors"
+                        >
                           <Pencil size={14} />
                         </button>
                       </Link>
@@ -105,7 +113,7 @@ export default function DataTable<T extends { id: string }>({
                             e.stopPropagation();
                             onDelete(row.id);
                           }}
-                          className="p-1.5 text-neutral-500 hover:text-danger hover:bg-red-50 rounded-md"
+                          className="p-1.5 text-neutral-400 hover:text-danger hover:bg-red-50 rounded-md transition-colors"
                         >
                           <Trash2 size={14} />
                         </button>

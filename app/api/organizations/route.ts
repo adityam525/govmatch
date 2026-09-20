@@ -13,6 +13,7 @@ export async function GET() {
   try {
     const organizations = await prisma.organization.findMany({
       orderBy: { name: "asc" },
+      include: { category: true },
     });
     return NextResponse.json(organizations);
   } catch (error) {

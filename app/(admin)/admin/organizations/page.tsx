@@ -7,14 +7,14 @@ interface OrganizationRow {
   id: string;
   name: string;
   shortName: string;
-  type: string;
+  category: { name: string } | null;
   website: string | null;
 }
 
 const columns: ColumnConfig<OrganizationRow>[] = [
   { key: 'name', label: 'Name' },
   { key: 'shortName', label: 'Short Name' },
-  { key: 'type', label: 'Type' },
+  { key: 'category', label: 'Category', render: (row) => row.category?.name ?? '-' },
   { key: 'website', label: 'Website', render: (row) => row.website ?? '-' },
 ];
 
