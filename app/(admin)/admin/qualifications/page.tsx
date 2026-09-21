@@ -8,11 +8,12 @@ interface QualificationRow {
   name: string;
   slug: string;
   level: number;
+  categories: { name: string }[];
 }
 
 const columns: ColumnConfig<QualificationRow>[] = [
   { key: 'name', label: 'Name' },
-  { key: 'slug', label: 'Slug' },
+  { key: 'categories', label: 'Category', render: (row) => row.categories?.map((c) => c.name).join(', ') || '-' },
   { key: 'level', label: 'Level' },
 ];
 
