@@ -117,6 +117,7 @@ export default function JobForm({ mode, jobId }: JobFormProps) {
   const [officialLinkTouched, setOfficialLinkTouched] = useState(
     mode === "edit",
   );
+  const [stateTouched, setStateTouched] = useState(mode === "edit");
 
   useEffect(() => {
     adminApi
@@ -354,10 +355,16 @@ export default function JobForm({ mode, jobId }: JobFormProps) {
 
   const handleOrganizationChange = (orgId: string) => {
     updateField("organizationId", orgId);
-    if (!officialLinkTouched) {
-      const org = organizations.find((o) => o.id === orgId);
-      if (org?.website) {
-        setForm((prev: any) => ({ ...prev, officialLink: org.website }));
+    const org = organizations.find((o) => o.id === orgId);
+    if (!officialLinkTouched && org?.website) {
+      setForm((prev: any) => ({ ...prev, officialLink: org.website }));
+    }
+    if (!stateTouched && org?.name && states.length > 0) {
+      const matchedState = states.find((s: any) =>
+        org.name.toLowerCase().includes(s.name.toLowerCase())
+      );
+      if (matchedState) {
+        setForm((prev: any) => ({ ...prev, stateId: matchedState.id }));
       }
     }
   };
@@ -642,7 +649,7 @@ export default function JobForm({ mode, jobId }: JobFormProps) {
               label="All India"
               options={states.map((s: any) => ({ id: s.id, label: s.name }))}
               selected={form.stateId ? [form.stateId] : []}
-              onChange={(ids) => updateField("stateId", ids[0] ?? "")}
+              onChange={(ids) => { updateField("stateId", ids[0] ?? ""); setStateTouched(true); }}
               multi={false}
               allowClear
               widthClass="w-full"
