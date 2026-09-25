@@ -653,6 +653,18 @@ export default function JobForm({ mode, jobId }: JobFormProps) {
               multi={false}
               allowClear
               widthClass="w-full"
+              allowCreate
+              onCreate={async (name) => {
+                const res = await fetch("/api/states", {
+                  method: "POST",
+                  headers: { "Content-Type": "application/json" },
+                  body: JSON.stringify({ name, code: name.slice(0, 3).toUpperCase() }),
+                });
+                const created = await res.json();
+                if (!res.ok) return null;
+                setStates((prev: any) => [...prev, created]);
+                return { id: created.id, label: created.name };
+              }}
             />
           </div>
 

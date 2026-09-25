@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { Plus, Check, X } from "lucide-react";
 
 export interface FilterOption {
   id: string;
@@ -20,16 +21,16 @@ interface FilterDropdownProps {
   placeholder?: string;
   emptyMessage?: string;
   widthClass?: string;
-  /** For single-select dropdowns: the value that represents "no filter
-   * applied" (e.g. 'all' for Category, 'newest' for Sort). When the current
-   * selection equals this, the button renders in its neutral (non-active)
-   * style instead of the highlighted "filter applied" style. */
   defaultValue?: string;
-  /** Show the inline (x) clear button. Defaults to true for multi-select,
-   * and to true for single-select only when no defaultValue is set (i.e.
-   * there's no "All"/"Newest"-style option that already serves as the
-   * clear target — e.g. Qualification Category). */
   allowClear?: boolean;
+  /** When true, shows an "+ Add Custom..." row that lets the user create a
+   * new option inline (e.g. a new State/Organization/Role) without leaving
+   * the dropdown. Requires onCreate. */
+  allowCreate?: boolean;
+  /** Called with the typed label when the user submits a custom option.
+   * Should create the record server-side and resolve with the new
+   * FilterOption, or null/throw on failure. */
+  onCreate?: (label: string) => Promise<FilterOption | null>;
 }
 
 export default function FilterDropdown({
@@ -46,15 +47,21 @@ export default function FilterDropdown({
   widthClass = "w-64",
   defaultValue,
   allowClear,
+  allowCreate = false,
+  onCreate,
 }: FilterDropdownProps) {
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState("");
+  const [creating, setCreating] = useState(false);
+  const [createValue, setCreateValue] = useState("");
+  const [saving, setSaving] = useState(false);
   const rootRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     function handleClickOutside(e: MouseEvent) {
       if (rootRef.current && !rootRef.current.contains(e.target as Node)) {
         setOpen(false);
+        setCreating(false);
       }
     }
     document.addEventListener("mousedown", handleClickOutside);
@@ -62,16 +69,16 @@ export default function FilterDropdown({
   }, []);
 
   useEffect(() => {
-    if (!open) setQuery("");
+    if (!open) {
+      setQuery("");
+      setCreating(false);
+    }
   }, [open]);
 
   const filteredOptions = query.trim()
     ? options.filter((o) => o.label.toLowerCase().includes(query.toLowerCase()))
     : options;
 
-  // Group options that carry a `group` field (used for Branch, grouped by
-  // qualificationGroup) so ungrouped lists (Qualification Category,
-  // Qualification, State) just render flat.
   const hasGroups = filteredOptions.some((o) => o.group);
   const groupedOptions: Record<string, FilterOption[]> = {};
   if (hasGroups) {
@@ -84,11 +91,6 @@ export default function FilterDropdown({
 
   const toggleOption = (id: string) => {
     if (!multi) {
-      // Single-select behaves like a radio group: clicking an option always
-      // selects it, even if it's already selected. It never toggles off,
-      // since these dropdowns (Category, Sort) always have exactly one
-      // active value and rely on a real "default" option (e.g. "All
-      // Categories") to represent the cleared state.
       onChange([id]);
       setOpen(false);
       return;
@@ -102,6 +104,25 @@ export default function FilterDropdown({
   const clearSelection = (e: React.MouseEvent) => {
     e.stopPropagation();
     onChange([]);
+  };
+
+  const handleCreate = async () => {
+    if (!createValue.trim() || !onCreate) return;
+    setSaving(true);
+    try {
+      const created = await onCreate(createValue.trim());
+      if (created) {
+        onChange(multi ? [...selected, created.id] : [created.id]);
+        setCreating(false);
+        setCreateValue("");
+        setOpen(false);
+      }
+    } catch (err) {
+      console.error(err);
+      alert("Failed to create. It may already exist.");
+    } finally {
+      setSaving(false);
+    }
   };
 
   const selectedLabels = options
@@ -180,8 +201,8 @@ export default function FilterDropdown({
 
       {open && (
         <div className="absolute z-20 mt-1 w-72 max-w-[80vw] bg-white border border-neutral-200 rounded-lg shadow-lg py-2">
-          {searchable && (
-            <div className="px-2 pb-2">
+          {searchable && !creating && (
+           <div className="px-2 pb-2">
               <input
                 autoFocus
                 type="text"
@@ -193,28 +214,71 @@ export default function FilterDropdown({
             </div>
           )}
 
-          <div className="max-h-64 overflow-y-auto px-1">
-            {loading ? (
-              <p className="text-xs text-neutral-400 px-3 py-2">Loading...</p>
-            ) : filteredOptions.length === 0 ? (
-              <p className="text-xs text-neutral-400 px-3 py-2">
-                {emptyMessage}
-              </p>
-            ) : hasGroups ? (
-              Object.entries(groupedOptions).map(([group, opts]) => (
-                <div key={group} className="mb-1">
-                  <p className="px-3 py-1 text-[10px] font-semibold uppercase tracking-wide text-neutral-400">
-                    {group}
-                  </p>
-                  {opts.map(renderOption)}
-                </div>
-              ))
-            ) : (
-              filteredOptions.map(renderOption)
-            )}
-          </div>
+          {creating ? (
+            <div className="px-2 pb-2">
+              <div className="flex gap-1.5">
+                <input
+                  autoFocus
+                  type="text"
+                  value={createValue}
+                  onChange={(e) => setCreateValue(e.target.value)}
+                  onKeyDown={(e) => e.key === "Enter" && handleCreate()}
+                  placeholder="Enter new value"
+                  className="flex-1 px-2.5 py-1.5 text-xs border border-neutral-200 rounded-md focus:outline-none focus:ring-1 focus:ring-primary-400"
+                />
+                <button
+                  type="button"
+                  onClick={handleCreate}
+                  disabled={saving}
+                  className="shrink-0 p-1.5 rounded-md bg-primary-600 text-white hover:bg-primary-700 disabled:opacity-50"
+                >
+                  <Check size={14} />
+                </button>
+                <button
+                  type="button"
+                  onClick={() => { setCreating(false); setCreateValue(""); }}
+                  className="shrink-0 p-1.5 rounded-md border border-neutral-200 text-neutral-500 hover:bg-neutral-50"
+                >
+                  <X size={14} />
+                </button>
+              </div>
+            </div>
+          ) : (
+            <div className="max-h-64 overflow-y-auto px-1">
+              {loading ? (
+                <p className="text-xs text-neutral-400 px-3 py-2">Loading...</p>
+              ) : filteredOptions.length === 0 ? (
+                <p className="text-xs text-neutral-400 px-3 py-2">
+                  {emptyMessage}
+                </p>
+              ) : hasGroups ? (
+                Object.entries(groupedOptions).map(([group, opts]) => (
+                  <div key={group} className="mb-1">
+                    <p className="px-3 py-1 text-[10px] font-semibold uppercase tracking-wide text-neutral-400">
+                      {group}
+                    </p>
+                    {opts.map(renderOption)}
+                  </div>
+                ))
+              ) : (
+                filteredOptions.map(renderOption)
+              )}
+            </div>
+          )}
 
-          {resolvedAllowClear && selectedLabels.length > 0 && (
+          {allowCreate && onCreate && !creating && (
+            <div className="px-3 pt-2 mt-1 border-t border-neutral-100">
+              <button
+                type="button"
+                onClick={() => setCreating(true)}
+                className="flex items-center gap-1.5 text-[11px] text-primary-600 hover:underline"
+              >
+                <Plus size={12} /> Add Custom...
+              </button>
+            </div>
+          )}
+
+          {resolvedAllowClear && selectedLabels.length > 0 && !creating && (
             <div className="px-3 pt-2 mt-1 border-t border-neutral-100">
               <button
                 type="button"
