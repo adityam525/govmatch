@@ -28,7 +28,6 @@ import ApplicationFeeFieldArray, {
 } from "@/components/admin/ApplicationFeeFieldArray";
 import { validateNotificationDates } from "@/features/jobs/validation";
 import { Trash2 } from "lucide-react";
-import AdminCreatableSelect from "@/components/admin/AdminCreatableSelect";
 import FilterDropdown from "@/components/ui/FilterDropdown";
 
 interface OrgOption {
@@ -616,13 +615,25 @@ export default function JobForm({ mode, jobId }: JobFormProps) {
             <label className="block text-xs font-medium text-neutral-600 mb-1.5">
               Organization *
             </label>
-            <AdminCreatableSelect
-              value={form.organizationId}
-              onChange={handleOrganizationChange}
-              options={organizations}
-              entity="organizations"
-              labelKey="name"
-              onCreated={(created) => setOrganizations((prev) => [...prev, created])}
+            <FilterDropdown
+              label="Select organization"
+              options={organizations.map((o: any) => ({ id: o.id, label: o.name }))}
+              selected={form.organizationId ? [form.organizationId] : []}
+              onChange={(ids) => handleOrganizationChange(ids[0] ?? "")}
+              multi={false}
+              widthClass="w-full"
+              allowCreate
+              onCreate={async (name) => {
+                const res = await fetch("/api/organizations", {
+                  method: "POST",
+                  headers: { "Content-Type": "application/json" },
+                  body: JSON.stringify({ name, shortName: name.slice(0, 20) }),
+                });
+                const created = await res.json();
+                if (!res.ok) return null;
+                setOrganizations((prev: any) => [...prev, created]);
+                return { id: created.id, label: created.name };
+              }}
             />
           </div>
 

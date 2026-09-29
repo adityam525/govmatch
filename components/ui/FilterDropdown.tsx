@@ -111,6 +111,7 @@ export default function FilterDropdown({
     setSaving(true);
     try {
       const created = await onCreate(createValue.trim());
+      if (!created) throw new Error("Create failed");
       if (created) {
         onChange(multi ? [...selected, created.id] : [created.id]);
         setCreating(false);

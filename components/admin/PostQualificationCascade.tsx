@@ -1,11 +1,11 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import AdminCreatableSelect from './AdminCreatableSelect';
 import { Plus, X } from 'lucide-react';
+import FilterDropdown from '@/components/ui/FilterDropdown';
 
 interface QualCategoryOption { id: string; name: string; slug: string; }
-interface QualificationOption { id: string; name: string; slug: string; }
+interface QualificationOption { id: string; name: string; slug: string; level?: number; }
 interface BranchOption { id: string; name: string; slug: string; }
 
 export interface QualificationBlock {
@@ -18,6 +18,11 @@ interface PostQualificationCascadeProps {
   blocks: QualificationBlock[];
   onChange: (blocks: QualificationBlock[]) => void;
 }
+
+const slugify = (text: string) =>
+  text.toLowerCase().trim().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+
+const jsonHeaders = { 'Content-Type': 'application/json' };
 
 function SingleQualificationRow({
   block,
@@ -45,7 +50,7 @@ function SingleQualificationRow({
     }
     fetch(`/api/qualifications?categorySlugs=${block.qualificationCategorySlug}`)
       .then((r) => r.json())
-      .then(setQualifications)
+      .then((data) => setQualifications(Array.isArray(data) ? data : []))
       .catch(() => {});
   }, [block.qualificationCategorySlug]);
 
@@ -69,8 +74,6 @@ function SingleQualificationRow({
     });
   };
 
-  const inputClass = 'w-full text-sm border border-neutral-200 rounded-md px-3 py-2 outline-none focus:border-primary-500';
-
   return (
     <div className="border border-neutral-200 rounded-lg p-3 relative">
       {showRemove && (
@@ -81,27 +84,59 @@ function SingleQualificationRow({
       <div className="grid md:grid-cols-2 gap-3 pr-6">
         <div>
           <label className="block text-xs font-medium text-neutral-600 mb-1">Qualification Category</label>
-          <select
-            value={block.qualificationCategorySlug}
-            onChange={(e) => onUpdate({ qualificationCategorySlug: e.target.value, qualificationId: '', branchIds: [] })}
-            className={inputClass}
-          >
-            <option value="">Select...</option>
-            {categories.map((c) => <option key={c.id} value={c.slug}>{c.name}</option>)}
-          </select>
+          <FilterDropdown
+            label="Select category"
+            options={categories.map((c) => ({ id: c.slug, label: c.name }))}
+            selected={block.qualificationCategorySlug ? [block.qualificationCategorySlug] : []}
+            onChange={(ids) => onUpdate({ qualificationCategorySlug: ids[0] ?? '', qualificationId: '', branchIds: [] })}
+            multi={false}
+            allowClear
+            widthClass="w-full"
+            allowCreate
+            onCreate={async (name) => {
+              const res = await fetch('/api/qualification-categories', {
+                method: 'POST',
+                headers: jsonHeaders,
+                body: JSON.stringify({ name }),
+              });
+              if (!res.ok) return null;
+              const created = await res.json();
+              setCategories((prev) => [...prev, created]);
+              return { id: created.slug, label: created.name };
+            }}
+          />
         </div>
 
-        {qualifications.length > 0 && (
+        {block.qualificationCategorySlug && (
           <div>
             <label className="block text-xs font-medium text-neutral-600 mb-1">Qualification</label>
-            <AdminCreatableSelect
-              value={block.qualificationId}
-              onChange={(v) => onUpdate({ qualificationId: v, branchIds: [] })}
-              options={qualifications}
-              entity="qualifications"
-              labelKey="name"
-              extraFields={{ level: 5 }}
-              onCreated={(created) => setQualifications((prev) => [...prev, created])}
+            <FilterDropdown
+              label="Select qualification"
+              options={qualifications.map((q) => ({ id: q.id, label: q.name }))}
+              selected={block.qualificationId ? [block.qualificationId] : []}
+              onChange={(ids) => onUpdate({ qualificationId: ids[0] ?? '', branchIds: [] })}
+              multi={false}
+              allowClear
+              widthClass="w-full"
+              allowCreate
+              onCreate={async (name) => {
+                // Default level = highest level already in this category (review later in /admin/qualifications)
+                const level = qualifications.reduce((max, q) => Math.max(max, q.level ?? 0), 0) || 5;
+                const res = await fetch('/api/qualifications', {
+                  method: 'POST',
+                  headers: jsonHeaders,
+                  body: JSON.stringify({
+                    name,
+                    slug: slugify(name),
+                    level,
+                    categorySlug: block.qualificationCategorySlug,
+                  }),
+                });
+                if (!res.ok) return null;
+                const created = await res.json();
+                setQualifications((prev) => [...prev, created]);
+                return { id: created.id, label: created.name };
+              }}
             />
           </div>
         )}

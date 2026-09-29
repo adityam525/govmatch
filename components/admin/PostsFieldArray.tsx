@@ -7,7 +7,7 @@ import { adminApi } from "@/features/admin/api";
 import PostQualificationCascade, {
   QualificationBlock,
 } from "./PostQualificationCascade";
-import AdminCreatableSelect from "./AdminCreatableSelect";
+import FilterDropdown from "@/components/ui/FilterDropdown";
 
 export interface PostDraft {
   id?: string;
@@ -152,15 +152,26 @@ export default function PostsFieldArray({
                 <label className="block text-xs font-medium text-neutral-600 mb-1">
                   Employee Role
                 </label>
-                <AdminCreatableSelect
-                  value={post.roleId}
-                  onChange={(v) => updatePost(index, "roleId", v)}
-                  options={roles}
-                  entity="roles"
-                  labelKey="name"
-                  onCreated={(created) =>
-                    setRoles((prev) => [...prev, created])
-                  }
+                <FilterDropdown
+                  label="Select role"
+                  options={roles.map((r) => ({ id: r.id, label: r.name }))}
+                  selected={post.roleId ? [post.roleId] : []}
+                  onChange={(ids) => updatePost(index, "roleId", ids[0] ?? "")}
+                  multi={false}
+                  widthClass="w-full"
+                  allowCreate
+                  onCreate={async (name) => {
+                    const slug = name.toLowerCase().trim().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
+                    const res = await fetch("/api/roles", {
+                      method: "POST",
+                      headers: { "Content-Type": "application/json" },
+                      body: JSON.stringify({ name, slug }),
+                    });
+                    const created = await res.json();
+                    if (!res.ok) return null;
+                    setRoles((prev) => [...prev, created]);
+                    return { id: created.id, label: created.name };
+                  }}
                 />
               </div>
 
