@@ -89,7 +89,7 @@ export default function SearchBar() {
 
   return (
     <div className="relative" ref={containerRef}>
-      <form onSubmit={handleSubmit} className="flex gap-2">
+      <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-2">
         <div className="flex-1 flex items-center gap-2 bg-white border border-neutral-200 rounded-lg px-4 py-3">
           <Search size={18} className="text-neutral-400 shrink-0" />
           <input
