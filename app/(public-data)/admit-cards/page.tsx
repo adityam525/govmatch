@@ -1,3 +1,4 @@
+export const dynamic = "force-dynamic";
 import { FileCheck2 } from 'lucide-react';
 import Card from '@/components/ui/Card';
 import SectionHeader from '@/components/ui/SectionHeader';

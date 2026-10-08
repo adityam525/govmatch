@@ -548,3 +548,17 @@ model Subscription {
   startedAt DateTime @default(now())
   expiresAt DateTime?
 }
+
+model ContactMessage {
+  id        String   @id @default(cuid())
+  name      String
+  email     String
+  subject   String?
+  category  String   @default("General Inquiry")
+  message   String
+  resolved  Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  @@index([resolved])
+  @@index([createdAt])
+}

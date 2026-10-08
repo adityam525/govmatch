@@ -1,6 +1,6 @@
 "use client";
 
-import { FormEvent } from "react";
+import { useState, FormEvent } from "react";
 import Card from "@/components/ui/Card";
 import Button from "@/components/ui/Button";
 import {
@@ -12,15 +12,55 @@ import {
   CheckCircle2,
 } from "lucide-react";
 
-type Props = {
-  submitted: boolean;
-  handleSubmit: (e: FormEvent<HTMLFormElement>) => void;
-};
+const CATEGORIES = [
+  "General Inquiry",
+  "Technical Support",
+  "Government Jobs",
+  "Feature Request",
+  "Report a Bug",
+  "Partnership",
+];
 
-export default function ContactForm({
-  submitted,
-  handleSubmit,
-}: Props) {
+export default function ContactForm() {
+  const [form, setForm] = useState({
+    name: "",
+    email: "",
+    subject: "",
+    category: CATEGORIES[0],
+    message: "",
+  });
+  const [submitting, setSubmitting] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
+  const [error, setError] = useState("");
+
+  const updateField = (key: string, value: string) => setForm((prev) => ({ ...prev, [key]: value }));
+
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setError("");
+    setSubmitting(true);
+
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
+
+      if (!res.ok) {
+        const data = await res.json();
+        setError(data.message ?? "Failed to send message. Please try again.");
+        return;
+      }
+
+      setSubmitted(true);
+    } catch (err) {
+      setError("Something went wrong. Please try again.");
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
   return (
     <Card padding="lg" className="rounded-3xl shadow-sm border border-neutral-200">
 
@@ -75,6 +115,8 @@ export default function ContactForm({
                 <input
                   required
                   type="text"
+                  value={form.name}
+                  onChange={(e) => updateField("name", e.target.value)}
                   placeholder="John Doe"
                   className="h-12 w-full rounded-xl border border-neutral-200 pl-11 pr-4 outline-none transition focus:border-primary-500"
                 />
@@ -98,6 +140,8 @@ export default function ContactForm({
                 <input
                   required
                   type="email"
+                  value={form.email}
+                  onChange={(e) => updateField("email", e.target.value)}
                   placeholder="you@example.com"
                   className="h-12 w-full rounded-xl border border-neutral-200 pl-11 pr-4 outline-none transition focus:border-primary-500"
                 />
@@ -125,6 +169,8 @@ export default function ContactForm({
 
                 <input
                   type="text"
+                  value={form.subject}
+                  onChange={(e) => updateField("subject", e.target.value)}
                   placeholder="How can we help?"
                   className="h-12 w-full rounded-xl border border-neutral-200 pl-11 pr-4 outline-none transition focus:border-primary-500"
                 />
@@ -147,14 +193,11 @@ export default function ContactForm({
                 />
 
                 <select
+                  value={form.category}
+                  onChange={(e) => updateField("category", e.target.value)}
                   className="h-12 w-full rounded-xl border border-neutral-200 pl-11 pr-4 outline-none transition focus:border-primary-500"
                 >
-                  <option>General Inquiry</option>
-                  <option>Technical Support</option>
-                  <option>Government Jobs</option>
-                  <option>Feature Request</option>
-                  <option>Report a Bug</option>
-                  <option>Partnership</option>
+                  {CATEGORIES.map((c) => <option key={c}>{c}</option>)}
                 </select>
 
               </div>
@@ -179,6 +222,8 @@ export default function ContactForm({
               <textarea
                 required
                 rows={7}
+                value={form.message}
+                onChange={(e) => updateField("message", e.target.value)}
                 placeholder="Tell us how we can help..."
                 className="w-full rounded-xl border border-neutral-200 pl-11 pr-4 pt-4 outline-none transition focus:border-primary-500"
               />
@@ -187,13 +232,16 @@ export default function ContactForm({
 
           </div>
 
+          {error && <p className="text-sm text-danger">{error}</p>}
+
           <Button
             type="submit"
             variant="primary"
             size="lg"
             fullWidth
+            disabled={submitting}
           >
-            Send Message
+            {submitting ? "Sending..." : "Send Message"}
           </Button>
 
         </form>
