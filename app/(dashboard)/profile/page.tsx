@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import Card from '@/components/ui/Card';
 import Button from '@/components/ui/Button';
 import DeleteAccountButton from '@/components/profile/DeleteAccountButton';
+import PreferencesCard from "@/components/profile/PreferencesCard";
 import { useAuth } from '@/features/auth/hooks';
 
 interface CategoryOption { id: string; name: string; slug: string; }
@@ -261,6 +262,7 @@ export default function ProfilePage() {
         </form>
       </Card>
 
+      <PreferencesCard />
       <Card padding="lg" className="mt-6 border-red-100">
         <p className="text-sm font-bold text-danger">Danger Zone</p>
         <p className="text-xs text-neutral-600 mt-1">
