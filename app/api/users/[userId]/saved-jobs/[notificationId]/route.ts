@@ -1,10 +1,14 @@
 import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
+import { requireSelf } from '@/lib/require-user';
 
 interface Params { params: Promise<{ userId: string; notificationId: string }> }
 
 export async function DELETE(request: Request, { params }: Params) {
   const { userId, notificationId } = await params;
+  const guard = await requireSelf(userId);
+  if (!guard.ok) return guard.response;
+
   try {
     await prisma.savedJob.delete({
       where: { userId_notificationId: { userId, notificationId } },

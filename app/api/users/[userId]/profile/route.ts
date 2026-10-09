@@ -1,16 +1,23 @@
 import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
+import { requireSelf } from '@/lib/require-user';
 
 interface Params { params: Promise<{ userId: string }> }
 
 export async function GET(request: Request, { params }: Params) {
   const { userId } = await params;
+  const guard = await requireSelf(userId);
+  if (!guard.ok) return guard.response;
+
   const profile = await prisma.userProfile.findUnique({ where: { userId } });
   return NextResponse.json(profile);
 }
 
 export async function PATCH(request: Request, { params }: Params) {
   const { userId } = await params;
+  const guard = await requireSelf(userId);
+  if (!guard.ok) return guard.response;
+
   try {
     const body = await request.json();
 
@@ -20,6 +27,7 @@ export async function PATCH(request: Request, { params }: Params) {
       phoneNumber: body.phoneNumber || null,
       category: body.category || null,
       qualificationId: body.qualificationId || null,
+      branchId: body.branchId || null,
       degreeName: body.degreeName || null,
       yearOfPassing: body.yearOfPassing ? Number(body.yearOfPassing) : null,
       percentage: body.percentage ? Number(body.percentage) : null,

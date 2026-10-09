@@ -1,16 +1,19 @@
 import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
+import { requireSelf } from '@/lib/require-user';
 
 interface Params { params: Promise<{ userId: string }> }
 
 export async function GET(request: Request, { params }: Params) {
   const { userId } = await params;
+  const guard = await requireSelf(userId);
+  if (!guard.ok) return guard.response;
+
   const savedJobs = await prisma.savedJob.findMany({
     where: { userId },
     orderBy: { createdAt: 'desc' },
   });
 
-  // Fetch full notification details for each saved job
   const notificationIds = savedJobs.map((sj) => sj.notificationId);
   const notifications = await prisma.notification.findMany({
     where: { id: { in: notificationIds } },
@@ -22,8 +25,14 @@ export async function GET(request: Request, { params }: Params) {
 
 export async function POST(request: Request, { params }: Params) {
   const { userId } = await params;
+  const guard = await requireSelf(userId);
+  if (!guard.ok) return guard.response;
+
   try {
     const { notificationId } = await request.json();
+    if (!notificationId) {
+      return NextResponse.json({ message: 'notificationId is required' }, { status: 400 });
+    }
     const saved = await prisma.savedJob.create({
       data: { userId, notificationId },
     });

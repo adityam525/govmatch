@@ -1,11 +1,14 @@
 import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { computeMatch } from '@/features/matching/engine';
+import { requireSelf } from '@/lib/require-user';
 
 interface Params { params: Promise<{ userId: string }> }
 
 export async function GET(request: Request, { params }: Params) {
   const { userId } = await params;
+  const guard = await requireSelf(userId);
+  if (!guard.ok) return guard.response;
   try {
     const profile = await prisma.userProfile.findUnique({
       where: { userId },
@@ -21,7 +24,7 @@ export async function GET(request: Request, { params }: Params) {
       : null;
 
     const notifications = await prisma.notification.findMany({
-      where: { status: 'LIVE' },
+      where: { status: 'LIVE', published: true },
       include: {
         organization: true,
         posts: { include: { qualification: true, branches: true, roles: true } },

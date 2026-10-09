@@ -1,10 +1,16 @@
 import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
+import { requireSelf } from '@/lib/require-user';
 
 interface Params { params: Promise<{ userId: string }> }
 
+const VALID_STATUSES = ['APPLIED', 'EXAM_SCHEDULED', 'RESULT_AWAITED', 'SELECTED', 'REJECTED'];
+
 export async function GET(request: Request, { params }: Params) {
   const { userId } = await params;
+  const guard = await requireSelf(userId);
+  if (!guard.ok) return guard.response;
+
   const applications = await prisma.application.findMany({
     where: { userId },
     orderBy: { appliedAt: 'desc' },
@@ -26,8 +32,17 @@ export async function GET(request: Request, { params }: Params) {
 
 export async function POST(request: Request, { params }: Params) {
   const { userId } = await params;
+  const guard = await requireSelf(userId);
+  if (!guard.ok) return guard.response;
+
   try {
     const { notificationId, status } = await request.json();
+    if (!notificationId) {
+      return NextResponse.json({ message: 'notificationId is required' }, { status: 400 });
+    }
+    if (status && !VALID_STATUSES.includes(status)) {
+      return NextResponse.json({ message: 'Invalid status' }, { status: 400 });
+    }
     const application = await prisma.application.create({
       data: { userId, notificationId, status: status || 'APPLIED' },
     });

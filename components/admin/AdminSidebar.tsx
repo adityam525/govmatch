@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import clsx from 'clsx';
 import {
-  LayoutDashboard, Bell, Building2, MapPin, Tags, Users, GraduationCap,
+  LayoutDashboard, Bell, Building2, MapPin, Tags, Users, GraduationCap, Mail,
 } from 'lucide-react';
 
 const navSections = [
@@ -13,6 +13,7 @@ const navSections = [
       { label: 'Dashboard', href: '/admin', icon: LayoutDashboard },
       { label: 'Jobs', href: '/admin/notifications', icon: Bell },
       { label: 'Users', href: '/admin/users', icon: Users },
+      { label: 'Messages', href: '/admin/messages', icon: Mail },
     ],
   },
   {
