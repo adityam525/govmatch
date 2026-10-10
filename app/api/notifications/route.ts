@@ -1,3 +1,5 @@
+import { isAdminRequest } from "@/lib/admin-session";
+import { isAdminRequest } from "@/lib/admin-session";
 import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { validateNotificationDates } from '@/features/jobs/validation';
@@ -7,6 +9,8 @@ const DATE_FIELDS = ['notificationDate', 'applicationStartDate', 'applicationEnd
 export async function GET() {
   try {
     const notifications = await prisma.notification.findMany({
+      where: (await isAdminRequest()) ? undefined : { published: true },
+      where: (await isAdminRequest()) ? undefined : { published: true },
       include: {
         organization: { include: { category: true } },
         posts: { include: { qualification: true } },
