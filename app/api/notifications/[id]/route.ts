@@ -1,5 +1,4 @@
 import { isAdminRequest } from "@/lib/admin-session";
-import { isAdminRequest } from "@/lib/admin-session";
 import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { validateNotificationDates } from '@/features/jobs/validation';
@@ -14,7 +13,6 @@ export async function GET(request: Request, { params }: Params) {
       include: { organization: true, posts: { include: { qualification: true } }, categories: true, states: true },
     });
     if (!notification) return NextResponse.json({ message: 'Not found' }, { status: 404 });
-    if (!notification.published && !(await isAdminRequest())) return NextResponse.json({ message: "Not found" }, { status: 404 });
     if (!notification.published && !(await isAdminRequest())) return NextResponse.json({ message: "Not found" }, { status: 404 });
     return NextResponse.json(notification);
   } catch (error) {
