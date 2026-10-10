@@ -35,6 +35,7 @@ export async function GET(request: Request) {
     where: {
       status: 'LIVE',
       published: true,
+      OR: terms.flatMap((term) => [
         { title: { contains: term, mode: 'insensitive' as const } },
         { organization: { name: { contains: term, mode: 'insensitive' as const } } },
         { organization: { shortName: { contains: term, mode: 'insensitive' as const } } },
