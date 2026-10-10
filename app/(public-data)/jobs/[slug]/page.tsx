@@ -1,3 +1,4 @@
+import { cookies } from "next/headers";
 import {
   CalendarDays,
   IndianRupee,
@@ -10,6 +11,9 @@ import {
   ShieldCheck,
   Briefcase,
   Award,
+  FileCheck2,
+  Trophy,
+  KeyRound,
 } from "lucide-react";
 import Card from "@/components/ui/Card";
 import RecentJobsSidebar from "@/components/jobs/RecentJobsSidebar";
@@ -37,7 +41,7 @@ const LINK_LABELS: Record<string, string> = {
   OTHER: "Link",
 };
 
-async function getNotification(slug: string) {
+async function getNotificationRaw(slug: string) {
   return prisma.notification.findUnique({
     where: { slug },
     include: {
@@ -150,11 +154,116 @@ export default async function JobDetailPage({ params }: PageProps) {
             Location: {stateNames}
           </p>
 
+          {(notification.admitCards.length > 0 ||
+            notification.results.length > 0 ||
+            notification.answerKeys.length > 0) && (
+            <div className="flex flex-wrap gap-2 mt-3">
+              {notification.admitCards.length > 0 && (
+                <a
+                  href="#exam-updates"
+                  className="inline-flex items-center gap-1 text-[11px] font-medium bg-sky-50 text-sky-700 px-2.5 py-1 rounded-full"
+                >
+                  <FileCheck2 size={12} /> Admit Card available
+                </a>
+              )}
+              {notification.results.length > 0 && (
+                <a
+                  href="#exam-updates"
+                  className="inline-flex items-center gap-1 text-[11px] font-medium bg-amber-50 text-amber-800 px-2.5 py-1 rounded-full"
+                >
+                  <Trophy size={12} /> Result available
+                </a>
+              )}
+              {notification.answerKeys.length > 0 && (
+                <a
+                  href="#exam-updates"
+                  className="inline-flex items-center gap-1 text-[11px] font-medium bg-violet-50 text-violet-700 px-2.5 py-1 rounded-full"
+                >
+                  <KeyRound size={12} /> Answer Key available
+                </a>
+              )}
+            </div>
+          )}
+
           <JobActionButtons
             notificationId={notification.id}
             applyUrl={primaryLink?.url ?? notification.officialLink}
           />
         </Card>
+
+        {(notification.admitCards.length > 0 ||
+          notification.results.length > 0 ||
+          notification.answerKeys.length > 0) && (
+          <Card padding="lg">
+            <div id="exam-updates" className="scroll-mt-24">
+              <h2 className="text-sm font-bold text-neutral-900 mb-4">
+                Exam Lifecycle Updates
+              </h2>
+              <div className="space-y-4">
+                {notification.admitCards.map((ac: any) => (
+                  <a
+                    key={ac.id}
+                    href={ac.downloadLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center justify-between p-3 rounded-md border border-neutral-200 hover:bg-neutral-50"
+                  >
+                    <div>
+                      <p className="text-xs font-medium text-neutral-900">
+                        {ac.title}
+                        {ac.examLevel ? ` (${ac.examLevel.name})` : ""}
+                      </p>
+                      <p className="text-[10px] text-neutral-400">
+                        Admit Card - Released {formatDate(ac.releaseDate)}
+                      </p>
+                    </div>
+                    <ExternalLink size={14} className="text-neutral-400" />
+                  </a>
+                ))}
+                {notification.results.map((r: any) => (
+                  <a
+                    key={r.id}
+                    href={r.resultLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center justify-between p-3 rounded-md border border-neutral-200 hover:bg-neutral-50"
+                  >
+                    <div>
+                      <p className="text-xs font-medium text-neutral-900">
+                        {r.title}
+                        {r.examLevel ? ` (${r.examLevel.name})` : ""}
+                      </p>
+                      <p className="text-[10px] text-neutral-400">
+                        Result - Released {formatDate(r.releaseDate)}
+                      </p>
+                    </div>
+                    <ExternalLink size={14} className="text-neutral-400" />
+                  </a>
+                ))}
+                {notification.answerKeys.map((k: any) => (
+                  <a
+                    key={k.id}
+                    href={k.downloadLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center justify-between p-3 rounded-md border border-neutral-200 hover:bg-neutral-50"
+                  >
+                    <div>
+                      <p className="text-xs font-medium text-neutral-900">
+                        {k.title}
+                        {k.examLevel ? ` (${k.examLevel.name})` : ""}
+                      </p>
+                      <p className="text-[10px] text-neutral-400">
+                        Answer Key - Released {formatDate(k.releaseDate)}
+                      </p>
+                    </div>
+                    <ExternalLink size={14} className="text-neutral-400" />
+                  </a>
+                ))}
+              </div>
+            </div>
+          </Card>
+        )}
 
         {examLevels.length > 0 && (
           <Card padding="lg">
@@ -479,78 +588,6 @@ export default async function JobDetailPage({ params }: PageProps) {
           </Card>
         )}
 
-        {(notification.admitCards.length > 0 ||
-          notification.results.length > 0 ||
-          notification.answerKeys.length > 0) && (
-          <Card padding="lg">
-            <h2 className="text-sm font-bold text-neutral-900 mb-4">
-              Exam Lifecycle Updates
-            </h2>
-            <div className="space-y-4">
-              {notification.admitCards.map((ac: any) => (
-                <a
-                  key={ac.id}
-                  href={ac.downloadLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center justify-between p-3 rounded-md border border-neutral-200 hover:bg-neutral-50"
-                >
-                  <div>
-                    <p className="text-xs font-medium text-neutral-900">
-                      {ac.title}
-                      {ac.examLevel ? ` (${ac.examLevel.name})` : ""}
-                    </p>
-                    <p className="text-[10px] text-neutral-400">
-                      Admit Card - Released {formatDate(ac.releaseDate)}
-                    </p>
-                  </div>
-                  <ExternalLink size={14} className="text-neutral-400" />
-                </a>
-              ))}
-              {notification.results.map((r: any) => (
-                <a
-                  key={r.id}
-                  href={r.resultLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center justify-between p-3 rounded-md border border-neutral-200 hover:bg-neutral-50"
-                >
-                  <div>
-                    <p className="text-xs font-medium text-neutral-900">
-                      {r.title}
-                      {r.examLevel ? ` (${r.examLevel.name})` : ""}
-                    </p>
-                    <p className="text-[10px] text-neutral-400">
-                      Result - Released {formatDate(r.releaseDate)}
-                    </p>
-                  </div>
-                  <ExternalLink size={14} className="text-neutral-400" />
-                </a>
-              ))}
-              {notification.answerKeys.map((k: any) => (
-                <a
-                  key={k.id}
-                  href={k.downloadLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center justify-between p-3 rounded-md border border-neutral-200 hover:bg-neutral-50"
-                >
-                  <div>
-                    <p className="text-xs font-medium text-neutral-900">
-                      {k.title}
-                      {k.examLevel ? ` (${k.examLevel.name})` : ""}
-                    </p>
-                    <p className="text-[10px] text-neutral-400">
-                      Answer Key - Released {formatDate(k.releaseDate)}
-                    </p>
-                  </div>
-                  <ExternalLink size={14} className="text-neutral-400" />
-                </a>
-              ))}
-            </div>
-          </Card>
-        )}
-
         <Card padding="lg">
           <h2 className="text-sm font-bold text-neutral-900 mb-4">
             Important Links
@@ -643,4 +680,16 @@ export default async function JobDetailPage({ params }: PageProps) {
       </div>
     </div>
   );
+}
+
+// Drafts are hidden from the public; a logged-in admin can still preview them.
+async function getNotification(slug: string) {
+  const notification = await getNotificationRaw(slug);
+  if (!notification) return null;
+  if (!notification.published) {
+    const session = (await cookies()).get("admin_session")?.value;
+    const isAdmin = !!session && !!process.env.ADMIN_PASSWORD && session === process.env.ADMIN_PASSWORD;
+    if (!isAdmin) return null;
+  }
+  return notification;
 }
