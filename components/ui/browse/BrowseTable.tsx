@@ -17,10 +17,7 @@ interface BrowseTableProps {
   title: string;
   description: string;
   items: BrowseTableItem[];
-
   initialRows?: number;
-
-  // Navbar height
   stickyOffset?: string;
 }
 
@@ -35,7 +32,7 @@ export default function BrowseTable({
   const [showAll, setShowAll] = useState(false);
 
   const filteredItems = useMemo(() => {
-    const value = search.toLowerCase().trim();
+    const value = search.trim().toLowerCase();
 
     if (!value) return items;
 
@@ -44,93 +41,63 @@ export default function BrowseTable({
     );
   }, [items, search]);
 
-  const visibleItems = filteredItems;
+  const visibleItems =
+    showAll || search.trim()
+      ? filteredItems
+      : filteredItems.slice(0, initialRows);
+
+  const canExpand = filteredItems.length > initialRows;
 
   return (
-    <div className="rounded-2xl border border-neutral-200 bg-white">
-      {/* Sticky Complete Header */}
+    <section className="min-w-0 overflow-hidden rounded-2xl border border-neutral-200 bg-white shadow-sm">
+      {/* Header */}
       <div
-        className={showAll ? "sticky z-30 bg-white" : "bg-white"}
-        style={
-          showAll
-            ? {
-                top: stickyOffset,
-              }
-            : undefined
-        }
+        className="z-30 bg-white"
+        style={showAll ? { position: "sticky", top: stickyOffset } : undefined}
       >
-        {/* Section Header */}
-        <div
-          className="
-            border-b
-            border-neutral-100
-            px-6
-            py-5
-          "
-        >
-          <div className="flex items-start justify-between gap-6">
-            {/* Title */}
-            <div>
-              <h2 className="text-xl font-bold text-neutral-900">{title}</h2>
+        {/* Title and controls */}
+        <div className="border-b border-neutral-100 px-4 py-4 sm:px-6 sm:py-5">
+          <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+            <div className="min-w-0">
+              <h2 className="text-lg font-bold text-neutral-900 sm:text-xl">
+                {title}
+              </h2>
 
-              <p className="mt-1 text-sm text-neutral-600">{description}</p>
+              <p className="mt-1 text-sm leading-6 text-neutral-600">
+                {description}
+              </p>
             </div>
 
-            {/* Search + View */}
-            <div className="flex items-center gap-3">
-              <div className="relative">
+            <div className="flex w-full flex-col gap-2 sm:flex-row sm:items-center lg:w-auto lg:shrink-0">
+              {/* Search */}
+              <div className="relative min-w-0 flex-1 lg:w-64 lg:flex-none">
                 <Search
                   size={17}
-                  className="
-                    absolute
-                    left-3
-                    top-1/2
-                    -translate-y-1/2
-                    text-neutral-400
-                  "
+                  aria-hidden="true"
+                  className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-neutral-400"
                 />
 
                 <input
+                  type="search"
                   value={search}
-                  onChange={(e) => setSearch(e.target.value)}
+                  onChange={(e) => {
+                    setSearch(e.target.value);
+                    setShowAll(false);
+                  }}
                   placeholder="Search categories..."
-                  className="
-                    h-10
-                    w-64
-                    rounded-lg
-                    border
-                    border-neutral-200
-                    pl-9
-                    pr-3
-                    text-sm
-                    outline-none
-                    focus:border-blue-400
-                  "
+                  aria-label="Search categories"
+                  className="h-10 w-full rounded-lg border border-neutral-200 bg-white pl-9 pr-3 text-sm text-neutral-900 outline-none transition placeholder:text-neutral-400 focus:border-blue-400 focus:ring-2 focus:ring-blue-100"
                 />
               </div>
 
-              {filteredItems.length > initialRows && (
+              {canExpand && (
                 <button
                   type="button"
                   onClick={() => setShowAll((prev) => !prev)}
-                  className="
-                    flex
-                    w-48
-                    items-center
-                    justify-center
-                    gap-1
-                    rounded-lg
-                    px-3
-                    py-2
-                    text-sm
-                    font-medium
-                    text-blue-600
-                    hover:bg-blue-50
-                  "
+                  aria-expanded={showAll}
+                  className="inline-flex min-h-10 shrink-0 items-center justify-center gap-2 rounded-lg border border-neutral-200 px-4 py-2 text-sm font-medium text-blue-600 transition hover:bg-blue-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400 sm:border-transparent"
                 >
-                  {showAll
-                    ? `Show Less (${filteredItems.length})`
-                    : `View All (${filteredItems.length})`}
+                  {showAll ? "Show Less" : `View All (${filteredItems.length})`}
 
                   {showAll ? (
                     <ChevronUp size={16} />
@@ -143,124 +110,146 @@ export default function BrowseTable({
           </div>
         </div>
 
-        {/* Column Header */}
-        <table className="w-full text-left bg-white">
-          <thead>
-            <tr className="border-b border-neutral-100">
-              <th className="w-[45%] px-6 py-3 text-sm font-semibold  text-neutral-700">
-                Category
-              </th>
+        {/* Desktop/tablet column headings */}
+        <div className="hidden border-b border-neutral-100 bg-neutral-50/70 md:block">
+          <div className="grid grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)_110px] items-center gap-4 px-6 py-3 lg:grid-cols-[minmax(0,1.3fr)_minmax(0,1fr)_140px]">
+            <span className="text-sm font-semibold text-neutral-700">
+              Category
+            </span>
 
-              <th className="w-[35%] px-6 py-3 text-sm font-semibold  text-neutral-700">
-                Description
-              </th>
+            <span className="text-sm font-semibold text-neutral-700">
+              Description
+            </span>
 
-              <th className="w-[20%] px-6 py-3 text-sm font-semibold  text-neutral-700">
-                Action
-              </th>
-            </tr>
-          </thead>
-        </table>
+            <span className="text-sm font-semibold text-neutral-700">
+              Action
+            </span>
+          </div>
+        </div>
       </div>
 
-      {/* Body Scroll Area */}
-      <div className={showAll ? "" : "max-h-105 overflow-y-auto"}>
-        <table className="w-full table-fixed text-left">
-          <tbody>
+      {/* Categories */}
+      <div
+        className={
+          showAll
+            ? "min-w-0"
+            : "max-h-[420px] min-w-0 overflow-y-auto overscroll-contain"
+        }
+      >
+        {visibleItems.length > 0 ? (
+          <div className="divide-y divide-neutral-100">
             {visibleItems.map((item) => {
               const Icon = getIcon(item.iconName);
 
               return (
-                <tr
+                <div
+                  key={item.id}
                   onClick={() => {
                     window.location.href = item.href;
                   }}
-                  style={{ cursor: "pointer" }}
-                  key={item.id}
-                  className="
-                    h-16
-                    border-b
-                  border-neutral-100
-                  hover:bg-neutral-50
-                  "
+                  onKeyDown={(e) => {
+                    if (
+                      e.target === e.currentTarget &&
+                      (e.key === "Enter" || e.key === " ")
+                    ) {
+                      e.preventDefault();
+                      window.location.href = item.href;
+                    }
+                  }}
+                  role="link"
+                  tabIndex={0}
+                  aria-label={`View jobs in ${item.title}`}
+                  className="group grid cursor-pointer grid-cols-1 gap-3 px-4 py-4 transition-colors hover:bg-neutral-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-blue-400 md:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)_110px] md:items-center md:gap-4 md:px-6 lg:grid-cols-[minmax(0,1.3fr)_minmax(0,1fr)_140px]"
                 >
                   {/* Category */}
-
-                  <td className=" w-[45%] px-6 py-4">
-                    <div className="flex items-center gap-3">
-                      <div
-                        className="
-                          flex
-                          h-10
-                          w-10
-                          items-center
-                          justify-center
-                          rounded-xl
-                        "
-                        style={{
-                          backgroundColor: item.iconBg ?? "#e5e7eb",
-                        }}
-                      >
-                        {Icon && <Icon size={20} className="text-white" />}
-                      </div>
-
-                      <span
-                        title={item.title}
-                        className="font-medium block max-w-65 truncate text-neutral-900"
-                      >
-                        {truncate(item.title, 30)}
-                      </span>
+                  <div className="flex min-w-0 items-center gap-3">
+                    <div
+                      className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl"
+                      style={{
+                        backgroundColor: item.iconBg ?? "#64748b",
+                      }}
+                    >
+                      <Icon
+                        size={20}
+                        aria-hidden="true"
+                        className="text-white"
+                      />
                     </div>
-                  </td>
+
+                    <span
+                      title={item.title}
+                      className="min-w-0 break-words font-medium text-neutral-900 group-hover:text-blue-700"
+                    >
+                      {item.title}
+                    </span>
+                  </div>
 
                   {/* Description */}
-
-                  <td
+                  <p
                     title={item.description}
-                    className=" w-[35%] px-6 py-4 text-sm text-neutral-600 max-w-60 truncate"
+                    className="min-w-0 break-words text-sm leading-6 text-neutral-600 md:line-clamp-2"
                   >
-                    {truncate(item.description, 70)}
-                  </td>
+                    <span className="font-medium text-neutral-500 md:hidden">
+                      Description:{" "}
+                    </span>
+                    {item.description}
+                  </p>
 
                   {/* Action */}
-
-                  <td className="w-[20%] px-6 py-4">
+                  <div className="flex items-center justify-between gap-3 md:justify-start">
                     <a
                       href={item.href}
-                      className="
-                        text-sm
-                        font-medium
-                        text-blue-600
-                        hover:underline
-                      "
+                      onClick={(e) => e.stopPropagation()}
+                      className="inline-flex min-h-9 items-center gap-1 rounded-md text-sm font-medium text-blue-600 hover:text-blue-800 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400"
                     >
                       View Jobs
+                      <span aria-hidden="true">→</span>
                     </a>
-                  </td>
-                </tr>
+
+                    <span className="text-xs text-neutral-400 md:hidden">
+                      Open category
+                    </span>
+                  </div>
+                </div>
               );
             })}
+          </div>
+        ) : (
+          <div className="px-4 py-12 text-center sm:px-6">
+            <Search
+              size={24}
+              aria-hidden="true"
+              className="mx-auto mb-3 text-neutral-300"
+            />
 
-            {visibleItems.length === 0 && (
-              <tr>
-                <td
-                  colSpan={3}
-                  className="
-                    px-6
-                    py-10
-                    text-center
-                    text-sm
-                    text-neutral-500
-                  "
-                >
-                  No categories found
-                </td>
-              </tr>
-            )}
-          </tbody>
-        </table>
+            <p className="font-medium text-neutral-700">No categories found</p>
+
+            <p className="mt-1 text-sm text-neutral-500">
+              Try a different search term.
+            </p>
+          </div>
+        )}
       </div>
-    </div>
+
+      {/* Footer */}
+      {filteredItems.length > 0 && (
+        <div className="flex flex-wrap items-center justify-between gap-2 border-t border-neutral-100 bg-neutral-50/50 px-4 py-3 sm:px-6">
+          <p className="text-xs text-neutral-500 sm:text-sm">
+            Showing {visibleItems.length} of {filteredItems.length} categories
+          </p>
+
+          {canExpand && (
+            <button
+              type="button"
+              onClick={() => setShowAll((prev) => !prev)}
+              className="text-sm font-medium text-blue-600 hover:text-blue-800 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400"
+            >
+              {showAll ? "Show fewer" : "Show all"}
+            </button>
+          )}
+        </div>
+      )}
+    </section>
   );
 }
 
@@ -271,9 +260,4 @@ function getIcon(name: string) {
     (Icons[formattedName as keyof typeof Icons] as React.ElementType) ??
     Icons.Briefcase
   );
-}
-
-function truncate(text: string, max = 45) {
-  if (text.length <= max) return text;
-  return `${text.slice(0, max)}...`;
 }
