@@ -1,4 +1,4 @@
-import { cookies } from "next/headers";
+import { isAdminRequest } from "@/lib/admin-session";
 import {
   CalendarDays,
   IndianRupee,
@@ -686,10 +686,6 @@ export default async function JobDetailPage({ params }: PageProps) {
 async function getNotification(slug: string) {
   const notification = await getNotificationRaw(slug);
   if (!notification) return null;
-  if (!notification.published) {
-    const session = (await cookies()).get("admin_session")?.value;
-    const isAdmin = !!session && !!process.env.ADMIN_PASSWORD && session === process.env.ADMIN_PASSWORD;
-    if (!isAdmin) return null;
-  }
+  if (!notification.published && !(await isAdminRequest())) return null;
   return notification;
 }

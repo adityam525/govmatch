@@ -1,13 +1,26 @@
 import { CalendarDays, Trophy, FileCheck2, KeyRound, FileText, GraduationCap } from 'lucide-react';
 import InfoListCard from '@/components/shared/InfoListCard';
 
-function toItems(records: any[], titleKey: string, dateKey: string, hrefBuilder: (r: any) => string) {
+function toJobUpdateItems(records: any[], titleKey: string, dateKey: string) {
+  return records
+    .filter((r) => r.notification?.slug)
+    .slice(0, 4)
+    .map((r) => ({
+      id: r.id,
+      title: r[titleKey],
+      subtitle: r.notification?.title ?? '',
+      date: r[dateKey] ? new Date(r[dateKey]).toLocaleDateString('en-IN') : 'TBA',
+      href: `/jobs/${r.notification.slug}#exam-updates`,
+    }));
+}
+
+function toFileItems(records: any[], titleKey: string, dateKey: string, hrefKey: string) {
   return records.slice(0, 4).map((r) => ({
     id: r.id,
     title: r[titleKey],
     subtitle: r.notification?.title ?? '',
     date: r[dateKey] ? new Date(r[dateKey]).toLocaleDateString('en-IN') : 'TBA',
-    href: hrefBuilder(r),
+    href: r[hrefKey],
   }));
 }
 
@@ -44,25 +57,25 @@ export default function LatestUpdatesGrid({
         <InfoListCard
           title="Admit Cards"
           icon={FileCheck2}
-          items={toItems(admitCards, 'title', 'releaseDate', (r) => r.downloadLink)}
+          items={toJobUpdateItems(admitCards, 'title', 'releaseDate')}
           viewAllHref="/admit-cards"
         />
         <InfoListCard
           title="Results"
           icon={Trophy}
-          items={toItems(results, 'title', 'releaseDate', (r) => r.resultLink)}
+          items={toJobUpdateItems(results, 'title', 'releaseDate')}
           viewAllHref="/results"
         />
         <InfoListCard
           title="Answer Keys"
           icon={KeyRound}
-          items={toItems(answerKeys, 'title', 'releaseDate', (r) => r.downloadLink)}
+          items={toJobUpdateItems(answerKeys, 'title', 'releaseDate')}
           viewAllHref="/answer-key"
         />
         <InfoListCard
           title="Documents"
           icon={FileText}
-          items={toItems(documents, 'title', 'createdAt', (r) => r.fileUrl)}
+          items={toFileItems(documents, 'title', 'createdAt', 'fileUrl')}
           viewAllHref="/resources"
         />
         <InfoListCard

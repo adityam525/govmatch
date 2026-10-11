@@ -40,6 +40,8 @@ export default function LatestJobsSection({ initialNotifications }: LatestJobsSe
     if (activeTab !== 'all' && category !== activeTab) return [];
 
     const daysLeft = daysUntil(n.applicationEndDate);
+    if (daysLeft !== null && daysLeft < 0) return [];
+
     const badge: 'NEW' | 'HOT' | null = isRecentlyPosted(n.createdAt)
       ? 'NEW'
       : daysLeft !== null && daysLeft <= 3 && daysLeft >= 0

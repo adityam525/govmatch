@@ -86,6 +86,7 @@ const organizations = [
   { name: "Uttar Pradesh Police Recruitment and Promotion Board", shortName: "UPPOLICE", website: "https://uppbpb.gov.in", categorySlug: "police-security" },
   { name: "Karnataka State Police", shortName: "KSP", website: "https://ksp.karnataka.gov.in", categorySlug: "police-security" },
   { name: "Central Selection Board of Constable (Bihar Police)", shortName: "CSBC", website: "https://csbc.bih.nic.in", categorySlug: "police-security" },
+  { name: "Madhya Pradesh Employees Selection Board", shortName: "MPESB", website: "https://esb.mp.gov.in", categorySlug: "police-security" },
 
   // ---------- PSU ----------
   { name: "Indian Space Research Organisation", shortName: "ISRO", website: "https://www.isro.gov.in", categorySlug: "psu" },

@@ -29,7 +29,12 @@ export default function RecentJobsSidebar({ excludeSlug }: RecentJobsSidebarProp
   }, []);
 
   const recentJobs = notifications
-    .filter((n) => n.slug !== excludeSlug)
+    .filter((n) => n.published && n.slug !== excludeSlug)
+    .filter((n) => {
+      if (n.status === 'CLOSED' || n.status === 'CANCELLED') return false;
+      if (!n.applicationEndDate) return true;
+      return new Date(n.applicationEndDate).getTime() >= Date.now() - 1000 * 60 * 60 * 24;
+    })
     .slice(0, 8);
 
   return (

@@ -22,6 +22,7 @@ type JobPayload = {
     applicationFeeScSt?: string | null;
     selectionProcess?: string[];
     howToApply?: string | null;
+    directEligibility?: string | null;
     notificationDate?: string | null;
     applicationStartDate?: string | null;
     applicationEndDate?: string | null;
@@ -182,6 +183,7 @@ async function main() {
     applicationFeeScSt: n.applicationFeeScSt ?? null,
     selectionProcess: n.selectionProcess ?? [],
     howToApply: n.howToApply ?? null,
+    directEligibility: n.directEligibility ?? null,
     notificationDate: toDate(n.notificationDate),
     applicationStartDate: toDate(n.applicationStartDate),
     applicationEndDate: toDate(n.applicationEndDate),
