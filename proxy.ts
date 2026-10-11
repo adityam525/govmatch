@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
+import { ADMIN_SESSION_COOKIE, verifyAdminSessionToken } from '@/lib/admin-token';
 
 // Admin-only APIs: every method requires the admin session.
 const ADMIN_ONLY_PREFIXES = ['/api/admin-users', '/api/admin/'];
@@ -27,19 +28,14 @@ const WRITE_PROTECTED_PREFIXES = [
   '/api/documents',
 ];
 
-function isAdmin(request: NextRequest): boolean {
-  const session = request.cookies.get('admin_session');
-  return !!session && !!process.env.ADMIN_PASSWORD && session.value === process.env.ADMIN_PASSWORD;
-}
-
-export function proxy(request: NextRequest) {
+export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
-  const method = request.method;
-  const isRead = method === 'GET' || method === 'HEAD';
+  const isRead = request.method === 'GET' || request.method === 'HEAD';
+  const token = request.cookies.get(ADMIN_SESSION_COOKIE)?.value;
 
   // Admin pages (login page excluded)
   if (pathname.startsWith('/admin') && pathname !== '/admin/login') {
-    if (!isAdmin(request)) {
+    if (!(await verifyAdminSessionToken(token))) {
       return NextResponse.redirect(new URL('/admin/login', request.url));
     }
     return NextResponse.next();
@@ -47,7 +43,7 @@ export function proxy(request: NextRequest) {
 
   // Admin-only APIs
   if (ADMIN_ONLY_PREFIXES.some((p) => pathname.startsWith(p))) {
-    if (!isAdmin(request)) {
+    if (!(await verifyAdminSessionToken(token))) {
       return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
     }
     return NextResponse.next();
@@ -55,7 +51,7 @@ export function proxy(request: NextRequest) {
 
   // Shared APIs: reads public, writes admin-only
   if (!isRead && WRITE_PROTECTED_PREFIXES.some((p) => pathname.startsWith(p))) {
-    if (!isAdmin(request)) {
+    if (!(await verifyAdminSessionToken(token))) {
       return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
     }
   }
