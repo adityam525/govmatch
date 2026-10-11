@@ -16,31 +16,40 @@ export default function SearchHero({
   matchScore,
 }: SearchHeroProps) {
   return (
-    <div className="flex items-center py-8 md:py-16">
-      <div className="grid md:grid-cols-2 gap-6 md:gap-8 items-center w-full">
-        <div className="md:col-span-1 order-2 md:order-1">
-          <h1 className="text-2xl sm:text-3xl md:text-5xl font-bold text-neutral-900 leading-tight">
+    <section className="w-full py-8 sm:py-10 lg:py-16">
+      <div className="grid w-full grid-cols-1 items-center gap-6 md:gap-8 lg:grid-cols-2">
+        {/* Content */}
+        <div className="order-2 mx-auto w-full max-w-xl px-4 text-center md:max-w-2xl lg:order-1 lg:mx-0 lg:max-w-none lg:px-0 lg:text-left">
+          <h1 className="text-2xl font-bold leading-tight text-neutral-900 sm:text-3xl md:text-4xl xl:text-5xl">
             {title} <span className="text-[#3A6BEE]">{highlight}</span>
           </h1>
-          <p className="text-sm md:text-base text-neutral-600 mt-3 max-w-xl">{subtitle}</p>
-          <div className="mt-5">
+
+          <p className="mx-auto mt-3 max-w-lg text-sm leading-6 text-neutral-600 sm:text-base sm:leading-7 md:max-w-2xl lg:mx-0 lg:max-w-none">
+            {subtitle}
+          </p>
+
+          {/* Keep search bar width unchanged */}
+          <div className="mx-auto mt-5 w-full max-w-xl lg:mx-0">
             <SearchBar />
             <PopularSearchTags />
           </div>
         </div>
-        <div className="flex justify-center md:justify-end relative order-1 md:order-2">
+
+        {/* Illustration */}
+        <div className="relative order-1 flex min-w-0 justify-center md:justify-center lg:order-2 lg:justify-end">
           <img
             src="/illustrations/government-building.png"
             alt="Government building"
-            className="w-3/4 sm:w-2/3 md:w-full max-w-sm md:max-w-none object-contain"
+            className="h-auto w-3/4 max-w-sm object-contain sm:w-2/3 md:w-full md:max-w-lg lg:max-w-none"
           />
+
           {matchScore != null && (
-            <div className="absolute -bottom-4 left-4 md:-bottom-6 md:-left-4">
+            <div className="absolute bottom-0 left-4 sm:bottom-2 sm:left-[15%] lg:-bottom-6 lg:left-0">
               <MatchScoreCard score={matchScore} />
             </div>
           )}
         </div>
       </div>
-    </div>
+    </section>
   );
 }

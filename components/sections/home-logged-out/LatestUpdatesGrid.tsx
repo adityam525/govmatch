@@ -1,5 +1,12 @@
-import { CalendarDays, Trophy, FileCheck2, KeyRound, FileText, GraduationCap } from 'lucide-react';
-import InfoListCard from '@/components/shared/InfoListCard';
+import {
+  CalendarDays,
+  Trophy,
+  FileCheck2,
+  KeyRound,
+  FileText,
+  GraduationCap,
+} from "lucide-react";
+import InfoListCard from "@/components/shared/InfoListCard";
 
 function toJobUpdateItems(records: any[], titleKey: string, dateKey: string) {
   return records
@@ -8,18 +15,25 @@ function toJobUpdateItems(records: any[], titleKey: string, dateKey: string) {
     .map((r) => ({
       id: r.id,
       title: r[titleKey],
-      subtitle: r.notification?.title ?? '',
-      date: r[dateKey] ? new Date(r[dateKey]).toLocaleDateString('en-IN') : 'TBA',
+      subtitle: r.notification?.title ?? "",
+      date: r[dateKey]
+        ? new Date(r[dateKey]).toLocaleDateString("en-IN")
+        : "TBA",
       href: `/jobs/${r.notification.slug}#exam-updates`,
     }));
 }
 
-function toFileItems(records: any[], titleKey: string, dateKey: string, hrefKey: string) {
+function toFileItems(
+  records: any[],
+  titleKey: string,
+  dateKey: string,
+  hrefKey: string,
+) {
   return records.slice(0, 4).map((r) => ({
     id: r.id,
     title: r[titleKey],
-    subtitle: r.notification?.title ?? '',
-    date: r[dateKey] ? new Date(r[dateKey]).toLocaleDateString('en-IN') : 'TBA',
+    subtitle: r.notification?.title ?? "",
+    date: r[dateKey] ? new Date(r[dateKey]).toLocaleDateString("en-IN") : "TBA",
     href: r[hrefKey],
   }));
 }
@@ -45,37 +59,42 @@ export default function LatestUpdatesGrid({
     .map((n) => ({
       id: n.id,
       title: n.title,
-      subtitle: n.organization?.name ?? '',
-      date: new Date(n.examDate).toLocaleDateString('en-IN'),
+      subtitle: n.organization?.name ?? "",
+      date: new Date(n.examDate).toLocaleDateString("en-IN"),
       href: `/exams/${n.slug}`,
     }));
 
   return (
     <section>
-      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <InfoListCard title="Upcoming Exams" icon={CalendarDays} items={examItems} viewAllHref="/exams" />
+      <div className="grid grid-cols-1 gap-4 min-[700px]:grid-cols-2 min-[1100px]:grid-cols-3 sm:gap-6">
+        <InfoListCard
+          title="Upcoming Exams"
+          icon={CalendarDays}
+          items={examItems}
+          viewAllHref="/exams"
+        />
         <InfoListCard
           title="Admit Cards"
           icon={FileCheck2}
-          items={toJobUpdateItems(admitCards, 'title', 'releaseDate')}
+          items={toJobUpdateItems(admitCards, "title", "releaseDate")}
           viewAllHref="/admit-cards"
         />
         <InfoListCard
           title="Results"
           icon={Trophy}
-          items={toJobUpdateItems(results, 'title', 'releaseDate')}
+          items={toJobUpdateItems(results, "title", "releaseDate")}
           viewAllHref="/results"
         />
         <InfoListCard
           title="Answer Keys"
           icon={KeyRound}
-          items={toJobUpdateItems(answerKeys, 'title', 'releaseDate')}
+          items={toJobUpdateItems(answerKeys, "title", "releaseDate")}
           viewAllHref="/answer-key"
         />
         <InfoListCard
           title="Documents"
           icon={FileText}
-          items={toFileItems(documents, 'title', 'createdAt', 'fileUrl')}
+          items={toFileItems(documents, "title", "createdAt", "fileUrl")}
           viewAllHref="/resources"
         />
         <InfoListCard

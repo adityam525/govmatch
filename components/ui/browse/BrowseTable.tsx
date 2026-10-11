@@ -25,7 +25,7 @@ export default function BrowseTable({
   title,
   description,
   items,
-  initialRows = 8,
+  initialRows = 80,
   stickyOffset = "64px",
 }: BrowseTableProps) {
   const [search, setSearch] = useState("");
