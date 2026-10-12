@@ -1,26 +1,42 @@
 import { NextResponse } from 'next/server';
 import bcrypt from 'bcryptjs';
 import { prisma } from '@/lib/prisma';
+import { clientIp, rateLimit } from '@/lib/rate-limit';
+
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export async function POST(request: Request) {
+  // 5 signups per hour per IP
+  const limit = rateLimit(`signup:${clientIp(request)}`, 5, 60 * 60 * 1000);
+  if (!limit.allowed) {
+    return NextResponse.json(
+      { message: 'Too many signup attempts. Please try again later.' },
+      { status: 429, headers: { 'Retry-After': String(limit.retryAfterSeconds) } },
+    );
+  }
+
   try {
     const body = await request.json();
-    const {
-      name,
-      email,
-      password,
-      dateOfBirth,
-      gender,
-      category,
-      qualificationId,
-      branchId,
-      degreeName,
-      yearOfPassing,
-      percentage,
-    } = body;
+    const name = String(body.name ?? '').trim();
+    const email = String(body.email ?? '').trim().toLowerCase();
+    const password = String(body.password ?? '');
+    const { dateOfBirth, gender, category, qualificationId, branchId, degreeName, yearOfPassing, percentage } = body;
 
     if (!email || !password || !name) {
       return NextResponse.json({ message: 'Name, email, and password are required' }, { status: 400 });
+    }
+    if (!EMAIL_RE.test(email) || email.length > 254) {
+      return NextResponse.json({ message: 'Please enter a valid email address' }, { status: 400 });
+    }
+    if (name.length > 100) {
+      return NextResponse.json({ message: 'Name is too long' }, { status: 400 });
+    }
+    if (password.length < 8) {
+      return NextResponse.json({ message: 'Password must be at least 8 characters' }, { status: 400 });
+    }
+    // bcrypt only uses the first 72 bytes; reject longer input instead of silently truncating
+    if (Buffer.byteLength(password, 'utf8') > 72) {
+      return NextResponse.json({ message: 'Password is too long (max 72 characters)' }, { status: 400 });
     }
 
     const existing = await prisma.user.findUnique({ where: { email } });

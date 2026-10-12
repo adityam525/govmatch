@@ -4,6 +4,7 @@ import Google from 'next-auth/providers/google';
 import Credentials from 'next-auth/providers/credentials';
 import bcrypt from 'bcryptjs';
 import { prisma } from './prisma';
+import { rateLimit, resetRateLimit } from './rate-limit';
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
   adapter: PrismaAdapter(prisma),
@@ -25,20 +26,34 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       async authorize(credentials) {
         if (!credentials?.email || !credentials?.password) return null;
 
-        const user = await prisma.user.findUnique({
-          where: { email: credentials.email as string },
-        });
+        const email = String(credentials.email).trim().toLowerCase();
 
+        // Throttle guessing per account: 10 attempts / 15 min.
+        // (authorize() has no request IP, so the limit is keyed on the email.)
+        const key = `login:${email}`;
+        if (!rateLimit(key, 10, 15 * 60 * 1000).allowed) return null;
+
+        const user = await prisma.user.findUnique({ where: { email } });
         if (!user || !user.passwordHash || !user.isActive) return null;
 
-        const isValid = await bcrypt.compare(credentials.password as string, user.passwordHash);
+        const isValid = await bcrypt.compare(String(credentials.password), user.passwordHash);
         if (!isValid) return null;
 
+        resetRateLimit(key);
         return { id: user.id, email: user.email, name: user.name };
       },
     }),
   ],
   callbacks: {
+    // Deactivated accounts can't sign in through any provider (including Google).
+    async signIn({ user }) {
+      if (!user?.email) return true;
+      const existing = await prisma.user.findUnique({
+        where: { email: user.email.toLowerCase() },
+        select: { isActive: true },
+      });
+      return existing ? existing.isActive : true;
+    },
     async jwt({ token, user }) {
       if (user) token.id = user.id;
       return token;
