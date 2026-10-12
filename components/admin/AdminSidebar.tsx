@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import clsx from 'clsx';
 import {
-  LayoutDashboard, Bell, Building2, MapPin, Tags, Users, GraduationCap, Mail,
+  LayoutDashboard, Bell, Building2, MapPin, Tags, Users, GraduationCap, Mail, Upload,
 } from 'lucide-react';
 
 const navSections = [
@@ -12,6 +12,7 @@ const navSections = [
     items: [
       { label: 'Dashboard', href: '/admin', icon: LayoutDashboard },
       { label: 'Jobs', href: '/admin/notifications', icon: Bell },
+      { label: 'Import Jobs', href: '/admin/import', icon: Upload },
       { label: 'Users', href: '/admin/users', icon: Users },
       { label: 'Messages', href: '/admin/messages', icon: Mail },
     ],
