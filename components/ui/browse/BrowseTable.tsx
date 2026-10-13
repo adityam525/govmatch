@@ -25,7 +25,7 @@ export default function BrowseTable({
   title,
   description,
   items,
-  initialRows = 80,
+  initialRows = 150,
   stickyOffset = "64px",
 }: BrowseTableProps) {
   const [search, setSearch] = useState("");
@@ -133,7 +133,7 @@ export default function BrowseTable({
         className={
           showAll
             ? "min-w-0"
-            : "max-h-[420px] min-w-0 overflow-y-auto overscroll-contain"
+            : "max-h-[432px] min-w-0 overflow-y-auto overscroll-contain"
         }
       >
         {visibleItems.length > 0 ? (
@@ -232,7 +232,7 @@ export default function BrowseTable({
       </div>
 
       {/* Footer */}
-      {filteredItems.length > 0 && (
+      {/* {filteredItems.length > 0 && (
         <div className="flex flex-wrap items-center justify-between gap-2 border-t border-neutral-100 bg-neutral-50/50 px-4 py-3 sm:px-6">
           <p className="text-xs text-neutral-500 sm:text-sm">
             Showing {visibleItems.length} of {filteredItems.length} categories
@@ -248,7 +248,7 @@ export default function BrowseTable({
             </button>
           )}
         </div>
-      )}
+      )} */}
     </section>
   );
 }

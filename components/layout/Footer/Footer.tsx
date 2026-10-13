@@ -5,6 +5,9 @@ const footerLinks = {
   Platform: [
     { label: "Jobs", href: "/jobs" },
     { label: "Upcoming Exams", href: "/exams" },
+    { label: "Admit Cards", href: "/admit-cards" },
+    { label: "Results", href: "/results" },
+    { label: "Answer Keys", href: "/answer-key" },
     { label: "Study Zone", href: "/study-zone" },
     { label: "Pricing", href: "/pricing" },
   ],

@@ -51,3 +51,154 @@
 body {
   font-family: "Inter Variable", "Inter", system-ui, sans-serif;
 }
+
+/* =========================================================
+   SEARCH HERO — LEFT SIDE ONLY
+   Animated heading, gradient, underline and sparkle
+   ========================================================= */
+
+.hero-content {
+  min-width: 0;
+}
+
+/* Heading entrance */
+.hero-heading {
+  animation: hero-heading-enter 650ms ease-out both;
+}
+
+/* Highlighted heading text */
+.hero-highlight {
+  position: relative;
+  display: inline-block;
+  isolation: isolate;
+  padding-bottom: 8px;
+}
+
+/* Animated blue-purple gradient */
+.hero-design-gradient .hero-highlight-text {
+  display: inline;
+  color: #3a6bee;
+  background: linear-gradient(
+    100deg,
+    #2563eb 0%,
+    #6553ee 35%,
+    #9333ea 65%,
+    #3a6bee 100%
+  );
+  background-size: 250% 100%;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: hero-gradient-flow 5s ease-in-out infinite;
+}
+
+/* Animated underline */
+.hero-underline {
+  position: absolute;
+  right: 0;
+  bottom: 1px;
+  left: 0;
+  height: 3px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #3a6bee, #8b5cf6, #d946ef);
+  transform: scaleX(0);
+  transform-origin: left center;
+  animation: hero-underline-draw 800ms 300ms ease-out forwards;
+}
+
+/* Decorative sparkle */
+.hero-sparkle {
+  position: absolute;
+  top: -0.35em;
+  right: -0.48em;
+  z-index: 2;
+  color: #8b5cf6;
+  font-size: 0.48em;
+  line-height: 1;
+  pointer-events: none;
+  animation: hero-sparkle-pulse 2.4s 700ms ease-in-out infinite;
+}
+
+/* Subtitle entrance */
+.hero-subtitle {
+  animation: hero-content-enter 650ms 100ms ease-out both;
+}
+
+/* Search area entrance — preserves its existing styling */
+.hero-search {
+  animation: hero-content-enter 650ms 180ms ease-out both;
+}
+
+/* =========================================================
+   ANIMATIONS
+   ========================================================= */
+
+@keyframes hero-heading-enter {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes hero-content-enter {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes hero-gradient-flow {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+@keyframes hero-underline-draw {
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@keyframes hero-sparkle-pulse {
+  0%,
+  100% {
+    opacity: 0.45;
+    transform: scale(0.85) rotate(0deg);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1.12) rotate(18deg);
+  }
+}
+
+/* Respect reduced-motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .hero-heading,
+  .hero-highlight-text,
+  .hero-underline,
+  .hero-sparkle,
+  .hero-subtitle,
+  .hero-search {
+    animation: none !important;
+  }
+
+  .hero-underline {
+    transform: scaleX(1);
+  }
+}
