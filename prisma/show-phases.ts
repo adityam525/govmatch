@@ -1,6 +1,6 @@
 import 'dotenv/config';
 import { prisma } from '../lib/prisma';
-import { computeJobPhase, formatCalendarDate, todayIST, STALE_AFTER_DAYS } from '../lib/job-status';
+import { computeJobPhase, formatCalendarDate, todayIST } from '../lib/job-status';
 
 async function main() {
   const jobs = await prisma.notification.findMany({
@@ -8,7 +8,7 @@ async function main() {
     orderBy: { createdAt: 'desc' },
   });
   const now = new Date();
-  console.log(`Today (IST): ${formatCalendarDate(todayIST(now))} | closes after ${STALE_AFTER_DAYS} quiet days\n`);
+  console.log(`Today (IST): ${formatCalendarDate(todayIST(now))}\n`);
 
   const counts: Record<string, number> = {};
   const table = jobs.map((job) => {
@@ -18,10 +18,10 @@ async function main() {
       phase: info.phase,
       published: job.published ? 'yes' : 'draft',
       stored: job.status,
-      apps: info.applicationOpen ? 'open' : '-',
+      applications: info.applicationOpen ? 'open' : '-',
       start: formatCalendarDate(job.applicationStartDate),
       end: formatCalendarDate(job.applicationEndDate),
-      lastActivity: formatCalendarDate(info.lastActivity),
+      finalResult: job.results.some((r) => r.resultType === 'FINAL') ? 'yes' : '-',
       title: job.title.length > 46 ? job.title.slice(0, 45) + '...' : job.title,
     };
   });

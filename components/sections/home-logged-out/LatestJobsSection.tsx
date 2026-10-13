@@ -1,109 +1,78 @@
-'use client';
-
-import { useState } from 'react';
 import SectionHeader from '@/components/ui/SectionHeader';
-import JobCard, { JobCardData } from '@/components/jobs/JobCard';
-import TabFilterBar from './TabFilterBar';
 import ViewAllBanner from '@/components/shared/ViewAllBanner';
+import type { JobCardData } from '@/components/jobs/JobCard';
+import { getPublishedJobs } from '@/lib/job-queries';
+import { daysBetween, formatCalendarDate, todayIST } from '@/lib/job-status';
+import LatestJobsTabs, { type LatestJobItem } from './LatestJobsTabs';
 
-const orgIconMap: Record<string, string> = {
+const ORG_ICONS: Record<string, string> = {
   SSC: 'crown', RRB: 'train', IBPS: 'landmark', UPSC: 'crown',
   IAF: 'shield', NAVY: 'shield', DSSSB: 'landmark', ISRO: 'shield', IOCL: 'shield',
 };
 
-const categoryMap: Record<string, string> = {
+const CATEGORY_TABS: Record<string, string> = {
   ssc: 'central', railway: 'central', banking: 'banking', upsc: 'central',
   'state-government': 'state', defence: 'defence', psu: 'psu', 'police-security': 'defence',
   teaching: 'teaching', healthcare: 'central', 'judiciary-law': 'central', agriculture: 'central',
 };
 
-function daysUntil(dateStr: string | null): number | null {
-  if (!dateStr) return null;
-  const diff = new Date(dateStr).getTime() - Date.now();
-  return Math.ceil(diff / (1000 * 60 * 60 * 24));
+const MAX_CARDS = 40;
+const NEW_FOR_DAYS = 14;
+
+function unique(values: (string | null | undefined)[]): string[] {
+  return [...new Set(values.filter((v): v is string => !!v))];
 }
 
-function isRecentlyPosted(createdAt: string): boolean {
-  const diff = Date.now() - new Date(createdAt).getTime();
-  return diff < 1000 * 60 * 60 * 24 * 14;
-}
+// The homepage still passes the old `initialNotifications` prop. It is ignored:
+// this section now reads jobs itself and shows one card per job (not per post).
+export default async function LatestJobsSection(_props: Record<string, unknown>) {
+  const today = todayIST();
 
-interface LatestJobsSectionProps {
-  initialNotifications: any[];
-}
+  const jobs = (await getPublishedJobs())
+    .filter((job) => job.phase === 'LIVE' && job.applicationOpen)
+    .sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime())
+    .slice(0, MAX_CARDS);
 
-export default function LatestJobsSection({ initialNotifications }: LatestJobsSectionProps) {
-  const [activeTab, setActiveTab] = useState('all');
+  const items: LatestJobItem[] = jobs.map((job) => {
+    const end = job.applicationEndDate;
+    const daysLeft = end ? daysBetween(today, end) : null;
+    const isNew = Date.now() - job.createdAt.getTime() < NEW_FOR_DAYS * 24 * 60 * 60 * 1000;
+    const badge: JobCardData['badge'] = isNew ? 'NEW' : daysLeft !== null && daysLeft <= 3 ? 'HOT' : null;
 
-  const cards: JobCardData[] = initialNotifications.flatMap((n) => {
-    const category = categoryMap[n.organization?.category?.slug] ?? 'central';
-    if (activeTab !== 'all' && category !== activeTab) return [];
+    const qualifications = unique(job.posts.flatMap((post) => post.qualifications.map((q) => q.name)));
+    const payScales = unique(job.posts.map((post) => post.payScale));
 
-    const daysLeft = daysUntil(n.applicationEndDate);
-    if (daysLeft !== null && daysLeft < 0) return [];
-
-    const badge: 'NEW' | 'HOT' | null = isRecentlyPosted(n.createdAt)
-      ? 'NEW'
-      : daysLeft !== null && daysLeft <= 3 && daysLeft >= 0
-      ? 'HOT'
-      : null;
-
-    const lastDate = n.applicationEndDate
-      ? new Date(n.applicationEndDate).toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' })
-      : 'TBA';
-
-    if (!n.posts || n.posts.length === 0) {
-      return [{
-        id: n.id,
-        title: n.title,
-        org: n.organization?.name ?? 'Unknown',
-        orgIconName: orgIconMap[n.organization?.shortName] ?? 'shield',
-        slug: n.slug,
-        vacancies: n.totalVacancies ?? 0,
-        lastDate,
+    return {
+      category: CATEGORY_TABS[job.organization?.category?.slug ?? ''] ?? 'central',
+      card: {
+        id: job.id,
+        title: job.title,
+        org: job.organization?.name ?? 'Unknown',
+        orgIconName: ORG_ICONS[job.organization?.shortName ?? ''] ?? 'shield',
+        slug: job.slug,
+        vacancies: job.vacancyTotal,
+        lastDate: formatCalendarDate(end),
         daysLeft,
-        payScale: null,
-        qualificationName: null,
+        payScale: payScales.length === 1 ? payScales[0] : null,
+        qualificationName:
+          qualifications.length === 0
+            ? null
+            : qualifications.length <= 2
+              ? qualifications.join(', ')
+              : `${qualifications.slice(0, 2).join(', ')} +${qualifications.length - 2}`,
         badge,
-      }];
-    }
-
-    return n.posts.map((post: any) => ({
-      id: post.id,
-      title: `${n.title} - ${post.title}`,
-      org: n.organization?.name ?? 'Unknown',
-      orgIconName: orgIconMap[n.organization?.shortName] ?? 'shield',
-      slug: n.slug,
-      vacancies: post.vacancies ?? 0,
-      lastDate,
-      daysLeft,
-      payScale: post.payScale ?? null,
-      qualificationName: post.qualification?.name ?? null,
-      badge,
-    }));
+      },
+    };
   });
 
   return (
     <section>
       <SectionHeader
         title="Latest Government Job Notifications"
-        description="Freshly published openings, verified against official sources"
+        description="Open for applications now, newest first"
         viewAllHref="/jobs"
       />
-      <TabFilterBar activeTab={activeTab} onChange={setActiveTab} />
-
-      <div className="mt-4 overflow-y-auto" style={{ maxHeight: '1088px' }}>
-        {cards.length === 0 ? (
-          <p className="text-sm text-neutral-400 py-6 text-center">No jobs found.</p>
-        ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 pb-1">
-            {cards.map((card) => (
-              <JobCard key={card.id} job={card} />
-            ))}
-          </div>
-        )}
-      </div>
-
+      <LatestJobsTabs items={items} />
       <ViewAllBanner href="/jobs" label="View All Latest Jobs" />
     </section>
   );

@@ -22,7 +22,7 @@ export default async function QuickStatsBar() {
 
   const live = jobs.filter((job) => job.phase === 'LIVE');
   const stats: Stat[] = [
-    { icon: <Briefcase size={20} />, iconBg: colors.primary[600], value: live.length, label: 'Live Jobs', href: '/jobs?phase=live' },
+    { icon: <Briefcase size={20} />, iconBg: colors.primary[600], value: live.filter((job) => job.applicationOpen).length, label: 'Applications Open', href: '/jobs?phase=live' },
     { icon: <CalendarClock size={20} />, iconBg: colors.accent.purple, value: jobs.filter((job) => job.phase === 'UPCOMING').length, label: 'Upcoming Jobs', href: '/jobs?phase=upcoming' },
     { icon: <Clock size={20} />, iconBg: colors.accent.orange, value: live.filter((job) => job.applicationEndDate?.getTime() === today).length, label: 'Last Date Today', href: '/jobs?phase=live' },
     { icon: <FileCheck2 size={20} />, iconBg: colors.accent.green, value: admitCardJobs.length, label: 'Admit Cards', href: '/admit-cards' },

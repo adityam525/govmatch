@@ -3,8 +3,12 @@
 //
 //   UPCOMING   applications have not opened yet (or: announced, dates still awaited)
 //   LIVE       from the day applications open until the FINAL result is declared
-//   CLOSED     final result declared, closed manually, or quiet for STALE_AFTER_DAYS
+//   CLOSED     final result declared, or closed manually
 //   CANCELLED  set manually
+//
+// There is deliberately no timer: some recruitments take years, so a job stays
+// LIVE until a FINAL result is recorded or an admin closes it. Use
+// `applicationOpen` to tell "accepting applications" from "in progress".
 //
 // The stored `status` column is read like this: LIVE and UPCOMING mean "work it
 // out from the dates"; CLOSED and CANCELLED are manual overrides that always win.
@@ -12,18 +16,12 @@
 export type JobPhase = 'UPCOMING' | 'LIVE' | 'CLOSED' | 'CANCELLED';
 export type PhaseTab = 'live' | 'upcoming' | 'closed';
 
-// A job with no FINAL result closes once nothing on it (application, exam,
-// admit card, result, answer key...) is dated within this many days. It
-// reopens by itself if a newer date is added later.
-export const STALE_AFTER_DAYS = 90;
-
 const DAY_MS = 24 * 60 * 60 * 1000;
 
 type DateLike = Date | string | null | undefined;
 
 export interface PhaseInput {
   status: string;
-  createdAt?: DateLike;
   notificationDate?: DateLike;
   applicationStartDate?: DateLike;
   applicationEndDate?: DateLike;
@@ -115,9 +113,6 @@ export function computeJobPhase(job: PhaseInput, now: Date = new Date()): JobPha
 
   if (start && start > today) return result('UPCOMING');
   if (!start && job.status === 'UPCOMING') return result('UPCOMING');
-
-  const reference = lastActivity ?? toDate(job.createdAt);
-  if (reference && daysBetween(reference, today) > STALE_AFTER_DAYS) return result('CLOSED');
 
   return result('LIVE', end ? end >= today : true);
 }
