@@ -1,7 +1,8 @@
 import { Briefcase, CalendarClock, Clock, FileCheck2, Trophy } from 'lucide-react';
 import Link from 'next/link';
 import { colors } from '@/styles/tokens';
-import { prisma } from '@/lib/prisma';
+import { getPublishedJobs, getAdmitCardRows, getResultRows } from '@/lib/job-queries';
+import { todayIST } from '@/lib/job-status';
 
 interface Stat {
   icon: React.ReactNode;
@@ -11,49 +12,21 @@ interface Stat {
   href: string;
 }
 
-// Deadlines are stored as UTC midnight of the calendar date, so "today" is the
-// current calendar date in India (IST, UTC+5:30) expressed as UTC midnight.
-function todayStartIST(): Date {
-  const ist = new Date(Date.now() + 5.5 * 60 * 60 * 1000);
-  return new Date(`${ist.toISOString().slice(0, 10)}T00:00:00.000Z`);
-}
-
-async function getCounts() {
-  const todayStart = todayStartIST();
-  const tomorrowStart = new Date(todayStart.getTime() + 24 * 60 * 60 * 1000);
-
-  const [live, upcoming, lastDateToday, admitCards, results] = await Promise.all([
-    prisma.notification.count({
-      where: {
-        published: true,
-        status: 'LIVE',
-        OR: [{ applicationEndDate: null }, { applicationEndDate: { gte: todayStart } }],
-      },
-    }),
-    prisma.notification.count({ where: { published: true, status: 'UPCOMING' } }),
-    prisma.notification.count({
-      where: {
-        published: true,
-        status: 'LIVE',
-        applicationEndDate: { gte: todayStart, lt: tomorrowStart },
-      },
-    }),
-    prisma.admitCard.count({ where: { notification: { published: true } } }),
-    prisma.result.count({ where: { notification: { published: true } } }),
+export default async function QuickStatsBar() {
+  const today = todayIST().getTime();
+  const [jobs, admitCardJobs, resultJobs] = await Promise.all([
+    getPublishedJobs(),
+    getAdmitCardRows(Infinity),
+    getResultRows(Infinity),
   ]);
 
-  return { live, upcoming, lastDateToday, admitCards, results };
-}
-
-export default async function QuickStatsBar() {
-  const counts = await getCounts();
-
+  const live = jobs.filter((job) => job.phase === 'LIVE');
   const stats: Stat[] = [
-    { icon: <Briefcase size={20} />, iconBg: colors.primary[600], value: counts.live, label: 'Live Jobs', href: '/jobs' },
-    { icon: <CalendarClock size={20} />, iconBg: colors.accent.purple, value: counts.upcoming, label: 'Upcoming Jobs', href: '/jobs' },
-    { icon: <Clock size={20} />, iconBg: colors.accent.orange, value: counts.lastDateToday, label: 'Last Date Today', href: '/jobs' },
-    { icon: <FileCheck2 size={20} />, iconBg: colors.accent.green, value: counts.admitCards, label: 'Admit Cards', href: '/admit-cards' },
-    { icon: <Trophy size={20} />, iconBg: '#ec4899', value: counts.results, label: 'Results Declared', href: '/results' },
+    { icon: <Briefcase size={20} />, iconBg: colors.primary[600], value: live.length, label: 'Live Jobs', href: '/jobs?phase=live' },
+    { icon: <CalendarClock size={20} />, iconBg: colors.accent.purple, value: jobs.filter((job) => job.phase === 'UPCOMING').length, label: 'Upcoming Jobs', href: '/jobs?phase=upcoming' },
+    { icon: <Clock size={20} />, iconBg: colors.accent.orange, value: live.filter((job) => job.applicationEndDate?.getTime() === today).length, label: 'Last Date Today', href: '/jobs?phase=live' },
+    { icon: <FileCheck2 size={20} />, iconBg: colors.accent.green, value: admitCardJobs.length, label: 'Admit Cards', href: '/admit-cards' },
+    { icon: <Trophy size={20} />, iconBg: '#ec4899', value: resultJobs.length, label: 'Results Declared', href: '/results' },
   ];
 
   return (

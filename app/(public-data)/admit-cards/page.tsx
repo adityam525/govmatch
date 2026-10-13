@@ -1,37 +1,18 @@
-export const dynamic = "force-dynamic";
 import { FileCheck2 } from 'lucide-react';
-import Card from '@/components/ui/Card';
-import SectionHeader from '@/components/ui/SectionHeader';
-import InfoListItem from '@/components/shared/InfoListItem';
-import { prisma } from '@/lib/prisma';
+import UpdatesListPage from '@/components/sections/updates/UpdatesListPage';
+import { getAdmitCardRows } from '@/lib/job-queries';
+
+export const dynamic = 'force-dynamic';
 
 export default async function AdmitCardsPage() {
-  const items = await prisma.admitCard.findMany({
-    include: { notification: true },
-    orderBy: { createdAt: 'desc' },
-  });
-
+  const rows = await getAdmitCardRows(Infinity);
   return (
-    <div className="max-w-4xl mx-auto px-6 py-8">
-      <Card padding="lg">
-        <SectionHeader title="Admit Cards" />
-        {items.length === 0 ? (
-          <p className="text-sm text-neutral-600 py-8 text-center">No admit cards published yet.</p>
-        ) : (
-          <div>
-            {items.map((item) => (
-              <InfoListItem
-                key={item.id}
-                icon={FileCheck2}
-                title={item.title}
-                subtitle={item.notification?.title ?? ''}
-                date={item.releaseDate ? new Date(item.releaseDate).toLocaleDateString('en-IN') : 'TBA'}
-                href={item.downloadLink}
-              />
-            ))}
-          </div>
-        )}
-      </Card>
-    </div>
+    <UpdatesListPage
+      title="Admit Cards"
+      description="Jobs with an admit card available for an exam that is still ahead"
+      icon={FileCheck2}
+      rows={rows}
+      emptyText="No admit cards available right now."
+    />
   );
 }

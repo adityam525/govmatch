@@ -1,109 +1,29 @@
+import { CalendarDays, Trophy, FileCheck2, KeyRound } from 'lucide-react';
+import InfoListCard from '@/components/shared/InfoListCard';
 import {
-  CalendarDays,
-  Trophy,
-  FileCheck2,
-  KeyRound,
-  FileText,
-  GraduationCap,
-} from "lucide-react";
-import InfoListCard from "@/components/shared/InfoListCard";
+  getUpcomingExamRows,
+  getAdmitCardRows,
+  getResultRows,
+  getAnswerKeyRows,
+} from '@/lib/job-queries';
 
-function toJobUpdateItems(records: any[], titleKey: string, dateKey: string) {
-  return records
-    .filter((r) => r.notification?.slug)
-    .slice(0, 4)
-    .map((r) => ({
-      id: r.id,
-      title: r[titleKey],
-      subtitle: r.notification?.title ?? "",
-      date: r[dateKey]
-        ? new Date(r[dateKey]).toLocaleDateString("en-IN")
-        : "TBA",
-      href: `/jobs/${r.notification.slug}#exam-updates`,
-    }));
-}
-
-function toFileItems(
-  records: any[],
-  titleKey: string,
-  dateKey: string,
-  hrefKey: string,
-) {
-  return records.slice(0, 4).map((r) => ({
-    id: r.id,
-    title: r[titleKey],
-    subtitle: r.notification?.title ?? "",
-    date: r[dateKey] ? new Date(r[dateKey]).toLocaleDateString("en-IN") : "TBA",
-    href: r[hrefKey],
-  }));
-}
-
-interface LatestUpdatesGridProps {
-  notifications: any[];
-  admitCards: any[];
-  results: any[];
-  answerKeys: any[];
-  documents: any[];
-}
-
-export default function LatestUpdatesGrid({
-  notifications,
-  admitCards,
-  results,
-  answerKeys,
-  documents,
-}: LatestUpdatesGridProps) {
-  const examItems = notifications
-    .filter((n) => n.examDate)
-    .slice(0, 4)
-    .map((n) => ({
-      id: n.id,
-      title: n.title,
-      subtitle: n.organization?.name ?? "",
-      date: new Date(n.examDate).toLocaleDateString("en-IN"),
-      href: `/exams/${n.slug}`,
-    }));
+// The homepage still passes the old per-table props. They are ignored: every
+// list below is now derived from the jobs themselves.
+export default async function LatestUpdatesGrid(_props: Record<string, unknown>) {
+  const [exams, admitCards, results, answerKeys] = await Promise.all([
+    getUpcomingExamRows(5),
+    getAdmitCardRows(5),
+    getResultRows(5),
+    getAnswerKeyRows(5),
+  ]);
 
   return (
     <section>
-      <div className="grid grid-cols-1 gap-4 min-[700px]:grid-cols-2 min-[1100px]:grid-cols-3 sm:gap-6">
-        <InfoListCard
-          title="Upcoming Exams"
-          icon={CalendarDays}
-          items={examItems}
-          viewAllHref="/exams"
-        />
-        <InfoListCard
-          title="Admit Cards"
-          icon={FileCheck2}
-          items={toJobUpdateItems(admitCards, "title", "releaseDate")}
-          viewAllHref="/admit-cards"
-        />
-        <InfoListCard
-          title="Results"
-          icon={Trophy}
-          items={toJobUpdateItems(results, "title", "releaseDate")}
-          viewAllHref="/results"
-        />
-        <InfoListCard
-          title="Answer Keys"
-          icon={KeyRound}
-          items={toJobUpdateItems(answerKeys, "title", "releaseDate")}
-          viewAllHref="/answer-key"
-        />
-        <InfoListCard
-          title="Documents"
-          icon={FileText}
-          items={toFileItems(documents, "title", "createdAt", "fileUrl")}
-          viewAllHref="/resources"
-        />
-        <InfoListCard
-          title="Admission"
-          icon={GraduationCap}
-          items={[]}
-          emptyMessage="No admission notices published yet"
-          viewAllHref="/admission"
-        />
+      <div className="grid gap-6 md:grid-cols-2">
+        <InfoListCard title="Upcoming Exams" icon={CalendarDays} items={exams} viewAllHref="/exams" emptyMessage="No exams scheduled right now" />
+        <InfoListCard title="Admit Cards" icon={FileCheck2} items={admitCards} viewAllHref="/admit-cards" emptyMessage="No admit cards available right now" />
+        <InfoListCard title="Results" icon={Trophy} items={results} viewAllHref="/results" emptyMessage="No results declared yet" />
+        <InfoListCard title="Answer Keys" icon={KeyRound} items={answerKeys} viewAllHref="/answer-key" emptyMessage="No answer keys released yet" />
       </div>
     </section>
   );
