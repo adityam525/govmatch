@@ -18,15 +18,15 @@ export default function AdminLayout({
   }
 
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex min-h-screen flex-col">
+      {" "}
       <Navbar />
-      <div className="flex flex-1 justify-center">
-        <div className="min-h-screen bg-neutral-50 flex">
-          <AdminSidebar />
-          <div className="flex-1">{children}</div>
-        </div>
+      <div className="flex flex-1 min-w-0 flex-col md:flex-row bg-neutral-50">
+        {" "}
+        <AdminSidebar />
+        <main className="min-w-0 flex-1"> {children} </main>{" "}
       </div>
-      <Footer />
+      <Footer />{" "}
     </div>
   );
 }
