@@ -7,6 +7,8 @@ import JobFiltersBar from "@/components/jobs/JobFiltersBar";
 import SectionHeader from "@/components/ui/SectionHeader";
 import { Prisma } from "@prisma/client";
 import { resolveCategoryFilter } from "@/lib/category-filters";
+import { parseView, getViewIds, getPhaseCounts } from "@/lib/jobs-view";
+import JobsViewTabs from "@/components/jobs/JobsViewTabs";
 
 const SEARCH_ALIASES: Record<string, string[]> = {
   "bank po": ["probationary officer", "management trainee", "po"],
@@ -101,6 +103,9 @@ export default async function JobsPage({ searchParams }: JobsPageProps) {
   const branchSlugs = params.branches?.split(",").filter(Boolean) ?? [];
 
   const selectedSort = getSortType(params.sort);
+  const view = parseView(params);
+  const viewIds = await getViewIds(view);
+  const phaseCounts = await getPhaseCounts();
 
   const session = await auth();
   const userId = (session?.user as any)?.id;
@@ -204,7 +209,7 @@ export default async function JobsPage({ searchParams }: JobsPageProps) {
 
   const notifications = await prisma.notification.findMany({
     where: {
-      status: "LIVE",
+      id: { in: viewIds },
       published: true,
 
       ...(hasOrganizationFilter
@@ -456,6 +461,7 @@ export default async function JobsPage({ searchParams }: JobsPageProps) {
   return (
     <div className="mx-auto max-w-7xl px-6 py-8">
       <div className="mb-6">
+        <JobsViewTabs view={view} counts={phaseCounts} params={params} />
         <JobFiltersBar />
       </div>
 

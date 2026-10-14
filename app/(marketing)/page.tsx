@@ -18,6 +18,8 @@ import NotificationPromptCard from "@/components/sections/home-logged-in/Notific
 import MockTestPromoCard from "@/components/sections/home-logged-in/MockTestPromoCard";
 import OrganizationStrip from "@/components/sections/home-logged-out/OrganizationStrip";
 import StateStrip from "@/components/sections/home-logged-out/StateStrip";
+import HotNewsBanner from "@/components/sections/home/HotNewsBanner";
+import UpcomingJobsSection from "@/components/sections/home/UpcomingJobsSection";
 
 function serialize<T>(data: T): T {
   return JSON.parse(JSON.stringify(data));
@@ -155,6 +157,7 @@ export default async function HomePage() {
 
     return (
       <div className="bg-neutral-50">
+        <HotNewsBanner />
         <div className="max-w-7xl mx-auto px-6 pt-8">
           <SearchHero matchScore={topScore} />
         </div>
@@ -162,6 +165,7 @@ export default async function HomePage() {
           <div className="lg:col-span-7 space-y-10">
             <QuickStatsBar />
             <LatestJobsSection initialNotifications={data.notifications} />
+            <UpcomingJobsSection hideWhenEmpty />
           </div>
           <div className="lg:col-span-3 lg:sticky lg:top-20 space-y-6">
             <RecommendedJobsSidebar matches={matches} />
@@ -186,6 +190,7 @@ export default async function HomePage() {
 
   return (
     <div className="bg-neutral-50">
+      <HotNewsBanner />
       <div className="max-w-7xl mx-auto px-6 pt-8">
         <SearchHero />
       </div>
@@ -194,6 +199,7 @@ export default async function HomePage() {
       </div>
       <div className="max-w-7xl mx-auto px-6 space-y-16 py-16">
         <LatestJobsSection initialNotifications={data.notifications} />
+        <UpcomingJobsSection hideWhenEmpty />
         <CategoryStrip />
         <OrganizationStrip />
         <QualificationStrip />
