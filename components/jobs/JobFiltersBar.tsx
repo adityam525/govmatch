@@ -11,9 +11,9 @@ interface ApiBranch { slug: string; name: string; qualificationGroup?: string }
 
 const SORT_OPTIONS: FilterOption[] = [
   { id: "newest", label: "Newest first" },
-  { id: "deadline", label: "Last date (soonest)" },
-  { id: "vacancies", label: "Most vacancies" },
-  { id: "match", label: "Best match" },
+  { id: "oldest", label: "Oldest first" },
+  { id: "relevance", label: "Best match" },
+  { id: "salary_high", label: "Highest salary" },
 ];
 
 const csv = (value: string | null) => value?.split(",").filter(Boolean) ?? [];

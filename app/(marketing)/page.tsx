@@ -3,7 +3,7 @@ import { prisma } from "@/lib/prisma";
 import { computeMatch } from "@/features/matching/engine";
 
 import QuickStatsBar from "@/components/sections/home-logged-in/QuickStatsBar";
-import LatestJobsSection from "@/components/sections/home-logged-out/LatestJobsSection";
+import LatestJobsWithToday from "@/components/sections/home/LatestJobsWithToday";
 import CategoryStrip from "@/components/sections/home-logged-out/CategoryStrip";
 import QualificationStrip from "@/components/sections/home-logged-out/QualificationStrip";
 import LatestUpdatesGrid from "@/components/sections/home-logged-out/LatestUpdatesGrid";
@@ -164,7 +164,7 @@ export default async function HomePage() {
           <div className="lg:col-span-7 space-y-10">
             <QuickStatsBar />
             <HotNewsBanner />
-            <LatestJobsSection initialNotifications={data.notifications} />
+            <LatestJobsWithToday />
             <UpcomingJobsSection hideWhenEmpty />
           </div>
           <div className="lg:col-span-3 lg:sticky lg:top-20 space-y-6">
@@ -198,7 +198,7 @@ export default async function HomePage() {
       </div>
       <div className="max-w-7xl mx-auto px-6 space-y-16 py-16">
         <HotNewsBanner />
-        <LatestJobsSection initialNotifications={data.notifications} />
+        <LatestJobsWithToday />
         <UpcomingJobsSection hideWhenEmpty />
         <CategoryStrip />
         <OrganizationStrip />

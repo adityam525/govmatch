@@ -40,6 +40,8 @@ export function notificationToJobs(notification: any): Job[] {
       id: notification.id,
       title: notification.title,
       org: notification.organization?.name ?? 'Unknown',
+      orgShortName: notification.organization?.shortName ?? null,
+      orgLogoUrl: notification.organization?.logoUrl ?? null,
       orgIconName: ORG_ICONS[notification.organization?.shortName] ?? 'shield',
       category: CATEGORY_MAP[notification.organization?.category?.slug] ?? 'central',
       vacancies: posts.length > 0 ? postVacancies : (notification.totalVacancies ?? 0),

@@ -5,11 +5,6 @@ import { getPublishedJobs } from '@/lib/job-queries';
 import { daysBetween, formatCalendarDate, todayIST } from '@/lib/job-status';
 import LatestJobsTabs, { type LatestJobItem } from './LatestJobsTabs';
 
-const ORG_ICONS: Record<string, string> = {
-  SSC: 'crown', RRB: 'train', IBPS: 'landmark', UPSC: 'crown',
-  IAF: 'shield', NAVY: 'shield', DSSSB: 'landmark', ISRO: 'shield', IOCL: 'shield',
-};
-
 const CATEGORY_TABS: Record<string, string> = {
   ssc: 'central', railway: 'central', banking: 'banking', upsc: 'central',
   'state-government': 'state', defence: 'defence', psu: 'psu', 'police-security': 'defence',
@@ -23,8 +18,8 @@ function unique(values: (string | null | undefined)[]): string[] {
   return [...new Set(values.filter((v): v is string => !!v))];
 }
 
-// The homepage still passes the old `initialNotifications` prop. It is ignored:
-// this section now reads jobs itself and shows one card per job (not per post).
+// The homepage may still pass an old `initialNotifications` prop. It is ignored:
+// this section reads jobs itself and shows one card per job (not per post).
 export default async function LatestJobsSection(_props: Record<string, unknown>) {
   const today = todayIST();
 
@@ -48,7 +43,8 @@ export default async function LatestJobsSection(_props: Record<string, unknown>)
         id: job.id,
         title: job.title,
         org: job.organization?.name ?? 'Unknown',
-        orgIconName: ORG_ICONS[job.organization?.shortName ?? ''] ?? 'shield',
+        orgShortName: job.organization?.shortName ?? null,
+        orgLogoUrl: job.organization?.logoUrl ?? null,
         slug: job.slug,
         vacancies: job.vacancyTotal,
         lastDate: formatCalendarDate(end),

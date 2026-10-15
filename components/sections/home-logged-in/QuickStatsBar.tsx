@@ -2,6 +2,7 @@ import { Briefcase, CalendarClock, Clock, FileCheck2, Trophy } from 'lucide-reac
 import Link from 'next/link';
 import { colors } from '@/styles/tokens';
 import { getPublishedJobs, getAdmitCardRows, getResultRows } from '@/lib/job-queries';
+import { isLastDateToday } from '@/lib/job-today';
 import { todayIST } from '@/lib/job-status';
 
 interface Stat {
@@ -13,18 +14,17 @@ interface Stat {
 }
 
 export default async function QuickStatsBar() {
-  const today = todayIST().getTime();
+  const today = todayIST();
   const [jobs, admitCardJobs, resultJobs] = await Promise.all([
     getPublishedJobs(),
     getAdmitCardRows(Infinity),
     getResultRows(Infinity),
   ]);
 
-  const live = jobs.filter((job) => job.phase === 'LIVE');
   const stats: Stat[] = [
-    { icon: <Briefcase size={20} />, iconBg: colors.primary[600], value: live.filter((job) => job.applicationOpen).length, label: 'Applications Open', href: '/jobs?phase=live' },
+    { icon: <Briefcase size={20} />, iconBg: colors.primary[600], value: jobs.filter((job) => job.phase === 'LIVE' && job.applicationOpen).length, label: 'Applications Open', href: '/jobs' },
     { icon: <CalendarClock size={20} />, iconBg: colors.accent.purple, value: jobs.filter((job) => job.phase === 'UPCOMING').length, label: 'Upcoming Jobs', href: '/jobs?phase=upcoming' },
-    { icon: <Clock size={20} />, iconBg: colors.accent.orange, value: live.filter((job) => job.applicationEndDate?.getTime() === today).length, label: 'Last Date Today', href: '/jobs?phase=live' },
+    { icon: <Clock size={20} />, iconBg: colors.accent.orange, value: jobs.filter((job) => isLastDateToday(job, today)).length, label: 'Last Date Today', href: '/jobs?phase=today' },
     { icon: <FileCheck2 size={20} />, iconBg: colors.accent.green, value: admitCardJobs.length, label: 'Admit Cards', href: '/jobs?updates=admit-cards' },
     { icon: <Trophy size={20} />, iconBg: '#ec4899', value: resultJobs.length, label: 'Results Declared', href: '/jobs?updates=results' },
   ];

@@ -1,22 +1,15 @@
 import Link from "next/link";
-import { Crown, TrainFront, Landmark, Shield, Building2 } from "lucide-react";
 import Button from "@/components/ui/Button";
-
-const iconMap: Record<
-  string,
-  React.ComponentType<{ size?: number; className?: string }>
-> = {
-  crown: Crown,
-  train: TrainFront,
-  landmark: Landmark,
-  shield: Shield,
-};
+import OrgLogo from "@/components/shared/OrgLogo";
 
 export interface JobCardData {
   id: string;
   title: string;
   org: string;
-  orgIconName: string;
+  orgShortName?: string | null;
+  orgLogoUrl?: string | null;
+  /** No longer used (logos replaced the generic icons); kept so existing callers still compile. */
+  orgIconName?: string;
   slug: string;
   vacancies: number;
   lastDate: string;
@@ -31,8 +24,6 @@ interface JobCardProps {
 }
 
 export default function JobCard({ job }: JobCardProps) {
-  const Icon = iconMap[job.orgIconName] ?? Building2;
-
   const daysLeftLabel =
     job.daysLeft === null
       ? null
@@ -52,9 +43,7 @@ export default function JobCard({ job }: JobCardProps) {
   return (
     <div className="bg-white border border-neutral-200 rounded-xl p-4 flex flex-col h-full hover:shadow-md hover:border-neutral-300 transition-all">
       <div className="flex items-start justify-between mb-3">
-        <div className="w-11 h-11 rounded-lg bg-neutral-50 border border-neutral-100 flex items-center justify-center">
-          <Icon size={20} className="text-neutral-600" />
-        </div>
+        <OrgLogo name={job.org} shortName={job.orgShortName} logoUrl={job.orgLogoUrl} size={44} />
         {job.badge && (
           <span
             className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${

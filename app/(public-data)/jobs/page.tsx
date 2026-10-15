@@ -7,7 +7,7 @@ import JobFiltersBar from "@/components/jobs/JobFiltersBar";
 import SectionHeader from "@/components/ui/SectionHeader";
 import { Prisma } from "@prisma/client";
 import { resolveCategoryFilter } from "@/lib/category-filters";
-import { parseView, getViewIds, getPhaseCounts } from "@/lib/jobs-view";
+import { parseView, getViewIds, getPhaseCounts, sortByIdOrder } from "@/lib/jobs-view";
 import JobsViewTabs from "@/components/jobs/JobsViewTabs";
 
 const SEARCH_ALIASES: Record<string, string[]> = {
@@ -341,7 +341,7 @@ export default async function JobsPage({ searchParams }: JobsPageProps) {
 
           matchByJobId.set(post.id, result.score);
 
-          matchByJobId.set(notification.id, result.score);
+          matchByJobId.set(notification.id, Math.max(matchByJobId.get(notification.id) ?? 0, result.score));
         }
       }
     }
@@ -478,7 +478,7 @@ export default async function JobsPage({ searchParams }: JobsPageProps) {
         </div>
       ) : (
         <div className="mt-6 space-y-4">
-          {jobs.map((job) => (
+          {(view.preset && !params.sort ? sortByIdOrder(jobs, viewIds) : jobs).map((job) => (
             <JobListItem
               key={job.id}
               job={job}

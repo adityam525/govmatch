@@ -3,6 +3,8 @@ export interface Job {
   title: string;
   org: string;
   orgIconName: "crown" | "train" | "landmark" | "shield";
+  orgShortName?: string | null;
+  orgLogoUrl?: string | null;
   category: "central" | "state" | "psu" | "banking" | "defence" | "teaching";
   vacancies: number;
   lastDate: string;

@@ -45,20 +45,25 @@ export default function JobsViewTabs({
 
       {PHASE_TABS.map((tab) => {
         const active = view.tab === tab.id;
+        const urgent = tab.id === 'today' && counts.today > 0 && !active;
         const href =
           tab.id === defaultTab ? buildHref(params, {}, ['phase']) : buildHref(params, { phase: tab.id });
+        const style = active
+          ? 'border-primary-600 bg-primary-600 text-white'
+          : urgent
+            ? 'border-red-200 bg-red-50 text-red-700 hover:bg-red-100'
+            : 'border-neutral-200 bg-white text-neutral-600 hover:bg-neutral-50';
         return (
           <Link
             key={tab.id}
             href={href}
             aria-current={active ? 'page' : undefined}
-            className={`shrink-0 rounded-full border px-3.5 py-1.5 text-sm font-medium transition-colors ${
-              active
-                ? 'border-primary-600 bg-primary-600 text-white'
-                : 'border-neutral-200 bg-white text-neutral-600 hover:bg-neutral-50'
-            }`}
+            className={`shrink-0 rounded-full border px-3.5 py-1.5 text-sm font-medium transition-colors ${style}`}
           >
-            {tab.label} <span className={active ? 'opacity-80' : 'text-neutral-400'}>({counts[tab.id]})</span>
+            {tab.label}{' '}
+            <span className={active ? 'opacity-80' : urgent ? 'text-red-400' : 'text-neutral-400'}>
+              ({counts[tab.id]})
+            </span>
           </Link>
         );
       })}
