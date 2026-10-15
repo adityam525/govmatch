@@ -9,13 +9,18 @@ import {
 } from '@/lib/job-queries';
 
 export type PhaseTab = 'open' | 'upcoming' | 'progress' | 'closed';
+export type PhaseFilter = PhaseTab | 'all';
 export type UpdatePreset = 'exams' | 'admit-cards' | 'results' | 'answer-keys';
 
-export type JobsView =
-  | { kind: 'phase'; tab: PhaseTab }
-  | { kind: 'updates'; preset: UpdatePreset };
+// A preset (exams / admit cards / ...) and a phase tab combine: the preset
+// picks the jobs, the tab narrows them by lifecycle phase.
+export interface JobsView {
+  tab: PhaseFilter;
+  preset: UpdatePreset | null;
+}
 
-export const PHASE_TABS: { id: PhaseTab; label: string }[] = [
+export const PHASE_TABS: { id: PhaseFilter; label: string }[] = [
+  { id: 'all', label: 'All' },
   { id: 'open', label: 'Applications Open' },
   { id: 'upcoming', label: 'Upcoming' },
   { id: 'progress', label: 'In Progress' },
@@ -30,7 +35,8 @@ export const PRESET_LABELS: Record<UpdatePreset, string> = {
 };
 
 // `phase=live` is what the homepage tiles already link to.
-const PHASE_ALIASES: Record<string, PhaseTab> = {
+const PHASE_ALIASES: Record<string, PhaseFilter> = {
+  all: 'all',
   live: 'open',
   open: 'open',
   upcoming: 'upcoming',
@@ -51,12 +57,14 @@ const has = (obj: object, key: string) => Object.prototype.hasOwnProperty.call(o
 
 export function parseView(params: { [key: string]: string | undefined }): JobsView {
   const updates = params.updates;
-  if (updates && has(PRESET_LABELS, updates)) {
-    return { kind: 'updates', preset: updates as UpdatePreset };
-  }
+  const preset = updates && has(PRESET_LABELS, updates) ? (updates as UpdatePreset) : null;
+
   const phase = params.phase;
-  const tab = phase && has(PHASE_ALIASES, phase) ? PHASE_ALIASES[phase] : 'open';
-  return { kind: 'phase', tab };
+  let tab: PhaseFilter;
+  if (phase && has(PHASE_ALIASES, phase)) tab = PHASE_ALIASES[phase];
+  else tab = preset ? 'all' : 'open';
+
+  return { tab, preset };
 }
 
 function tabOf(job: PublishedJob): PhaseTab {
@@ -65,18 +73,28 @@ function tabOf(job: PublishedJob): PhaseTab {
   return 'closed';
 }
 
-// Ids of the published jobs that belong to the selected view.
-export async function getViewIds(view: JobsView): Promise<string[]> {
-  if (view.kind === 'updates') {
-    const rows = await PRESET_ROWS[view.preset](Infinity);
-    return rows.map((row) => row.id);
-  }
-  const jobs = await getPublishedJobs();
-  return jobs.filter((job) => tabOf(job) === view.tab).map((job) => job.id);
+async function presetJobIds(preset: UpdatePreset | null): Promise<Set<string> | null> {
+  if (!preset) return null;
+  const rows = await PRESET_ROWS[preset](Infinity);
+  return new Set(rows.map((row) => row.id));
 }
 
-export async function getPhaseCounts(): Promise<Record<PhaseTab, number>> {
-  const counts: Record<PhaseTab, number> = { open: 0, upcoming: 0, progress: 0, closed: 0 };
-  for (const job of await getPublishedJobs()) counts[tabOf(job)] += 1;
+// Ids of the published jobs that belong to the selected view.
+export async function getViewIds(view: JobsView): Promise<string[]> {
+  const [jobs, allowed] = await Promise.all([getPublishedJobs(), presetJobIds(view.preset)]);
+  return jobs
+    .filter((job) => (!allowed || allowed.has(job.id)) && (view.tab === 'all' || tabOf(job) === view.tab))
+    .map((job) => job.id);
+}
+
+// Tab counts, computed inside the active preset (if any).
+export async function getPhaseCounts(preset: UpdatePreset | null = null): Promise<Record<PhaseFilter, number>> {
+  const [jobs, allowed] = await Promise.all([getPublishedJobs(), presetJobIds(preset)]);
+  const counts: Record<PhaseFilter, number> = { all: 0, open: 0, upcoming: 0, progress: 0, closed: 0 };
+  for (const job of jobs) {
+    if (allowed && !allowed.has(job.id)) continue;
+    counts.all += 1;
+    counts[tabOf(job)] += 1;
+  }
   return counts;
 }

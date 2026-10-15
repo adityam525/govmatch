@@ -105,7 +105,7 @@ export default async function JobsPage({ searchParams }: JobsPageProps) {
   const selectedSort = getSortType(params.sort);
   const view = parseView(params);
   const viewIds = await getViewIds(view);
-  const phaseCounts = await getPhaseCounts();
+  const phaseCounts = await getPhaseCounts(view.preset);
 
   const session = await auth();
   const userId = (session?.user as any)?.id;

@@ -46,8 +46,18 @@ function hotItemFor(job: PublishedJob, today: Date): RankedItem | null {
 }
 
 export default async function HotNewsBanner({ limit = 12, sticky = false }: { limit?: number; sticky?: boolean }) {
+  // This sits in shared layouts. A database hiccup must never take down pages
+  // that otherwise don't need the database, so it fails quietly.
+  let jobs: PublishedJob[];
+  try {
+    jobs = await getPublishedJobs();
+  } catch (error) {
+    console.error('HotNewsBanner: could not load jobs', error);
+    return null;
+  }
+
   const today = todayIST();
-  const items = (await getPublishedJobs())
+  const items = jobs
     .map((job) => hotItemFor(job, today))
     .filter((item): item is RankedItem => item !== null)
     .sort((a, b) => a.rank - b.rank)

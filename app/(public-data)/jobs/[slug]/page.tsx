@@ -138,7 +138,7 @@ export default async function JobDetailPage({ params }: PageProps) {
 
   return (
     <div className="max-w-7xl mx-auto px-6 py-8 grid lg:grid-cols-10 gap-6 items-start">
-      <div className="lg:col-span-3 lg:sticky lg:top-20">
+      <div className="lg:col-span-3 lg:sticky lg:top-28">
         <RecentJobsSidebar excludeSlug={notification.slug} />
       </div>
       <div className="lg:col-span-7 space-y-6">
