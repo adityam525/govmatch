@@ -1,13 +1,13 @@
-'use client';
+"use client";
 
-import { useEffect, useRef, useState } from 'react';
-import Link from 'next/link';
-import { Flame } from 'lucide-react';
-import './hot-news-marquee.css';
+import { useEffect, useRef, useState } from "react";
+import Link from "next/link";
+import { Flame } from "lucide-react";
+import "./hot-news-marquee.css";
 
 export interface HotItemView {
   key: string;
-  tone: 'urgent' | 'info';
+  tone: "urgent" | "info";
   label: string;
   title: string;
   href: string;
@@ -22,9 +22,9 @@ function Chip({ item, tabbable }: { item: HotItemView; tabbable: boolean }) {
       tabIndex={tabbable ? 0 : -1}
       aria-hidden={!tabbable}
       className={`mr-2 flex shrink-0 items-center gap-1.5 rounded-full border px-3 py-1 text-xs transition-colors ${
-        item.tone === 'urgent'
-          ? 'border-red-200 bg-red-50 text-red-700 hover:bg-red-100'
-          : 'border-neutral-200 bg-white text-neutral-700 hover:bg-neutral-50'
+        item.tone === "urgent"
+          ? "border-red-200 bg-red-50 text-red-700 hover:bg-red-100"
+          : "border-neutral-200 bg-white text-neutral-700 hover:bg-neutral-50"
       }`}
     >
       <span className="font-semibold">{item.label}</span>
@@ -34,26 +34,34 @@ function Chip({ item, tabbable }: { item: HotItemView; tabbable: boolean }) {
   );
 }
 
-export default function HotNewsMarquee({ items, sticky = false }: { items: HotItemView[]; sticky?: boolean }) {
+export default function HotNewsMarquee({
+  items,
+  sticky = false,
+}: {
+  items: HotItemView[];
+  sticky?: boolean;
+}) {
   const viewport = useRef<HTMLDivElement>(null);
   const firstSet = useRef<HTMLDivElement>(null);
   const [scrolling, setScrolling] = useState(false);
 
   // Only animate when the list is wider than the visible strip.
   useEffect(() => {
-    const check = () => 
+    const check = () => {
       if (viewport.current && firstSet.current) {
-        setScrolling(firstSet.current.scrollWidth > viewport.current.clientWidth);
+        setScrolling(
+          firstSet.current.scrollWidth > viewport.current.clientWidth,
+        );
       }
     };
     check();
-    window.addEventListener('resize', check);
-    return () => window.removeEventListener('resize', check);
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
   }, [items]);
 
   return (
     <div
-      className={`border-b border-amber-200 bg-amber-50 ${sticky ? 'sticky top-16 z-30' : ''}`}
+      className={`border-b border-amber-200 bg-amber-50 ${sticky ? "sticky top-16 z-30" : ""}`}
       role="region"
       aria-label="Hot news"
     >
@@ -64,9 +72,11 @@ export default function HotNewsMarquee({ items, sticky = false }: { items: HotIt
         <div
           ref={viewport}
           className="hot-news-marquee min-w-0 flex-1 overflow-hidden"
-          style={{ ['--hot-news-duration' as string]: `${Math.max(items.length * SECONDS_PER_ITEM, 20)}s` }}
+          style={{
+            ["--hot-news-duration" as string]: `${Math.max(items.length * SECONDS_PER_ITEM, 20)}s`,
+          }}
         >
-          <div className={scrolling ? 'hot-news-track' : 'flex'}>
+          <div className={scrolling ? "hot-news-track" : "flex"}>
             <div ref={firstSet} className="flex shrink-0">
               {items.map((item) => (
                 <Chip key={item.key} item={item} tabbable />
