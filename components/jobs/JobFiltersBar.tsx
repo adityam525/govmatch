@@ -1,348 +1,313 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import Card from "@/components/ui/Card";
+import { Search, SlidersHorizontal, X } from "lucide-react";
 import FilterDropdown, { FilterOption } from "@/components/ui/FilterDropdown";
 
-const ALL_CATEGORIES_OPTION: FilterOption = { id: "", label: "All Categories" };
+interface ApiNamed { slug: string; name: string }
+interface ApiState { code: string; name: string }
+interface ApiBranch { slug: string; name: string; qualificationGroup?: string }
 
 const SORT_OPTIONS: FilterOption[] = [
-  { id: "newest", label: "Newest First" },
-  { id: "oldest", label: "Oldest First" },
-  { id: "relevance", label: "Most Relevant" },
-  { id: "salary_high", label: "Highest Salary" },
-  { id: "salary_low", label: "Lowest Salary" },
-  { id: "deadline_soon", label: "Deadline: Soonest" },
-  { id: "deadline_late", label: "Deadline: Latest" },
-  { id: "posts_high", label: "Most Vacancies" },
-  { id: "posts_low", label: "Fewest Vacancies" },
+  { id: "newest", label: "Newest first" },
+  { id: "deadline", label: "Last date (soonest)" },
+  { id: "vacancies", label: "Most vacancies" },
+  { id: "match", label: "Best match" },
 ];
 
-interface ApiCategory {
-  id: string;
-  name: string;
-  slug: string;
-}
+const csv = (value: string | null) => value?.split(",").filter(Boolean) ?? [];
 
-interface ApiQualificationCategory {
-  id: string;
-  name: string;
-  slug: string;
-}
-
-interface ApiQualification {
-  id: string;
-  name: string;
-  slug: string;
-  level: number;
-}
-
-interface ApiBranch {
-  id: string;
-  name: string;
-  slug: string;
-  qualificationGroup: string;
-  qualificationId: string;
-}
-
-interface ApiState {
-  id: string;
-  name: string;
-  code: string;
-}
-
-interface ApiOrganization {
-  id: string;
-  name: string;
-  slug: string;
-}
+type Draft = {
+  category: string;
+  qualificationCategories: string[];
+  qualifications: string[];
+  branches: string[];
+  states: string[];
+  organizations: string[];
+};
 
 export default function JobFiltersBar() {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const urlKey = searchParams.toString();
 
-  // TEMPORARY DEBUG LOGGING -- remove once confirmed this is the file
-  // actually being rendered.
-  console.log("[JobFiltersBar RENDER]", { url: searchParams.toString() });
+  const applied: Draft = useMemo(
+    () => ({
+      category: searchParams.get("category") ?? "",
+      qualificationCategories: csv(searchParams.get("qualificationCategories")),
+      qualifications: csv(searchParams.get("qualifications")),
+      branches: csv(searchParams.get("branches")),
+      states: csv(searchParams.get("states")),
+      organizations: csv(searchParams.get("organizations")),
+    }),
+    [urlKey], // eslint-disable-line react-hooks/exhaustive-deps
+  );
+  const sort = searchParams.get("sort") ?? "newest";
 
-  // All filter values below are slugs / codes (human-readable, matching how
-  // `search` already uses free text) -- not raw database ids.
-  const selectedCategory = searchParams.get("category") ?? "";
-  const selectedQualificationCategories =
-    searchParams.get("qualificationCategories")?.split(",").filter(Boolean) ??
-    [];
-  const selectedQualifications =
-    searchParams.get("qualifications")?.split(",").filter(Boolean) ?? [];
-  const selectedBranches =
-    searchParams.get("branches")?.split(",").filter(Boolean) ?? [];
-  const selectedStates =
-    searchParams.get("states")?.split(",").filter(Boolean) ?? [];
-  const selectedOrganizations =
-    searchParams.get("organizations")?.split(",").filter(Boolean) ?? [];
-  const selectedSort = searchParams.get("sort") ?? "newest";
+  const [draft, setDraft] = useState<Draft>(applied);
+  const [panelOpen, setPanelOpen] = useState(false);
+  const [searchText, setSearchText] = useState(searchParams.get("search") ?? "");
 
-  const [categories, setCategories] = useState<FilterOption[]>([
-    ALL_CATEGORIES_OPTION,
-  ]);
-  const [qualificationCategories, setQualificationCategories] = useState<
-    FilterOption[]
-  >([]);
+  const [categories, setCategories] = useState<FilterOption[]>([]);
+  const [qualCategories, setQualCategories] = useState<FilterOption[]>([]);
   const [qualifications, setQualifications] = useState<FilterOption[]>([]);
   const [branches, setBranches] = useState<FilterOption[]>([]);
   const [states, setStates] = useState<FilterOption[]>([]);
   const [organizations, setOrganizations] = useState<FilterOption[]>([]);
 
-  const [loadingQualifications, setLoadingQualifications] = useState(false);
-  const [loadingBranches, setLoadingBranches] = useState(false);
-
-  const updateParams = (updates: Record<string, string>) => {
-    const params = new URLSearchParams(searchParams.toString());
-    Object.entries(updates).forEach(([key, value]) => {
-      if (value) params.set(key, value);
-      else params.delete(key);
-    });
-    router.push(`/jobs?${params.toString()}`);
-  };
-
-  // Static lookups that never change per-request.
+  // Keep the form in step with the URL (back button, chip removal, tab switch).
   useEffect(() => {
-    fetch("/api/categories")
-      .then((r) => r.json())
-      .then((data: ApiCategory[]) =>
-        setCategories([
-          ALL_CATEGORIES_OPTION,
-          ...(Array.isArray(data)
-            ? data.map((c) => ({ id: c.slug, label: c.name }))
-            : []),
-        ]),
-      )
-      .catch(() => {});
+    setDraft(applied);
+    setSearchText(searchParams.get("search") ?? "");
+  }, [applied]); // eslint-disable-line react-hooks/exhaustive-deps
 
-    fetch("/api/qualification-categories")
-      .then((r) => r.json())
-      .then((data: ApiQualificationCategory[]) =>
-        setQualificationCategories(
-          Array.isArray(data)
-            ? data.map((c) => ({ id: c.slug, label: c.name }))
-            : [],
-        ),
-      )
-      .catch(() => {});
+  useEffect(() => {
+    const load = <T,>(url: string, map: (rows: T[]) => FilterOption[], set: (o: FilterOption[]) => void) =>
+      fetch(url)
+        .then((r) => r.json())
+        .then((rows) => set(Array.isArray(rows) ? map(rows) : []))
+        .catch(() => {});
 
-    fetch("/api/states")
-      .then((r) => r.json())
-      .then((data: ApiState[]) =>
-        setStates(
-          Array.isArray(data)
-            ? data.map((s) => ({ id: s.code, label: s.name }))
-            : [],
-        ),
-      )
-      .catch(() => {});
-
-    fetch("/api/organizations")
-      .then((r) => r.json())
-      .then((data: ApiOrganization[]) =>
-        setOrganizations(
-          Array.isArray(data)
-            ? data.map((o) => ({ id: o.slug, label: o.name }))
-            : [],
-        ),
-      )
-      .catch(() => {});
+    load<ApiNamed>("/api/categories", (rows) => rows.map((c) => ({ id: c.slug, label: c.name })), setCategories);
+    load<ApiNamed>("/api/qualification-categories", (rows) => rows.map((c) => ({ id: c.slug, label: c.name })), setQualCategories);
+    load<ApiState>("/api/states", (rows) => rows.map((s) => ({ id: s.code, label: s.name })), setStates);
+    load<ApiNamed>("/api/organizations", (rows) => rows.map((o) => ({ id: o.slug, label: o.name })), setOrganizations);
   }, []);
 
-  // Qualifications cascade off the selected qualification category, but
-  // stay independently searchable when none is selected.
+  // Qualifications follow the chosen qualification categories.
   useEffect(() => {
-    setLoadingQualifications(true);
-    const qs =
-      selectedQualificationCategories.length > 0
-        ? `?categorySlugs=${selectedQualificationCategories.join(",")}`
-        : "";
+    const qs = draft.qualificationCategories.length ? `?categorySlugs=${draft.qualificationCategories.join(",")}` : "";
     fetch(`/api/qualifications${qs}`)
       .then((r) => r.json())
-      .then((data: ApiQualification[]) =>
-        setQualifications(
-          Array.isArray(data)
-            ? data.map((q) => ({ id: q.slug, label: q.name }))
-            : [],
-        ),
-      )
-      .catch(() => {})
-      .finally(() => setLoadingQualifications(false));
-  }, [selectedQualificationCategories.join(",")]);
+      .then((rows: ApiNamed[]) => {
+        const options = Array.isArray(rows) ? rows.map((q) => ({ id: q.slug, label: q.name })) : [];
+        setQualifications(options);
+        // A single possible qualification needs no choice.
+        if (draft.qualificationCategories.length > 0 && draft.qualifications.length === 0 && options.length === 1) {
+          setDraft((d) => ({ ...d, qualifications: [options[0].id] }));
+        }
+      })
+      .catch(() => {});
+  }, [draft.qualificationCategories.join(",")]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  // Branches cascade off selected qualifications, but stay independently
-  // searchable (grouped by qualificationGroup) when none are selected.
+  // Branches follow the chosen qualifications.
   useEffect(() => {
-    setLoadingBranches(true);
-    const qs =
-      selectedQualifications.length > 0
-        ? `?qualificationSlugs=${selectedQualifications.join(",")}`
-        : "";
+    const qs = draft.qualifications.length ? `?qualificationSlugs=${draft.qualifications.join(",")}` : "";
     fetch(`/api/branches${qs}`)
       .then((r) => r.json())
-      .then((data: ApiBranch[]) =>
+      .then((rows: ApiBranch[]) =>
         setBranches(
-          Array.isArray(data)
-            ? data.map((b) => ({
-                id: b.slug,
-                label: b.name,
-                group: b.qualificationGroup,
-              }))
-            : [],
+          Array.isArray(rows) ? rows.map((b) => ({ id: b.slug, label: b.name, group: b.qualificationGroup })) : [],
         ),
       )
-      .catch(() => {})
-      .finally(() => setLoadingBranches(false));
-  }, [selectedQualifications.join(",")]);
+      .catch(() => {});
+  }, [draft.qualifications.join(",")]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  // If narrowing by Qualification Category leaves exactly one Qualification
-  // option, auto-select it -- no point making the user open a dropdown that
-  // only has one thing in it. Only fires when nothing is already chosen, so
-  // it never overrides a user's own selection, and it won't re-fire after
-  // auto-selecting since selectedQualifications.length becomes 1 on the
-  // next render (which fails the guard below).
-  useEffect(() => {
-    // TEMPORARY DEBUG LOGGING -- remove once this is confirmed working.
-    console.log("[auto-select check]", {
-      loadingQualifications,
-      selectedQualificationCategories,
-      selectedQualifications,
-      qualifications,
-    });
-    if (
-      !loadingQualifications &&
-      selectedQualificationCategories.length > 0 &&
-      selectedQualifications.length === 0 &&
-      qualifications.length === 1
-    ) {
-      console.log(
-        "[auto-select] firing updateParams with",
-        qualifications[0].id,
-      );
-      updateParams({ qualifications: qualifications[0].id });
+  const push = (updates: Record<string, string>) => {
+    const params = new URLSearchParams(searchParams.toString());
+    for (const [key, value] of Object.entries(updates)) {
+      if (value) params.set(key, value);
+      else params.delete(key);
     }
-  }, [
-    qualifications,
-    loadingQualifications,
-    selectedQualificationCategories.join(","),
-  ]);
+    const qs = params.toString();
+    router.push(qs ? `/jobs?${qs}` : "/jobs");
+  };
 
-  const hasActiveFilters =
-    selectedCategory !== "" ||
-    selectedQualificationCategories.length > 0 ||
-    selectedQualifications.length > 0 ||
-    selectedBranches.length > 0 ||
-    selectedStates.length > 0 ||
-    selectedOrganizations.length > 0;
+  const applyFilters = () => {
+    push({
+      category: draft.category,
+      qualificationCategories: draft.qualificationCategories.join(","),
+      qualifications: draft.qualifications.join(","),
+      branches: draft.branches.join(","),
+      states: draft.states.join(","),
+      organizations: draft.organizations.join(","),
+    });
+    setPanelOpen(false);
+  };
 
-  // Progressive disclosure: Qualification only appears once a Qualification
-  // Category is picked AND that category actually has qualifications to
-  // show (or Qualification already has a value from a deep link). Branch
-  // follows the same rule off Qualification. This avoids showing an
-  // dropdown that would open to "No options found".
-  const showQualification =
-    selectedQualifications.length > 0 ||
-    (selectedQualificationCategories.length > 0 &&
-      (loadingQualifications || qualifications.length > 0));
+  const submitSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    push({ search: searchText.trim() });
+  };
 
-  const showBranch =
-    selectedBranches.length > 0 ||
-    (selectedQualifications.length > 0 &&
-      (loadingBranches || branches.length > 0));
+  const labelOf = (options: FilterOption[], id: string) => options.find((o) => o.id === id)?.label ?? id;
 
-  const clearAll = () => router.push("/jobs");
+  // Applied filters as removable chips.
+  const chips: { key: string; label: string; remove: () => void }[] = [];
+  const dropFrom = (field: keyof Draft, id: string) =>
+    push({ [field]: (applied[field] as string[]).filter((v) => v !== id).join(",") });
+
+  if (applied.category) {
+    chips.push({ key: `cat-${applied.category}`, label: labelOf(categories, applied.category), remove: () => push({ category: "" }) });
+  }
+  applied.qualificationCategories.forEach((id) =>
+    chips.push({ key: `qc-${id}`, label: labelOf(qualCategories, id), remove: () => dropFrom("qualificationCategories", id) }),
+  );
+  applied.qualifications.forEach((id) =>
+    chips.push({ key: `q-${id}`, label: labelOf(qualifications, id), remove: () => dropFrom("qualifications", id) }),
+  );
+  applied.branches.forEach((id) =>
+    chips.push({ key: `b-${id}`, label: labelOf(branches, id), remove: () => dropFrom("branches", id) }),
+  );
+  applied.states.forEach((id) =>
+    chips.push({ key: `s-${id}`, label: labelOf(states, id), remove: () => dropFrom("states", id) }),
+  );
+  applied.organizations.forEach((id) =>
+    chips.push({ key: `o-${id}`, label: labelOf(organizations, id), remove: () => dropFrom("organizations", id) }),
+  );
+
+  const clearAll = () => {
+    const params = new URLSearchParams();
+    for (const keep of ["phase", "updates", "search"]) {
+      const value = searchParams.get(keep);
+      if (value) params.set(keep, value);
+    }
+    const qs = params.toString();
+    router.push(qs ? `/jobs?${qs}` : "/jobs");
+  };
+
+  const dropdownProps = { widthClass: "w-full", allowClear: true } as const;
 
   return (
-    <Card padding="lg">
-      <div className="flex items-center justify-between mb-3">
-        <h2 className="text-sm font-bold text-neutral-900">Filters</h2>
-        {hasActiveFilters && (
+    <div className="mb-4">
+      <div className="flex flex-col gap-2 sm:flex-row">
+        <form onSubmit={submitSearch} className="relative flex-1">
+          <Search size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-neutral-400" />
+          <input
+            type="search"
+            value={searchText}
+            onChange={(e) => setSearchText(e.target.value)}
+            placeholder="Search jobs, departments, exams..."
+            className="h-11 w-full rounded-xl border border-neutral-200 bg-white pl-10 pr-4 text-sm outline-none focus:border-primary-500"
+          />
+        </form>
+
+        <div className="flex gap-2">
           <button
-            onClick={clearAll}
-            className="text-xs text-primary-600 hover:underline"
+            type="button"
+            onClick={() => setPanelOpen((open) => !open)}
+            aria-expanded={panelOpen}
+            className={`flex h-11 items-center gap-2 rounded-xl border px-4 text-sm font-medium transition-colors ${
+              panelOpen || chips.length > 0
+                ? "border-primary-300 bg-primary-50 text-primary-700"
+                : "border-neutral-200 bg-white text-neutral-700 hover:bg-neutral-50"
+            }`}
           >
+            <SlidersHorizontal size={16} />
+            Filters
+            {chips.length > 0 && (
+              <span className="rounded-full bg-primary-600 px-1.5 text-[10px] font-semibold text-white">{chips.length}</span>
+            )}
+          </button>
+
+          <div className="w-44">
+            <FilterDropdown
+              label="Sort"
+              options={SORT_OPTIONS}
+              selected={[sort]}
+              onChange={(ids) => push({ sort: ids[0] ?? "newest" })}
+              multi={false}
+              searchable={false}
+              defaultValue="newest"
+              widthClass="w-full"
+            />
+          </div>
+        </div>
+      </div>
+
+      {panelOpen && (
+        <div className="mt-3 rounded-2xl border border-neutral-200 bg-white p-4 shadow-sm">
+          <div className="grid gap-5 md:grid-cols-3">
+            <div className="space-y-2">
+              <p className="text-xs font-semibold uppercase tracking-wide text-neutral-400">Your education</p>
+              <FilterDropdown
+                label="Qualification category"
+                options={qualCategories}
+                selected={draft.qualificationCategories}
+                onChange={(ids) => setDraft((d) => ({ ...d, qualificationCategories: ids, qualifications: [], branches: [] }))}
+                {...dropdownProps}
+              />
+              {(draft.qualificationCategories.length > 0 || draft.qualifications.length > 0) && qualifications.length > 0 && (
+                <FilterDropdown
+                  label="Qualification"
+                  options={qualifications}
+                  selected={draft.qualifications}
+                  onChange={(ids) => setDraft((d) => ({ ...d, qualifications: ids, branches: [] }))}
+                  {...dropdownProps}
+                />
+              )}
+              {draft.qualifications.length > 0 && branches.length > 0 && (
+                <FilterDropdown
+                  label="Branch"
+                  options={branches}
+                  selected={draft.branches}
+                  onChange={(ids) => setDraft((d) => ({ ...d, branches: ids }))}
+                  {...dropdownProps}
+                />
+              )}
+            </div>
+
+            <div className="space-y-2">
+              <p className="text-xs font-semibold uppercase tracking-wide text-neutral-400">Location</p>
+              <FilterDropdown
+                label="State"
+                options={states}
+                selected={draft.states}
+                onChange={(ids) => setDraft((d) => ({ ...d, states: ids }))}
+                {...dropdownProps}
+              />
+            </div>
+
+            <div className="space-y-2">
+              <p className="text-xs font-semibold uppercase tracking-wide text-neutral-400">Recruiter</p>
+              <FilterDropdown
+                label="Sector"
+                options={categories}
+                selected={draft.category ? [draft.category] : []}
+                onChange={(ids) => setDraft((d) => ({ ...d, category: ids[0] ?? "" }))}
+                multi={false}
+                {...dropdownProps}
+              />
+              <FilterDropdown
+                label="Organization"
+                options={organizations}
+                selected={draft.organizations}
+                onChange={(ids) => setDraft((d) => ({ ...d, organizations: ids }))}
+                {...dropdownProps}
+              />
+            </div>
+          </div>
+
+          <div className="mt-4 flex items-center justify-end gap-2 border-t border-neutral-100 pt-3">
+            <button type="button" onClick={() => setPanelOpen(false)} className="rounded-lg px-3 py-2 text-sm text-neutral-600 hover:bg-neutral-50">
+              Cancel
+            </button>
+            <button type="button" onClick={applyFilters} className="rounded-lg bg-primary-600 px-4 py-2 text-sm font-medium text-white hover:bg-primary-700">
+              Apply filters
+            </button>
+          </div>
+        </div>
+      )}
+
+      {chips.length > 0 && (
+        <div className="mt-3 flex flex-wrap items-center gap-2">
+          {chips.map((chip) => (
+            <button
+              key={chip.key}
+              type="button"
+              onClick={chip.remove}
+              className="flex items-center gap-1.5 rounded-full border border-primary-200 bg-primary-50 px-3 py-1 text-xs font-medium text-primary-700 hover:bg-primary-100"
+            >
+              {chip.label}
+              <X size={12} />
+            </button>
+          ))}
+          <button type="button" onClick={clearAll} className="text-xs text-neutral-500 underline hover:text-neutral-700">
             Clear all
           </button>
-        )}
-      </div>
-
-      <div className="flex flex-wrap items-center gap-2.5">
-        <FilterDropdown
-          label="Category"
-          options={categories}
-          selected={[selectedCategory]}
-          onChange={(ids) => updateParams({ category: ids[0] ?? "" })}
-          multi={false}
-          searchable={false}
-          widthClass="w-48"
-          defaultValue=""
-        />
-
-        <FilterDropdown
-          label="Qualification Category"
-          options={qualificationCategories}
-          selected={selectedQualificationCategories}
-          onChange={(ids) =>
-            updateParams({ qualificationCategories: ids[0] ?? "" })
-          }
-          multi={false}
-          allowClear
-          widthClass="w-56"
-        />
-
-        {showQualification && (
-          <FilterDropdown
-            label="Qualification"
-            options={qualifications}
-            selected={selectedQualifications}
-            onChange={(ids) => updateParams({ qualifications: ids.join(",") })}
-            loading={loadingQualifications}
-            widthClass="w-56"
-          />
-        )}
-
-        {showBranch && (
-          <FilterDropdown
-            label="Branch"
-            options={branches}
-            selected={selectedBranches}
-            onChange={(ids) => updateParams({ branches: ids.join(",") })}
-            loading={loadingBranches}
-            widthClass="w-56"
-          />
-        )}
-
-        <FilterDropdown
-          label="State"
-          options={states}
-          selected={selectedStates}
-          onChange={(ids) => updateParams({ states: ids.join(",") })}
-          widthClass="w-48"
-        />
-
-        <FilterDropdown
-          label="Organization"
-          options={organizations}
-          selected={selectedOrganizations}
-          onChange={(ids) => updateParams({ organizations: ids.join(",") })}
-          widthClass="w-56"
-        />
-
-        <FilterDropdown
-          label="Sort"
-          options={SORT_OPTIONS}
-          selected={[selectedSort]}
-          onChange={(ids) => updateParams({ sort: ids[0] ?? "newest" })}
-          multi={false}
-          searchable={false}
-          widthClass="w-40"
-          defaultValue="newest"
-        />
-      </div>
-    </Card>
+        </div>
+      )}
+    </div>
   );
 }

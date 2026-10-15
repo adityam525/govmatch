@@ -11,9 +11,9 @@ import { useAuth } from '@/features/auth/hooks';
 const MOBILE_LINKS = [
   { label: 'Home', href: '/' },
   { label: 'Jobs', href: '/jobs' },
-  { label: 'Upcoming Exams', href: '/exams' },
-  { label: 'Admit Cards', href: '/admit-cards' },
-  { label: 'Results', href: '/results' },
+  { label: 'Upcoming Exams', href: '/jobs?updates=exams' },
+  { label: 'Admit Cards', href: '/jobs?updates=admit-cards' },
+  { label: 'Results', href: '/jobs?updates=results' },
 ];
 
 const MOBILE_GROUPS = [
@@ -59,9 +59,9 @@ export default function Navbar() {
         <nav className="hidden lg:flex items-center gap-6">
           <NavLink href="/">Home</NavLink>
           <NavLink href="/jobs">Jobs</NavLink>
-          <NavLink href="/exams">Upcoming Exams</NavLink>
-          <NavLink href="/admit-cards">Admit Cards</NavLink>
-          <NavLink href="/results">Results</NavLink>
+          <NavLink href="/jobs?updates=exams">Upcoming Exams</NavLink>
+          <NavLink href="/jobs?updates=admit-cards">Admit Cards</NavLink>
+          <NavLink href="/jobs?updates=results">Results</NavLink>
           <NavDropdown
             label="Study Zone"
             items={[

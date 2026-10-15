@@ -157,13 +157,13 @@ export default async function HomePage() {
 
     return (
       <div className="bg-neutral-50">
-        <HotNewsBanner />
         <div className="max-w-7xl mx-auto px-6 pt-8">
           <SearchHero matchScore={topScore} />
         </div>
         <div className="max-w-7xl mx-auto px-6 pt-10 grid lg:grid-cols-10 gap-8 items-start">
           <div className="lg:col-span-7 space-y-10">
             <QuickStatsBar />
+            <HotNewsBanner />
             <LatestJobsSection initialNotifications={data.notifications} />
             <UpcomingJobsSection hideWhenEmpty />
           </div>
@@ -190,7 +190,6 @@ export default async function HomePage() {
 
   return (
     <div className="bg-neutral-50">
-      <HotNewsBanner />
       <div className="max-w-7xl mx-auto px-6 pt-8">
         <SearchHero />
       </div>
@@ -198,6 +197,7 @@ export default async function HomePage() {
         <QuickStatsBar />
       </div>
       <div className="max-w-7xl mx-auto px-6 space-y-16 py-16">
+        <HotNewsBanner />
         <LatestJobsSection initialNotifications={data.notifications} />
         <UpcomingJobsSection hideWhenEmpty />
         <CategoryStrip />

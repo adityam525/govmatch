@@ -4,10 +4,10 @@ import DisclaimerBar from "./DisclaimerBar";
 const footerLinks = {
   Platform: [
     { label: "Jobs", href: "/jobs" },
-    { label: "Upcoming Exams", href: "/exams" },
-    { label: "Admit Cards", href: "/admit-cards" },
-    { label: "Results", href: "/results" },
-    { label: "Answer Keys", href: "/answer-key" },
+    { label: "Upcoming Exams", href: "/jobs?updates=exams" },
+    { label: "Admit Cards", href: "/jobs?updates=admit-cards" },
+    { label: "Results", href: "/jobs?updates=results" },
+    { label: "Answer Keys", href: "/jobs?updates=answer-keys" },
     { label: "Study Zone", href: "/study-zone" },
     { label: "Pricing", href: "/pricing" },
   ],

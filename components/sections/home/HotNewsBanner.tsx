@@ -1,24 +1,16 @@
-import Link from 'next/link';
-import { Flame } from 'lucide-react';
 import { getPublishedJobs, type PublishedJob } from '@/lib/job-queries';
 import { daysBetween, todayIST } from '@/lib/job-status';
+import HotNewsMarquee, { type HotItemView } from './HotNewsMarquee';
 
 const DAY_MS = 24 * 60 * 60 * 1000;
 
-interface HotItem {
-  key: string;
-  tone: 'urgent' | 'info';
-  label: string;
-  title: string;
-  href: string;
-  rank: number;
-}
+type RankedItem = HotItemView & { rank: number };
 
 const plural = (n: number, word: string) => `${n} ${word}${n === 1 ? '' : 's'}`;
 
 // One item per job, in priority order: last date today, closing within 3 days,
 // admit card out with the exam within a week, result declared in the last 3 days.
-function hotItemFor(job: PublishedJob, today: Date): HotItem | null {
+function hotItemFor(job: PublishedJob, today: Date): RankedItem | null {
   const base = { key: job.id, title: job.title, href: `/jobs/${job.slug}` };
 
   if (job.phase === 'LIVE' && job.applicationOpen && job.applicationEndDate) {
@@ -53,40 +45,15 @@ function hotItemFor(job: PublishedJob, today: Date): HotItem | null {
   return null;
 }
 
-export default async function HotNewsBanner({ limit = 8 }: { limit?: number }) {
+export default async function HotNewsBanner({ limit = 12, sticky = false }: { limit?: number; sticky?: boolean }) {
   const today = todayIST();
   const items = (await getPublishedJobs())
     .map((job) => hotItemFor(job, today))
-    .filter((item): item is HotItem => item !== null)
+    .filter((item): item is RankedItem => item !== null)
     .sort((a, b) => a.rank - b.rank)
-    .slice(0, limit);
+    .slice(0, limit)
+    .map(({ rank: _rank, ...item }) => item);
 
   if (items.length === 0) return null;
-
-  return (
-    <div className="border-b border-amber-200 bg-amber-50">
-      <div className="mx-auto flex max-w-7xl items-center gap-3 px-4 py-2 md:px-6">
-        <span className="flex shrink-0 items-center gap-1 text-xs font-bold uppercase tracking-wide text-amber-700">
-          <Flame size={14} /> Hot
-        </span>
-        <div className="flex min-w-0 flex-1 gap-2 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-          {items.map((item) => (
-            <Link
-              key={item.key}
-              href={item.href}
-              className={`flex shrink-0 items-center gap-1.5 rounded-full border px-3 py-1 text-xs transition-colors ${
-                item.tone === 'urgent'
-                  ? 'border-red-200 bg-red-50 text-red-700 hover:bg-red-100'
-                  : 'border-neutral-200 bg-white text-neutral-700 hover:bg-neutral-50'
-              }`}
-            >
-              <span className="font-semibold">{item.label}</span>
-              <span className="opacity-40">·</span>
-              <span className="max-w-[14rem] truncate">{item.title}</span>
-            </Link>
-          ))}
-        </div>
-      </div>
-    </div>
-  );
+  return <HotNewsMarquee items={items} sticky={sticky} />;
 }

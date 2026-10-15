@@ -1,0 +1,17 @@
+.hot-news-track {
+  display: flex;
+  width: max-content;
+  animation: hot-news-scroll var(--hot-news-duration, 40s) linear infinite;
+}
+.hot-news-marquee:hover .hot-news-track,
+.hot-news-marquee:focus-within .hot-news-track {
+  animation-play-state: paused;
+}
+@keyframes hot-news-scroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hot-news-track { animation: none; }
+  .hot-news-marquee { overflow-x: auto; }
+}
