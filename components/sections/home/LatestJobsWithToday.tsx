@@ -16,11 +16,11 @@ export default async function LatestJobsWithToday() {
   if (dueToday.length === 0) return <LatestJobsSection />;
 
   return (
-    <div className="grid items-start gap-6 lg:grid-cols-4">
+    <div className="grid items-stretch gap-6 lg:grid-cols-4">
       <div className="min-w-0 lg:col-span-3">
         <LatestJobsSection />
       </div>
-      <aside className="lg:sticky lg:top-20 lg:col-span-1">
+      <aside className="lg:col-span-1">
         <LastDateTodayPanel jobs={dueToday} />
       </aside>
     </div>

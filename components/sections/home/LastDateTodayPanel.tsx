@@ -2,13 +2,15 @@ import Link from 'next/link';
 import OrgLogo from '@/components/shared/OrgLogo';
 import type { PublishedJob } from '@/lib/job-queries';
 
-const MAX_ROWS = 8;
+const MAX_ROWS = 20;
 
+// Fills the height of the row it sits in. The list scrolls inside the panel,
+// so a long Latest Jobs column never leaves blank space beneath it.
 export default function LastDateTodayPanel({ jobs }: { jobs: PublishedJob[] }) {
   const shown = jobs.slice(0, MAX_ROWS);
 
   return (
-    <section className="rounded-2xl border border-red-100 bg-white p-4 shadow-sm">
+    <section className="flex h-full max-h-[1088px] min-h-[24rem] flex-col rounded-2xl border border-red-100 bg-white p-4 shadow-sm">
       <div className="flex items-center justify-between gap-2">
         <h2 className="flex items-center gap-2 text-sm font-bold text-neutral-900">
           <span className="relative flex h-2.5 w-2.5">
@@ -21,13 +23,9 @@ export default function LastDateTodayPanel({ jobs }: { jobs: PublishedJob[] }) {
       </div>
       <p className="mt-1 text-xs text-neutral-500">Final day to apply for these jobs</p>
 
-      <div className="mt-3 divide-y divide-neutral-100">
+      <div className="mt-3 min-h-0 flex-1 divide-y divide-neutral-100 overflow-y-auto pr-1">
         {shown.map((job) => (
-          <Link
-            key={job.id}
-            href={`/jobs/${job.slug}`}
-            className="group flex items-start gap-3 py-2.5 first:pt-0"
-          >
+          <Link key={job.id} href={`/jobs/${job.slug}`} className="group flex items-start gap-3 py-2.5 first:pt-0">
             <OrgLogo
               name={job.organization?.name ?? 'Organization'}
               shortName={job.organization?.shortName}
@@ -52,7 +50,10 @@ export default function LastDateTodayPanel({ jobs }: { jobs: PublishedJob[] }) {
         ))}
       </div>
 
-      <Link href="/jobs?phase=today" className="mt-3 block text-center text-xs font-medium text-primary-600 hover:underline">
+      <Link
+        href="/jobs?phase=today"
+        className="mt-3 block border-t border-neutral-100 pt-3 text-center text-xs font-medium text-primary-600 hover:underline"
+      >
         View all {jobs.length}
       </Link>
     </section>

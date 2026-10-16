@@ -18,7 +18,7 @@ import NotificationPromptCard from "@/components/sections/home-logged-in/Notific
 import MockTestPromoCard from "@/components/sections/home-logged-in/MockTestPromoCard";
 import OrganizationStrip from "@/components/sections/home-logged-out/OrganizationStrip";
 import StateStrip from "@/components/sections/home-logged-out/StateStrip";
-import HotNewsBanner from "@/components/sections/home/HotNewsBanner";
+import HomeHotNews from "@/components/sections/home/HomeHotNews";
 import UpcomingJobsSection from "@/components/sections/home/UpcomingJobsSection";
 
 function serialize<T>(data: T): T {
@@ -163,7 +163,7 @@ export default async function HomePage() {
         <div className="max-w-7xl mx-auto px-6 pt-10 grid lg:grid-cols-10 gap-8 items-start">
           <div className="lg:col-span-7 space-y-10">
             <QuickStatsBar />
-            <HotNewsBanner />
+            <HomeHotNews />
             <LatestJobsWithToday />
             <UpcomingJobsSection hideWhenEmpty />
           </div>
@@ -197,7 +197,7 @@ export default async function HomePage() {
         <QuickStatsBar />
       </div>
       <div className="max-w-7xl mx-auto px-6 space-y-16 py-16">
-        <HotNewsBanner />
+        <HomeHotNews />
         <LatestJobsWithToday />
         <UpcomingJobsSection hideWhenEmpty />
         <CategoryStrip />

@@ -4,6 +4,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Search, SlidersHorizontal, X } from "lucide-react";
 import FilterDropdown, { FilterOption } from "@/components/ui/FilterDropdown";
+import { useAuth } from "@/features/auth/hooks";
 
 interface ApiNamed { slug: string; name: string }
 interface ApiState { code: string; name: string }
@@ -11,9 +12,9 @@ interface ApiBranch { slug: string; name: string; qualificationGroup?: string }
 
 const SORT_OPTIONS: FilterOption[] = [
   { id: "newest", label: "Newest first" },
-  { id: "oldest", label: "Oldest first" },
+  { id: "deadline_soon", label: "Last date (soonest)" },
+  { id: "posts_high", label: "Most vacancies" },
   { id: "relevance", label: "Best match" },
-  { id: "salary_high", label: "Highest salary" },
 ];
 
 const csv = (value: string | null) => value?.split(",").filter(Boolean) ?? [];
@@ -32,6 +33,7 @@ export default function JobFiltersBar() {
   const searchParams = useSearchParams();
   const urlKey = searchParams.toString();
   const toolbarRef = useRef<HTMLDivElement>(null);
+  const { isLoggedIn } = useAuth();
 
   const applied: Draft = useMemo(
     () => ({
@@ -228,7 +230,7 @@ export default function JobFiltersBar() {
             <div className="w-40">
               <FilterDropdown
                 label="Sort"
-                options={SORT_OPTIONS}
+                options={isLoggedIn ? SORT_OPTIONS : SORT_OPTIONS.filter((o) => o.id !== "relevance")}
                 selected={[sort]}
                 onChange={(ids) => push({ sort: ids[0] ?? "newest" })}
                 multi={false}
