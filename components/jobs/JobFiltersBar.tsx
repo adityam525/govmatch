@@ -19,8 +19,7 @@ interface ApiNamed { slug: string; name: string }
 interface ApiState { code: string; name: string }
 interface ApiBranch { slug: string; name: string; qualificationGroup?: string }
 
-// Same ids as the update presets in lib/jobs-view.ts. That module is
-// server-only, so the ids are repeated here.
+// Same ids as the update presets in lib/jobs-view.ts (server-only, so repeated here).
 const UPDATE_PILLS = [
   { id: "exams", label: "Upcoming exams", Icon: CalendarDays },
   { id: "admit-cards", label: "Admit cards", Icon: FileCheck2 },
@@ -189,13 +188,11 @@ export default function JobFiltersBar() {
   const [states, setStates] = useState<Option[]>([]);
   const [organizations, setOrganizations] = useState<Option[]>([]);
 
-  // Keep the form in step with the URL (back button, chip removal, tab switch).
   useEffect(() => {
     setDraft(applied);
     setSearchText(searchParams.get("search") ?? "");
   }, [applied]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  // While the drawer is open: lock page scroll and close on Escape.
   useEffect(() => {
     if (!open) return;
     const previous = document.body.style.overflow;
@@ -223,7 +220,6 @@ export default function JobFiltersBar() {
     load<ApiNamed>("/api/organizations", (rows) => rows.map((o) => ({ id: o.slug, label: o.name })), setOrganizations);
   }, []);
 
-  // Qualifications follow the chosen qualification categories.
   useEffect(() => {
     const qs = draft.qualificationCategories.length ? `?categorySlugs=${draft.qualificationCategories.join(",")}` : "";
     fetch(`/api/qualifications${qs}`)
@@ -231,7 +227,6 @@ export default function JobFiltersBar() {
       .then((rows: ApiNamed[]) => {
         const options = Array.isArray(rows) ? rows.map((q) => ({ id: q.slug, label: q.name })) : [];
         setQualifications(options);
-        // A single possible qualification needs no choice.
         if (draft.qualificationCategories.length > 0 && draft.qualifications.length === 0 && options.length === 1) {
           setDraft((d) => ({ ...d, qualifications: [options[0].id] }));
         }
@@ -239,7 +234,6 @@ export default function JobFiltersBar() {
       .catch(() => {});
   }, [draft.qualificationCategories.join(",")]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  // Branches follow the chosen qualifications.
   useEffect(() => {
     const qs = draft.qualifications.length ? `?qualificationSlugs=${draft.qualifications.join(",")}` : "";
     fetch(`/api/branches${qs}`)
@@ -263,7 +257,7 @@ export default function JobFiltersBar() {
   };
 
   const openDrawer = () => {
-    setDraft(applied); // always start from what is actually applied
+    setDraft(applied);
     setOpen(true);
   };
 
@@ -287,7 +281,6 @@ export default function JobFiltersBar() {
   const toggleSection = (key: string) => setSections((s) => ({ ...s, [key]: !s[key] }));
   const labelOf = (options: Option[], id: string) => options.find((o) => o.id === id)?.label ?? id;
 
-  // Applied filters as removable chips.
   const chips: { key: string; label: string; remove: () => void }[] = [];
   const dropFrom = (field: Exclude<keyof Draft, "category">, id: string) =>
     push({ [field]: applied[field].filter((v) => v !== id).join(",") });
@@ -338,17 +331,17 @@ export default function JobFiltersBar() {
   ];
 
   return (
-    <div className="mb-3 space-y-3">
-      <div className="flex gap-2">
-        <form onSubmit={submitSearch} className="relative min-w-0 flex-1">
-          <Search size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-neutral-400" />
+    <div className="mb-4 space-y-3 rounded-2xl border border-neutral-200 bg-white p-3 shadow-sm sm:p-4">
+      <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
+        <form onSubmit={submitSearch} className="relative min-w-0 sm:flex-1">
+          <Search size={17} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-neutral-400" />
           <input
             type="text"
             inputMode="search"
             value={searchText}
             onChange={(e) => setSearchText(e.target.value)}
             placeholder="Search jobs, departments, exams"
-            className="h-10 w-full rounded-xl border border-neutral-200 bg-white pl-10 pr-9 text-sm outline-none focus:border-primary-500"
+            className="h-11 w-full rounded-xl border border-neutral-200 bg-neutral-50 pl-10 pr-9 text-sm text-neutral-900 outline-none transition placeholder:text-neutral-400 focus:border-primary-400 focus:bg-white focus:ring-2 focus:ring-primary-100"
           />
           {searchText && (
             <button
@@ -365,39 +358,42 @@ export default function JobFiltersBar() {
           )}
         </form>
 
-        <select
-          value={sortValue}
-          onChange={(e) => push({ sort: e.target.value })}
-          aria-label="Sort jobs"
-          className="h-10 w-[8.5rem] shrink-0 rounded-xl border border-neutral-200 bg-white px-3 text-sm text-neutral-700 outline-none focus:border-primary-500 sm:w-48"
-        >
-          {sortOptions.map((o) => (
-            <option key={o.id} value={o.id}>
-              {o.label}
-            </option>
-          ))}
-        </select>
+        <div className="flex gap-2">
+          <button
+            type="button"
+            onClick={openDrawer}
+            className={`flex h-11 shrink-0 items-center justify-center gap-2 rounded-xl border px-4 text-sm font-medium transition-colors ${
+              chips.length > 0
+                ? "border-primary-300 bg-primary-50 text-primary-700"
+                : "border-neutral-200 bg-white text-neutral-700 hover:bg-neutral-50"
+            }`}
+          >
+            <SlidersHorizontal size={16} />
+            Filters
+            {chips.length > 0 && (
+              <span className="rounded-full bg-primary-600 px-1.5 text-[10px] font-semibold text-white">{chips.length}</span>
+            )}
+          </button>
+
+          <select
+            value={sortValue}
+            onChange={(e) => push({ sort: e.target.value })}
+            aria-label="Sort jobs"
+            className="h-11 min-w-0 flex-1 rounded-xl border border-neutral-200 bg-white px-3 text-sm text-neutral-700 outline-none transition focus:border-primary-400 focus:ring-2 focus:ring-primary-100 sm:w-52 sm:flex-none"
+          >
+            {sortOptions.map((o) => (
+              <option key={o.id} value={o.id}>
+                {o.label}
+              </option>
+            ))}
+          </select>
+        </div>
       </div>
 
-      <div className="flex items-center gap-2 overflow-x-auto pb-0.5 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-        <button
-          type="button"
-          onClick={openDrawer}
-          className={`flex h-9 shrink-0 items-center gap-2 rounded-full border px-3.5 text-sm font-medium transition-colors ${
-            chips.length > 0
-              ? "border-primary-300 bg-primary-50 text-primary-700"
-              : "border-neutral-200 bg-white text-neutral-700 hover:bg-neutral-50"
-          }`}
-        >
-          <SlidersHorizontal size={15} />
-          Filters
-          {chips.length > 0 && (
-            <span className="rounded-full bg-primary-600 px-1.5 text-[10px] font-semibold text-white">{chips.length}</span>
-          )}
-        </button>
-
-        <span className="h-5 w-px shrink-0 bg-neutral-200" />
-
+      <div className="flex items-center gap-2 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+        <span className="hidden shrink-0 text-[11px] font-semibold uppercase tracking-wide text-neutral-400 sm:inline">
+          Quick filters
+        </span>
         {UPDATE_PILLS.map(({ id, label, Icon }) => {
           const active = activeUpdate === id;
           return (
@@ -406,21 +402,22 @@ export default function JobFiltersBar() {
               type="button"
               aria-pressed={active}
               onClick={() => push({ updates: active ? "" : id })}
-              className={`flex h-9 shrink-0 items-center gap-1.5 rounded-full border px-3 text-sm font-medium transition-colors ${
+              className={`flex h-8 shrink-0 items-center gap-1.5 rounded-full border px-3 text-[13px] font-medium transition-colors ${
                 active
-                  ? "border-primary-600 bg-primary-600 text-white"
-                  : "border-neutral-200 bg-white text-neutral-700 hover:bg-neutral-50"
+                  ? "border-primary-300 bg-primary-50 text-primary-700 ring-1 ring-primary-200"
+                  : "border-neutral-200 bg-white text-neutral-600 hover:border-primary-300 hover:text-primary-700"
               }`}
             >
               <Icon size={14} />
               {label}
+              {active && <X size={12} />}
             </button>
           );
         })}
       </div>
 
       {chips.length > 0 && (
-        <div className="flex flex-wrap items-center gap-2">
+        <div className="flex flex-wrap items-center gap-2 border-t border-neutral-100 pt-3">
           {chips.map((chip) => (
             <button
               key={chip.key}

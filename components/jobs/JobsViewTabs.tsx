@@ -27,31 +27,40 @@ export default function JobsViewTabs({
   const defaultTab: PhaseFilter = view.preset ? 'all' : 'open';
 
   return (
-    <div className="mb-3 flex items-center gap-2 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-      {PHASE_TABS.map((tab) => {
-        const active = view.tab === tab.id;
-        const urgent = tab.id === 'today' && counts.today > 0 && !active;
-        const href =
-          tab.id === defaultTab ? buildHref(params, {}, ['phase']) : buildHref(params, { phase: tab.id });
-        const style = active
-          ? 'border-primary-600 bg-primary-600 text-white'
-          : urgent
-            ? 'border-red-200 bg-red-50 text-red-700 hover:bg-red-100'
-            : 'border-neutral-200 bg-white text-neutral-600 hover:bg-neutral-50';
-        return (
-          <Link
-            key={tab.id}
-            href={href}
-            aria-current={active ? 'page' : undefined}
-            className={`shrink-0 rounded-full border px-3.5 py-1.5 text-sm font-medium transition-colors ${style}`}
-          >
-            {tab.label}{' '}
-            <span className={active ? 'opacity-80' : urgent ? 'text-red-400' : 'text-neutral-400'}>
-              ({counts[tab.id]})
-            </span>
-          </Link>
-        );
-      })}
+    <div className="mb-4 border-b border-neutral-200">
+      <div className="-mb-px flex gap-1 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+        {PHASE_TABS.map((tab) => {
+          const active = view.tab === tab.id;
+          const urgent = tab.id === 'today' && counts.today > 0;
+          const href =
+            tab.id === defaultTab ? buildHref(params, {}, ['phase']) : buildHref(params, { phase: tab.id });
+          return (
+            <Link
+              key={tab.id}
+              href={href}
+              aria-current={active ? 'page' : undefined}
+              className={`flex shrink-0 items-center gap-2 whitespace-nowrap border-b-2 px-3 py-3 text-sm font-medium transition-colors ${
+                active
+                  ? 'border-primary-600 text-primary-700'
+                  : 'border-transparent text-neutral-500 hover:border-neutral-300 hover:text-neutral-800'
+              }`}
+            >
+              {tab.label}
+              <span
+                className={`rounded-full px-1.5 py-0.5 text-[11px] font-semibold leading-none ${
+                  active
+                    ? 'bg-primary-50 text-primary-700'
+                    : urgent
+                      ? 'bg-red-50 text-red-600'
+                      : 'bg-neutral-100 text-neutral-500'
+                }`}
+              >
+                {counts[tab.id]}
+              </span>
+            </Link>
+          );
+        })}
+      </div>
     </div>
   );
 }

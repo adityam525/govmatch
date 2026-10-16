@@ -9,6 +9,7 @@ export interface BrowseItem {
   description: string;
   iconName: string;
   colorKey: string;
+  logo?: { name: string; shortName?: string | null; logoUrl?: string | null };
 }
 
 interface BrowseSectionProps<T extends BrowseItem> {
@@ -36,6 +37,7 @@ export default function BrowseSection<T extends BrowseItem>({
     iconName: item.iconName,
     iconBg: colorMap[item.colorKey],
     href: getHref(item),
+    logo: item.logo,
   }));
 
   return (

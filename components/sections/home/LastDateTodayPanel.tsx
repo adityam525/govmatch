@@ -1,6 +1,6 @@
-import Link from 'next/link';
-import OrgLogo from '@/components/shared/OrgLogo';
-import type { PublishedJob } from '@/lib/job-queries';
+import Link from "next/link";
+import OrgLogo from "@/components/shared/OrgLogo";
+import type { PublishedJob } from "@/lib/job-queries";
 
 const MAX_ROWS = 20;
 
@@ -10,7 +10,7 @@ export default function LastDateTodayPanel({ jobs }: { jobs: PublishedJob[] }) {
   const shown = jobs.slice(0, MAX_ROWS);
 
   return (
-    <section className="flex h-full max-h-[1088px] min-h-[24rem] flex-col rounded-2xl border border-red-100 bg-white p-4 shadow-sm">
+    <section className="flex h-full max-h-192 min-h-96 flex-col rounded-2xl border border-red-100 bg-white p-4 shadow-sm">
       <div className="flex items-center justify-between gap-2">
         <h2 className="flex items-center gap-2 text-sm font-bold text-neutral-900">
           <span className="relative flex h-2.5 w-2.5">
@@ -19,15 +19,23 @@ export default function LastDateTodayPanel({ jobs }: { jobs: PublishedJob[] }) {
           </span>
           Last date today
         </h2>
-        <span className="rounded-full bg-red-50 px-2 py-0.5 text-[11px] font-semibold text-red-600">{jobs.length}</span>
+        <span className="rounded-full bg-red-50 px-2 py-0.5 text-[11px] font-semibold text-red-600">
+          {jobs.length}
+        </span>
       </div>
-      <p className="mt-1 text-xs text-neutral-500">Final day to apply for these jobs</p>
+      <p className="mt-1 text-xs text-neutral-500">
+        Final day to apply for these jobs
+      </p>
 
       <div className="mt-3 min-h-0 flex-1 divide-y divide-neutral-100 overflow-y-auto pr-1">
         {shown.map((job) => (
-          <Link key={job.id} href={`/jobs/${job.slug}`} className="group flex items-start gap-3 py-2.5 first:pt-0">
+          <Link
+            key={job.id}
+            href={`/jobs/${job.slug}`}
+            className="group flex items-start gap-3 py-2.5 first:pt-0"
+          >
             <OrgLogo
-              name={job.organization?.name ?? 'Organization'}
+              name={job.organization?.name ?? "Organization"}
               shortName={job.organization?.shortName}
               logoUrl={job.organization?.logoUrl}
               size={36}
@@ -39,10 +47,12 @@ export default function LastDateTodayPanel({ jobs }: { jobs: PublishedJob[] }) {
               >
                 {job.title}
               </p>
-              <p className="mt-0.5 truncate text-[11px] text-neutral-500">{job.organization?.name}</p>
+              <p className="mt-0.5 truncate text-[11px] text-neutral-500">
+                {job.organization?.name}
+              </p>
               {job.vacancyTotal > 0 && (
                 <p className="mt-1 text-[11px] font-medium text-neutral-600">
-                  {job.vacancyTotal.toLocaleString('en-IN')} vacancies
+                  {job.vacancyTotal.toLocaleString("en-IN")} vacancies
                 </p>
               )}
             </div>

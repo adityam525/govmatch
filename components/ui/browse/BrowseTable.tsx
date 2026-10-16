@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import { ChevronDown, ChevronUp, Search } from "lucide-react";
 import * as Icons from "lucide-react";
+import OrgLogo from "@/components/shared/OrgLogo";
 
 interface BrowseTableItem {
   id: string;
@@ -10,6 +11,7 @@ interface BrowseTableItem {
   description: string;
   iconName: string;
   iconBg?: string;
+  logo?: { name: string; shortName?: string | null; logoUrl?: string | null };
   href: string;
 }
 
@@ -163,18 +165,21 @@ export default function BrowseTable({
                 >
                   {/* Category */}
                   <div className="flex min-w-0 items-center gap-3">
-                    <div
-                      className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl"
-                      style={{
-                        backgroundColor: item.iconBg ?? "#64748b",
-                      }}
-                    >
-                      <Icon
-                        size={20}
-                        aria-hidden="true"
-                        className="text-white"
+                    {item.logo ? (
+                      <OrgLogo
+                        name={item.logo.name}
+                        shortName={item.logo.shortName}
+                        logoUrl={item.logo.logoUrl}
+                        size={40}
                       />
-                    </div>
+                    ) : (
+                      <div
+                        className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl"
+                        style={{ backgroundColor: item.iconBg ?? "#64748b" }}
+                      >
+                        <Icon size={20} aria-hidden="true" className="text-white" />
+                      </div>
+                    )}
 
                     <span
                       title={item.title}

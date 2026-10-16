@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import JobCard, { type JobCardData } from '@/components/jobs/JobCard';
-import TabFilterBar from './TabFilterBar';
+import { useState } from "react";
+import JobCard, { type JobCardData } from "@/components/jobs/JobCard";
+import TabFilterBar from "./TabFilterBar";
 
 export interface LatestJobItem {
   category: string;
@@ -12,13 +12,16 @@ export interface LatestJobItem {
 // The grid follows this section's own width (container queries), so it stays
 // tidy whether it has the full row or shares it with the Last Date Today panel.
 export default function LatestJobsTabs({ items }: { items: LatestJobItem[] }) {
-  const [activeTab, setActiveTab] = useState('all');
-  const visible = activeTab === 'all' ? items : items.filter((item) => item.category === activeTab);
+  const [activeTab, setActiveTab] = useState("all");
+  const visible =
+    activeTab === "all"
+      ? items
+      : items.filter((item) => item.category === activeTab);
 
   return (
     <div className="@container">
       <TabFilterBar activeTab={activeTab} onChange={setActiveTab} />
-      <div className="mt-4 overflow-y-auto" style={{ maxHeight: '1088px' }}>
+      <div className="mt-4 overflow-y-auto" style={{ maxHeight: "768px" }}>
         {visible.length === 0 ? (
           <p className="text-sm text-neutral-400 py-6 text-center">
             No jobs are open for applications in this category right now.
