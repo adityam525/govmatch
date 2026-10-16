@@ -461,8 +461,8 @@ export default async function JobsPage({ searchParams }: JobsPageProps) {
   return (
     <div className="mx-auto max-w-7xl px-6 py-8">
       <div className="mb-6">
-        <JobsViewTabs view={view} counts={phaseCounts} params={params} />
         <JobFiltersBar />
+        <JobsViewTabs view={view} counts={phaseCounts} params={params} />
       </div>
 
       <SectionHeader

@@ -1,10 +1,9 @@
 import Link from 'next/link';
-import { X } from 'lucide-react';
-import { PHASE_TABS, PRESET_LABELS, type JobsView, type PhaseFilter } from '@/lib/jobs-view';
+import { PHASE_TABS, type JobsView, type PhaseFilter } from '@/lib/jobs-view';
 
 type Params = { [key: string]: string | undefined };
 
-// Builds a /jobs URL that keeps every other filter (search, state, ...).
+// Builds a /jobs URL that keeps every other filter (search, state, preset...).
 function buildHref(params: Params, set: Record<string, string>, drop: string[] = []) {
   const next = new URLSearchParams();
   for (const [key, value] of Object.entries(params)) {
@@ -29,20 +28,6 @@ export default function JobsViewTabs({
 
   return (
     <div className="mb-3 flex items-center gap-2 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-      {view.preset && (
-        <>
-          <Link
-            href={buildHref(params, {}, ['updates'])}
-            title="Remove this filter"
-            className="flex shrink-0 items-center gap-1.5 rounded-full border border-primary-200 bg-primary-50 px-3 py-1.5 text-sm font-medium text-primary-700 hover:bg-primary-100"
-          >
-            {PRESET_LABELS[view.preset]}
-            <X size={13} />
-          </Link>
-          <span className="h-5 w-px shrink-0 bg-neutral-200" />
-        </>
-      )}
-
       {PHASE_TABS.map((tab) => {
         const active = view.tab === tab.id;
         const urgent = tab.id === 'today' && counts.today > 0 && !active;

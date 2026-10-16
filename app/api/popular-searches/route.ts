@@ -1,21 +1,20 @@
 import { NextResponse } from 'next/server';
-import { getPublishedJobs } from '@/lib/job-queries';
+import { getPopularOrganizations } from '@/lib/popular-searches';
 
-// Organizations behind the most recently published jobs that are still active.
 export async function GET() {
-  const jobs = (await getPublishedJobs())
-    .filter((job) => job.phase === 'LIVE' || job.phase === 'UPCOMING')
-    .sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
-
-  const seen = new Set<string>();
-  const popular: { label: string; query: string }[] = [];
-  for (const job of jobs) {
-    const shortName = job.organization?.shortName;
-    if (!shortName || seen.has(shortName)) continue;
-    seen.add(shortName);
-    popular.push({ label: shortName, query: shortName });
-    if (popular.length >= 6) break;
+  try {
+    const items = await getPopularOrganizations(5);
+    return NextResponse.json(
+      items.map((item) => ({
+        label: item.label,
+        slug: item.slug,
+        jobs: item.jobs,
+        vacancies: item.vacancies,
+        href: `/jobs?organizations=${encodeURIComponent(item.slug)}&phase=all`,
+      })),
+    );
+  } catch (error) {
+    console.error('Failed to load popular searches:', error);
+    return NextResponse.json([]);
   }
-
-  return NextResponse.json(popular);
 }

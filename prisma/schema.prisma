@@ -34,6 +34,7 @@ model State {
   code String @unique
 
   notifications Notification[] @relation("NotificationStates")
+  logoUrl String?
 }
 
 // Sector / recruiting-body category — e.g. SSC, Railway, Banking, UPSC,

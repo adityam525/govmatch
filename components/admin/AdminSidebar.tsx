@@ -28,38 +28,38 @@ const navSections = [
   },
 ];
 
+// A horizontally scrolling tab strip on phones; the vertical sidebar from md up.
 export default function AdminSidebar() {
   const pathname = usePathname();
+  const isActive = (href: string) =>
+    href === '/admin' ? pathname === href : pathname === href || pathname.startsWith(`${href}/`);
 
   return (
-    <aside className="w-56 shrink-0 border-r border-neutral-200 bg-white min-h-screen p-3">
-      <nav className="space-y-4">
+    <aside className="w-full shrink-0 border-b border-neutral-200 bg-white md:min-h-screen md:w-56 md:border-b-0 md:border-r md:p-3">
+      <nav className="flex gap-1 overflow-x-auto px-3 py-2 [scrollbar-width:none] md:block md:space-y-4 md:overflow-visible md:p-0 [&::-webkit-scrollbar]:hidden">
         {navSections.map((section, i) => (
-          <div key={i}>
+          <div key={i} className="flex shrink-0 gap-1 md:block md:space-y-0.5">
             {section.label && (
-              <p className="px-3 mb-1 text-[10px] font-semibold uppercase tracking-wide text-neutral-400">
+              <p className="hidden px-3 pb-1 pt-2 text-[10px] font-semibold uppercase tracking-wide text-neutral-400 md:block">
                 {section.label}
               </p>
             )}
-            <div className="space-y-0.5">
-              {section.items.map((item) => {
-                const isActive = pathname === item.href;
-                const Icon = item.icon;
-                return (
-                  <Link
-                    key={item.href}
-                    href={item.href}
-                    className={clsx(
-                      'flex items-center gap-2.5 px-3 py-2 rounded-md text-sm font-medium transition-colors',
-                      isActive ? 'bg-primary-50 text-primary-600' : 'text-neutral-600 hover:bg-neutral-50'
-                    )}
-                  >
-                    <Icon size={16} />
-                    {item.label}
-                  </Link>
-                );
-              })}
-            </div>
+            {section.items.map((item) => {
+              const Icon = item.icon;
+              return (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className={clsx(
+                    'flex shrink-0 items-center gap-2.5 whitespace-nowrap rounded-md px-3 py-2 text-sm font-medium transition-colors',
+                    isActive(item.href) ? 'bg-primary-50 text-primary-600' : 'text-neutral-600 hover:bg-neutral-50',
+                  )}
+                >
+                  <Icon size={16} />
+                  {item.label}
+                </Link>
+              );
+            })}
           </div>
         ))}
       </nav>

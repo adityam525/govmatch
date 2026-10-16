@@ -1,23 +1,32 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { Search, SlidersHorizontal, X } from "lucide-react";
-import FilterDropdown, { FilterOption } from "@/components/ui/FilterDropdown";
+import {
+  CalendarDays,
+  ChevronDown,
+  FileCheck2,
+  KeyRound,
+  Search,
+  SlidersHorizontal,
+  Trophy,
+  X,
+} from "lucide-react";
 import { useAuth } from "@/features/auth/hooks";
 
+interface Option { id: string; label: string; group?: string }
 interface ApiNamed { slug: string; name: string }
 interface ApiState { code: string; name: string }
 interface ApiBranch { slug: string; name: string; qualificationGroup?: string }
 
-const SORT_OPTIONS: FilterOption[] = [
-  { id: "newest", label: "Newest first" },
-  { id: "deadline_soon", label: "Last date (soonest)" },
-  { id: "posts_high", label: "Most vacancies" },
-  { id: "relevance", label: "Best match" },
-];
-
-const csv = (value: string | null) => value?.split(",").filter(Boolean) ?? [];
+// Same ids as the update presets in lib/jobs-view.ts. That module is
+// server-only, so the ids are repeated here.
+const UPDATE_PILLS = [
+  { id: "exams", label: "Upcoming exams", Icon: CalendarDays },
+  { id: "admit-cards", label: "Admit cards", Icon: FileCheck2 },
+  { id: "results", label: "Results", Icon: Trophy },
+  { id: "answer-keys", label: "Answer keys", Icon: KeyRound },
+] as const;
 
 type Draft = {
   category: string;
@@ -28,12 +37,130 @@ type Draft = {
   organizations: string[];
 };
 
+const EMPTY_DRAFT: Draft = {
+  category: "",
+  qualificationCategories: [],
+  qualifications: [],
+  branches: [],
+  states: [],
+  organizations: [],
+};
+
+const csv = (value: string | null) => value?.split(",").filter(Boolean) ?? [];
+const toggleIn = (list: string[], id: string) =>
+  list.includes(id) ? list.filter((x) => x !== id) : [...list, id];
+
+function Section({
+  title,
+  count,
+  open,
+  onToggle,
+  children,
+}: {
+  title: string;
+  count: number;
+  open: boolean;
+  onToggle: () => void;
+  children: React.ReactNode;
+}) {
+  return (
+    <div className="border-b border-neutral-100">
+      <button
+        type="button"
+        onClick={onToggle}
+        aria-expanded={open}
+        className="flex w-full items-center justify-between px-5 py-3.5 text-left"
+      >
+        <span className="flex items-center gap-2 text-sm font-semibold text-neutral-900">
+          {title}
+          {count > 0 && (
+            <span className="rounded-full bg-primary-600 px-1.5 text-[10px] font-semibold text-white">{count}</span>
+          )}
+        </span>
+        <ChevronDown size={16} className={`text-neutral-400 transition-transform ${open ? "rotate-180" : ""}`} />
+      </button>
+      {open && <div className="space-y-4 px-5 pb-4">{children}</div>}
+    </div>
+  );
+}
+
+function OptionList({
+  label,
+  options,
+  selected,
+  onToggle,
+}: {
+  label?: string;
+  options: Option[];
+  selected: string[];
+  onToggle: (id: string) => void;
+}) {
+  const [query, setQuery] = useState("");
+  const needle = query.trim().toLowerCase();
+  const shown = needle ? options.filter((o) => o.label.toLowerCase().includes(needle)) : options;
+  const hasGroups = shown.some((o) => o.group);
+
+  const row = (o: Option) => (
+    <label
+      key={o.id}
+      className="flex cursor-pointer items-center gap-2.5 rounded-md px-1.5 py-1.5 text-sm text-neutral-700 hover:bg-neutral-50"
+    >
+      <input
+        type="checkbox"
+        checked={selected.includes(o.id)}
+        onChange={() => onToggle(o.id)}
+        className="h-4 w-4 shrink-0 accent-primary-600"
+      />
+      <span className="min-w-0 truncate">{o.label}</span>
+    </label>
+  );
+
+  const grouped: Record<string, Option[]> = {};
+  if (hasGroups) {
+    for (const o of shown) {
+      const key = o.group ?? "Other";
+      if (!grouped[key]) grouped[key] = [];
+      grouped[key].push(o);
+    }
+  }
+
+  return (
+    <div>
+      {label && <p className="mb-1.5 text-xs font-medium text-neutral-500">{label}</p>}
+      {options.length > 8 && (
+        <input
+          type="text"
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          placeholder="Search..."
+          className="mb-2 h-9 w-full rounded-lg border border-neutral-200 px-3 text-sm outline-none focus:border-primary-500"
+        />
+      )}
+      <div className="max-h-56 overflow-y-auto pr-1">
+        {shown.length === 0 ? (
+          <p className="px-1.5 py-2 text-xs text-neutral-400">Nothing found</p>
+        ) : hasGroups ? (
+          Object.entries(grouped).map(([group, opts]) => (
+            <div key={group}>
+              <p className="px-1.5 pb-1 pt-2 text-[10px] font-semibold uppercase tracking-wide text-neutral-400">
+                {group}
+              </p>
+              {opts.map(row)}
+            </div>
+          ))
+        ) : (
+          shown.map(row)
+        )}
+      </div>
+    </div>
+  );
+}
+
 export default function JobFiltersBar() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const urlKey = searchParams.toString();
-  const toolbarRef = useRef<HTMLDivElement>(null);
   const { isLoggedIn } = useAuth();
+  const urlKey = searchParams.toString();
 
   const applied: Draft = useMemo(
     () => ({
@@ -46,18 +173,21 @@ export default function JobFiltersBar() {
     }),
     [urlKey], // eslint-disable-line react-hooks/exhaustive-deps
   );
-  const sort = searchParams.get("sort") ?? "newest";
+  const activeUpdate = searchParams.get("updates") ?? "";
+  const sort = searchParams.get("sort") ?? "";
+  const sortValue = sort === "newest" && !activeUpdate ? "" : sort;
 
   const [draft, setDraft] = useState<Draft>(applied);
-  const [panelOpen, setPanelOpen] = useState(false);
+  const [open, setOpen] = useState(false);
+  const [sections, setSections] = useState<Record<string, boolean>>({ education: true });
   const [searchText, setSearchText] = useState(searchParams.get("search") ?? "");
 
-  const [categories, setCategories] = useState<FilterOption[]>([]);
-  const [qualCategories, setQualCategories] = useState<FilterOption[]>([]);
-  const [qualifications, setQualifications] = useState<FilterOption[]>([]);
-  const [branches, setBranches] = useState<FilterOption[]>([]);
-  const [states, setStates] = useState<FilterOption[]>([]);
-  const [organizations, setOrganizations] = useState<FilterOption[]>([]);
+  const [categories, setCategories] = useState<Option[]>([]);
+  const [qualCategories, setQualCategories] = useState<Option[]>([]);
+  const [qualifications, setQualifications] = useState<Option[]>([]);
+  const [branches, setBranches] = useState<Option[]>([]);
+  const [states, setStates] = useState<Option[]>([]);
+  const [organizations, setOrganizations] = useState<Option[]>([]);
 
   // Keep the form in step with the URL (back button, chip removal, tab switch).
   useEffect(() => {
@@ -65,25 +195,23 @@ export default function JobFiltersBar() {
     setSearchText(searchParams.get("search") ?? "");
   }, [applied]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  // Close the panel on Escape or a click outside the toolbar.
+  // While the drawer is open: lock page scroll and close on Escape.
   useEffect(() => {
-    if (!panelOpen) return;
+    if (!open) return;
+    const previous = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setPanelOpen(false);
-    };
-    const onClick = (e: MouseEvent) => {
-      if (toolbarRef.current && !toolbarRef.current.contains(e.target as Node)) setPanelOpen(false);
+      if (e.key === "Escape") setOpen(false);
     };
     document.addEventListener("keydown", onKey);
-    document.addEventListener("mousedown", onClick);
     return () => {
+      document.body.style.overflow = previous;
       document.removeEventListener("keydown", onKey);
-      document.removeEventListener("mousedown", onClick);
     };
-  }, [panelOpen]);
+  }, [open]);
 
   useEffect(() => {
-    const load = <T,>(url: string, map: (rows: T[]) => FilterOption[], set: (o: FilterOption[]) => void) =>
+    const load = <T,>(url: string, map: (rows: T[]) => Option[], set: (o: Option[]) => void) =>
       fetch(url)
         .then((r) => r.json())
         .then((rows) => set(Array.isArray(rows) ? map(rows) : []))
@@ -134,9 +262,9 @@ export default function JobFiltersBar() {
     router.push(qs ? `/jobs?${qs}` : "/jobs");
   };
 
-  const togglePanel = () => {
-    if (!panelOpen) setDraft(applied); // always start from what is actually applied
-    setPanelOpen(!panelOpen);
+  const openDrawer = () => {
+    setDraft(applied); // always start from what is actually applied
+    setOpen(true);
   };
 
   const applyFilters = () => {
@@ -148,7 +276,7 @@ export default function JobFiltersBar() {
       states: draft.states.join(","),
       organizations: draft.organizations.join(","),
     });
-    setPanelOpen(false);
+    setOpen(false);
   };
 
   const submitSearch = (e: React.FormEvent) => {
@@ -156,12 +284,13 @@ export default function JobFiltersBar() {
     push({ search: searchText.trim() });
   };
 
-  const labelOf = (options: FilterOption[], id: string) => options.find((o) => o.id === id)?.label ?? id;
+  const toggleSection = (key: string) => setSections((s) => ({ ...s, [key]: !s[key] }));
+  const labelOf = (options: Option[], id: string) => options.find((o) => o.id === id)?.label ?? id;
 
   // Applied filters as removable chips.
   const chips: { key: string; label: string; remove: () => void }[] = [];
-  const dropFrom = (field: keyof Draft, id: string) =>
-    push({ [field]: (applied[field] as string[]).filter((v) => v !== id).join(",") });
+  const dropFrom = (field: Exclude<keyof Draft, "category">, id: string) =>
+    push({ [field]: applied[field].filter((v) => v !== id).join(",") });
 
   if (applied.category) {
     chips.push({ key: `cat-${applied.category}`, label: labelOf(categories, applied.category), remove: () => push({ category: "" }) });
@@ -184,7 +313,7 @@ export default function JobFiltersBar() {
 
   const clearAll = () => {
     const params = new URLSearchParams();
-    for (const keep of ["phase", "updates", "search"]) {
+    for (const keep of ["phase", "updates", "search", "sort"]) {
       const value = searchParams.get(keep);
       if (value) params.set(keep, value);
     }
@@ -192,133 +321,106 @@ export default function JobFiltersBar() {
     router.push(qs ? `/jobs?${qs}` : "/jobs");
   };
 
-  const dropdownProps = { widthClass: "w-full", allowClear: true } as const;
+  const draftCount =
+    (draft.category ? 1 : 0) +
+    draft.qualificationCategories.length +
+    draft.qualifications.length +
+    draft.branches.length +
+    draft.states.length +
+    draft.organizations.length;
+
+  const sortOptions = [
+    { id: "", label: activeUpdate ? "Best for this filter" : "Newest first" },
+    ...(activeUpdate ? [{ id: "newest", label: "Newest first" }] : []),
+    { id: "deadline_soon", label: "Last date (soonest)" },
+    { id: "posts_high", label: "Most vacancies" },
+    ...(isLoggedIn ? [{ id: "relevance", label: "Best match" }] : []),
+  ];
 
   return (
-    <div className="mb-3">
-      <div ref={toolbarRef} className="relative">
-        <div className="flex flex-col gap-2 sm:flex-row">
-          <form onSubmit={submitSearch} className="relative flex-1">
-            <Search size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-neutral-400" />
-            <input
-              type="search"
-              value={searchText}
-              onChange={(e) => setSearchText(e.target.value)}
-              placeholder="Search jobs, departments, exams..."
-              className="h-10 w-full rounded-xl border border-neutral-200 bg-white pl-10 pr-4 text-sm outline-none focus:border-primary-500"
-            />
-          </form>
-
-          <div className="flex gap-2">
+    <div className="mb-3 space-y-3">
+      <div className="flex gap-2">
+        <form onSubmit={submitSearch} className="relative min-w-0 flex-1">
+          <Search size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-neutral-400" />
+          <input
+            type="text"
+            inputMode="search"
+            value={searchText}
+            onChange={(e) => setSearchText(e.target.value)}
+            placeholder="Search jobs, departments, exams"
+            className="h-10 w-full rounded-xl border border-neutral-200 bg-white pl-10 pr-9 text-sm outline-none focus:border-primary-500"
+          />
+          {searchText && (
             <button
               type="button"
-              onClick={togglePanel}
-              aria-expanded={panelOpen}
-              className={`flex h-10 items-center gap-2 rounded-xl border px-3.5 text-sm font-medium transition-colors ${
-                panelOpen || chips.length > 0
-                  ? "border-primary-300 bg-primary-50 text-primary-700"
+              aria-label="Clear search"
+              onClick={() => {
+                setSearchText("");
+                push({ search: "" });
+              }}
+              className="absolute right-2.5 top-1/2 -translate-y-1/2 rounded-full p-1 text-neutral-400 hover:text-neutral-600"
+            >
+              <X size={14} />
+            </button>
+          )}
+        </form>
+
+        <select
+          value={sortValue}
+          onChange={(e) => push({ sort: e.target.value })}
+          aria-label="Sort jobs"
+          className="h-10 w-[8.5rem] shrink-0 rounded-xl border border-neutral-200 bg-white px-3 text-sm text-neutral-700 outline-none focus:border-primary-500 sm:w-48"
+        >
+          {sortOptions.map((o) => (
+            <option key={o.id} value={o.id}>
+              {o.label}
+            </option>
+          ))}
+        </select>
+      </div>
+
+      <div className="flex items-center gap-2 overflow-x-auto pb-0.5 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+        <button
+          type="button"
+          onClick={openDrawer}
+          className={`flex h-9 shrink-0 items-center gap-2 rounded-full border px-3.5 text-sm font-medium transition-colors ${
+            chips.length > 0
+              ? "border-primary-300 bg-primary-50 text-primary-700"
+              : "border-neutral-200 bg-white text-neutral-700 hover:bg-neutral-50"
+          }`}
+        >
+          <SlidersHorizontal size={15} />
+          Filters
+          {chips.length > 0 && (
+            <span className="rounded-full bg-primary-600 px-1.5 text-[10px] font-semibold text-white">{chips.length}</span>
+          )}
+        </button>
+
+        <span className="h-5 w-px shrink-0 bg-neutral-200" />
+
+        {UPDATE_PILLS.map(({ id, label, Icon }) => {
+          const active = activeUpdate === id;
+          return (
+            <button
+              key={id}
+              type="button"
+              aria-pressed={active}
+              onClick={() => push({ updates: active ? "" : id })}
+              className={`flex h-9 shrink-0 items-center gap-1.5 rounded-full border px-3 text-sm font-medium transition-colors ${
+                active
+                  ? "border-primary-600 bg-primary-600 text-white"
                   : "border-neutral-200 bg-white text-neutral-700 hover:bg-neutral-50"
               }`}
             >
-              <SlidersHorizontal size={16} />
-              Filters
-              {chips.length > 0 && (
-                <span className="rounded-full bg-primary-600 px-1.5 text-[10px] font-semibold text-white">{chips.length}</span>
-              )}
+              <Icon size={14} />
+              {label}
             </button>
-
-            <div className="w-40">
-              <FilterDropdown
-                label="Sort"
-                options={isLoggedIn ? SORT_OPTIONS : SORT_OPTIONS.filter((o) => o.id !== "relevance")}
-                selected={[sort]}
-                onChange={(ids) => push({ sort: ids[0] ?? "newest" })}
-                multi={false}
-                searchable={false}
-                defaultValue="newest"
-                widthClass="w-full"
-              />
-            </div>
-          </div>
-        </div>
-
-        {panelOpen && (
-          <div className="mt-2 rounded-2xl border border-neutral-200 bg-white p-4 shadow-lg md:absolute md:inset-x-0 md:top-full md:z-30">
-            <div className="grid gap-5 md:grid-cols-3">
-              <div className="space-y-2">
-                <p className="text-xs font-semibold uppercase tracking-wide text-neutral-400">Your education</p>
-                <FilterDropdown
-                  label="Qualification category"
-                  options={qualCategories}
-                  selected={draft.qualificationCategories}
-                  onChange={(ids) => setDraft((d) => ({ ...d, qualificationCategories: ids, qualifications: [], branches: [] }))}
-                  {...dropdownProps}
-                />
-                {(draft.qualificationCategories.length > 0 || draft.qualifications.length > 0) && qualifications.length > 0 && (
-                  <FilterDropdown
-                    label="Qualification"
-                    options={qualifications}
-                    selected={draft.qualifications}
-                    onChange={(ids) => setDraft((d) => ({ ...d, qualifications: ids, branches: [] }))}
-                    {...dropdownProps}
-                  />
-                )}
-                {draft.qualifications.length > 0 && branches.length > 0 && (
-                  <FilterDropdown
-                    label="Branch"
-                    options={branches}
-                    selected={draft.branches}
-                    onChange={(ids) => setDraft((d) => ({ ...d, branches: ids }))}
-                    {...dropdownProps}
-                  />
-                )}
-              </div>
-
-              <div className="space-y-2">
-                <p className="text-xs font-semibold uppercase tracking-wide text-neutral-400">Location</p>
-                <FilterDropdown
-                  label="State"
-                  options={states}
-                  selected={draft.states}
-                  onChange={(ids) => setDraft((d) => ({ ...d, states: ids }))}
-                  {...dropdownProps}
-                />
-              </div>
-
-              <div className="space-y-2">
-                <p className="text-xs font-semibold uppercase tracking-wide text-neutral-400">Recruiter</p>
-                <FilterDropdown
-                  label="Sector"
-                  options={categories}
-                  selected={draft.category ? [draft.category] : []}
-                  onChange={(ids) => setDraft((d) => ({ ...d, category: ids[0] ?? "" }))}
-                  multi={false}
-                  {...dropdownProps}
-                />
-                <FilterDropdown
-                  label="Organization"
-                  options={organizations}
-                  selected={draft.organizations}
-                  onChange={(ids) => setDraft((d) => ({ ...d, organizations: ids }))}
-                  {...dropdownProps}
-                />
-              </div>
-            </div>
-
-            <div className="mt-4 flex items-center justify-end gap-2 border-t border-neutral-100 pt-3">
-              <button type="button" onClick={() => setPanelOpen(false)} className="rounded-lg px-3 py-2 text-sm text-neutral-600 hover:bg-neutral-50">
-                Cancel
-              </button>
-              <button type="button" onClick={applyFilters} className="rounded-lg bg-primary-600 px-4 py-2 text-sm font-medium text-white hover:bg-primary-700">
-                Apply filters
-              </button>
-            </div>
-          </div>
-        )}
+          );
+        })}
       </div>
 
       {chips.length > 0 && (
-        <div className="mt-2 flex flex-wrap items-center gap-2">
+        <div className="flex flex-wrap items-center gap-2">
           {chips.map((chip) => (
             <button
               key={chip.key}
@@ -333,6 +435,125 @@ export default function JobFiltersBar() {
           <button type="button" onClick={clearAll} className="text-xs text-neutral-500 underline hover:text-neutral-700">
             Clear all
           </button>
+        </div>
+      )}
+
+      {open && (
+        <div className="fixed inset-0 z-50">
+          <div className="absolute inset-0 bg-black/40" onClick={() => setOpen(false)} />
+          <div
+            role="dialog"
+            aria-modal="true"
+            aria-label="Filters"
+            className="absolute inset-x-0 bottom-0 flex max-h-[88vh] flex-col rounded-t-2xl bg-white shadow-xl md:inset-y-0 md:left-auto md:right-0 md:max-h-none md:w-[26rem] md:rounded-none"
+          >
+            <div className="flex items-center justify-between border-b border-neutral-100 px-5 py-4">
+              <h2 className="text-base font-bold text-neutral-900">Filters</h2>
+              <button
+                type="button"
+                onClick={() => setOpen(false)}
+                aria-label="Close filters"
+                className="rounded-full p-1.5 text-neutral-500 hover:bg-neutral-100"
+              >
+                <X size={18} />
+              </button>
+            </div>
+
+            <div className="flex-1 overflow-y-auto">
+              <Section
+                title="Education"
+                count={draft.qualificationCategories.length + draft.qualifications.length + draft.branches.length}
+                open={!!sections.education}
+                onToggle={() => toggleSection("education")}
+              >
+                <OptionList
+                  label="Qualification category"
+                  options={qualCategories}
+                  selected={draft.qualificationCategories}
+                  onToggle={(id) =>
+                    setDraft((d) => ({
+                      ...d,
+                      qualificationCategories: toggleIn(d.qualificationCategories, id),
+                      qualifications: [],
+                      branches: [],
+                    }))
+                  }
+                />
+                {(draft.qualificationCategories.length > 0 || draft.qualifications.length > 0) &&
+                  qualifications.length > 0 && (
+                    <OptionList
+                      label="Qualification"
+                      options={qualifications}
+                      selected={draft.qualifications}
+                      onToggle={(id) =>
+                        setDraft((d) => ({ ...d, qualifications: toggleIn(d.qualifications, id), branches: [] }))
+                      }
+                    />
+                  )}
+                {draft.qualifications.length > 0 && branches.length > 0 && (
+                  <OptionList
+                    label="Branch"
+                    options={branches}
+                    selected={draft.branches}
+                    onToggle={(id) => setDraft((d) => ({ ...d, branches: toggleIn(d.branches, id) }))}
+                  />
+                )}
+              </Section>
+
+              <Section
+                title="State"
+                count={draft.states.length}
+                open={!!sections.location}
+                onToggle={() => toggleSection("location")}
+              >
+                <OptionList
+                  options={states}
+                  selected={draft.states}
+                  onToggle={(id) => setDraft((d) => ({ ...d, states: toggleIn(d.states, id) }))}
+                />
+              </Section>
+
+              <Section
+                title="Recruiter"
+                count={(draft.category ? 1 : 0) + draft.organizations.length}
+                open={!!sections.recruiter}
+                onToggle={() => toggleSection("recruiter")}
+              >
+                <OptionList
+                  label="Sector"
+                  options={categories}
+                  selected={draft.category ? [draft.category] : []}
+                  onToggle={(id) => setDraft((d) => ({ ...d, category: d.category === id ? "" : id }))}
+                />
+                <OptionList
+                  label="Organization"
+                  options={organizations}
+                  selected={draft.organizations}
+                  onToggle={(id) => setDraft((d) => ({ ...d, organizations: toggleIn(d.organizations, id) }))}
+                />
+              </Section>
+            </div>
+
+            <div
+              className="flex items-center gap-3 border-t border-neutral-100 px-5 pt-3"
+              style={{ paddingBottom: "max(0.75rem, env(safe-area-inset-bottom))" }}
+            >
+              <button
+                type="button"
+                onClick={() => setDraft(EMPTY_DRAFT)}
+                className="text-sm font-medium text-neutral-600 hover:text-neutral-900"
+              >
+                Reset
+              </button>
+              <button
+                type="button"
+                onClick={applyFilters}
+                className="h-11 flex-1 rounded-xl bg-primary-600 text-sm font-semibold text-white hover:bg-primary-700"
+              >
+                Apply filters{draftCount > 0 ? ` (${draftCount})` : ""}
+              </button>
+            </div>
+          </div>
         </div>
       )}
     </div>
