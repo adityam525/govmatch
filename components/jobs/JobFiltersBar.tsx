@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import { createPortal } from "react-dom";
 import { useRouter, useSearchParams } from "next/navigation";
 import {
   CalendarDays,
@@ -178,7 +179,7 @@ export default function JobFiltersBar() {
 
   const [draft, setDraft] = useState<Draft>(applied);
   const [open, setOpen] = useState(false);
-  const [sections, setSections] = useState<Record<string, boolean>>({ education: true });
+  const [openSection, setOpenSection] = useState<string | null>("education");
   const [searchText, setSearchText] = useState(searchParams.get("search") ?? "");
 
   const [categories, setCategories] = useState<Option[]>([]);
@@ -278,7 +279,7 @@ export default function JobFiltersBar() {
     push({ search: searchText.trim() });
   };
 
-  const toggleSection = (key: string) => setSections((s) => ({ ...s, [key]: !s[key] }));
+  const toggleSection = (key: string) => setOpenSection((current) => (current === key ? null : key));
   const labelOf = (options: Option[], id: string) => options.find((o) => o.id === id)?.label ?? id;
 
   const chips: { key: string; label: string; remove: () => void }[] = [];
@@ -435,7 +436,7 @@ export default function JobFiltersBar() {
         </div>
       )}
 
-      {open && (
+      {open && createPortal(
         <div className="fixed inset-0 z-50">
           <div className="absolute inset-0 bg-black/40" onClick={() => setOpen(false)} />
           <div
@@ -460,7 +461,7 @@ export default function JobFiltersBar() {
               <Section
                 title="Education"
                 count={draft.qualificationCategories.length + draft.qualifications.length + draft.branches.length}
-                open={!!sections.education}
+                open={openSection === "education"}
                 onToggle={() => toggleSection("education")}
               >
                 <OptionList
@@ -500,7 +501,7 @@ export default function JobFiltersBar() {
               <Section
                 title="State"
                 count={draft.states.length}
-                open={!!sections.location}
+                open={openSection === "location"}
                 onToggle={() => toggleSection("location")}
               >
                 <OptionList
@@ -513,7 +514,7 @@ export default function JobFiltersBar() {
               <Section
                 title="Recruiter"
                 count={(draft.category ? 1 : 0) + draft.organizations.length}
-                open={!!sections.recruiter}
+                open={openSection === "recruiter"}
                 onToggle={() => toggleSection("recruiter")}
               >
                 <OptionList
@@ -551,7 +552,8 @@ export default function JobFiltersBar() {
               </button>
             </div>
           </div>
-        </div>
+        </div>,
+        document.body,
       )}
     </div>
   );

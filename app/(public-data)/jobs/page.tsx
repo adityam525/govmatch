@@ -9,6 +9,7 @@ import { Prisma } from "@prisma/client";
 import { resolveCategoryFilter } from "@/lib/category-filters";
 import { parseView, getViewIds, getPhaseCounts, sortByIdOrder } from "@/lib/jobs-view";
 import JobsViewTabs from "@/components/jobs/JobsViewTabs";
+import StickyTools from "@/components/jobs/StickyTools";
 
 const SEARCH_ALIASES: Record<string, string[]> = {
   "bank po": ["probationary officer", "management trainee", "po"],
@@ -460,10 +461,10 @@ export default async function JobsPage({ searchParams }: JobsPageProps) {
 
   return (
     <div className="mx-auto max-w-7xl px-6 py-8">
-      <div className="mb-6">
+      <StickyTools>
         <JobFiltersBar />
         <JobsViewTabs view={view} counts={phaseCounts} params={params} />
-      </div>
+      </StickyTools>
 
       <SectionHeader
         title={query ? `Search results for "${query}"` : "All Government Jobs"}
@@ -477,7 +478,7 @@ export default async function JobsPage({ searchParams }: JobsPageProps) {
           </p>
         </div>
       ) : (
-        <div className="mt-6 space-y-4">
+        <div className="mt-4 max-h-[75vh] space-y-4 overflow-y-auto pr-1">
           {(view.preset && !params.sort ? sortByIdOrder(jobs, viewIds) : jobs).map((job) => (
             <JobListItem
               key={job.id}

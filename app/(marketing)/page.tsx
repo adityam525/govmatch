@@ -161,7 +161,7 @@ export default async function HomePage() {
           <SearchHero matchScore={topScore} />
         </div>
         <div className="max-w-7xl mx-auto px-6 pt-10 grid lg:grid-cols-10 gap-8 items-start">
-          <div className="lg:col-span-7 space-y-10">
+          <div className="lg:col-span-7 min-w-0 space-y-10">
             <QuickStatsBar />
             <HomeHotNews />
             <LatestJobsWithToday />
