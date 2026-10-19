@@ -3,16 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { createPortal } from "react-dom";
 import { useRouter, useSearchParams } from "next/navigation";
-import {
-  CalendarDays,
-  ChevronDown,
-  FileCheck2,
-  KeyRound,
-  Search,
-  SlidersHorizontal,
-  Trophy,
-  X,
-} from "lucide-react";
+import { ChevronDown, Search, SlidersHorizontal, X } from "lucide-react";
 import { useAuth } from "@/features/auth/hooks";
 
 interface Option { id: string; label: string; group?: string }
@@ -21,11 +12,12 @@ interface ApiState { code: string; name: string }
 interface ApiBranch { slug: string; name: string; qualificationGroup?: string }
 
 // Same ids as the update presets in lib/jobs-view.ts (server-only, so repeated here).
-const UPDATE_PILLS = [
-  { id: "exams", label: "Upcoming exams", Icon: CalendarDays },
-  { id: "admit-cards", label: "Admit cards", Icon: FileCheck2 },
-  { id: "results", label: "Results", Icon: Trophy },
-  { id: "answer-keys", label: "Answer keys", Icon: KeyRound },
+const UPDATE_OPTIONS = [
+  { id: "", label: "Any update" },
+  { id: "exams", label: "Upcoming exams" },
+  { id: "admit-cards", label: "Admit cards out" },
+  { id: "results", label: "Results out" },
+  { id: "answer-keys", label: "Answer keys out" },
 ] as const;
 
 type Draft = {
@@ -332,17 +324,17 @@ export default function JobFiltersBar() {
   ];
 
   return (
-    <div className="mb-4 space-y-3 rounded-2xl border border-neutral-200 bg-white p-3 shadow-sm sm:p-4">
-      <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
-        <form onSubmit={submitSearch} className="relative min-w-0 sm:flex-1">
-          <Search size={17} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-neutral-400" />
+    <div className="space-y-2">
+      <div className="flex flex-col gap-2 md:flex-row md:items-center">
+        <form onSubmit={submitSearch} className="relative min-w-0 md:flex-1">
+          <Search size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-neutral-400" />
           <input
             type="text"
             inputMode="search"
             value={searchText}
             onChange={(e) => setSearchText(e.target.value)}
             placeholder="Search jobs, departments, exams"
-            className="h-11 w-full rounded-xl border border-neutral-200 bg-neutral-50 pl-10 pr-9 text-sm text-neutral-900 outline-none transition placeholder:text-neutral-400 focus:border-primary-400 focus:bg-white focus:ring-2 focus:ring-primary-100"
+            className="h-10 w-full rounded-xl border border-neutral-200 bg-white pl-10 pr-9 text-sm text-neutral-900 outline-none transition placeholder:text-neutral-400 focus:border-primary-400 focus:ring-2 focus:ring-primary-100"
           />
           {searchText && (
             <button
@@ -360,10 +352,27 @@ export default function JobFiltersBar() {
         </form>
 
         <div className="flex gap-2">
+          <select
+            value={UPDATE_OPTIONS.some((o) => o.id === activeUpdate) ? activeUpdate : ""}
+            onChange={(e) => push({ updates: e.target.value })}
+            aria-label="Show jobs with"
+            className={`h-10 min-w-0 flex-1 rounded-xl border px-3 text-sm outline-none transition focus:ring-2 focus:ring-primary-100 md:w-44 md:flex-none ${
+              activeUpdate
+                ? "border-primary-300 bg-primary-50 font-medium text-primary-700"
+                : "border-neutral-200 bg-white text-neutral-700"
+            }`}
+          >
+            {UPDATE_OPTIONS.map((o) => (
+              <option key={o.id} value={o.id}>
+                {o.label}
+              </option>
+            ))}
+          </select>
+
           <button
             type="button"
             onClick={openDrawer}
-            className={`flex h-11 shrink-0 items-center justify-center gap-2 rounded-xl border px-4 text-sm font-medium transition-colors ${
+            className={`flex h-10 shrink-0 items-center justify-center gap-2 rounded-xl border px-3.5 text-sm font-medium transition-colors ${
               chips.length > 0
                 ? "border-primary-300 bg-primary-50 text-primary-700"
                 : "border-neutral-200 bg-white text-neutral-700 hover:bg-neutral-50"
@@ -380,7 +389,7 @@ export default function JobFiltersBar() {
             value={sortValue}
             onChange={(e) => push({ sort: e.target.value })}
             aria-label="Sort jobs"
-            className="h-11 min-w-0 flex-1 rounded-xl border border-neutral-200 bg-white px-3 text-sm text-neutral-700 outline-none transition focus:border-primary-400 focus:ring-2 focus:ring-primary-100 sm:w-52 sm:flex-none"
+            className="h-10 min-w-0 flex-1 rounded-xl border border-neutral-200 bg-white px-3 text-sm text-neutral-700 outline-none transition focus:border-primary-400 focus:ring-2 focus:ring-primary-100 md:w-48 md:flex-none"
           >
             {sortOptions.map((o) => (
               <option key={o.id} value={o.id}>
@@ -391,40 +400,14 @@ export default function JobFiltersBar() {
         </div>
       </div>
 
-      <div className="flex items-center gap-2 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-        <span className="hidden shrink-0 text-[11px] font-semibold uppercase tracking-wide text-neutral-400 sm:inline">
-          Quick filters
-        </span>
-        {UPDATE_PILLS.map(({ id, label, Icon }) => {
-          const active = activeUpdate === id;
-          return (
-            <button
-              key={id}
-              type="button"
-              aria-pressed={active}
-              onClick={() => push({ updates: active ? "" : id })}
-              className={`flex h-8 shrink-0 items-center gap-1.5 rounded-full border px-3 text-[13px] font-medium transition-colors ${
-                active
-                  ? "border-primary-300 bg-primary-50 text-primary-700 ring-1 ring-primary-200"
-                  : "border-neutral-200 bg-white text-neutral-600 hover:border-primary-300 hover:text-primary-700"
-              }`}
-            >
-              <Icon size={14} />
-              {label}
-              {active && <X size={12} />}
-            </button>
-          );
-        })}
-      </div>
-
       {chips.length > 0 && (
-        <div className="flex flex-wrap items-center gap-2 border-t border-neutral-100 pt-3">
+        <div className="flex flex-wrap items-center gap-1.5">
           {chips.map((chip) => (
             <button
               key={chip.key}
               type="button"
               onClick={chip.remove}
-              className="flex items-center gap-1.5 rounded-full border border-primary-200 bg-primary-50 px-3 py-1 text-xs font-medium text-primary-700 hover:bg-primary-100"
+              className="flex items-center gap-1.5 rounded-full border border-primary-200 bg-primary-50 px-2.5 py-0.5 text-xs font-medium text-primary-700 hover:bg-primary-100"
             >
               {chip.label}
               <X size={12} />

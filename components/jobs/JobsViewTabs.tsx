@@ -27,7 +27,7 @@ export default function JobsViewTabs({
   const defaultTab: PhaseFilter = view.preset ? 'all' : 'open';
 
   return (
-    <div className="mb-4 border-b border-neutral-200">
+    <div className="mb-1 border-b border-neutral-200">
       <div className="-mb-px flex gap-1 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
         {PHASE_TABS.map((tab) => {
           const active = view.tab === tab.id;
@@ -39,7 +39,7 @@ export default function JobsViewTabs({
               key={tab.id}
               href={href}
               aria-current={active ? 'page' : undefined}
-              className={`flex shrink-0 items-center gap-2 whitespace-nowrap border-b-2 px-3 py-3 text-sm font-medium transition-colors ${
+              className={`flex shrink-0 items-center gap-2 whitespace-nowrap border-b-2 px-3 py-2 text-sm font-medium transition-colors ${
                 active
                   ? 'border-primary-600 text-primary-700'
                   : 'border-transparent text-neutral-500 hover:border-neutral-300 hover:text-neutral-800'
