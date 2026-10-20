@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { requireSelf } from '@/lib/require-user';
+import { isPremiumSubscription } from '@/lib/plan';
 
 interface Params { params: Promise<{ userId: string }> }
 
@@ -18,5 +19,17 @@ export async function GET(request: Request, { params }: Params) {
     },
   });
   if (!user) return NextResponse.json({ message: 'Not found' }, { status: 404 });
-  return NextResponse.json(user);
+
+  const premium = isPremiumSubscription(user.subscription);
+  return NextResponse.json({
+    role: user.role,
+    isActive: user.isActive,
+    premium,
+    // The plan the user really has right now, so an expired Premium reads as FREE.
+    subscription: {
+      plan: premium ? 'PREMIUM' : 'FREE',
+      status: user.subscription?.status ?? 'ACTIVE',
+      expiresAt: user.subscription?.expiresAt ?? null,
+    },
+  });
 }

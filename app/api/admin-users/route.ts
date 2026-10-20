@@ -12,7 +12,7 @@ export async function GET() {
       authProvider: true,
       createdAt: true,
       profile: { select: { profileStrength: true } },
-      subscription: { select: { plan: true, status: true } },
+      subscription: { select: { plan: true, status: true, expiresAt: true } },
     },
     orderBy: { createdAt: 'desc' },
   });

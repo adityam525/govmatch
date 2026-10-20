@@ -148,6 +148,50 @@ function OptionList({
   );
 }
 
+function SelectBox({
+  label,
+  value,
+  onChange,
+  options,
+  active = false,
+  className = "",
+}: {
+  label: string;
+  value: string;
+  onChange: (value: string) => void;
+  options: readonly { id: string; label: string }[];
+  active?: boolean;
+  className?: string;
+}) {
+  return (
+    <div className={`relative ${className}`}>
+      <select
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        aria-label={label}
+        className={`h-10 w-full appearance-none rounded-xl border pl-3 pr-8 text-sm outline-none transition focus:ring-2 focus:ring-primary-100 ${
+          active
+            ? "border-primary-300 bg-primary-50 font-medium text-primary-700"
+            : "border-neutral-200 bg-white text-neutral-700 focus:border-primary-400"
+        }`}
+      >
+        {options.map((o) => (
+          <option key={o.id} value={o.id}>
+            {o.label}
+          </option>
+        ))}
+      </select>
+      <ChevronDown
+        size={16}
+        aria-hidden
+        className={`pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 ${
+          active ? "text-primary-500" : "text-neutral-400"
+        }`}
+      />
+    </div>
+  );
+}
+
 export default function JobFiltersBar() {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -352,22 +396,14 @@ export default function JobFiltersBar() {
         </form>
 
         <div className="flex gap-2">
-          <select
+          <SelectBox
+            label="Show jobs with"
             value={UPDATE_OPTIONS.some((o) => o.id === activeUpdate) ? activeUpdate : ""}
-            onChange={(e) => push({ updates: e.target.value })}
-            aria-label="Show jobs with"
-            className={`h-10 min-w-0 flex-1 rounded-xl border px-3 text-sm outline-none transition focus:ring-2 focus:ring-primary-100 md:w-44 md:flex-none ${
-              activeUpdate
-                ? "border-primary-300 bg-primary-50 font-medium text-primary-700"
-                : "border-neutral-200 bg-white text-neutral-700"
-            }`}
-          >
-            {UPDATE_OPTIONS.map((o) => (
-              <option key={o.id} value={o.id}>
-                {o.label}
-              </option>
-            ))}
-          </select>
+            onChange={(next) => push({ updates: next })}
+            options={UPDATE_OPTIONS}
+            active={!!activeUpdate}
+            className="min-w-0 flex-1 md:w-44 md:flex-none"
+          />
 
           <button
             type="button"
@@ -385,18 +421,13 @@ export default function JobFiltersBar() {
             )}
           </button>
 
-          <select
+          <SelectBox
+            label="Sort jobs"
             value={sortValue}
-            onChange={(e) => push({ sort: e.target.value })}
-            aria-label="Sort jobs"
-            className="h-10 min-w-0 flex-1 rounded-xl border border-neutral-200 bg-white px-3 text-sm text-neutral-700 outline-none transition focus:border-primary-400 focus:ring-2 focus:ring-primary-100 md:w-48 md:flex-none"
-          >
-            {sortOptions.map((o) => (
-              <option key={o.id} value={o.id}>
-                {o.label}
-              </option>
-            ))}
-          </select>
+            onChange={(next) => push({ sort: next })}
+            options={sortOptions}
+            className="min-w-0 flex-1 md:w-48 md:flex-none"
+          />
         </div>
       </div>
 
