@@ -35,8 +35,9 @@ export async function GET(request: Request, { params }: Params) {
   return NextResponse.json(user);
 }
 
-// Body may carry { isActive: boolean } and/or { plan: 'FREE' | 'PREMIUM', days?: number }.
-// days of 0 or missing means Premium with no expiry.
+// Body may carry { isActive: boolean } and/or { plan: 'FREE' | 'PREMIUM' }.
+// For PREMIUM, either `expiresAt` (YYYY-MM-DD, valid through the end of that
+// day in IST) or `days` (0 or missing means no expiry).
 export async function PATCH(request: Request, { params }: Params) {
   const { id } = await params;
   const body = await request.json().catch(() => ({}));
@@ -45,19 +46,40 @@ export async function PATCH(request: Request, { params }: Params) {
     return NextResponse.json({ message: 'plan must be FREE or PREMIUM' }, { status: 400 });
   }
 
+  let premiumExpiry: Date | null = null;
+  if (body.plan === 'PREMIUM') {
+    if (typeof body.expiresAt === 'string' && body.expiresAt) {
+      if (!/^\d{4}-\d{2}-\d{2}$/.test(body.expiresAt)) {
+        return NextResponse.json({ message: 'expiresAt must be a date like 2027-03-31' }, { status: 400 });
+      }
+      const date = new Date(`${body.expiresAt}T23:59:59+05:30`);
+      if (Number.isNaN(date.getTime())) {
+        return NextResponse.json({ message: 'That is not a real calendar date' }, { status: 400 });
+      }
+      if (date.getTime() <= Date.now()) {
+        return NextResponse.json({ message: 'The expiry date must be in the future' }, { status: 400 });
+      }
+      if (date.getTime() - Date.now() > MAX_DAYS * DAY_MS) {
+        return NextResponse.json({ message: 'The expiry date is too far away (max 10 years)' }, { status: 400 });
+      }
+      premiumExpiry = date;
+    } else {
+      const days = Number(body.days);
+      premiumExpiry =
+        Number.isFinite(days) && days > 0 ? new Date(Date.now() + Math.min(days, MAX_DAYS) * DAY_MS) : null;
+    }
+  }
+
   try {
     if (typeof body.isActive === 'boolean') {
       await prisma.user.update({ where: { id }, data: { isActive: body.isActive } });
     }
 
     if (body.plan === 'PREMIUM') {
-      const days = Number(body.days);
-      const expiresAt =
-        Number.isFinite(days) && days > 0 ? new Date(Date.now() + Math.min(days, MAX_DAYS) * DAY_MS) : null;
       await prisma.subscription.upsert({
         where: { userId: id },
-        update: { plan: 'PREMIUM', status: 'ACTIVE', expiresAt, startedAt: new Date() },
-        create: { userId: id, plan: 'PREMIUM', status: 'ACTIVE', expiresAt },
+        update: { plan: 'PREMIUM', status: 'ACTIVE', expiresAt: premiumExpiry, startedAt: new Date() },
+        create: { userId: id, plan: 'PREMIUM', status: 'ACTIVE', expiresAt: premiumExpiry },
       });
     } else if (body.plan === 'FREE') {
       await prisma.subscription.upsert({

@@ -10,6 +10,7 @@ import { resolveCategoryFilter } from "@/lib/category-filters";
 import { parseView, getViewIds, getPhaseCounts, sortByIdOrder } from "@/lib/jobs-view";
 import JobsViewTabs from "@/components/jobs/JobsViewTabs";
 import StickyTools from "@/components/jobs/StickyTools";
+import { isPremiumUser } from "@/lib/plan";
 
 const SEARCH_ALIASES: Record<string, string[]> = {
   "bank po": ["probationary officer", "management trainee", "po"],
@@ -80,6 +81,15 @@ function getCreatedAtValue(job: any): number {
   return Number.isNaN(timestamp) ? 0 : timestamp;
 }
 
+// A post can accept several qualifications (any one of them is enough), so the
+// lowest level is the real entry bar.
+function lowestQualificationLevel(post: any): number | null {
+  const levels = [...(post.qualifications ?? []), ...(post.qualification ? [post.qualification] : [])]
+    .map((q: any) => q?.level)
+    .filter((level: unknown): level is number => typeof level === "number");
+  return levels.length > 0 ? Math.min(...levels) : null;
+}
+
 interface JobsPageProps {
   searchParams: Promise<{ [key: string]: string | undefined }>;
 }
@@ -110,6 +120,8 @@ export default async function JobsPage({ searchParams }: JobsPageProps) {
 
   const session = await auth();
   const userId = (session?.user as any)?.id;
+  const isPremium = userId ? await isPremiumUser(userId) : false;
+  const eligibleOnly = isPremium && params.eligible === "1";
 
   /*
    * Qualification filters
@@ -247,12 +259,7 @@ export default async function JobsPage({ searchParams }: JobsPageProps) {
         },
       },
 
-      posts: {
-        include: {
-          qualification: true,
-          branches: true,
-        },
-      },
+      posts: { include: { qualification: true, qualifications: true, branches: true, roles: true } },
     },
 
     orderBy: {
@@ -293,6 +300,8 @@ export default async function JobsPage({ searchParams }: JobsPageProps) {
    */
 
   const matchByJobId = new Map<string, number>();
+  const eligibleJobIds = new Set<string>();
+  let hasProfile = false;
 
   if (userId) {
     const profile = await prisma.userProfile.findUnique({
@@ -306,6 +315,7 @@ export default async function JobsPage({ searchParams }: JobsPageProps) {
     });
 
     if (profile) {
+      hasProfile = true;
       const userQualification = profile.qualificationId
         ? await prisma.qualification.findUnique({
             where: {
@@ -329,7 +339,9 @@ export default async function JobsPage({ searchParams }: JobsPageProps) {
             {
               minAge: post.minAge,
               maxAge: post.maxAge,
-              qualificationLevel: post.qualification?.level ?? null,
+              qualificationLevel: lowestQualificationLevel(post),
+              branchIds: (post.branches ?? []).map((b: any) => b.id),
+              roleIds: (post.roles ?? []).map((r: any) => r.id),
               employmentType: post.employmentType,
             },
           );
@@ -341,6 +353,7 @@ export default async function JobsPage({ searchParams }: JobsPageProps) {
            */
 
           matchByJobId.set(post.id, result.score);
+          if (result.eligible) eligibleJobIds.add(notification.id);
 
           matchByJobId.set(notification.id, Math.max(matchByJobId.get(notification.id) ?? 0, result.score));
         }
@@ -358,6 +371,10 @@ export default async function JobsPage({ searchParams }: JobsPageProps) {
    * 3. Search filtering
    * 4. Match-score calculation
    */
+
+  if (eligibleOnly && hasProfile) {
+    jobs = jobs.filter((job) => eligibleJobIds.has(job.id));
+  }
 
   jobs.sort((a: any, b: any) => {
     switch (selectedSort) {
@@ -462,9 +479,15 @@ export default async function JobsPage({ searchParams }: JobsPageProps) {
   return (
     <div className="mx-auto max-w-7xl px-6 py-8">
       <StickyTools>
-        <JobFiltersBar />
+        <JobFiltersBar isPremium={isPremium} />
         <JobsViewTabs view={view} counts={phaseCounts} params={params} />
       </StickyTools>
+
+      {eligibleOnly && !hasProfile && (
+        <p className="mb-3 rounded-lg bg-amber-50 px-3 py-2 text-sm text-amber-800">
+          Add your qualification and date of birth in your profile to use the eligibility filter.
+        </p>
+      )}
 
       <SectionHeader
         title={query ? `Search results for "${query}"` : "All Government Jobs"}

@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { createPortal } from "react-dom";
 import { useRouter, useSearchParams } from "next/navigation";
-import { ChevronDown, Search, SlidersHorizontal, X } from "lucide-react";
+import { ChevronDown, Crown, Search, SlidersHorizontal, X } from "lucide-react";
 import { useAuth } from "@/features/auth/hooks";
 
 interface Option { id: string; label: string; group?: string }
@@ -192,7 +192,7 @@ function SelectBox({
   );
 }
 
-export default function JobFiltersBar() {
+export default function JobFiltersBar({ isPremium = false }: { isPremium?: boolean }) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const { isLoggedIn } = useAuth();
@@ -210,11 +210,13 @@ export default function JobFiltersBar() {
     [urlKey], // eslint-disable-line react-hooks/exhaustive-deps
   );
   const activeUpdate = searchParams.get("updates") ?? "";
+  const eligible = isPremium && searchParams.get("eligible") === "1";
   const sort = searchParams.get("sort") ?? "";
   const sortValue = sort === "newest" && !activeUpdate ? "" : sort;
 
   const [draft, setDraft] = useState<Draft>(applied);
   const [open, setOpen] = useState(false);
+  const [draftEligible, setDraftEligible] = useState(false);
   const [openSection, setOpenSection] = useState<string | null>("education");
   const [searchText, setSearchText] = useState(searchParams.get("search") ?? "");
 
@@ -295,6 +297,7 @@ export default function JobFiltersBar() {
 
   const openDrawer = () => {
     setDraft(applied);
+    setDraftEligible(eligible);
     setOpen(true);
   };
 
@@ -306,6 +309,7 @@ export default function JobFiltersBar() {
       branches: draft.branches.join(","),
       states: draft.states.join(","),
       organizations: draft.organizations.join(","),
+      eligible: draftEligible ? "1" : "",
     });
     setOpen(false);
   };
@@ -341,6 +345,10 @@ export default function JobFiltersBar() {
     chips.push({ key: `o-${id}`, label: labelOf(organizations, id), remove: () => dropFrom("organizations", id) }),
   );
 
+  if (eligible) {
+    chips.push({ key: "eligible", label: "Eligible for me", remove: () => push({ eligible: "" }) });
+  }
+
   const clearAll = () => {
     const params = new URLSearchParams();
     for (const keep of ["phase", "updates", "search", "sort"]) {
@@ -358,6 +366,18 @@ export default function JobFiltersBar() {
     draft.branches.length +
     draft.states.length +
     draft.organizations.length;
+
+  const onEligibleClick = () => {
+    if (!isLoggedIn) {
+      router.push("/login");
+      return;
+    }
+    if (!isPremium) {
+      router.push("/pricing");
+      return;
+    }
+    setDraftEligible((value) => !value);
+  };
 
   const sortOptions = [
     { id: "", label: activeUpdate ? "Best for this filter" : "Newest first" },
@@ -472,6 +492,32 @@ export default function JobFiltersBar() {
             </div>
 
             <div className="flex-1 overflow-y-auto">
+              <div className="border-b border-neutral-100 px-5 py-3.5">
+                <button type="button" onClick={onEligibleClick} className="flex w-full items-center justify-between gap-3 text-left">
+                  <span className="min-w-0">
+                    <span className="flex items-center gap-1.5 text-sm font-semibold text-neutral-900">
+                      Only jobs I&apos;m eligible for
+                      {!isPremium && <Crown size={14} className="text-amber-500" />}
+                    </span>
+                    <span className="mt-0.5 block text-xs text-neutral-500">
+                      {isPremium
+                        ? "Based on your qualification, age and preferences"
+                        : isLoggedIn
+                          ? "Premium feature. Tap to see plans"
+                          : "Log in to use this filter"}
+                    </span>
+                  </span>
+                  <span
+                    role="switch"
+                    aria-checked={draftEligible}
+                    className={`relative h-6 w-11 shrink-0 rounded-full transition-colors ${draftEligible ? "bg-primary-600" : "bg-neutral-300"}`}
+                  >
+                    <span
+                      className={`absolute top-0.5 h-5 w-5 rounded-full bg-white shadow transition-all ${draftEligible ? "left-[1.375rem]" : "left-0.5"}`}
+                    />
+                  </span>
+                </button>
+              </div>
               <Section
                 title="Education"
                 count={draft.qualificationCategories.length + draft.qualifications.length + draft.branches.length}

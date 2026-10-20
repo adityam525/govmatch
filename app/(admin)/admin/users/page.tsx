@@ -27,16 +27,20 @@ const PLAN_CHOICES = [
   { value: 'PREMIUM:30', label: 'Premium - 30 days' },
   { value: 'PREMIUM:365', label: 'Premium - 1 year' },
   { value: 'PREMIUM:0', label: 'Premium - no expiry' },
+  { value: 'CUSTOM', label: 'Premium - custom date...' },
 ];
+
+const formatIST = (iso: string) =>
+  new Date(iso).toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric', timeZone: 'Asia/Kolkata' });
+
+// Tomorrow's calendar date in India, as YYYY-MM-DD (the earliest allowed custom expiry).
+const tomorrowIST = () => new Date(Date.now() + 5.5 * 3600 * 1000 + 24 * 3600 * 1000).toISOString().slice(0, 10);
 
 function planState(sub: Subscription | null): { premium: boolean; note: string } {
   if (!sub || sub.plan !== 'PREMIUM') return { premium: false, note: '' };
   const expired = sub.status !== 'ACTIVE' || (!!sub.expiresAt && new Date(sub.expiresAt) < new Date());
   if (expired) return { premium: false, note: 'expired' };
-  return {
-    premium: true,
-    note: sub.expiresAt ? `until ${new Date(sub.expiresAt).toLocaleDateString('en-IN')}` : 'no expiry',
-  };
+  return { premium: true, note: sub.expiresAt ? `until ${formatIST(sub.expiresAt)}` : 'no expiry' };
 }
 
 export default function AdminUsersPage() {
@@ -44,6 +48,8 @@ export default function AdminUsersPage() {
   const [loading, setLoading] = useState(true);
   const [busyId, setBusyId] = useState<string | null>(null);
   const [error, setError] = useState('');
+  const [customFor, setCustomFor] = useState<string | null>(null);
+  const [customDate, setCustomDate] = useState('');
 
   useEffect(() => {
     fetch('/api/admin-users')
@@ -53,7 +59,7 @@ export default function AdminUsersPage() {
       .finally(() => setLoading(false));
   }, []);
 
-  const patchUser = async (id: string, body: Record<string, unknown>) => {
+  const patchUser = async (id: string, body: Record<string, unknown>): Promise<boolean> => {
     setBusyId(id);
     setError('');
     try {
@@ -65,7 +71,7 @@ export default function AdminUsersPage() {
       const data = await res.json().catch(() => ({}));
       if (!res.ok) {
         setError(data.message ?? 'Could not update this user.');
-        return;
+        return false;
       }
       setUsers((prev) =>
         prev.map((u) =>
@@ -74,8 +80,10 @@ export default function AdminUsersPage() {
             : u,
         ),
       );
+      return true;
     } catch {
       setError('Network error. Please try again.');
+      return false;
     } finally {
       setBusyId(null);
     }
@@ -83,8 +91,23 @@ export default function AdminUsersPage() {
 
   const changePlan = (id: string, choice: string) => {
     if (!choice) return;
+    if (choice === 'CUSTOM') {
+      setCustomFor(id);
+      setCustomDate('');
+      return;
+    }
+    setCustomFor(null);
     const [plan, days] = choice.split(':');
     patchUser(id, plan === 'FREE' ? { plan: 'FREE' } : { plan: 'PREMIUM', days: Number(days) });
+  };
+
+  const applyCustom = async (id: string) => {
+    if (!customDate) {
+      setError('Pick an expiry date first.');
+      return;
+    }
+    const ok = await patchUser(id, { plan: 'PREMIUM', expiresAt: customDate });
+    if (ok) setCustomFor(null);
   };
 
   return (
@@ -120,7 +143,7 @@ export default function AdminUsersPage() {
                 users.map((u) => {
                   const plan = planState(u.subscription);
                   return (
-                    <tr key={u.id} className="border-b border-neutral-50 hover:bg-neutral-50">
+                    <tr key={u.id} className="border-b border-neutral-50 align-top hover:bg-neutral-50">
                       <td className="px-4 py-2.5 text-neutral-900">{u.name ?? '-'}</td>
                       <td className="px-4 py-2.5 text-neutral-600">{u.email}</td>
                       <td className="px-4 py-2.5">
@@ -140,7 +163,7 @@ export default function AdminUsersPage() {
                           <select
                             value=""
                             disabled={busyId === u.id}
-                            onChange={(e) => changePlan(u.id, e.target.value)}
+                           onChange={(e) => changePlan(u.id, e.target.value)}
                             aria-label={`Change plan for ${u.email}`}
                             className="rounded-md border border-neutral-200 bg-white px-1.5 py-1 text-xs text-neutral-600 disabled:opacity-50"
                           >
@@ -148,12 +171,39 @@ export default function AdminUsersPage() {
                               <option key={c.value} value={c.value}>{c.label}</option>
                             ))}
                           </select>
+                          {customFor === u.id && (
+                            <div className="flex flex-wrap items-center gap-1">
+                              <input
+                                type="date"
+                                min={tomorrowIST()}
+                                value={customDate}
+                                onChange={(e) => setCustomDate(e.target.value)}
+                                aria-label="Premium expiry date"
+                                className="rounded-md border border-neutral-200 px-1.5 py-1 text-xs"
+                              />
+                              <button
+                                type="button"
+                                disabled={busyId === u.id}
+                                onClick={() => applyCustom(u.id)}
+                                className="rounded-md bg-primary-600 px-2 py-1 text-xs font-medium text-white hover:bg-primary-700 disabled:opacity-50"
+                              >
+                                Set
+                              </button>
+                              <button
+                                type="button"
+                                onClick={() => setCustomFor(null)}
+                                className="rounded-md border border-neutral-200 px-2 py-1 text-xs text-neutral-600 hover:bg-neutral-50"
+                              >
+                                Cancel
+                              </button>
+                            </div>
+                          )}
                         </div>
                       </td>
                       <td className="px-4 py-2.5">
                         <span
                           className={`rounded-full px-2 py-0.5 text-xs ${
-                           u.isActive ? 'bg-green-50 text-success' : 'bg-red-50 text-danger'
+                            u.isActive ? 'bg-green-50 text-success' : 'bg-red-50 text-danger'
                           }`}
                         >
                           {u.isActive ? 'Active' : 'Deactivated'}

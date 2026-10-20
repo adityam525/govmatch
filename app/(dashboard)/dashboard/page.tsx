@@ -6,6 +6,7 @@ import { Briefcase, Bookmark, ClipboardList, TrendingUp } from 'lucide-react';
 import Card from '@/components/ui/Card';
 import { useAuth } from '@/features/auth/hooks';
 import { useJobMatches } from '@/features/matching/hooks';
+import PremiumDashboardCards from '@/components/dashboard/PremiumDashboardCards';
 
 export default function DashboardPage() {
   const { user, isLoggedIn, loading: authLoading } = useAuth();
@@ -83,6 +84,8 @@ export default function DashboardPage() {
           </div>
         </Card>
       </div>
+
+      <PremiumDashboardCards />
 
       <div className="grid md:grid-cols-2 gap-6 mt-6">
         <Card padding="lg">
