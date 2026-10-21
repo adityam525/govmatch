@@ -153,7 +153,7 @@ export default async function DashboardPage() {
   let matchesBody: React.ReactNode;
   if (!picks) {
     matchesBody = <Note>Your matches could not be loaded just now. Please refresh in a moment.</Note>;
-  } else if (picks.status === 'no-profile') {
+  } else if (picks.status === 'no-profile' || picks.incomplete) {
     matchesBody = (
       <Note>
         Add your qualification and date of birth to see jobs that fit you.{' '}
@@ -204,14 +204,14 @@ export default async function DashboardPage() {
       </div>
 
       <div className="mt-6 grid grid-cols-2 gap-3 lg:grid-cols-4 lg:gap-4">
-        <Kpi icon={<Briefcase size={18} />} tint="bg-green-50 text-success" value={String(fits.length)} label="Open jobs that fit you" href="/jobs?sort=relevance" />
+        <Kpi icon={<Briefcase size={18} />} tint="bg-green-50 text-success" value={picks && picks.status === 'ok' && !picks.incomplete ? String(fits.length) : '-'} label="Open jobs that fit you" href="/jobs?sort=relevance" />
         <Kpi icon={<Bookmark size={18} />} tint="bg-violet-50 text-violet-600" value={String(savedCount)} label="Saved jobs" href="/saved-jobs" />
         <Kpi icon={<ClipboardList size={18} />} tint="bg-amber-50 text-amber-600" value={String(applications.length)} label="Applications tracked" href="/applications" />
         <Kpi icon={<TrendingUp size={18} />} tint="bg-primary-50 text-primary-600" value={`${completeness}%`} label="Profile complete" href="/profile" />
       </div>
 
-      <div className="mt-6 grid gap-6 lg:grid-cols-3">
-        <div className="min-w-0 space-y-6 lg:col-span-2">
+      <div className="mt-6 grid gap-6 xl:grid-cols-3">
+        <div className="min-w-0 space-y-6 xl:col-span-2">
           <Panel title="Top matches" action={{ href: '/jobs?sort=relevance', label: 'See all' }}>
             {matchesBody}
           </Panel>

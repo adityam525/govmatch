@@ -16,9 +16,29 @@ const categoryLabels: Record<Job["category"], string> = {
   teaching: "Teaching",
 };
 
+type Tier = "strong" | "good" | "partial" | "none" | "neutral";
+
+function tierOf(matchPercentage: number | undefined, eligible: boolean | undefined): Tier {
+  if (eligible === false) return "none";
+  if (matchPercentage === undefined) return "neutral";
+  if (matchPercentage >= 80) return "strong";
+  if (matchPercentage >= 60) return "good";
+  return "partial";
+}
+
+// The accent bar and tint show how well the job fits at a glance. The badge text says the
+// same thing in words, so colour is never the only signal.
+const TIERS: Record<Tier, { card: string; accent: string; badge: string; title: string }> = {
+  strong: { card: "bg-green-50/50", accent: "bg-green-500", badge: "bg-green-100 text-green-800", title: "Strong match: this job fits your profile well" },
+  good: { card: "bg-sky-50/50", accent: "bg-sky-500", badge: "bg-sky-100 text-sky-800", title: "Good match: most of your profile fits" },
+  partial: { card: "bg-amber-50/50", accent: "bg-amber-400", badge: "bg-amber-100 text-amber-800", title: "Partial match: some parts of your profile do not fit" },
+  none: { card: "bg-red-50/40", accent: "bg-red-400", badge: "", title: "" },
+  neutral: { card: "bg-white", accent: "", badge: "", title: "" },
+};
+
 interface JobListItemProps {
   job: Job;
-  /** Set for logged-in users when the job has posts to score. */
+  /** Set for logged-in users with a complete profile when the job has posts to score. */
   matchPercentage?: number;
   /** false when no post of this job fits the user's profile. */
   eligible?: boolean;
@@ -26,15 +46,15 @@ interface JobListItemProps {
   verdict?: { label: string; reasons: string[] };
 }
 
-function matchTone(percentage: number) {
-  if (percentage >= 80) return "bg-green-50 text-green-700";
-  if (percentage >= 60) return "bg-sky-50 text-sky-700";
-  return "bg-amber-50 text-amber-700";
-}
-
 export default function JobListItem({ job, matchPercentage, eligible, verdict }: JobListItemProps) {
+  const tier = TIERS[tierOf(matchPercentage, eligible)];
+
   return (
-    <article className="group rounded-xl border border-neutral-200 bg-white px-4 py-4 transition-all duration-200 hover:border-primary-200 hover:shadow-sm sm:px-5">
+    <article
+      className={`group relative overflow-hidden rounded-xl border border-neutral-200 px-4 py-4 transition-all duration-200 hover:border-primary-200 hover:shadow-sm sm:px-5 ${tier.card}`}
+    >
+      {tier.accent && <span aria-hidden className={`absolute inset-y-0 left-0 w-1 ${tier.accent}`} />}
+
       <div className="flex items-start gap-3 sm:gap-4">
         <OrgLogo name={job.org} shortName={job.orgShortName} logoUrl={job.orgLogoUrl} size={56} className="hidden sm:flex" />
         <OrgLogo name={job.org} shortName={job.orgShortName} logoUrl={job.orgLogoUrl} size={44} className="sm:hidden" />
@@ -58,10 +78,7 @@ export default function JobListItem({ job, matchPercentage, eligible, verdict }:
                     reasons={verdict?.reasons ?? ["This job does not fit your profile."]}
                   />
                 ) : matchPercentage !== undefined ? (
-                  <span
-                    title="How well this job fits your profile"
-                    className={`rounded-full px-2 py-0.5 text-[11px] font-semibold ${matchTone(matchPercentage)}`}
-                  >
+                  <span title={tier.title} className={`rounded-full px-2 py-0.5 text-[11px] font-semibold ${tier.badge}`}>
                     {matchPercentage}% match
                   </span>
                 ) : null}

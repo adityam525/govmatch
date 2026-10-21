@@ -39,7 +39,7 @@ export default function JobPicksCard({
 
   if (!picks) {
     matches = <Message>Your matches could not be loaded just now. Please refresh in a moment.</Message>;
-  } else if (picks.status === 'no-profile') {
+  } else if (picks.status === 'no-profile' || picks.incomplete) {
     matches = (
       <Message>
         <p>Add your qualification and date of birth to see jobs that fit you.</p>

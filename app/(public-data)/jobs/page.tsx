@@ -357,6 +357,7 @@ export default async function JobsPage({ searchParams }: JobsPageProps) {
         qualificationLevel: userQualification?.level ?? null,
         age: profile.dateOfBirth ? ageInYears(profile.dateOfBirth) : null,
         preferredEmploymentTypes: profile.preferredEmploymentTypes as string[],
+        category: profile.category ?? null,
       };
 
       for (const notification of notifications) {
@@ -420,7 +421,7 @@ export default async function JobsPage({ searchParams }: JobsPageProps) {
    * 4. Match-score calculation
    */
 
-  if (eligibleOnly && hasProfile) {
+  if (eligibleOnly && profileComplete) {
     jobs = jobs.filter((job) => eligibleJobIds.has(job.id));
   }
 
@@ -537,7 +538,7 @@ export default async function JobsPage({ searchParams }: JobsPageProps) {
           <Link href="/profile" className="font-medium underline">
             profile
           </Link>{" "}
-          to see accurate match percentages
+          to see how well each job matches you
           {eligibleOnly ? " and use the eligibility filter" : ""}.
         </p>
       )}
@@ -562,8 +563,8 @@ export default async function JobsPage({ searchParams }: JobsPageProps) {
             <JobListItem
               key={job.id}
               job={job}
-              matchPercentage={matchByJobId.get(job.id)}
-              eligible={hasProfile ? eligibleJobIds.has(job.id) : undefined}
+              matchPercentage={profileComplete ? matchByJobId.get(job.id) : undefined}
+              eligible={profileComplete ? eligibleJobIds.has(job.id) : undefined}
               verdict={verdictByJobId.get(job.id)?.verdict}
             />
           ))}

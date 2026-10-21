@@ -18,6 +18,7 @@ export interface ReasonUser {
   qualificationName: string | null;
   qualificationLevel: number | null;
   age: number | null;
+  category?: string | null;
   preferredEmploymentTypes: string[];
 }
 
@@ -27,6 +28,7 @@ export interface ReasonPost {
   employmentType?: string | null;
   qualification?: QualificationRef | null;
   qualifications?: QualificationRef[];
+  ageRelaxation?: unknown;
 }
 
 const TYPE_LABEL: Record<string, string> = {
@@ -45,6 +47,23 @@ export function ageInYears(dob: Date | string, now: Date = new Date()): number {
     now.getMonth() < birth.getMonth() || (now.getMonth() === birth.getMonth() && now.getDate() < birth.getDate());
   if (beforeBirthday) age -= 1;
   return age;
+}
+
+// The matcher ignores age relaxation, so someone just over the limit may still qualify.
+// This never changes the verdict. It tells the user to check the official notice.
+function relaxationHint(category: string | null | undefined, relaxation: unknown): string | null {
+  const wanted = (category ?? '').trim().toLowerCase();
+  if (!wanted || wanted === 'general') return null;
+
+  if (relaxation && typeof relaxation === 'object' && !Array.isArray(relaxation)) {
+    for (const [key, value] of Object.entries(relaxation as Record<string, unknown>)) {
+      const tokens = key.toLowerCase().split(/[^a-z]+/).filter(Boolean);
+      if (tokens.includes(wanted)) {
+        return `The notification lists ${String(value)} age relaxation for ${key}. Check the official notice, as you may still qualify.`;
+      }
+    }
+  }
+  return `Candidates in the ${(category ?? '').trim()} category often get age relaxation. Check the official notice, as you may still qualify.`;
 }
 
 export function explainIneligibility(user: ReasonUser, post: ReasonPost): EligibilityVerdict {
@@ -73,6 +92,8 @@ export function explainIneligibility(user: ReasonUser, post: ReasonPost): Eligib
           ? `Age limit is ${minAge} to ${maxAge} years; you are ${user.age}.`
           : `Maximum age is ${maxAge} years; you are ${user.age}.`,
       );
+      const hint = relaxationHint(user.category, post.ageRelaxation);
+      if (hint) reasons.push(hint);
       preferenceOnly = false;
     } else if (minAge != null && user.age < minAge) {
       reasons.push(`Minimum age is ${minAge} years; you are ${user.age}.`);
