@@ -17,36 +17,58 @@ const categoryLabels: Record<Job["category"], string> = {
 
 interface JobListItemProps {
   job: Job;
+  /** Set for logged-in users when the job has posts to score. */
   matchPercentage?: number;
+  /** false when no post of this job fits the user's profile. */
+  eligible?: boolean;
 }
 
-export default function JobListItem({ job, matchPercentage }: JobListItemProps) {
+function MatchBadge({ percentage, eligible }: { percentage: number; eligible?: boolean }) {
+  if (eligible === false) {
+    return (
+      <span
+        title="Based on your profile: qualification, age or job type does not fit"
+        className="rounded-full bg-neutral-100 px-2 py-0.5 text-[11px] font-semibold text-neutral-500"
+      >
+        Not eligible
+      </span>
+    );
+  }
+  const tone =
+    percentage >= 80
+      ? "bg-green-50 text-green-700"
+      : percentage >= 60
+        ? "bg-sky-50 text-sky-700"
+        : "bg-amber-50 text-amber-700";
   return (
-    <article className="group rounded-xl border border-neutral-200 bg-white px-5 py-4 transition-all duration-200 hover:border-primary-200 hover:shadow-sm">
-      <div className="flex items-start gap-4">
-        <OrgLogo name={job.org} shortName={job.orgShortName} logoUrl={job.orgLogoUrl} size={56} />
+    <span title="How well this job fits your profile" className={`rounded-full px-2 py-0.5 text-[11px] font-semibold ${tone}`}>
+      {percentage}% match
+    </span>
+  );
+}
+
+export default function JobListItem({ job, matchPercentage, eligible }: JobListItemProps) {
+  return (
+    <article className="group rounded-xl border border-neutral-200 bg-white px-4 py-4 transition-all duration-200 hover:border-primary-200 hover:shadow-sm sm:px-5">
+      <div className="flex items-start gap-3 sm:gap-4">
+        <OrgLogo name={job.org} shortName={job.orgShortName} logoUrl={job.orgLogoUrl} size={56} className="hidden sm:flex" />
+        <OrgLogo name={job.org} shortName={job.orgShortName} logoUrl={job.orgLogoUrl} size={44} className="sm:hidden" />
 
         <div className="min-w-0 flex-1">
           <div className="flex items-start justify-between gap-6">
             <div className="min-w-0 flex-1">
-              <div className="flex flex-wrap items-center gap-2">
-                <h3
-                  title={job.title}
-                  className="line-clamp-2 text-[15px] font-semibold leading-6 text-neutral-900 group-hover:text-primary-700"
-                >
-                  {job.title}
-                </h3>
+              <h3
+                title={job.title}
+                className="line-clamp-2 text-[15px] font-semibold leading-6 text-neutral-900 group-hover:text-primary-700"
+              >
+                {job.title}
+              </h3>
 
-                {matchPercentage !== undefined && (
-                  <span className="rounded-full bg-green-50 px-2 py-0.5 text-[11px] font-semibold text-green-700">
-                    {matchPercentage}% Match
-                  </span>
-                )}
-              </div>
-
-              <p className="mt-1 text-sm text-neutral-600">{job.org}</p>
+              <p className="mt-0.5 text-sm text-neutral-600">{job.org}</p>
 
               <div className="mt-3 flex flex-wrap items-center gap-2">
+                {matchPercentage !== undefined && <MatchBadge percentage={matchPercentage} eligible={eligible} />}
+
                 <JobMetaChip icon={Users}>
                   {job.vacancies.toLocaleString("en-IN")} {job.vacancies === 1 ? "Vacancy" : "Vacancies"}
                 </JobMetaChip>

@@ -10,6 +10,7 @@ import { resolveCategoryFilter } from "@/lib/category-filters";
 import { parseView, getViewIds, getPhaseCounts, sortByIdOrder } from "@/lib/jobs-view";
 import JobsViewTabs from "@/components/jobs/JobsViewTabs";
 import StickyTools from "@/components/jobs/StickyTools";
+import Link from "next/link";
 import { isPremiumUser } from "@/lib/plan";
 
 const SEARCH_ALIASES: Record<string, string[]> = {
@@ -302,6 +303,7 @@ export default async function JobsPage({ searchParams }: JobsPageProps) {
   const matchByJobId = new Map<string, number>();
   const eligibleJobIds = new Set<string>();
   let hasProfile = false;
+  let profileComplete = false;
 
   if (userId) {
     const profile = await prisma.userProfile.findUnique({
@@ -316,6 +318,7 @@ export default async function JobsPage({ searchParams }: JobsPageProps) {
 
     if (profile) {
       hasProfile = true;
+      profileComplete = !!profile.qualificationId && !!profile.dateOfBirth;
       const userQualification = profile.qualificationId
         ? await prisma.qualification.findUnique({
             where: {
@@ -483,9 +486,13 @@ export default async function JobsPage({ searchParams }: JobsPageProps) {
         <JobsViewTabs view={view} counts={phaseCounts} params={params} />
       </StickyTools>
 
-      {eligibleOnly && !hasProfile && (
+      {userId && !profileComplete && (
         <p className="mb-3 rounded-lg bg-amber-50 px-3 py-2 text-sm text-amber-800">
-          Add your qualification and date of birth in your profile to use the eligibility filter.
+          Add your qualification and date of birth in your{" "}
+          <Link href="/profile" className="font-medium underline">
+            profile
+          </Link>{" "}
+          to see accurate match percentages{eligibleOnly ? " and use the eligibility filter" : ""}.
         </p>
       )}
 
@@ -507,6 +514,7 @@ export default async function JobsPage({ searchParams }: JobsPageProps) {
               key={job.id}
               job={job}
               matchPercentage={matchByJobId.get(job.id)}
+              eligible={hasProfile ? eligibleJobIds.has(job.id) : undefined}
             />
           ))}
         </div>
