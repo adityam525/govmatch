@@ -7,11 +7,21 @@ import JobFiltersBar from "@/components/jobs/JobFiltersBar";
 import SectionHeader from "@/components/ui/SectionHeader";
 import { Prisma } from "@prisma/client";
 import { resolveCategoryFilter } from "@/lib/category-filters";
-import { parseView, getViewIds, getPhaseCounts, sortByIdOrder } from "@/lib/jobs-view";
+import {
+  parseView,
+  getViewIds,
+  getPhaseCounts,
+  sortByIdOrder,
+} from "@/lib/jobs-view";
 import JobsViewTabs from "@/components/jobs/JobsViewTabs";
 import StickyTools from "@/components/jobs/StickyTools";
 import Link from "next/link";
 import { isPremiumUser } from "@/lib/plan";
+import {
+  explainIneligibility,
+  ageInYears,
+  type EligibilityVerdict,
+} from "@/lib/eligibility-reasons";
 
 const SEARCH_ALIASES: Record<string, string[]> = {
   "bank po": ["probationary officer", "management trainee", "po"],
@@ -85,7 +95,10 @@ function getCreatedAtValue(job: any): number {
 // A post can accept several qualifications (any one of them is enough), so the
 // lowest level is the real entry bar.
 function lowestQualificationLevel(post: any): number | null {
-  const levels = [...(post.qualifications ?? []), ...(post.qualification ? [post.qualification] : [])]
+  const levels = [
+    ...(post.qualifications ?? []),
+    ...(post.qualification ? [post.qualification] : []),
+  ]
     .map((q: any) => q?.level)
     .filter((level: unknown): level is number => typeof level === "number");
   return levels.length > 0 ? Math.min(...levels) : null;
@@ -260,7 +273,14 @@ export default async function JobsPage({ searchParams }: JobsPageProps) {
         },
       },
 
-      posts: { include: { qualification: true, qualifications: true, branches: true, roles: true } },
+      posts: {
+        include: {
+          qualification: true,
+          qualifications: true,
+          branches: true,
+          roles: true,
+        },
+      },
     },
 
     orderBy: {
@@ -302,6 +322,10 @@ export default async function JobsPage({ searchParams }: JobsPageProps) {
 
   const matchByJobId = new Map<string, number>();
   const eligibleJobIds = new Set<string>();
+  const verdictByJobId = new Map<
+    string,
+    { score: number; verdict: EligibilityVerdict }
+  >();
   let hasProfile = false;
   let profileComplete = false;
 
@@ -319,6 +343,7 @@ export default async function JobsPage({ searchParams }: JobsPageProps) {
     if (profile) {
       hasProfile = true;
       profileComplete = !!profile.qualificationId && !!profile.dateOfBirth;
+
       const userQualification = profile.qualificationId
         ? await prisma.qualification.findUnique({
             where: {
@@ -326,6 +351,13 @@ export default async function JobsPage({ searchParams }: JobsPageProps) {
             },
           })
         : null;
+
+      const reasonUser = {
+        qualificationName: userQualification?.name ?? null,
+        qualificationLevel: userQualification?.level ?? null,
+        age: profile.dateOfBirth ? ageInYears(profile.dateOfBirth) : null,
+        preferredEmploymentTypes: profile.preferredEmploymentTypes as string[],
+      };
 
       for (const notification of notifications) {
         for (const post of notification.posts as any[]) {
@@ -356,9 +388,22 @@ export default async function JobsPage({ searchParams }: JobsPageProps) {
            */
 
           matchByJobId.set(post.id, result.score);
-          if (result.eligible) eligibleJobIds.add(notification.id);
+          if (result.eligible) {
+            eligibleJobIds.add(notification.id);
+          } else {
+            const known = verdictByJobId.get(notification.id);
+            if (!known || result.score > known.score) {
+              verdictByJobId.set(notification.id, {
+                score: result.score,
+                verdict: explainIneligibility(reasonUser, post),
+              });
+            }
+          }
 
-          matchByJobId.set(notification.id, Math.max(matchByJobId.get(notification.id) ?? 0, result.score));
+          matchByJobId.set(
+            notification.id,
+            Math.max(matchByJobId.get(notification.id) ?? 0, result.score),
+          );
         }
       }
     }
@@ -492,7 +537,8 @@ export default async function JobsPage({ searchParams }: JobsPageProps) {
           <Link href="/profile" className="font-medium underline">
             profile
           </Link>{" "}
-          to see accurate match percentages{eligibleOnly ? " and use the eligibility filter" : ""}.
+          to see accurate match percentages
+          {eligibleOnly ? " and use the eligibility filter" : ""}.
         </p>
       )}
 
@@ -509,12 +555,16 @@ export default async function JobsPage({ searchParams }: JobsPageProps) {
         </div>
       ) : (
         <div className="mt-4 max-h-[75vh] space-y-4 overflow-y-auto pr-1">
-          {(view.preset && !params.sort ? sortByIdOrder(jobs, viewIds) : jobs).map((job) => (
+          {(view.preset && !params.sort
+            ? sortByIdOrder(jobs, viewIds)
+            : jobs
+          ).map((job) => (
             <JobListItem
               key={job.id}
               job={job}
               matchPercentage={matchByJobId.get(job.id)}
               eligible={hasProfile ? eligibleJobIds.has(job.id) : undefined}
+              verdict={verdictByJobId.get(job.id)?.verdict}
             />
           ))}
         </div>

@@ -3,6 +3,19 @@ import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { validateNotificationDates } from '@/features/jobs/validation';
 
+// A readable, unique URL slug. A clash gets -2, -3, ... instead of a 500 error.
+async function uniqueSlug(input: string): Promise<string> {
+  const base =
+    (input || 'job').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 120) || 'job';
+  let candidate = base;
+  for (let n = 2; n < 500; n++) {
+    const taken = await prisma.notification.findUnique({ where: { slug: candidate }, select: { id: true } });
+    if (!taken) return candidate;
+    candidate = `${base}-${n}`;
+  }
+  return `${base}-${Date.now()}`;
+}
+
 const DATE_FIELDS = ['notificationDate', 'applicationStartDate', 'applicationEndDate', 'examDate'];
 
 export async function GET() {
@@ -40,6 +53,8 @@ export async function POST(request: Request) {
         notificationData[field] = new Date(notificationData[field]);
       }
     }
+
+    notificationData.slug = await uniqueSlug(String(notificationData.slug || notificationData.title || ''));
 
     const notification = await prisma.notification.create({
       data: {

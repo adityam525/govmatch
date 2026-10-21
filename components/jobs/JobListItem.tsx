@@ -4,6 +4,7 @@ import { Building2, ChevronRight, Users } from "lucide-react";
 import Button from "@/components/ui/Button";
 import JobMetaChip from "@/components/jobs/JobMetaChip";
 import OrgLogo from "@/components/shared/OrgLogo";
+import EligibilityHint from "@/components/jobs/EligibilityHint";
 import type { Job } from "@/features/jobs/types";
 
 const categoryLabels: Record<Job["category"], string> = {
@@ -21,33 +22,17 @@ interface JobListItemProps {
   matchPercentage?: number;
   /** false when no post of this job fits the user's profile. */
   eligible?: boolean;
+  /** Why the job does not fit, for the tooltip. */
+  verdict?: { label: string; reasons: string[] };
 }
 
-function MatchBadge({ percentage, eligible }: { percentage: number; eligible?: boolean }) {
-  if (eligible === false) {
-    return (
-      <span
-        title="Based on your profile: qualification, age or job type does not fit"
-        className="rounded-full bg-neutral-100 px-2 py-0.5 text-[11px] font-semibold text-neutral-500"
-      >
-        Not eligible
-      </span>
-    );
-  }
-  const tone =
-    percentage >= 80
-      ? "bg-green-50 text-green-700"
-      : percentage >= 60
-        ? "bg-sky-50 text-sky-700"
-        : "bg-amber-50 text-amber-700";
-  return (
-    <span title="How well this job fits your profile" className={`rounded-full px-2 py-0.5 text-[11px] font-semibold ${tone}`}>
-      {percentage}% match
-    </span>
-  );
+function matchTone(percentage: number) {
+  if (percentage >= 80) return "bg-green-50 text-green-700";
+  if (percentage >= 60) return "bg-sky-50 text-sky-700";
+  return "bg-amber-50 text-amber-700";
 }
 
-export default function JobListItem({ job, matchPercentage, eligible }: JobListItemProps) {
+export default function JobListItem({ job, matchPercentage, eligible, verdict }: JobListItemProps) {
   return (
     <article className="group rounded-xl border border-neutral-200 bg-white px-4 py-4 transition-all duration-200 hover:border-primary-200 hover:shadow-sm sm:px-5">
       <div className="flex items-start gap-3 sm:gap-4">
@@ -67,7 +52,19 @@ export default function JobListItem({ job, matchPercentage, eligible }: JobListI
               <p className="mt-0.5 text-sm text-neutral-600">{job.org}</p>
 
               <div className="mt-3 flex flex-wrap items-center gap-2">
-                {matchPercentage !== undefined && <MatchBadge percentage={matchPercentage} eligible={eligible} />}
+                {eligible === false ? (
+                  <EligibilityHint
+                    label={verdict?.label ?? "Not eligible"}
+                    reasons={verdict?.reasons ?? ["This job does not fit your profile."]}
+                  />
+                ) : matchPercentage !== undefined ? (
+                  <span
+                    title="How well this job fits your profile"
+                    className={`rounded-full px-2 py-0.5 text-[11px] font-semibold ${matchTone(matchPercentage)}`}
+                  >
+                    {matchPercentage}% match
+                  </span>
+                ) : null}
 
                 <JobMetaChip icon={Users}>
                   {job.vacancies.toLocaleString("en-IN")} {job.vacancies === 1 ? "Vacancy" : "Vacancies"}

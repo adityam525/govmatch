@@ -1,140 +1,323 @@
-'use client';
-
-import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { Briefcase, Bookmark, ClipboardList, TrendingUp } from 'lucide-react';
-import Card from '@/components/ui/Card';
-import { useAuth } from '@/features/auth/hooks';
-import { useJobMatches } from '@/features/matching/hooks';
+import { redirect } from 'next/navigation';
+import {
+  Bookmark,
+  Briefcase,
+  CheckCircle2,
+  Circle,
+  ClipboardList,
+  Crown,
+  ShieldCheck,
+  TrendingUp,
+} from 'lucide-react';
+import { auth } from '@/lib/auth';
+import { prisma } from '@/lib/prisma';
+import { getRecommendations, type RecommendationResult } from '@/lib/recommendations';
+import { isPremiumSubscription } from '@/lib/plan';
+import { formatShortDate } from '@/lib/job-status';
+import RecommendedList from '@/components/sections/home/RecommendedList';
 import PremiumDashboardCards from '@/components/dashboard/PremiumDashboardCards';
 
-export default function DashboardPage() {
-  const { user, isLoggedIn, loading: authLoading } = useAuth();
-  const { matches, loading: matchesLoading } = useJobMatches();
-  const [savedCount, setSavedCount] = useState(0);
-  const [applicationsCount, setApplicationsCount] = useState(0);
-  const [profileStrength, setProfileStrength] = useState(0);
+export const dynamic = 'force-dynamic';
 
-  useEffect(() => {
-    if (!user?.id) return;
-    fetch(`/api/users/${user.id}/saved-jobs`).then((r) => r.json()).then((d) => setSavedCount(Array.isArray(d) ? d.length : 0)).catch(() => {});
-    fetch(`/api/users/${user.id}/applications`).then((r) => r.json()).then((d) => setApplicationsCount(Array.isArray(d) ? d.length : 0)).catch(() => {});
-    fetch(`/api/users/${user.id}/profile`).then((r) => r.json()).then((d) => setProfileStrength(d?.profileStrength ?? 0)).catch(() => {});
-  }, [user?.id]);
+const STAGES: { id: string; label: string; tone: string }[] = [
+  { id: 'APPLIED', label: 'Applied', tone: 'bg-sky-50 text-sky-700' },
+  { id: 'EXAM_SCHEDULED', label: 'Exam scheduled', tone: 'bg-amber-50 text-amber-700' },
+  { id: 'RESULT_AWAITED', label: 'Result awaited', tone: 'bg-violet-50 text-violet-700' },
+  { id: 'SELECTED', label: 'Selected', tone: 'bg-green-50 text-green-700' },
+  { id: 'REJECTED', label: 'Not selected', tone: 'bg-neutral-100 text-neutral-600' },
+];
+const STAGE_BY_ID = new Map(STAGES.map((stage) => [stage.id, stage]));
 
-  if (authLoading) return <div className="max-w-5xl mx-auto px-6 py-8 text-sm text-neutral-600">Loading...</div>;
-  if (!isLoggedIn) {
-    return (
-      <div className="max-w-5xl mx-auto px-6 py-8">
-        <Card padding="lg"><p className="text-sm text-neutral-600">Please log in to view your dashboard.</p></Card>
+async function loadPicks(userId: string): Promise<RecommendationResult | null> {
+  try {
+    return await getRecommendations(userId);
+  } catch (error) {
+    console.error('Dashboard: could not load recommendations', error);
+    return null;
+  }
+}
+
+function Panel({
+  title,
+  action,
+  children,
+}: {
+  title: string;
+  action?: { href: string; label: string };
+  children: React.ReactNode;
+}) {
+  return (
+    <section className="overflow-hidden rounded-2xl border border-neutral-200 bg-white shadow-sm">
+      <div className="flex items-center justify-between gap-3 border-b border-neutral-100 px-4 py-3">
+        <h2 className="text-sm font-bold text-neutral-900">{title}</h2>
+        {action && (
+          <Link href={action.href} className="text-xs font-medium text-primary-600 hover:underline">
+            {action.label}
+          </Link>
+        )}
       </div>
-    );
+      {children}
+    </section>
+  );
+}
+
+function Kpi({
+  icon,
+  tint,
+  value,
+  label,
+  href,
+}: {
+  icon: React.ReactNode;
+  tint: string;
+  value: string;
+  label: string;
+  href: string;
+}) {
+  return (
+    <Link
+      href={href}
+      className="flex items-center gap-3 rounded-2xl border border-neutral-200 bg-white p-4 shadow-sm transition hover:border-neutral-300 hover:shadow-md"
+    >
+      <div className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl ${tint}`}>{icon}</div>
+      <div className="min-w-0">
+        <p className="text-xl font-bold leading-none text-neutral-900">{value}</p>
+        <p className="mt-1 truncate text-xs text-neutral-500">{label}</p>
+      </div>
+    </Link>
+  );
+}
+
+function Note({ children }: { children: React.ReactNode }) {
+  return <div className="px-4 py-8 text-center text-xs leading-relaxed text-neutral-500">{children}</div>;
+}
+
+export default async function DashboardPage() {
+  const session = await auth();
+  const userId = (session?.user as { id?: string } | undefined)?.id;
+  if (!userId) redirect('/login');
+
+  const [user, profile, savedCount, applications, picks] = await Promise.all([
+    prisma.user.findUnique({
+      where: { id: userId },
+      select: {
+        name: true,
+        role: true,
+        subscription: { select: { plan: true, status: true, expiresAt: true } },
+      },
+    }),
+    prisma.userProfile.findUnique({
+      where: { userId },
+      include: { preferredRoles: { select: { id: true } } },
+    }),
+    prisma.savedJob.count({ where: { userId } }),
+    prisma.application.findMany({ where: { userId }, orderBy: { appliedAt: 'desc' } }),
+    loadPicks(userId),
+  ]);
+
+  const recent = applications.slice(0, 5);
+  const recentJobs = recent.length
+    ? await prisma.notification.findMany({
+        where: { id: { in: recent.map((a) => a.notificationId) } },
+        select: { id: true, title: true, slug: true, organization: { select: { name: true } } },
+      })
+    : [];
+  const jobById = new Map(recentJobs.map((job) => [job.id, job]));
+
+  const stageCounts = new Map<string, number>();
+  for (const application of applications) {
+    stageCounts.set(application.status, (stageCounts.get(application.status) ?? 0) + 1);
   }
 
-  const topMatches = matches.slice(0, 3);
+  const checklist = [
+    { label: 'Date of birth', done: !!profile?.dateOfBirth },
+    { label: 'Highest qualification', done: !!profile?.qualificationId },
+    { label: 'Branch or stream', done: !!profile?.branchId },
+    { label: 'Category (General, OBC, SC, ST, EWS)', done: !!profile?.category },
+    { label: 'Gender', done: !!profile?.gender },
+    { label: 'Mobile number', done: !!profile?.phoneNumber },
+    {
+      label: 'Job preferences (roles or job type)',
+      done: (profile?.preferredRoles.length ?? 0) > 0 || (profile?.preferredEmploymentTypes.length ?? 0) > 0,
+    },
+  ];
+  const doneCount = checklist.filter((item) => item.done).length;
+  const completeness = Math.round((doneCount / checklist.length) * 100);
+
+  const premium = isPremiumSubscription(user?.subscription);
+  const fits = (picks?.items ?? []).filter((item) => item.eligible);
+  const topMatches = fits.slice(0, 5);
+  const firstName = user?.name?.split(' ')[0] ?? 'there';
+
+  let matchesBody: React.ReactNode;
+  if (!picks) {
+    matchesBody = <Note>Your matches could not be loaded just now. Please refresh in a moment.</Note>;
+  } else if (picks.status === 'no-profile') {
+    matchesBody = (
+      <Note>
+        Add your qualification and date of birth to see jobs that fit you.{' '}
+        <Link href="/profile" className="font-semibold text-primary-600 underline">
+          Complete profile
+        </Link>
+      </Note>
+    );
+  } else if (topMatches.length === 0) {
+    matchesBody = <Note>No open jobs match your profile right now. New ones appear here as soon as they are posted.</Note>;
+  } else {
+    matchesBody = <RecommendedList items={topMatches} />;
+  }
 
   return (
-    <div className="max-w-5xl mx-auto px-6 py-8">
-      <h1 className="text-xl font-bold text-neutral-900">Welcome back, {user?.name?.split(' ')[0] ?? 'there'}</h1>
-      <p className="text-sm text-neutral-600 mt-1">Here's what's happening with your job search.</p>
-
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6">
-        <Card padding="md">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-lg bg-primary-50 text-primary-600 flex items-center justify-center">
-              <TrendingUp size={18} />
-            </div>
-            <div>
-              <p className="text-lg font-bold text-neutral-900">{profileStrength}%</p>
-              <p className="text-xs text-neutral-600">Profile Strength</p>
-            </div>
-          </div>
-        </Card>
-        <Card padding="md">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-lg bg-green-50 text-success flex items-center justify-center">
-              <Briefcase size={18} />
-            </div>
-            <div>
-              <p className="text-lg font-bold text-neutral-900">{matchesLoading ? '-' : matches.length}</p>
-              <p className="text-xs text-neutral-600">Matched Jobs</p>
-            </div>
-          </div>
-        </Card>
-        <Card padding="md">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-lg bg-accent-purple/10 text-accent-purple flex items-center justify-center">
-              <Bookmark size={18} />
-            </div>
-            <div>
-              <p className="text-lg font-bold text-neutral-900">{savedCount}</p>
-              <p className="text-xs text-neutral-600">Saved Jobs</p>
-            </div>
-          </div>
-        </Card>
-        <Card padding="md">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-lg bg-accent-orange/10 text-accent-orange flex items-center justify-center">
-              <ClipboardList size={18} />
-            </div>
-            <div>
-              <p className="text-lg font-bold text-neutral-900">{applicationsCount}</p>
-              <p className="text-xs text-neutral-600">Applications</p>
-            </div>
-          </div>
-        </Card>
+    <div className="mx-auto w-full max-w-6xl px-4 py-6 sm:px-6 lg:py-8">
+      <div className="flex flex-wrap items-start justify-between gap-3">
+        <div className="min-w-0">
+          <h1 className="text-xl font-bold text-neutral-900">Welcome back, {firstName}</h1>
+          <p className="mt-1 text-sm text-neutral-600">Here is where your job search stands today.</p>
+        </div>
+        <div className="flex flex-wrap items-center gap-2">
+          {premium ? (
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-primary-50 px-3 py-1.5 text-xs font-semibold text-primary-700">
+              <Crown size={13} />
+              Premium
+              {user?.subscription?.expiresAt ? ` until ${formatShortDate(user.subscription.expiresAt)}` : ''}
+            </span>
+          ) : (
+            <Link
+              href="/pricing"
+              className="inline-flex items-center gap-1.5 rounded-full border border-neutral-200 bg-white px-3 py-1.5 text-xs font-semibold text-neutral-700 hover:bg-neutral-50"
+            >
+              <Crown size={13} className="text-amber-500" />
+              Free plan - see Premium
+            </Link>
+          )}
+          {user?.role === 'ADMIN' && (
+            <Link
+              href="/admin"
+              className="inline-flex items-center gap-1.5 rounded-full border border-neutral-200 bg-white px-3 py-1.5 text-xs font-semibold text-neutral-700 hover:bg-neutral-50"
+            >
+              <ShieldCheck size={13} />
+              Admin panel
+            </Link>
+          )}
+        </div>
       </div>
 
-      <PremiumDashboardCards />
+      <div className="mt-6 grid grid-cols-2 gap-3 lg:grid-cols-4 lg:gap-4">
+        <Kpi icon={<Briefcase size={18} />} tint="bg-green-50 text-success" value={String(fits.length)} label="Open jobs that fit you" href="/jobs?sort=relevance" />
+        <Kpi icon={<Bookmark size={18} />} tint="bg-violet-50 text-violet-600" value={String(savedCount)} label="Saved jobs" href="/saved-jobs" />
+        <Kpi icon={<ClipboardList size={18} />} tint="bg-amber-50 text-amber-600" value={String(applications.length)} label="Applications tracked" href="/applications" />
+        <Kpi icon={<TrendingUp size={18} />} tint="bg-primary-50 text-primary-600" value={`${completeness}%`} label="Profile complete" href="/profile" />
+      </div>
 
-      <div className="grid md:grid-cols-2 gap-6 mt-6">
-        <Card padding="lg">
-          <div className="flex items-center justify-between mb-4">
-            <h2 className="text-sm font-bold text-neutral-900">Top Matches</h2>
-            <Link href="/jobs" className="text-xs font-medium text-primary-600 hover:underline">View All</Link>
-          </div>
-          {matchesLoading ? (
-            <p className="text-xs text-neutral-400 py-4 text-center">Loading...</p>
-          ) : topMatches.length === 0 ? (
-            <p className="text-xs text-neutral-400 py-4 text-center">
-              Complete your profile to get personalized matches.
-            </p>
-          ) : (
-            <div className="space-y-2">
-              {topMatches.map((m) => (
+      <div className="mt-6 grid gap-6 lg:grid-cols-3">
+        <div className="min-w-0 space-y-6 lg:col-span-2">
+          <Panel title="Top matches" action={{ href: '/jobs?sort=relevance', label: 'See all' }}>
+            {matchesBody}
+          </Panel>
+
+          <Panel title="Application tracker" action={{ href: '/applications', label: 'Manage' }}>
+            {applications.length === 0 ? (
+              <Note>
+                You are not tracking any applications yet. Open a job and mark it as applied to follow it here.
+              </Note>
+            ) : (
+              <div className="p-4">
+                <div className="flex flex-wrap gap-2">
+                  {STAGES.map((stage) => (
+                    <span key={stage.id} className={`rounded-full px-3 py-1 text-xs font-medium ${stage.tone}`}>
+                      {stage.label}: {stageCounts.get(stage.id) ?? 0}
+                    </span>
+                  ))}
+                </div>
+                <div className="mt-4 divide-y divide-neutral-100">
+                  {recent.map((application) => {
+                    const job = jobById.get(application.notificationId);
+                    const stage = STAGE_BY_ID.get(application.status);
+                    return (
+                      <div key={application.id} className="flex items-center justify-between gap-3 py-2.5">
+                        <div className="min-w-0">
+                          {job ? (
+                            <Link href={`/jobs/${job.slug}`} className="block truncate text-sm font-medium text-neutral-900 hover:text-primary-700">
+                              {job.title}
+                            </Link>
+                          ) : (
+                            <p className="truncate text-sm text-neutral-500">This job is no longer listed</p>
+                          )}
+                          <p className="truncate text-xs text-neutral-500">
+                            {job?.organization?.name ?? ''}
+                            {job ? ' · ' : ''}applied {formatShortDate(application.appliedAt)}
+                          </p>
+                        </div>
+                        <span className={`shrink-0 rounded-full px-2.5 py-1 text-[11px] font-semibold ${stage?.tone ?? 'bg-neutral-100 text-neutral-600'}`}>
+                          {stage?.label ?? application.status}
+                        </span>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+          </Panel>
+        </div>
+
+        <div className="min-w-0 space-y-6">
+          <Panel title="Complete your profile">
+            <div className="p-4">
+              <div className="flex items-center justify-betwee text-xs text-neutral-600">
+                <span>
+                  {doneCount} of {checklist.length} done
+                </span>
+                <span className="font-semibold text-neutral-900">{completeness}%</span>
+              </div>
+              <div className="mt-2 h-2 overflow-hidden rounded-full bg-neutral-100">
+                <div className="h-full rounded-full bg-primary-600" style={{ width: `${completeness}%` }} />
+              </div>
+              <ul className="mt-4 space-y-2">
+                {checklist.map((item) => (
+                  <li key={item.label} className="flex items-center gap-2 text-xs">
+                    {item.done ? (
+                      <CheckCircle2 size={15} className="shrink-0 text-success" />
+                    ) : (
+                      <Circle size={15} className="shrink-0 text-neutral-300" />
+                    )}
+                    <span className={item.done ? 'text-neutral-400 line-through' : 'text-neutral-800'}>{item.label}</span>
+                  </li>
+                ))}
+              </ul>
+              {doneCount < checklist.length && (
                 <Link
-                  key={m.postId}
-                  href={`/jobs/${m.slug}`}
-                  className="flex items-center justify-between p-2 rounded-md hover:bg-neutral-50"
+                  href="/profile"
+                  className="mt-4 block rounded-lg bg-primary-600 px-4 py-2.5 text-center text-xs font-semibold text-white hover:bg-primary-700"
                 >
-                  <div className="min-w-0">
-                    <p className="text-xs font-semibold text-neutral-900 truncate">{m.postTitle}</p>
-                    <p className="text-[10px] text-neutral-400">{m.organization}</p>
-                  </div>
-                  <span className="text-xs font-bold text-success shrink-0 ml-2">{m.matchScore}%</span>
+                  Update profile
                 </Link>
-              ))}
+              )}
             </div>
-          )}
-        </Card>
+          </Panel>
 
-        <Card padding="lg">
-          <h2 className="text-sm font-bold text-neutral-900 mb-4">Quick Actions</h2>
-          <div className="space-y-2">
-            <Link href="/profile" className="block p-2.5 rounded-md border border-neutral-200 hover:bg-neutral-50 text-xs font-medium text-neutral-900">
-              Complete your profile
-            </Link>
-            <Link href="/saved-jobs" className="block p-2.5 rounded-md border border-neutral-200 hover:bg-neutral-50 text-xs font-medium text-neutral-900">
-              View saved jobs
-            </Link>
-            <Link href="/applications" className="block p-2.5 rounded-md border border-neutral-200 hover:bg-neutral-50 text-xs font-medium text-neutral-900">
-              Track applications
-            </Link>
-            <Link href="/jobs" className="block p-2.5 rounded-md border border-neutral-200 hover:bg-neutral-50 text-xs font-medium text-neutral-900">
-              Browse all jobs
-            </Link>
-          </div>
-        </Card>
+          {premium ? (
+            <PremiumDashboardCards />
+          ) : (
+            <Panel title="Deadline reminders">
+              <div className="p-4">
+                <p className="flex items-center gap-1.5 text-xs font-semibold text-neutral-900">
+                  <Crown size={13} className="text-amber-500" />
+                  Premium
+                </p>
+                <p className="mt-1 text-xs leading-relaxed text-neutral-600">
+                  See which of your saved jobs close in the next two weeks, soonest first.
+                </p>
+                <Link
+                  href="/pricing"
+                  className="mt-3 block rounded-lg border border-neutral-200 px-4 py-2 text-center text-xs font-semibold text-neutral-700 hover:bg-neutral-50"
+                >
+                  See plans
+                </Link>
+              </div>
+            </Panel>
+          )}
+        </div>
       </div>
     </div>
   );

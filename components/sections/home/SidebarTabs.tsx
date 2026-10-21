@@ -8,9 +8,11 @@ export interface SidebarTab {
   count?: number;
   tone?: 'urgent';
   content: React.ReactNode;
+  footer: React.ReactNode;
 }
 
-// Tabs are hidden when there is only one, so a single list looks like a plain card.
+// The list area has a fixed height and the footer is always present, so switching tabs
+// never changes the card's size (that was the jump when moving between the two lists).
 export default function SidebarTabs({ tabs }: { tabs: SidebarTab[] }) {
   const baseId = useId();
   const [activeId, setActiveId] = useState(tabs[0]?.id ?? '');
@@ -32,7 +34,7 @@ export default function SidebarTabs({ tabs }: { tabs: SidebarTab[] }) {
                 aria-selected={selected}
                 aria-controls={`${baseId}-panel`}
                 onClick={() => setActiveId(tab.id)}
-                className={`flex items-center gap-1.5 border-b-2 px-3 py-2.5 text-xs font-semibold transition-colors ${
+                className={`-mb-px flex items-center gap-1.5 border-b-2 px-3 py-2.5 text-xs font-semibold transition-colors ${
                   selected
                     ? 'border-primary-600 text-primary-700'
                     : 'border-transparent text-neutral-500 hover:text-neutral-800'
@@ -57,14 +59,18 @@ export default function SidebarTabs({ tabs }: { tabs: SidebarTab[] }) {
           })}
         </div>
       )}
+
       <div
+        key={active.id}
         id={`${baseId}-panel`}
         role="tabpanel"
         aria-labelledby={tabs.length > 1 ? `${baseId}-${active.id}-tab` : undefined}
-        className="lg:max-h-[30rem] lg:overflow-y-auto"
+        className="h-[19.5rem] overflow-y-auto overscroll-contain"
       >
-        {active.content}
+        <div className="flex min-h-full flex-col">{active.content}</div>
       </div>
+
+      <div className="flex h-11 items-center justify-center border-t border-neutral-100">{active.footer}</div>
     </div>
   );
 }

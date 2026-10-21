@@ -62,7 +62,7 @@ export default function PremiumDashboardCards() {
     .sort((a, b) => a.days - b.days);
 
   return (
-    <Card padding="lg" className="mt-6">
+    <Card padding="lg">
       <div className="mb-3 flex items-center gap-2">
         <BellRing size={16} className="text-primary-600" />
         <h2 className="text-sm font-bold text-neutral-900">Deadline reminders</h2>

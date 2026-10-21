@@ -505,7 +505,16 @@ export default function JobForm({ mode, jobId }: JobFormProps) {
           publishOverride !== undefined ? publishOverride : form.published,
         selectionProcess: selectedSteps,
         stateIds: form.stateId ? [form.stateId] : [],
-        slug: form.title.toLowerCase().replace(/[^a-z0-9]+/g, "-"),
+        // The URL slug is set once, when the job is created. Re-deriving it on every
+        // save changed existing URLs and could collide with another job.
+        ...(mode === "create"
+          ? {
+              slug: form.title
+                .toLowerCase()
+                .replace(/[^a-z0-9]+/g, "-")
+                .replace(/^-+|-+$/g, ""),
+            }
+          : {}),
       };
       delete payload.stateId;
 
