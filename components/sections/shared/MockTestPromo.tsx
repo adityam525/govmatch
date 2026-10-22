@@ -82,7 +82,7 @@ export default function MockTestPromo() {
 
           <p className="mt-4 max-w-lg text-sm leading-relaxed text-neutral-400 md:text-base">
             Full-length and sectional tests for SSC, IBPS, RRB and State PSC
-            patterns with instant evaluation, percentile ranking and detailed
+            patterns with detailed
             performance insights.
           </p>
 

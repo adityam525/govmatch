@@ -5,6 +5,8 @@ import Button from "@/components/ui/Button";
 import JobMetaChip from "@/components/jobs/JobMetaChip";
 import OrgLogo from "@/components/shared/OrgLogo";
 import EligibilityHint from "@/components/jobs/EligibilityHint";
+import FitHint from "@/components/jobs/FitHint";
+import type { JobFit } from "@/lib/job-fit";
 import type { Job } from "@/features/jobs/types";
 
 const categoryLabels: Record<Job["category"], string> = {
@@ -16,38 +18,69 @@ const categoryLabels: Record<Job["category"], string> = {
   teaching: "Teaching",
 };
 
-type Tier = "strong" | "good" | "partial" | "none" | "neutral";
+type Tier = "strong" | "good" | "partial" | "unknown" | "none" | "neutral";
 
-function tierOf(matchPercentage: number | undefined, eligible: boolean | undefined): Tier {
-  if (eligible === false) return "none";
-  if (matchPercentage === undefined) return "neutral";
-  if (matchPercentage >= 80) return "strong";
-  if (matchPercentage >= 60) return "good";
-  return "partial";
-}
-
-// The accent bar and tint show how well the job fits at a glance. The badge text says the
-// same thing in words, so colour is never the only signal.
 const TIERS: Record<Tier, { card: string; accent: string; badge: string; title: string }> = {
   strong: { card: "bg-green-50/50", accent: "bg-green-500", badge: "bg-green-100 text-green-800", title: "Strong match: this job fits your profile well" },
   good: { card: "bg-sky-50/50", accent: "bg-sky-500", badge: "bg-sky-100 text-sky-800", title: "Good match: most of your profile fits" },
   partial: { card: "bg-amber-50/50", accent: "bg-amber-400", badge: "bg-amber-100 text-amber-800", title: "Partial match: some parts of your profile do not fit" },
+  unknown: { card: "bg-white", accent: "bg-neutral-300", badge: "", title: "" },
   none: { card: "bg-red-50/40", accent: "bg-red-400", badge: "", title: "" },
   neutral: { card: "bg-white", accent: "", badge: "", title: "" },
 };
 
+function tierFor(fit: JobFit | undefined, matchPercentage?: number, eligible?: boolean): Tier {
+  if (fit) {
+    const { verdict, score } = fit.evaluation;
+    if (verdict === "not-eligible") return "none";
+    if (verdict === "unknown") return "unknown";
+    return score >= 80 ? "strong" : score >= 60 ? "good" : "partial";
+  }
+  if (eligible === false) return "none";
+  if (matchPercentage === undefined) return "neutral";
+  return matchPercentage >= 80 ? "strong" : matchPercentage >= 60 ? "good" : "partial";
+}
+
 interface JobListItemProps {
   job: Job;
-  /** Set for logged-in users with a complete profile when the job has posts to score. */
+  /** Full evaluation for logged-in users with a complete profile. */
+  fit?: JobFit;
+  /** Older callers that only have a percentage. */
   matchPercentage?: number;
-  /** false when no post of this job fits the user's profile. */
   eligible?: boolean;
-  /** Why the job does not fit, for the tooltip. */
   verdict?: { label: string; reasons: string[] };
 }
 
-export default function JobListItem({ job, matchPercentage, eligible, verdict }: JobListItemProps) {
-  const tier = TIERS[tierOf(matchPercentage, eligible)];
+export default function JobListItem({ job, fit, matchPercentage, eligible, verdict }: JobListItemProps) {
+  const tierName = tierFor(fit, matchPercentage, eligible);
+  const tier = TIERS[tierName];
+
+  let hint: React.ReactNode = null;
+  if (fit) {
+    const { verdict: v, score, label, checks } = fit.evaluation;
+    if (v === "not-eligible") {
+      hint = <FitHint tone="danger" pill={label} title={`Why: ${label}`} checks={checks} />;
+    } else if (v === "unknown") {
+      hint = <FitHint tone="warning" pill={label} title="We need a little more from your profile" checks={checks} />;
+    } else {
+      hint = (
+        <FitHint
+          tone={tierName === "strong" ? "success" : tierName === "good" ? "info" : "warning"}
+          pill={label}
+          title={score === 100 ? "A full match" : `Why ${score}%`}
+          checks={checks}
+        />
+      );
+    }
+  } else if (eligible === false) {
+    hint = <EligibilityHint label={verdict?.label ?? "Not eligible"} reasons={verdict?.reasons ?? ["This job does not fit your profile."]} />;
+  } else if (matchPercentage !== undefined) {
+    hint = (
+      <span title={tier.title} className={`rounded-full px-2 py-0.5 text-[11px] font-semibold ${tier.badge}`}>
+        {matchPercentage}% match
+      </span>
+    );
+  }
 
   return (
     <article
@@ -72,16 +105,7 @@ export default function JobListItem({ job, matchPercentage, eligible, verdict }:
               <p className="mt-0.5 text-sm text-neutral-600">{job.org}</p>
 
               <div className="mt-3 flex flex-wrap items-center gap-2">
-                {eligible === false ? (
-                  <EligibilityHint
-                    label={verdict?.label ?? "Not eligible"}
-                    reasons={verdict?.reasons ?? ["This job does not fit your profile."]}
-                  />
-                ) : matchPercentage !== undefined ? (
-                  <span title={tier.title} className={`rounded-full px-2 py-0.5 text-[11px] font-semibold ${tier.badge}`}>
-                    {matchPercentage}% match
-                  </span>
-                ) : null}
+                {hint}
 
                 <JobMetaChip icon={Users}>
                   {job.vacancies.toLocaleString("en-IN")} {job.vacancies === 1 ? "Vacancy" : "Vacancies"}

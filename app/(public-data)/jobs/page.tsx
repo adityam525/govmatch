@@ -17,6 +17,7 @@ import JobsViewTabs from "@/components/jobs/JobsViewTabs";
 import StickyTools from "@/components/jobs/StickyTools";
 import Link from "next/link";
 import { isPremiumUser } from "@/lib/plan";
+import { loadFitContext, bestFitForJob, type JobFit } from "@/lib/job-fit";
 import {
   explainIneligibility,
   ageInYears,
@@ -315,98 +316,49 @@ export default async function JobsPage({ searchParams }: JobsPageProps) {
   }
 
   /*
-   * Compute match scores for logged-in users.
-   *
-   * These scores are used by "Most Relevant".
+   * Match, eligibility and the reasons behind them, for logged-in users.
+   * The rules live in lib/job-fit.ts: every qualification the user holds counts,
+   * and a specific degree needs the same field (or a higher degree in it).
    */
 
   const matchByJobId = new Map<string, number>();
   const eligibleJobIds = new Set<string>();
-  const verdictByJobId = new Map<
-    string,
-    { score: number; verdict: EligibilityVerdict }
-  >();
+  const verdictByJobId = new Map<string, { score: number; verdict: { label: string; reasons: string[] } }>();
+  const fitByJobId = new Map<string, JobFit>();
   let hasProfile = false;
   let profileComplete = false;
 
   if (userId) {
-    const profile = await prisma.userProfile.findUnique({
-      where: {
-        userId,
-      },
+    try {
+      const fitContext = await loadFitContext(userId);
+      hasProfile = fitContext.hasProfile;
+      profileComplete = fitContext.profileComplete;
 
-      include: {
-        preferredRoles: true,
-      },
-    });
+      if (fitContext.hasProfile) {
+        for (const notification of notifications) {
+          const fit = bestFitForJob(fitContext, notification.posts as any[]);
+          if (!fit) continue;
 
-    if (profile) {
-      hasProfile = true;
-      profileComplete = !!profile.qualificationId && !!profile.dateOfBirth;
+          fitByJobId.set(notification.id, fit);
+          matchByJobId.set(notification.id, fit.evaluation.score);
 
-      const userQualification = profile.qualificationId
-        ? await prisma.qualification.findUnique({
-            where: {
-              id: profile.qualificationId,
-            },
-          })
-        : null;
-
-      const reasonUser = {
-        qualificationName: userQualification?.name ?? null,
-        qualificationLevel: userQualification?.level ?? null,
-        age: profile.dateOfBirth ? ageInYears(profile.dateOfBirth) : null,
-        preferredEmploymentTypes: profile.preferredEmploymentTypes as string[],
-        category: profile.category ?? null,
-      };
-
-      for (const notification of notifications) {
-        for (const post of notification.posts as any[]) {
-          const result = computeMatch(
-            {
-              dateOfBirth: profile.dateOfBirth,
-              category: profile.category,
-              qualificationLevel: userQualification?.level ?? null,
-              branchId: profile.branchId,
-              preferredRoleIds: profile.preferredRoles.map((role) => role.id),
-              preferredEmploymentTypes: profile.preferredEmploymentTypes,
-            },
-
-            {
-              minAge: post.minAge,
-              maxAge: post.maxAge,
-              qualificationLevel: lowestQualificationLevel(post),
-              branchIds: (post.branches ?? []).map((b: any) => b.id),
-              roleIds: (post.roles ?? []).map((r: any) => r.id),
-              employmentType: post.employmentType,
-            },
-          );
-
-          /*
-           * Store score against both the post and notification
-           * because notificationToJobs() may expose either ID
-           * as the final job ID.
-           */
-
-          matchByJobId.set(post.id, result.score);
-          if (result.eligible) {
+          if (fit.evaluation.verdict === "eligible") {
             eligibleJobIds.add(notification.id);
           } else {
-            const known = verdictByJobId.get(notification.id);
-            if (!known || result.score > known.score) {
-              verdictByJobId.set(notification.id, {
-                score: result.score,
-                verdict: explainIneligibility(reasonUser, post),
-              });
-            }
+            verdictByJobId.set(notification.id, {
+              score: fit.evaluation.score,
+              verdict: {
+                label: fit.evaluation.label,
+                reasons: fit.evaluation.checks
+                  .filter((check) => check.state === "fail" || check.state === "unknown")
+                  .map((check) => check.text),
+              },
+            });
           }
-
-          matchByJobId.set(
-            notification.id,
-            Math.max(matchByJobId.get(notification.id) ?? 0, result.score),
-          );
         }
       }
+    } catch (error) {
+      console.error("Jobs: could not evaluate matches", error);
     }
   }
 
@@ -566,6 +518,7 @@ export default async function JobsPage({ searchParams }: JobsPageProps) {
               matchPercentage={profileComplete ? matchByJobId.get(job.id) : undefined}
               eligible={profileComplete ? eligibleJobIds.has(job.id) : undefined}
               verdict={verdictByJobId.get(job.id)?.verdict}
+              fit={profileComplete ? fitByJobId.get(job.id) : undefined}
             />
           ))}
         </div>

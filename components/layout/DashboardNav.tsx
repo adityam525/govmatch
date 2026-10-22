@@ -4,13 +4,14 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import clsx from 'clsx';
-import { Bookmark, ClipboardList, LayoutDashboard, User } from 'lucide-react';
+import { Bookmark, ClipboardList, FileText, LayoutDashboard, User } from 'lucide-react';
 
 const ITEMS = [
   { label: 'Dashboard', href: '/dashboard', icon: LayoutDashboard },
   { label: 'Profile', href: '/profile', icon: User },
   { label: 'Saved jobs', href: '/saved-jobs', icon: Bookmark },
   { label: 'Applications', href: '/applications', icon: ClipboardList },
+  { label: 'Mock tests', href: '/mock-tests', icon: FileText },
 ];
 
 // A swipeable tab strip on phones. From md up it pins just below the site header and the

@@ -39,8 +39,8 @@ export default function HeroIllustration() {
       <FloatingFeatureCard
         icon={<Bell size={18} />}
         iconBg={colors.accent.orange}
-        title="Smart Alerts"
-        description="Never miss any important update"
+        title="Deadline Tracking"
+        description="Every last date in one place"
         className="absolute bottom-16 left-0"
       />
       <FloatingFeatureCard

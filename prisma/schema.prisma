@@ -76,6 +76,7 @@ model Qualification {
   userProfiles UserProfile[]
 
   @@index([level])
+  educations UserEducation[]
 }
 
 // Branch/stream WITHIN a qualification level — e.g. Computer Science,
@@ -95,6 +96,7 @@ model Branch {
   userProfiles UserProfile[]
 
   @@index([qualificationId])
+  educations UserEducation[]
 }
 
 // What the job actually IS — Clerk, Officer, Engineer, Teacher, Doctor,
@@ -333,6 +335,7 @@ model User {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  educations UserEducation[]
 }
 
 enum AuthProvider {
@@ -562,4 +565,27 @@ model ContactMessage {
 
   @@index([resolved])
   @@index([createdAt])
+}
+
+// One row per qualification a user holds. Several rows can share a level
+// (two M.A degrees in different subjects, for example).
+model UserEducation {
+  id              String        @id @default(cuid())
+  userId          String
+  user            User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  qualificationId String
+  qualification   Qualification @relation(fields: [qualificationId], references: [id])
+  branchId        String?
+  branch          Branch?       @relation(fields: [branchId], references: [id])
+
+  subject       String?
+  institution   String?
+  yearOfPassing Int?
+  percentage    Float?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId])
+  @@index([qualificationId])
 }
