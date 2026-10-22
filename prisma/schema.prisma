@@ -225,6 +225,8 @@ model Post {
   updatedAt DateTime @updatedAt
 
   @@index([notificationId])
+  pwdTypes        String[] @default([])
+  relaxationRules Json?
 }
 
 model AdmitCard {
@@ -373,6 +375,9 @@ model UserProfile {
   updatedAt DateTime @updatedAt
 
   @@index([branchId])
+  disabilityTypes   String[] @default([])
+  disabilityPercent Int?
+  specialStatuses   String[] @default([])
 }
 
 model SavedJob {
