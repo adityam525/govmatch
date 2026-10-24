@@ -42,15 +42,25 @@ async function loadPicks(userId: string): Promise<RecommendationResult | null> {
 function Panel({
   title,
   action,
+  highlight,
   children,
 }: {
   title: string;
   action?: { href: string; label: string };
+  highlight?: boolean;
   children: React.ReactNode;
 }) {
   return (
-    <section className="overflow-hidden rounded-2xl border border-neutral-200 bg-white shadow-sm">
-      <div className="flex items-center justify-between gap-3 border-b border-neutral-100 px-4 py-3">
+    <section
+      className={`overflow-hidden rounded-2xl border bg-white ${
+        highlight ? 'border-primary-200 shadow-md ring-1 ring-primary-100' : 'border-neutral-200 shadow-sm'
+      }`}
+    >
+      <div
+        className={`flex items-center justify-between gap-3 border-b px-4 py-3 ${
+          highlight ? 'border-primary-100 bg-gradient-to-r from-primary-50 via-white to-white' : 'border-neutral-100'
+        }`}
+      >
         <h2 className="text-sm font-bold text-neutral-900">{title}</h2>
         {action && (
           <Link href={action.href} className="text-xs font-medium text-primary-600 hover:underline">
@@ -211,7 +221,7 @@ export default async function DashboardPage() {
 
       <div className="mt-6 grid gap-6 xl:grid-cols-3">
         <div className="min-w-0 space-y-6 xl:col-span-2">
-          <Panel title="Top matches" action={{ href: '/jobs?sort=relevance', label: 'See all' }}>
+          <Panel title="Top matches" highlight action={{ href: '/jobs?sort=relevance', label: 'See all' }}>
             {matchesBody}
           </Panel>
 

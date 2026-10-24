@@ -1,6 +1,7 @@
 import { prisma } from './prisma';
 import { fieldKey } from './field-keys';
 import { evaluateAge } from './age-rules';
+import { evaluateRequirements } from './requirements';
 import { computeCompleteness } from './profile-completeness';
 
 export interface QualRef {
@@ -23,6 +24,12 @@ export interface UserFacts {
   disabilityTypes: string[];
   disabilityPercent: number | null;
   specialStatuses: string[];
+  gender: string | null;
+  domicileStateCode: string | null;
+  experienceYears: number | null;
+  certifications: string[];
+  heightCm: number | null;
+  chestCm: number | null;
   preferredRoleIds: string[];
   preferredEmploymentTypes: string[];
 }
@@ -33,6 +40,7 @@ export interface FitContext {
   profileComplete: boolean;
   strength: number;
   missing: string[];
+  stateNames?: Map<string, string>;
   user: UserFacts;
   qualifications: Map<string, QualRef>;
 }
@@ -66,6 +74,12 @@ export interface PostLike {
   ageRelaxation?: unknown;
   relaxationRules?: unknown;
   pwdTypes?: string[];
+  genderRestriction?: string | null;
+  minExperienceYears?: number | null;
+  requiredCertifications?: string[];
+  domicileStateCode?: string | null;
+  minHeightCm?: number | null;
+  minChestCm?: number | null;
   employmentType?: string | null;
   qualification?: { id: string } | null;
   qualifications?: { id: string }[];
@@ -94,6 +108,8 @@ export async function loadFitContext(userId: string): Promise<FitContext> {
   ]);
 
   const qualifications = new Map<string, QualRef>(qualRows.map((q) => [q.id, q]));
+  const stateRows = await prisma.state.findMany({ select: { code: true, name: true } });
+  const stateNames = new Map<string, string>(stateRows.map((s) => [s.code, s.name]));
 
   const educations: EducationFact[] = [];
   for (const row of rows) {
@@ -128,6 +144,7 @@ export async function loadFitContext(userId: string): Promise<FitContext> {
     profileComplete: educations.length > 0 && !!profile?.dateOfBirth,
     strength: completeness.percent,
     missing: completeness.missing,
+    stateNames,
     qualifications,
     user: {
       educations,
@@ -136,6 +153,12 @@ export async function loadFitContext(userId: string): Promise<FitContext> {
       disabilityTypes: profile?.disabilityTypes ?? [],
       disabilityPercent: profile?.disabilityPercent ?? null,
       specialStatuses: profile?.specialStatuses ?? [],
+      gender: profile?.gender ?? null,
+      domicileStateCode: profile?.domicileStateCode ?? null,
+      experienceYears: profile?.experienceYears ?? null,
+      certifications: profile?.certifications ?? [],
+      heightCm: profile?.heightCm ?? null,
+      chestCm: profile?.chestCm ?? null,
       preferredRoleIds: profile?.preferredRoles.map((role) => role.id) ?? [],
       preferredEmploymentTypes: (profile?.preferredEmploymentTypes ?? []) as string[],
     },
@@ -301,6 +324,20 @@ export function evaluatePost(ctx: FitContext, post: PostLike, now: Date = new Da
   const ageStatus = ageResult.status;
   const ageCheck: FitCheck | null = ageResult.checks[0] ?? null;
 
+  // --- Gender, home state, experience, certificates and physical standards
+  const reqResult = evaluateRequirements(
+    {
+      gender: user.gender ?? null,
+      domicileStateCode: user.domicileStateCode ?? null,
+      experienceYears: user.experienceYears ?? null,
+      certifications: user.certifications ?? [],
+      heightCm: user.heightCm ?? null,
+      chestCm: user.chestCm ?? null,
+    },
+    post,
+    (code) => ctx.stateNames?.get(code) ?? code,
+  );
+
   // --- Job type preference (hard filter)
   const prefs = user.preferredEmploymentTypes;
   let prefFail = false;
@@ -348,13 +385,13 @@ export function evaluatePost(ctx: FitContext, post: PostLike, now: Date = new Da
   // --- Verdict
   let verdict: FitVerdict;
   let label: string;
-  if (qualStatus === 'no' || ageStatus === 'no') {
+  if (qualStatus === 'no' || ageStatus === 'no' || reqResult.status === 'no') {
     verdict = 'not-eligible';
     label = 'Not eligible';
   } else if (prefFail) {
     verdict = 'not-eligible';
     label = 'Not in your preferences';
-  } else if (qualStatus === 'unknown' || ageStatus === 'unknown') {
+  } else if (qualStatus === 'unknown' || ageStatus === 'unknown' || reqResult.status === 'unknown') {
     verdict = 'unknown';
     label = 'Add details to check';
   } else {
@@ -362,7 +399,7 @@ export function evaluatePost(ctx: FitContext, post: PostLike, now: Date = new Da
     label = `${score}% match`;
   }
 
-  const checks = [qualCheck, fieldCheck, ageCheck, roleCheck, prefCheck].filter((c): c is FitCheck => c !== null);
+  const checks = [qualCheck, fieldCheck, ageCheck, ...reqResult.checks, roleCheck, prefCheck].filter((c): c is FitCheck => c !== null);
   return { verdict, score, label, checks };
 }
 

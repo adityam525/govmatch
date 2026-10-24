@@ -227,6 +227,12 @@ model Post {
   @@index([notificationId])
   pwdTypes        String[] @default([])
   relaxationRules Json?
+  genderRestriction      String?
+  minExperienceYears     Int?
+  requiredCertifications String[] @default([])
+  domicileStateCode      String?
+  minHeightCm            Int?
+  minChestCm             Int?
 }
 
 model AdmitCard {
@@ -378,6 +384,12 @@ model UserProfile {
   disabilityTypes   String[] @default([])
   disabilityPercent Int?
   specialStatuses   String[] @default([])
+  domicileStateCode   String?
+  preferredStateCodes String[] @default([])
+  experienceYears     Int?
+  certifications      String[] @default([])
+  heightCm            Int?
+  chestCm             Int?
 }
 
 model SavedJob {

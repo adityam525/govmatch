@@ -282,6 +282,22 @@ export default function JobForm({ mode, jobId }: JobFormProps) {
               payScale: p.payScale ?? "",
               employmentType: p.employmentType ?? "PERMANENT",
               roleId: (p.roles ?? [])[0]?.id ?? "",
+            genderRestriction: p.genderRestriction ?? "",
+            minExperienceYears: p.minExperienceYears != null ? String(p.minExperienceYears) : "",
+            requiredCertifications: p.requiredCertifications ?? [],
+            domicileStateCode: p.domicileStateCode ?? "",
+            minHeightCm: p.minHeightCm != null ? String(p.minHeightCm) : "",
+            minChestCm: p.minChestCm != null ? String(p.minChestCm) : "",
+            pwdTypes: p.pwdTypes ?? [],
+            relaxationRules: Array.isArray(p.relaxationRules)
+              ? p.relaxationRules.map((r: any) => ({
+                  category: r.category,
+                  status: r.status,
+                  years: r.years != null ? String(r.years) : "",
+                  maxAge: r.maxAge != null ? String(r.maxAge) : "",
+                  note: r.note ?? "",
+                }))
+              : [],
             };
           }),
         );
@@ -475,6 +491,14 @@ export default function JobForm({ mode, jobId }: JobFormProps) {
             employmentType: p.employmentType,
             branchIds,
             roleIds: p.roleId ? [p.roleId] : [],
+            genderRestriction: p.genderRestriction || null,
+            minExperienceYears: p.minExperienceYears,
+            requiredCertifications: p.requiredCertifications ?? [],
+            domicileStateCode: p.domicileStateCode || null,
+            minHeightCm: p.minHeightCm,
+            minChestCm: p.minChestCm,
+            pwdTypes: p.pwdTypes ?? [],
+            relaxationRules: p.relaxationRules ?? [],
           });
         }),
     );
@@ -530,7 +554,7 @@ export default function JobForm({ mode, jobId }: JobFormProps) {
       return true;
     } catch (err) {
       console.error(err);
-      setFormError("Failed to save. Check console for details.");
+      setFormError(err instanceof Error && err.message ? err.message : "Failed to save. Check console for details.");
       return false;
     }
   };
