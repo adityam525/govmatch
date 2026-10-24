@@ -14,6 +14,7 @@ import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 import { getRecommendations, type RecommendationResult } from '@/lib/recommendations';
 import { isPremiumSubscription } from '@/lib/plan';
+import { computeCompleteness } from '@/lib/profile-completeness';
 import { formatShortDate } from '@/lib/job-status';
 import RecommendedList from '@/components/sections/home/RecommendedList';
 import PremiumDashboardCards from '@/components/dashboard/PremiumDashboardCards';
@@ -130,20 +131,18 @@ export default async function DashboardPage() {
     stageCounts.set(application.status, (stageCounts.get(application.status) ?? 0) + 1);
   }
 
-  const checklist = [
-    { label: 'Date of birth', done: !!profile?.dateOfBirth },
-    { label: 'Highest qualification', done: !!profile?.qualificationId },
-    { label: 'Branch or stream', done: !!profile?.branchId },
-    { label: 'Category (General, OBC, SC, ST, EWS)', done: !!profile?.category },
-    { label: 'Gender', done: !!profile?.gender },
-    { label: 'Mobile number', done: !!profile?.phoneNumber },
-    {
-      label: 'Job preferences (roles or job type)',
-      done: (profile?.preferredRoles.length ?? 0) > 0 || (profile?.preferredEmploymentTypes.length ?? 0) > 0,
-    },
-  ];
+  const educationCount = await prisma.userEducation.count({ where: { userId } });
+  const completenessResult = computeCompleteness({
+    dateOfBirth: profile?.dateOfBirth ?? null,
+    educationCount,
+    category: profile?.category ?? null,
+    gender: profile?.gender ?? null,
+    phoneNumber: profile?.phoneNumber ?? null,
+    preferenceCount: (profile?.preferredRoles.length ?? 0) + (profile?.preferredEmploymentTypes.length ?? 0),
+  });
+  const checklist = completenessResult.items;
   const doneCount = checklist.filter((item) => item.done).length;
-  const completeness = Math.round((doneCount / checklist.length) * 100);
+  const completeness = completenessResult.percent;
 
   const premium = isPremiumSubscription(user?.subscription);
   const fits = (picks?.items ?? []).filter((item) => item.eligible);

@@ -28,14 +28,14 @@ const navSections = [
   },
 ];
 
-// A horizontally scrolling tab strip on phones; the vertical sidebar from md up.
+// A swipeable tab strip on phones; the full-height side nav from md up.
 export default function AdminSidebar() {
   const pathname = usePathname();
   const isActive = (href: string) =>
     href === '/admin' ? pathname === href : pathname === href || pathname.startsWith(`${href}/`);
 
   return (
-    <aside className="w-full shrink-0 border-b border-neutral-200 bg-white md:min-h-screen md:w-56 md:border-b-0 md:border-r md:p-3">
+    <aside className="w-full shrink-0 border-b border-neutral-200 bg-white md:h-full md:w-56 md:overflow-y-auto md:border-b-0 md:border-r md:p-3">
       <nav className="flex gap-1 overflow-x-auto px-3 py-2 [scrollbar-width:none] md:block md:space-y-4 md:overflow-visible md:p-0 [&::-webkit-scrollbar]:hidden">
         {navSections.map((section, i) => (
           <div key={i} className="flex shrink-0 gap-1 md:block md:space-y-0.5">
@@ -50,6 +50,7 @@ export default function AdminSidebar() {
                 <Link
                   key={item.href}
                   href={item.href}
+                  aria-current={isActive(item.href) ? 'page' : undefined}
                   className={clsx(
                     'flex shrink-0 items-center gap-2.5 whitespace-nowrap rounded-md px-3 py-2 text-sm font-medium transition-colors',
                     isActive(item.href) ? 'bg-primary-50 text-primary-600' : 'text-neutral-600 hover:bg-neutral-50',

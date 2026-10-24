@@ -24,6 +24,8 @@ export interface RecommendationResult {
   /** True when the profile lacks a qualification or date of birth, which most of the score depends on. */
   incomplete: boolean;
   strength: number;
+  /** What the profile still lacks, required items first. */
+  missing: string[];
   items: Recommendation[];
 }
 
@@ -31,7 +33,7 @@ export interface RecommendationResult {
 // or opening soon. Eligible first, then best score, then soonest deadline.
 export async function getRecommendations(userId: string): Promise<RecommendationResult> {
   const ctx = await loadFitContext(userId);
-  if (!ctx.hasProfile) return { status: 'no-profile', incomplete: true, strength: 0, items: [] };
+  if (!ctx.hasProfile) return { status: 'no-profile', incomplete: true, strength: 0, missing: ctx.missing, items: [] };
 
   const today = todayIST();
   const jobs = (await getPublishedJobs()).filter(
@@ -69,5 +71,5 @@ export async function getRecommendations(userId: string): Promise<Recommendation
     return aEnd - bEnd;
   });
 
-  return { status: 'ok', incomplete: !ctx.profileComplete, strength: ctx.strength, items };
+  return { status: 'ok', incomplete: !ctx.profileComplete, strength: ctx.strength, missing: ctx.missing, items };
 }

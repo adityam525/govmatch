@@ -516,7 +516,7 @@ export default async function JobsPage({ searchParams }: JobsPageProps) {
               key={job.id}
               job={job}
               matchPercentage={profileComplete ? matchByJobId.get(job.id) : undefined}
-              eligible={profileComplete ? eligibleJobIds.has(job.id) : undefined}
+              eligible={profileComplete && fitByJobId.has(job.id) ? eligibleJobIds.has(job.id) : undefined}
               verdict={verdictByJobId.get(job.id)?.verdict}
               fit={profileComplete ? fitByJobId.get(job.id) : undefined}
             />

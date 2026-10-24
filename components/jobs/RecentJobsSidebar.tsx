@@ -2,12 +2,13 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import Card from '@/components/ui/Card';
 import OrgLogo from '@/components/shared/OrgLogo';
 
 interface RecentJobsSidebarProps {
   excludeSlug?: string;
 }
+
+const MAX_JOBS = 20;
 
 export default function RecentJobsSidebar({ excludeSlug }: RecentJobsSidebarProps) {
   const [notifications, setNotifications] = useState<any[]>([]);
@@ -28,38 +29,49 @@ export default function RecentJobsSidebar({ excludeSlug }: RecentJobsSidebarProp
       if (!n.applicationEndDate) return true;
       return new Date(n.applicationEndDate).getTime() >= Date.now() - 1000 * 60 * 60 * 24;
     })
-    .slice(0, 8);
+    .slice(0, MAX_JOBS);
 
   return (
-    <Card padding="lg">
-      <h2 className="text-sm font-bold text-neutral-900 mb-4">Recently Posted Jobs</h2>
+    <section className="flex h-96 flex-col overflow-hidden rounded-2xl border border-neutral-200 bg-white shadow-sm lg:h-[calc(100dvh-8.5rem)] lg:max-h-[60rem]">
+      <h2 className="shrink-0 border-b border-neutral-100 px-4 py-3 text-sm font-bold text-neutral-900">
+        Recently Posted Jobs
+      </h2>
 
-      {loading ? (
-        <p className="text-xs text-neutral-400 py-4 text-center">Loading...</p>
-      ) : recentJobs.length === 0 ? (
-        <p className="text-xs text-neutral-400 py-4 text-center">No other jobs available.</p>
-      ) : (
-        <div className="space-y-1">
-          {recentJobs.map((job) => (
-            <Link
-              key={job.id}
-              href={`/jobs/${job.slug}`}
-              className="flex items-start gap-2.5 p-2.5 rounded-md hover:bg-neutral-50 transition-colors"
-            >
-              <OrgLogo
-                name={job.organization?.name ?? 'Organization'}
-                shortName={job.organization?.shortName}
-                logoUrl={job.organization?.logoUrl}
-                size={32}
-              />
-              <div className="min-w-0">
-                <p className="text-xs font-semibold text-neutral-900 leading-tight line-clamp-2">{job.title}</p>
-                <p className="text-[10px] text-neutral-400 mt-1">{job.organization?.name}</p>
-              </div>
-            </Link>
-          ))}
-        </div>
-      )}
-    </Card>
+      <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain">
+        {loading ? (
+          <p className="py-6 text-center text-xs text-neutral-400">Loading...</p>
+        ) : recentJobs.length === 0 ? (
+          <p className="px-4 py-6 text-center text-xs text-neutral-400">No other jobs available.</p>
+        ) : (
+          <div className="divide-y divide-neutral-100">
+            {recentJobs.map((job) => (
+              <Link
+                key={job.id}
+                href={`/jobs/${job.slug}`}
+                className="flex items-start gap-2.5 px-4 py-3 transition-colors hover:bg-neutral-50"
+              >
+                <OrgLogo
+                  name={job.organization?.name ?? 'Organization'}
+                  shortName={job.organization?.shortName}
+                  logoUrl={job.organization?.logoUrl}
+                  size={32}
+                />
+                <div className="min-w-0">
+                  <p className="line-clamp-2 text-xs font-semibold leading-tight text-neutral-900">{job.title}</p>
+                  <p className="mt-1 truncate text-[10px] text-neutral-400">{job.organization?.name}</p>
+                </div>
+              </Link>
+            ))}
+          </div>
+        )}
+      </div>
+
+      <Link
+        href="/jobs"
+        className="shrink-0 border-t border-neutral-100 px-4 py-3 text-center text-xs font-medium text-primary-600 hover:underline"
+      >
+        View all jobs
+      </Link>
+    </section>
   );
 }

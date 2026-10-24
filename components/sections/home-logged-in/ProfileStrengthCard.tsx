@@ -3,19 +3,26 @@ import Button from '@/components/ui/Button';
 
 interface ProfileStrengthCardProps {
   strength: number;
+  /** What the profile still lacks, most important first. */
+  missing?: string[];
 }
 
-export default function ProfileStrengthCard({ strength }: ProfileStrengthCardProps) {
+export default function ProfileStrengthCard({ strength, missing = [] }: ProfileStrengthCardProps) {
   const radius = 28;
   const circumference = 2 * Math.PI * radius;
   const offset = circumference - (strength / 100) * circumference;
+  const next = missing[0];
 
   return (
     <div className="rounded-2xl border border-neutral-200 bg-white p-4 shadow-sm">
       <div className="flex items-center gap-4">
         <div className="min-w-0 flex-1">
           <p className="text-sm font-bold text-neutral-900">Profile Strength</p>
-          <p className="mt-1 text-xs text-neutral-600">Complete your profile to get better job matches</p>
+          <p className="mt-1 text-xs text-neutral-600">
+            {next
+              ? `Next: add your ${next}${missing.length > 1 ? ` (+${missing.length - 1} more)` : ''}`
+              : 'Complete your profile to get better job matches'}
+          </p>
         </div>
         <div className="relative h-16 w-16 shrink-0">
           <svg className="h-full w-full -rotate-90" viewBox="0 0 64 64">

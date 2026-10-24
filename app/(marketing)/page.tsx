@@ -79,7 +79,9 @@ export default async function HomePage() {
           </div>
 
           <div className="order-3 min-w-0 space-y-4 lg:order-none lg:col-span-3 lg:col-start-8 lg:row-start-2">
-            <ProfileStrengthCard strength={picks?.strength ?? 0} />
+            {(picks?.strength ?? 0) < 100 && (
+              <ProfileStrengthCard strength={picks?.strength ?? 0} missing={picks?.missing ?? []} />
+            )}
             <NotificationPromptCard />
             <MockTestPromoCard />
           </div>

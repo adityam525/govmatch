@@ -1,11 +1,13 @@
 import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { requireSelf } from '@/lib/require-user';
+import { DISABILITY_CODES, SPECIAL_STATUS_CODES } from '@/lib/special-categories';
 
 interface Params { params: Promise<{ userId: string }> }
 
 const GENDERS = ['Male', 'Female', 'Other'];
 const CATEGORIES = ['General', 'OBC', 'SC', 'ST', 'EWS'];
+const FEMALE_ONLY_STATUSES = ['WIDOW', 'DIVORCED_WOMAN'];
 
 export async function GET(request: Request, { params }: Params) {
   const { userId } = await params;
@@ -26,6 +28,7 @@ export async function PATCH(request: Request, { params }: Params) {
   try {
     const body = await request.json();
     const data: Record<string, unknown> = {};
+    const existing = await prisma.userProfile.findUnique({ where: { userId } });
 
     if ('dateOfBirth' in body) {
       if (body.dateOfBirth) {
@@ -52,25 +55,42 @@ export async function PATCH(request: Request, { params }: Params) {
       data.phoneNumber = body.phoneNumber ? String(body.phoneNumber).trim() : null;
     }
 
-    const existing = await prisma.userProfile.findUnique({ where: { userId } });
-    const merged: Record<string, unknown> = {
-      dateOfBirth: existing?.dateOfBirth ?? null,
-      gender: existing?.gender ?? null,
-      category: existing?.category ?? null,
-      qualificationId: existing?.qualificationId ?? null,
-      degreeName: existing?.degreeName ?? null,
-      yearOfPassing: existing?.yearOfPassing ?? null,
-      percentage: existing?.percentage ?? null,
-      ...data,
-    };
-    const fields = ['dateOfBirth', 'gender', 'category', 'qualificationId', 'degreeName', 'yearOfPassing', 'percentage'];
-    const filled = fields.filter((f) => merged[f] !== null && merged[f] !== undefined && merged[f] !== '');
-    const profileStrength = Math.round((filled.length / fields.length) * 100);
+    if ('disabilityTypes' in body) {
+      const types: unknown[] = Array.isArray(body.disabilityTypes) ? body.disabilityTypes : [];
+      if (types.some((t) => typeof t !== 'string' || !DISABILITY_CODES.has(t))) {
+        return NextResponse.json({ message: 'Choose a valid disability type.' }, { status: 400 });
+      }
+      data.disabilityTypes = [...new Set(types as string[])];
+    }
+    const effectiveTypes = (data.disabilityTypes as string[] | undefined) ?? existing?.disabilityTypes ?? [];
+    if ('disabilityPercent' in body || 'disabilityTypes' in body) {
+      if (effectiveTypes.length === 0 || body.disabilityPercent === '' || body.disabilityPercent == null) {
+        data.disabilityPercent = null;
+      } else {
+        const percent = Number(body.disabilityPercent);
+        if (!Number.isInteger(percent) || percent < 0 || percent > 100) {
+          return NextResponse.json({ message: 'Disability percentage must be a whole number from 0 to 100.' }, { status: 400 });
+        }
+        data.disabilityPercent = percent;
+      }
+    }
+
+    if ('specialStatuses' in body) {
+      const statuses: unknown[] = Array.isArray(body.specialStatuses) ? body.specialStatuses : [];
+      if (statuses.some((s) => typeof s !== 'string' || !SPECIAL_STATUS_CODES.has(s))) {
+        return NextResponse.json({ message: 'Choose a valid status.' }, { status: 400 });
+      }
+      const gender = (data.gender as string | null | undefined) ?? existing?.gender ?? null;
+      // Widow and divorced woman only apply to women; anything else is dropped.
+      data.specialStatuses = [...new Set(statuses as string[])].filter(
+        (s) => !FEMALE_ONLY_STATUSES.includes(s) || gender === 'Female',
+      );
+    }
 
     const profile = await prisma.userProfile.upsert({
       where: { userId },
-      update: { ...data, profileStrength },
-      create: { userId, ...data, profileStrength },
+      update: { ...data },
+      create: { userId, ...data },
     });
 
     return NextResponse.json(profile);

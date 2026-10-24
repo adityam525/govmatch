@@ -1,6 +1,7 @@
 import { prisma } from './prisma';
 import { fieldKey } from './field-keys';
-import { ageInYears } from './eligibility-reasons';
+import { evaluateAge } from './age-rules';
+import { computeCompleteness } from './profile-completeness';
 
 export interface QualRef {
   id: string;
@@ -19,6 +20,9 @@ export interface UserFacts {
   educations: EducationFact[];
   dateOfBirth: Date | null;
   category: string | null;
+  disabilityTypes: string[];
+  disabilityPercent: number | null;
+  specialStatuses: string[];
   preferredRoleIds: string[];
   preferredEmploymentTypes: string[];
 }
@@ -28,6 +32,7 @@ export interface FitContext {
   /** Needs at least one qualification and a date of birth. */
   profileComplete: boolean;
   strength: number;
+  missing: string[];
   user: UserFacts;
   qualifications: Map<string, QualRef>;
 }
@@ -59,6 +64,8 @@ export interface PostLike {
   minAge?: number | null;
   maxAge?: number | null;
   ageRelaxation?: unknown;
+  relaxationRules?: unknown;
+  pwdTypes?: string[];
   employmentType?: string | null;
   qualification?: { id: string } | null;
   qualifications?: { id: string }[];
@@ -107,15 +114,28 @@ export async function loadFitContext(userId: string): Promise<FitContext> {
     }
   }
 
+  const completeness = computeCompleteness({
+    dateOfBirth: profile?.dateOfBirth ?? null,
+    educationCount: educations.length,
+    category: profile?.category ?? null,
+    gender: profile?.gender ?? null,
+    phoneNumber: profile?.phoneNumber ?? null,
+    preferenceCount: (profile?.preferredRoles.length ?? 0) + (profile?.preferredEmploymentTypes.length ?? 0),
+  });
+
   return {
     hasProfile: !!profile,
     profileComplete: educations.length > 0 && !!profile?.dateOfBirth,
-    strength: profile?.profileStrength ?? 0,
+    strength: completeness.percent,
+    missing: completeness.missing,
     qualifications,
     user: {
       educations,
       dateOfBirth: profile?.dateOfBirth ?? null,
       category: profile?.category ?? null,
+      disabilityTypes: profile?.disabilityTypes ?? [],
+      disabilityPercent: profile?.disabilityPercent ?? null,
+      specialStatuses: profile?.specialStatuses ?? [],
       preferredRoleIds: profile?.preferredRoles.map((role) => role.id) ?? [],
       preferredEmploymentTypes: (profile?.preferredEmploymentTypes ?? []) as string[],
     },
@@ -266,51 +286,20 @@ export function evaluatePost(ctx: FitContext, post: PostLike, now: Date = new Da
     }
   }
 
-  // --- Age
-  const hasAgeLimits = post.minAge != null || post.maxAge != null;
-  let ageStatus: 'yes' | 'no' | 'unknown' = 'yes';
-  let ageCheck: FitCheck | null = null;
-
-  if (hasAgeLimits) {
-    const age = user.dateOfBirth ? ageInYears(user.dateOfBirth, now) : null;
-    if (age === null) {
-      ageStatus = 'unknown';
-      ageCheck = { label: 'Age', text: 'Add your date of birth so we can check the age limit.', state: 'unknown' };
-    } else {
-      const relax = relaxationFor(user.category, post.ageRelaxation);
-      const maxEffective = post.maxAge != null ? post.maxAge + (relax?.years ?? 0) : null;
-      const range =
-        post.minAge != null && post.maxAge != null
-          ? `${post.minAge} to ${post.maxAge}`
-          : post.maxAge != null
-            ? `up to ${post.maxAge}`
-            : `${post.minAge} and above`;
-
-      if (post.minAge != null && age < post.minAge) {
-        ageStatus = 'no';
-        ageCheck = { label: 'Age', text: `Minimum age is ${post.minAge} years; you are ${age}.`, state: 'fail' };
-      } else if (maxEffective != null && age > maxEffective) {
-        ageStatus = 'no';
-        const extra = relax
-          ? ` (up to ${maxEffective} with ${relax.key} relaxation)`
-          : user.category && user.category.toLowerCase() !== 'general'
-            ? ` Candidates in the ${user.category} category often get age relaxation, so check the official notice.`
-            : '';
-        ageCheck = {
-          label: 'Age',
-          text: `Age limit is ${range} years${relax ? extra : ''}; you are ${age}.${relax ? '' : extra}`,
-          state: 'fail',
-        };
-      } else {
-        const usedRelax = relax && post.maxAge != null && age > post.maxAge;
-        ageCheck = {
-          label: 'Age',
-          text: `Your age (${age}) fits the limit of ${range} years${usedRelax ? `, using ${relax!.years} years of ${relax!.key} relaxation` : ''}.`,
-          state: 'ok',
-        };
-      }
-    }
-  }
+  // --- Age (with relaxation for category, disability and special statuses)
+  const ageResult = evaluateAge(
+    {
+      dateOfBirth: user.dateOfBirth,
+      category: user.category,
+      disabilityTypes: user.disabilityTypes,
+      disabilityPercent: user.disabilityPercent,
+      specialStatuses: user.specialStatuses,
+    },
+    post,
+    now,
+  );
+  const ageStatus = ageResult.status;
+  const ageCheck: FitCheck | null = ageResult.checks[0] ?? null;
 
   // --- Job type preference (hard filter)
   const prefs = user.preferredEmploymentTypes;

@@ -95,10 +95,15 @@ export default function JobPicksCard({
   }
 
   return (
-    <section className="overflow-hidden rounded-2xl border border-neutral-200 bg-white shadow-sm">
-      <div className="flex items-center gap-2 px-4 pb-2 pt-4">
-        <Sparkles size={16} className="text-primary-600" />
+    <section className="overflow-hidden rounded-2xl border border-primary-200 bg-white shadow-md ring-1 ring-primary-100">
+      <div className="flex items-center gap-2 bg-gradient-to-r from-primary-50 via-white to-white px-4 pb-3 pt-4">
+        <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-primary-600 text-white">
+          <Sparkles size={15} />
+        </span>
         <h2 className="text-sm font-bold text-neutral-900">Recommended for you</h2>
+        <span className="ml-auto rounded-full bg-primary-600 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-white">
+          For you
+        </span>
       </div>
       <SidebarTabs tabs={tabs} />
     </section>
