@@ -3,6 +3,7 @@ import ViewAllBanner from '@/components/shared/ViewAllBanner';
 import type { JobCardData } from '@/components/jobs/JobCard';
 import { getPublishedJobs } from '@/lib/job-queries';
 import { daysBetween, formatCalendarDate, todayIST } from '@/lib/job-status';
+import { getRecentlyPostponedJobIds } from '@/lib/schedule-queries';
 import LatestJobsTabs, { type LatestJobItem } from './LatestJobsTabs';
 
 const CATEGORY_TABS: Record<string, string> = {
@@ -22,6 +23,7 @@ function unique(values: (string | null | undefined)[]): string[] {
 // this section reads jobs itself and shows one card per job (not per post).
 export default async function LatestJobsSection(_props: Record<string, unknown>) {
   const today = todayIST();
+  const postponed = await getRecentlyPostponedJobIds().catch(() => new Set<string>());
 
   const jobs = (await getPublishedJobs())
     .filter((job) => job.phase === 'LIVE' && job.applicationOpen)
@@ -32,7 +34,7 @@ export default async function LatestJobsSection(_props: Record<string, unknown>)
     const end = job.applicationEndDate;
     const daysLeft = end ? daysBetween(today, end) : null;
     const isNew = Date.now() - job.createdAt.getTime() < NEW_FOR_DAYS * 24 * 60 * 60 * 1000;
-    const badge: JobCardData['badge'] = isNew ? 'NEW' : daysLeft !== null && daysLeft <= 3 ? 'HOT' : null;
+    const badge: JobCardData['badge'] = postponed.has(job.id) ? 'POSTPONED' : isNew ? 'NEW' : daysLeft !== null && daysLeft <= 3 ? 'HOT' : null;
 
     const qualifications = unique(job.posts.flatMap((post) => post.qualifications.map((q) => q.name)));
     const payScales = unique(job.posts.map((post) => post.payScale));

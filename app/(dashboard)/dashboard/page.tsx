@@ -15,6 +15,7 @@ import { prisma } from '@/lib/prisma';
 import { getRecommendations, type RecommendationResult } from '@/lib/recommendations';
 import { isPremiumSubscription } from '@/lib/plan';
 import { computeCompleteness } from '@/lib/profile-completeness';
+import { getScheduleNoticesForUser } from '@/lib/schedule-queries';
 import { formatShortDate } from '@/lib/job-status';
 import RecommendedList from '@/components/sections/home/RecommendedList';
 import PremiumDashboardCards from '@/components/dashboard/PremiumDashboardCards';
@@ -127,6 +128,7 @@ export default async function DashboardPage() {
     loadPicks(userId),
   ]);
 
+  const notices = await getScheduleNoticesForUser(userId).catch(() => []);
   const recent = applications.slice(0, 5);
   const recentJobs = recent.length
     ? await prisma.notification.findMany({
@@ -224,6 +226,18 @@ export default async function DashboardPage() {
           <Panel title="Top matches" highlight action={{ href: '/jobs?sort=relevance', label: 'See all' }}>
             {matchesBody}
           </Panel>
+          {notices.length > 0 && (
+            <Panel title="Schedule changes" action={{ href: '/saved-jobs', label: 'Saved jobs' }}>
+              <div className="divide-y divide-neutral-100">
+                {notices.map((notice, index) => (
+                  <Link key={index} href={`/jobs/${notice.jobSlug}`} className="block px-4 py-3 hover:bg-neutral-50">
+                    <p className="truncate text-sm font-medium text-neutral-900">{notice.jobTitle}</p>
+                    <p className="mt-0.5 text-xs text-amber-800">{notice.text}</p>
+                  </Link>
+                ))}
+              </div>
+            </Panel>
+          )}
 
           <Panel title="Application tracker" action={{ href: '/applications', label: 'Manage' }}>
             {applications.length === 0 ? (

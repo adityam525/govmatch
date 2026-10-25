@@ -15,6 +15,7 @@ async function fetchPublishedJobs() {
       admitCards: true,
       results: true,
       answerKeys: true,
+      scheduleEvents: { where: { kind: 'APPLICATION_CLOSE' }, select: { at: true, timeKnown: true } },
     },
   });
 }
@@ -38,7 +39,9 @@ export const getPublishedJobs = cache(async (): Promise<PublishedJob[]> => {
     return {
       ...job,
       phase: info.phase,
-      applicationOpen: info.applicationOpen,
+      applicationOpen:
+        info.applicationOpen &&
+        !job.scheduleEvents.some((e) => e.timeKnown && e.at && e.at.getTime() < now.getTime()),
       lastActivity: info.lastActivity,
       vacancyTotal: job.posts.length > 0 ? postTotal : job.totalVacancies,
     };

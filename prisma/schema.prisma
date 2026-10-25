@@ -161,6 +161,7 @@ model Notification {
   @@index([status])
   @@index([organizationId])
   @@index([isFeatured])
+  scheduleEvents ScheduleEvent[]
 }
 
 enum ApplicationMode {
@@ -605,4 +606,47 @@ model UserEducation {
 
   @@index([userId])
   @@index([qualificationId])
+}
+
+// One dated step of a recruitment: applications open, applications close, an admit card,
+// an exam stage, a result. `at` is an exact moment; when `timeKnown` is false only the
+// calendar day is meaningful and the event counts as the end of that day in IST.
+model ScheduleEvent {
+  id             String       @id @default(cuid())
+  notificationId String
+  notification   Notification @relation(fields: [notificationId], references: [id], onDelete: Cascade)
+
+  kind  String // APPLICATION_OPEN | APPLICATION_CLOSE | ADMIT_CARD | EXAM | RESULT | OTHER
+  label String
+
+  at        DateTime? // null = date not announced yet (for example "postponed, new date awaited")
+  timeKnown Boolean   @default(false)
+  order     Int       @default(0)
+
+  history ScheduleChange[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([notificationId])
+}
+
+// One row per change: the first announcement, then every postponement or advance.
+model ScheduleChange {
+  id      String        @id @default(cuid())
+  eventId String
+  event   ScheduleEvent @relation(fields: [eventId], references: [id], onDelete: Cascade)
+
+  kind String // ANNOUNCED | POSTPONED | PREPONED | TIME_ADDED | CANCELLED
+
+  oldAt        DateTime?
+  oldTimeKnown Boolean   @default(false)
+  newAt        DateTime?
+  newTimeKnown Boolean   @default(false)
+
+  reason    String?
+  createdAt DateTime @default(now())
+
+  @@index([eventId])
+  @@index([createdAt])
 }

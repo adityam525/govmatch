@@ -16,7 +16,7 @@ export interface JobCardData {
   daysLeft: number | null;
   payScale: string | null;
   qualificationName: string | null;
-  badge: "NEW" | "HOT" | null;
+  badge: "NEW" | "HOT" | "POSTPONED" | null;
 }
 
 interface JobCardProps {
@@ -49,7 +49,9 @@ export default function JobCard({ job }: JobCardProps) {
             className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
               job.badge === "NEW"
                 ? "bg-green-50 text-success"
-                : "bg-orange-50 text-accent-orange"
+                : job.badge === "POSTPONED"
+                  ? "bg-amber-100 text-amber-800"
+                  : "bg-orange-50 text-accent-orange"
             }`}
           >
             {job.badge}
