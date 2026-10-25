@@ -40,6 +40,7 @@ interface ApiEvent {
 
 const input = 'w-full text-sm border border-neutral-200 rounded-md px-3 py-2 outline-none focus:border-primary-500';
 const DEFAULT_LABELS: Record<string, string> = {
+  NOTIFICATION: 'Notification published',
   APPLICATION_OPEN: 'Applications open',
   APPLICATION_CLOSE: 'Applications close',
   ADMIT_CARD: 'Admit card',
@@ -199,6 +200,16 @@ export default function ScheduleEditor({ jobId }: { jobId: string }) {
           </div>
 
           <div className="mt-3 flex flex-wrap items-center gap-3">
+            {rows.length === 0 && (
+              <Button
+                type="button"
+                variant="secondary"
+                size="sm"
+                onClick={() => ['NOTIFICATION', 'APPLICATION_OPEN', 'APPLICATION_CLOSE', 'EXAM'].forEach(add)}
+              >
+                Add standard dates
+              </Button>
+            )}
             <Button type="button" variant="secondary" size="sm" icon={<Plus size={14} />} onClick={() => add('OTHER')}>
               Add event
             </Button>

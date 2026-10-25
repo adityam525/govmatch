@@ -1,6 +1,7 @@
 // Schedule events: exact moments in IST, with or without a known time.
 
 export const EVENT_KINDS = [
+  { code: 'NOTIFICATION', label: 'Notification published' },
   { code: 'APPLICATION_OPEN', label: 'Applications open' },
   { code: 'APPLICATION_CLOSE', label: 'Applications close' },
   { code: 'ADMIT_CARD', label: 'Admit card' },
@@ -127,7 +128,8 @@ export function classifyChange(
 }
 
 // Which older job column an event keeps in step with, if any.
-export const LEGACY_COLUMN: Record<string, 'applicationStartDate' | 'applicationEndDate' | 'examDate' | undefined> = {
+export const LEGACY_COLUMN: Record<string, 'notificationDate' | 'applicationStartDate' | 'applicationEndDate' | 'examDate' | undefined> = {
+  NOTIFICATION: 'notificationDate',
   APPLICATION_OPEN: 'applicationStartDate',
   APPLICATION_CLOSE: 'applicationEndDate',
 };
