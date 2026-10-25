@@ -9,20 +9,23 @@ import ImageUpload from './ImageUpload';
 export interface LookupField {
   name: string;
   label: string;
-  type: 'text' | 'number' | 'select' | 'image';
+  type: 'text' | 'number' | 'select' | 'image' | 'multi';
   required?: boolean;
   placeholder?: string;
   help?: string;
   options?: { label: string; value: string }[];
-  /** For image fields: where the file is stored. */
+  min?: number;
+  max?: number;
+  /** For image fields: where the file is stored, and which field names the file. */
   folder?: 'organizations' | 'states';
-  /** For image fields: which field's value names the file. */
   slugFrom?: string;
 }
 
 const input = 'w-full text-sm border border-neutral-200 rounded-md px-3 py-2 outline-none focus:border-primary-500 focus:ring-1 focus:ring-primary-500';
+const isEmpty = (v: unknown) => v === undefined || v === null || (Array.isArray(v) ? v.length === 0 : String(v).trim() === '');
 
-// A form for lookup records (organizations, states ...), with logo upload and server messages.
+// A form for lookup records (organizations, states, qualifications ...) with logo upload,
+// multi-select and server messages.
 export default function LookupForm({
   title,
   fields,
@@ -55,9 +58,7 @@ export default function LookupForm({
     e.preventDefault();
     const next: Record<string, string> = {};
     for (const f of fields) {
-      if (f.required && (values[f.name] === undefined || values[f.name] === null || String(values[f.name]).trim() === '')) {
-        next[f.name] = `${f.label} is required`;
-      }
+      if (f.required && isEmpty(values[f.name])) next[f.name] = `${f.label} is required`;
     }
     setErrors(next);
     if (Object.keys(next).length > 0) return;
@@ -93,7 +94,7 @@ export default function LookupForm({
       <h2 className="mb-6 text-lg font-bold text-neutral-900">{title}</h2>
       <form onSubmit={submit} className="grid gap-5 md:grid-cols-2">
         {fields.map((f) => (
-          <div key={f.name} className={f.type === 'image' ? 'md:col-span-2' : ''}>
+          <div key={f.name} className={f.type === 'image' || f.type === 'multi' ? 'md:col-span-2' : ''}>
             <label className="mb-1.5 block text-xs font-medium text-neutral-600">
               {f.label}
               {f.required && <span className="ml-0.5 text-danger">*</span>}
@@ -107,6 +108,26 @@ export default function LookupForm({
                 slug={String(values[f.slugFrom ?? 'name'] ?? '')}
                 name={String(values.name ?? '')}
               />
+            ) : f.type === 'multi' ? (
+              <div className="flex flex-wrap gap-1.5">
+                {f.options?.map((o) => {
+                  const list: string[] = Array.isArray(values[f.name]) ? values[f.name] : [];
+                  const on = list.includes(o.value);
+                  return (
+                    <button
+                      key={o.value}
+                      type="button"
+                      aria-pressed={on}
+                      onClick={() => set(f.name, on ? list.filter((v) => v !== o.value) : [...list, o.value])}
+                      className={`rounded-full border px-3 py-1.5 text-xs transition-colors ${
+                        on ? 'border-primary-600 bg-primary-600 text-white' : 'border-neutral-200 bg-white text-neutral-600 hover:border-neutral-300'
+                      }`}
+                    >
+                      {o.label}
+                    </button>
+                  );
+                })}
+              </div>
             ) : f.type === 'select' ? (
               <select value={values[f.name] ?? ''} onChange={(e) => set(f.name, e.target.value)} className={input}>
                 <option value="">Select...</option>
@@ -117,6 +138,8 @@ export default function LookupForm({
             ) : (
               <input
                 type={f.type}
+                min={f.min}
+                max={f.max}
                 value={values[f.name] ?? ''}
                 placeholder={f.placeholder}
                 onChange={(e) => set(f.name, f.type === 'number' ? (e.target.value === '' ? null : Number(e.target.value)) : e.target.value)}
@@ -124,7 +147,7 @@ export default function LookupForm({
               />
             )}
 
-            {f.help && <p className="mt-1 text-[11px] text-neutral-500">{f.help}</p>}
+            {f.help && <p className="mt-1 text-[11px] leading-relaxed text-neutral-500">{f.help}</p>}
             {errors[f.name] && <p className="mt-1 text-xs text-danger">{errors[f.name]}</p>}
           </div>
         ))}

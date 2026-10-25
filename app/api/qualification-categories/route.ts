@@ -1,52 +1,39 @@
-import { NextResponse } from "next/server";
-import { prisma } from "@/lib/prisma";
+import { NextResponse } from 'next/server';
+import { prisma } from '@/lib/prisma';
+import { bad, describeDbError, slugify, text } from '@/lib/lookup-api';
 
-function slugify(input: string): string {
-  return input
-    .trim()
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-+|-+$/g, "");
-}
-
-// GET /api/qualification-categories
-// High-level qualification filter list (8th Pass, Engineering, Medical, ...),
-// ordered by the admin-controlled `order` field.
 export async function GET() {
   const categories = await prisma.qualificationCategory.findMany({
-    orderBy: { order: "asc" },
-    select: { id: true, name: true, slug: true },
+    orderBy: { order: 'asc' },
+    select: { id: true, name: true, slug: true, order: true },
   });
   return NextResponse.json(categories);
 }
 
-// POST /api/qualification-categories  { name }
-// Slug is auto-generated; order is appended after the current last category.
+// Slug is created from the name when empty; order goes after the current last one when empty.
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const name = String(body.name ?? "").trim();
-    if (!name) {
-      return NextResponse.json({ message: "Name is required" }, { status: 400 });
+    const name = text(body.name, 80);
+    if (!name) return bad('Enter the education type name (up to 80 characters).');
+    const slug = slugify(text(body.slug, 80) || name);
+    if (!slug) return bad('The slug needs letters or numbers.');
+
+    let order: number;
+    if (body.order === '' || body.order === null || body.order === undefined) {
+      const last = await prisma.qualificationCategory.findFirst({ orderBy: { order: 'desc' }, select: { order: true } });
+      order = (last?.order ?? 0) + 1;
+    } else {
+      order = Number(body.order);
+      if (!Number.isInteger(order) || order < 0 || order > 999) return bad('The order must be a whole number from 0 to 999.');
     }
-    const last = await prisma.qualificationCategory.findFirst({
-      orderBy: { order: "desc" },
-      select: { order: true },
-    });
+
     const created = await prisma.qualificationCategory.create({
-      data: {
-        name,
-        slug: body.slug || slugify(name),
-        order: (last?.order ?? 0) + 1,
-      },
-      select: { id: true, name: true, slug: true },
+      data: { name, slug, order },
+      select: { id: true, name: true, slug: true, order: true },
     });
     return NextResponse.json(created, { status: 201 });
   } catch (error) {
-    console.error("Failed to create qualification category:", error);
-    return NextResponse.json(
-      { message: "Failed to create qualification category" },
-      { status: 500 },
-    );
+    return describeDbError(error, 'education type');
   }
 }

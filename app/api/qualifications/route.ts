@@ -1,52 +1,43 @@
-import { NextRequest, NextResponse } from "next/server";
-import { prisma } from "@/lib/prisma";
+import { NextRequest, NextResponse } from 'next/server';
+import { prisma } from '@/lib/prisma';
+import { bad, describeDbError, slugify, text } from '@/lib/lookup-api';
+import { levelOf, resolveEducationTypes } from '@/lib/qualification-api';
 
-// GET /api/qualifications
-// GET /api/qualifications?categorySlugs=engineering,medical
-// With categorySlugs, only qualifications belonging to at least one of those
-// QualificationCategory rows are returned (cascading filter). Without it,
-// every qualification is returned.
+// GET /api/qualifications?categorySlugs=engineering,medical filters by education type.
 export async function GET(request: NextRequest) {
-  const categorySlugs =
-    request.nextUrl.searchParams
-      .get("categorySlugs")
-      ?.split(",")
-      .filter(Boolean) ?? [];
+  const categorySlugs = request.nextUrl.searchParams.get('categorySlugs')?.split(',').filter(Boolean) ?? [];
   const qualifications = await prisma.qualification.findMany({
-    where:
-      categorySlugs.length > 0
-        ? { categories: { some: { slug: { in: categorySlugs } } } }
-        : {},
-    orderBy: { level: "asc" },
+    where: categorySlugs.length > 0 ? { categories: { some: { slug: { in: categorySlugs } } } } : {},
+    orderBy: { level: 'asc' },
     include: { categories: true },
   });
   return NextResponse.json(qualifications);
 }
 
-// POST /api/qualifications
-// Optional `categorySlug` / `categorySlugs` link the new qualification to
-// existing QualificationCategory rows, so it shows up in the cascade.
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const { categorySlug, categorySlugs, ...data } = body;
-    const slugs: string[] = categorySlugs ?? (categorySlug ? [categorySlug] : []);
-    const qualification = await prisma.qualification.create({
+    const name = text(body.name, 120);
+    if (!name) return bad('Enter the qualification name (up to 120 characters).');
+    const slug = slugify(text(body.slug, 80) || name);
+    if (!slug) return bad('The slug needs letters or numbers.');
+    const level = levelOf(body.level);
+    if (level === undefined) return bad('Choose a level from 1 to 12. It decides which jobs this qualification is eligible for.');
+
+    const types = await resolveEducationTypes(body);
+    if ('error' in types) return bad(types.error);
+
+    const created = await prisma.qualification.create({
       data: {
-        ...data,
-        level: Number(data.level) || 5,
-        categories: slugs.length
-          ? { connect: slugs.map((slug) => ({ slug })) }
-          : undefined,
+        name,
+        slug,
+        level,
+        categories: types.ids.length ? { connect: types.ids.map((id) => ({ id })) } : undefined,
       },
       include: { categories: true },
     });
-    return NextResponse.json(qualification, { status: 201 });
+    return NextResponse.json(created, { status: 201 });
   } catch (error) {
-    console.error("Failed to create qualification:", error);
-    return NextResponse.json(
-      { message: "Failed to create qualification" },
-      { status: 500 },
-    );
+    return describeDbError(error, 'qualification');
   }
 }

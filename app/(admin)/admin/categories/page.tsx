@@ -1,31 +1,15 @@
 'use client';
 
-import { useAdminList } from '@/features/admin/hooks';
-import DataTable, { ColumnConfig } from '@/components/admin/DataTable';
+import ManagedList from '@/components/admin/ManagedList';
+import type { ColumnConfig } from '@/components/admin/DataTable';
 
-interface CategoryRow {
-  id: string;
-  name: string;
-  slug: string;
-}
+interface Row { id: string; name: string; slug: string }
 
-const columns: ColumnConfig<CategoryRow>[] = [
+const columns: ColumnConfig<Row>[] = [
   { key: 'name', label: 'Name' },
   { key: 'slug', label: 'Slug' },
 ];
 
 export default function CategoriesAdminPage() {
-  const { data, loading, deleteRecord } = useAdminList<CategoryRow>('categories');
-  return (
-    <div className="p-6">
-      <DataTable
-        title="Categories"
-        basePath="/admin/categories"
-        columns={columns}
-        rows={data}
-        loading={loading}
-        onDelete={(id) => { if (confirm('Delete this category?')) deleteRecord(id); }}
-      />
-    </div>
-  );
+  return <ManagedList<Row> title="Categories (sectors)" entity="categories" basePath="/admin/categories" columns={columns} deleteMessage="Delete this category?" />;
 }

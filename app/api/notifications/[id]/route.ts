@@ -43,6 +43,13 @@ export async function PATCH(request: Request, { params }: Params) {
       }
     }
 
+    // Once a job has a schedule, the schedule owns its application and exam dates.
+    const hasSchedule = (await prisma.scheduleEvent.count({ where: { notificationId: id } })) > 0;
+    if (hasSchedule) {
+      delete notificationData.applicationStartDate;
+      delete notificationData.applicationEndDate;
+      delete notificationData.examDate;
+    }
     const notification = await prisma.notification.update({
       where: { id },
       data: {

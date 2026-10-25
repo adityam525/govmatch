@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import clsx from 'clsx';
 import {
-  LayoutDashboard, Bell, Building2, MapPin, Tags, Users, GraduationCap, Mail, Upload,
+  LayoutDashboard, Bell, Building2, MapPin, Tags, Users, GraduationCap, Mail, Upload, Layers,
 } from 'lucide-react';
 
 const navSections = [
@@ -23,6 +23,7 @@ const navSections = [
       { label: 'Organizations', href: '/admin/organizations', icon: Building2 },
       { label: 'Categories', href: '/admin/categories', icon: Tags },
       { label: 'Qualifications', href: '/admin/qualifications', icon: GraduationCap },
+      { label: 'Education types', href: '/admin/qualification-categories', icon: Layers },
       { label: 'States', href: '/admin/states', icon: MapPin },
     ],
   },

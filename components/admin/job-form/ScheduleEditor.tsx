@@ -128,7 +128,7 @@ export default function ScheduleEditor({ jobId }: { jobId: string }) {
       <p className="mb-3 text-xs text-neutral-500">
         Leave the time empty when the notice gives only a date (it then counts as the end of that day). To postpone,
         change the date or time and add a reason. To say a date is not announced yet, clear the date. All times are IST.
-        This section saves on its own button.
+        This section saves on its own button. Once a job has a schedule it also controls the application and exam dates, so the date boxes higher up in this form are not used when you save.
       </p>
 
       {!loaded ? (

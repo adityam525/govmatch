@@ -26,6 +26,7 @@ import ExamLevelsFieldArray, {
 import ApplicationFeeFieldArray, {
   ApplicationFeeDraft,
 } from "@/components/admin/ApplicationFeeFieldArray";
+import ScheduleEditor from "@/components/admin/job-form/ScheduleEditor";
 import { validateNotificationDates } from "@/features/jobs/validation";
 import { Trash2 } from "lucide-react";
 import FilterDropdown from "@/components/ui/FilterDropdown";
@@ -884,6 +885,7 @@ export default function JobForm({ mode, jobId }: JobFormProps) {
             onChange={setAnswerKeys}
             examLevels={examLevels}
           />
+          {mode === "edit" && jobId && <ScheduleEditor jobId={jobId} />}
           <FAQsFieldArray faqs={faqs} onChange={setFaqs} />
           <LinksFieldArray links={links} onChange={setLinks} />
 

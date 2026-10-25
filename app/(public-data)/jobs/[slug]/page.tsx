@@ -17,6 +17,8 @@ import {
 } from "lucide-react";
 import Card from "@/components/ui/Card";
 import RecentJobsSidebar from "@/components/jobs/RecentJobsSidebar";
+import ScheduleSection from "@/components/jobs/ScheduleSection";
+import { getJobSchedule } from "@/lib/schedule-queries";
 import JobActionButtons from "@/components/jobs/JobActionButtons";
 import { prisma } from "@/lib/prisma";
 import type { Metadata } from "next";
@@ -99,6 +101,7 @@ export default async function JobDetailPage({ params }: PageProps) {
     );
   }
 
+  const schedule = await getJobSchedule(notification.id).catch(() => ({ events: [], recentlyChanged: false }));
   const orgName = notification.organization?.name ?? "Unknown Organization";
   const posts = notification.posts ?? [];
   const selectionSteps: string[] = notification.selectionProcess ?? [];
@@ -587,6 +590,8 @@ export default async function JobDetailPage({ params }: PageProps) {
             </p>
           </Card>
         )}
+
+        <ScheduleSection schedule={schedule} />
 
         <Card padding="lg">
           <h2 className="text-sm font-bold text-neutral-900 mb-4">
