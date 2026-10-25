@@ -18,6 +18,7 @@ export default function RecordForm({ title, fields, initialValues = {}, onSubmit
   const [values, setValues] = useState<Record<string, any>>(initialValues);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [submitting, setSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState('');
   const router = useRouter();
 
   const handleChange = (name: string, value: any) => {
@@ -40,11 +41,13 @@ export default function RecordForm({ title, fields, initialValues = {}, onSubmit
     e.preventDefault();
     if (!validate()) return;
     setSubmitting(true);
+    setSubmitError('');
     try {
       await onSubmit(values);
       router.push(backHref);
     } catch (err) {
       console.error('Save failed', err);
+      setSubmitError(err instanceof Error && err.message ? err.message : 'Could not save. Please try again.');
     } finally {
       setSubmitting(false);
     }
@@ -59,6 +62,7 @@ export default function RecordForm({ title, fields, initialValues = {}, onSubmit
             <FormField field={field} value={values[field.name]} onChange={handleChange} error={errors[field.name]} />
           </div>
         ))}
+        {submitError && <p className="md:col-span-2 text-sm text-danger">{submitError}</p>}
         <div className="md:col-span-2 flex gap-3 pt-4 border-t border-neutral-100 mt-2">
           <Button type="submit" variant="primary" disabled={submitting}>
             {submitting ? 'Saving...' : 'Save'}

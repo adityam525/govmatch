@@ -1,47 +1,41 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
-import { useAdminRecord } from '@/features/admin/hooks';
-import RecordForm from '@/components/admin/RecordForm';
-import { FieldConfig } from '@/components/admin/FormField';
+import LookupForm, { type LookupField } from '@/components/admin/LookupForm';
 import { adminApi } from '@/features/admin/api';
 
-interface CategoryOption { id: string; name: string; }
+interface CategoryOption { id: string; name: string }
 
 export default function EditOrganizationPage() {
-  const params = useParams();
-  const id = params.id as string;
-  const { data, loading, save } = useAdminRecord('organizations', id);
+  const { id } = useParams<{ id: string }>();
   const [categories, setCategories] = useState<CategoryOption[]>([]);
+  const [data, setData] = useState<Record<string, any> | null>(null);
 
   useEffect(() => {
     adminApi.list<CategoryOption>('categories').then(setCategories).catch(() => {});
-  }, []);
+    adminApi.getById<Record<string, any>>('organizations', id).then(setData).catch(() => setData({}));
+  }, [id]);
 
-  const fields: FieldConfig[] = [
-    { name: 'name', label: 'Organization Name', type: 'text', required: true },
-    { name: 'shortName', label: 'Short Name', type: 'text', required: true },
-    { name: 'logoUrl', label: 'Logo URL', type: 'text' },
-    { name: 'website', label: 'Website', type: 'text' },
-    {
-      name: 'categoryId',
-      label: 'Category (Sector)',
-      type: 'select',
-      required: true,
-      options: categories.map((c) => ({ label: c.name, value: c.id })),
-    },
+  const fields: LookupField[] = [
+    { name: 'name', label: 'Organization name', type: 'text', required: true },
+    { name: 'shortName', label: 'Short name', type: 'text', required: true },
+    { name: 'slug', label: 'Slug', type: 'text', help: 'Changing this changes the organization filter links. Leave it alone unless you must.' },
+    { name: 'website', label: 'Website', type: 'text', placeholder: 'https://' },
+    { name: 'categoryId', label: 'Sector', type: 'select', options: categories.map((c) => ({ label: c.name, value: c.id })) },
+    { name: 'logoUrl', label: 'Logo', type: 'image', folder: 'organizations', slugFrom: 'shortName' },
   ];
 
-  if (loading) return <div className="p-6">Loading...</div>;
+  if (!data) return <div className="p-6">Loading...</div>;
 
   return (
-    <div className="p-6 max-w-2xl">
-      <RecordForm
-        title="Edit Organization"
+    <div className="p-4 sm:p-6">
+      <LookupForm
+        title="Edit organization"
         fields={fields}
-        initialValues={data ?? {}}
-        onSubmit={(v) => save(v)}
+        initialValues={data}
+        onSubmit={(values) => adminApi.update('organizations', id, values)}
+        onDelete={() => adminApi.remove('organizations', id)}
         backHref="/admin/organizations"
       />
     </div>
