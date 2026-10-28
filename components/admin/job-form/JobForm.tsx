@@ -52,7 +52,7 @@ function SectionIndex({ items }: { items: { id: string; label: string; status: S
 
   return (
     <>
-      <nav aria-label="Job sections" className="hidden lg:sticky lg:top-6 lg:block lg:self-start">
+      <nav aria-label="Job sections" className="hidden lg:sticky lg:top-[calc(var(--shell-top,4rem)_+_1.5rem)] lg:block lg:self-start">
         <p className="mb-2 px-2 text-[11px] font-semibold uppercase tracking-wide text-neutral-400">Sections</p>
         <ul className="space-y-0.5">
           {items.map((item) => (

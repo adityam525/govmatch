@@ -507,7 +507,7 @@ export default async function JobsPage({ searchParams }: JobsPageProps) {
           </p>
         </div>
       ) : (
-        <div className="mt-4 max-h-[75vh] space-y-4 overflow-y-auto pr-1">
+        <div className="mt-4 space-y-4">
           {(view.preset && !params.sort
             ? sortByIdOrder(jobs, viewIds)
             : jobs

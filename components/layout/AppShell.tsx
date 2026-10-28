@@ -2,9 +2,9 @@
 
 import { useEffect, useState } from 'react';
 
-// A full-height side nav next to a content pane that scrolls on its own, sized to the screen
-// below the site header (and the Hot News banner, when there is one). Phones get the nav as a
-// strip on top and the normal page scroll.
+// A side nav pinned below the site header (and the Hot News banner, when there is one) next
+// to the page content. Only the page scrolls, so there is a single scrollbar. The pinned
+// height is also published as --shell-top so sticky elements inside the content can sit below it.
 export default function AppShell({
   nav,
   children,
@@ -34,13 +34,12 @@ export default function AppShell({
   }, []);
 
   return (
-    <div className="flex-1 bg-neutral-50">
-      <div
-        style={{ ['--shell-h' as string]: `calc(100dvh - ${top}px)` }}
-        className={`mx-auto flex w-full ${maxWidth} flex-col md:h-[var(--shell-h)] md:min-h-[30rem] md:flex-row md:overflow-hidden`}
-      >
-        {nav}
-        <main className="min-w-0 flex-1 md:overflow-y-auto">{children}</main>
+    <div className="flex-1 bg-neutral-50" style={{ ['--shell-top' as string]: `${top}px` }}>
+      <div className={`mx-auto flex w-full ${maxWidth} flex-col md:flex-row`}>
+        <div className="md:sticky md:top-[var(--shell-top)] md:h-[calc(100dvh_-_var(--shell-top))] md:shrink-0 md:self-start">
+          {nav}
+        </div>
+        <main className="min-w-0 flex-1">{children}</main>
       </div>
     </div>
   );

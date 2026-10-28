@@ -78,7 +78,7 @@ function SectionIndex({
     <>
       <nav
         aria-label="Profile sections"
-        className="hidden lg:sticky lg:top-6 lg:block lg:self-start
+        className="hidden lg:sticky lg:top-[calc(var(--shell-top,4rem)_+_1.5rem)] lg:block lg:self-start
              rounded-xl border border-gray-200
              bg-gray-50 p-3 shadow-sm"
       >
