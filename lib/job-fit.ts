@@ -348,6 +348,9 @@ export function evaluatePost(
     if (q && !accepted.some((a) => a.id === q.id)) accepted.push(q);
   }
   const branchNames = [...new Set((post.branches ?? []).map((b) => b.name))];
+  const fields = new Set(
+    branchNames.map((name) => fieldKey(name)).filter((key): key is string => !!key),
+  );
 
   // Each accepted qualification can carry its own branches. A rule with no branches means any branch.
   const branchNameById = new Map(
