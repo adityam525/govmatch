@@ -19,11 +19,13 @@ async function main() {
     const qualIds = p.qualifications.length ? p.qualifications.map((q) => q.id) : p.qualificationId ? [p.qualificationId] : [];
     if (qualIds.length === 0) { noQual++; continue; }
 
-    const rules = qualIds.map((qualificationId) => ({
-      qualificationId,
-      branchIds: p.branches.filter((b) => b.qualificationId === qualificationId).map((b) => b.id),
-    }));
     const unmatched = p.branches.filter((b) => !qualIds.includes(b.qualificationId));
+    // A qualification with no branches of its own inherits branches that matched none of the
+    // post's qualifications, so a post never becomes looser than it was.
+    const rules = qualIds.map((qualificationId) => {
+      const own = p.branches.filter((b) => b.qualificationId === qualificationId).map((b) => b.id);
+      return { qualificationId, branchIds: own.length > 0 ? own : unmatched.map((b) => b.id) };
+    });
     const hadBranches = p.branches.length > 0;
     const openOnes = rules.filter((r) => r.branchIds.length === 0).length;
     if (hadBranches && openOnes > 0) loosened++;
