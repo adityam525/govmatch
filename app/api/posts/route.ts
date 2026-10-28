@@ -59,6 +59,15 @@ async function cleanRequirements(body: Record<string, unknown>) {
     data.domicileStateCode = state.code;
   } else data.domicileStateCode = null;
 
+  if (!blank(body.ageCutoffDate)) {
+    const text = String(body.ageCutoffDate);
+    const date = /^\d{4}-\d{2}-\d{2}$/.test(text) ? new Date(`${text}T00:00:00.000Z`) : null;
+    if (!date || Number.isNaN(date.getTime()) || date.toISOString().slice(0, 10) !== text) {
+      return fail('Enter a real date for "age as on".');
+    }
+    data.ageCutoffDate = date;
+  } else data.ageCutoffDate = null;
+
   const { rules, errors } = parseRules(body.relaxationRules);
   if (errors.length > 0) return fail(errors[0]);
   if (rules.length > 0) {
@@ -75,13 +84,13 @@ export async function POST(request: Request) {
     const {
       branchIds, roleIds, qualificationIds,
       genderRestriction, minExperienceYears, requiredCertifications, domicileStateCode,
-      minHeightCm, minChestCm, pwdTypes, relaxationRules,
+      minHeightCm, minChestCm, pwdTypes, relaxationRules, ageCutoffDate,
       ...postData
     } = body;
 
     const extras = await cleanRequirements({
       genderRestriction, minExperienceYears, requiredCertifications, domicileStateCode,
-      minHeightCm, minChestCm, pwdTypes, relaxationRules,
+      minHeightCm, minChestCm, pwdTypes, relaxationRules, ageCutoffDate,
     });
     if (extras.error) return NextResponse.json({ message: extras.error }, { status: 400 });
 

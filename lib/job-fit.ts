@@ -73,6 +73,7 @@ export interface PostLike {
   maxAge?: number | null;
   ageRelaxation?: unknown;
   relaxationRules?: unknown;
+  ageCutoffDate?: Date | string | null;
   pwdTypes?: string[];
   genderRestriction?: string | null;
   minExperienceYears?: number | null;
@@ -310,6 +311,8 @@ export function evaluatePost(ctx: FitContext, post: PostLike, now: Date = new Da
   }
 
   // --- Age (with relaxation for category, disability and special statuses)
+  // Notifications measure age on a stated cut-off date; without one, today is used.
+  const ageAsOf = post.ageCutoffDate ? new Date(post.ageCutoffDate) : now;
   const ageResult = evaluateAge(
     {
       dateOfBirth: user.dateOfBirth,
@@ -319,10 +322,17 @@ export function evaluatePost(ctx: FitContext, post: PostLike, now: Date = new Da
       specialStatuses: user.specialStatuses,
     },
     post,
-    now,
+    ageAsOf,
   );
   const ageStatus = ageResult.status;
-  const ageCheck: FitCheck | null = ageResult.checks[0] ?? null;
+  const firstAgeCheck = ageResult.checks[0] ?? null;
+  const ageCheck: FitCheck | null =
+    firstAgeCheck && post.ageCutoffDate
+      ? {
+          ...firstAgeCheck,
+          text: `${firstAgeCheck.text} (age as on ${ageAsOf.toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric', timeZone: 'Asia/Kolkata' })})`,
+        }
+      : firstAgeCheck;
 
   // --- Gender, home state, experience, certificates and physical standards
   const reqResult = evaluateRequirements(

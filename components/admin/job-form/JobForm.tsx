@@ -318,6 +318,13 @@ export default function JobForm({ mode, jobId }: JobFormProps) {
 
           <Section id="posts" title="Posts and eligibility">
             <div className="grid gap-5 md:grid-cols-2">
+              <div className="md:col-span-2">
+                <label className="mb-1.5 block text-xs font-medium text-neutral-600">Age calculated as on</label>
+                <input type="date" value={b.ageCutoff} onChange={(e) => setBasics({ ageCutoff: e.target.value })} className={`${inputClass} max-w-xs`} />
+                <p className="mt-1 text-[11px] text-neutral-500">
+                  Copy the date from the notice, for example &quot;age as on 1 August 2026&quot;. It applies to every post of this job. Leave it empty to measure age from today.
+                </p>
+              </div>
               <PostsFieldArray posts={data.posts} onChange={(posts) => patch({ posts })} />
               <div className="md:col-span-2 border-t border-neutral-100 pt-4">
                 <label className="mb-1.5 block text-xs font-medium text-neutral-600">

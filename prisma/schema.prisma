@@ -234,6 +234,7 @@ model Post {
   domicileStateCode      String?
   minHeightCm            Int?
   minChestCm             Int?
+  ageCutoffDate DateTime?
 }
 
 model AdmitCard {

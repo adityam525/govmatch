@@ -19,6 +19,8 @@ export interface JobBasics {
   applicationMode: string;
   howToApply: string;
   directEligibility: string;
+  /** Age is measured on this date (YYYY-MM-DD), copied to every post. Empty means today. */
+  ageCutoff: string;
   published: boolean;
 }
 
@@ -39,7 +41,7 @@ export interface JobData {
 export const emptyJob = (): JobData => ({
   basics: {
     title: "", organizationId: "", officialLink: "", stateId: "", status: "LIVE",
-    applicationMode: "ONLINE", howToApply: "", directEligibility: "", published: false,
+    applicationMode: "ONLINE", howToApply: "", directEligibility: "", ageCutoff: "", published: false,
   },
   steps: [], schedule: [], posts: [], fees: [], examLevels: [], admitCards: [], results: [], answerKeys: [], links: [], faqs: [],
 });
@@ -83,6 +85,7 @@ export async function loadJob(jobId: string): Promise<JobData> {
       applicationMode: job.applicationMode ?? "ONLINE",
       howToApply: str(job.howToApply),
       directEligibility: str(job.directEligibility),
+      ageCutoff: day(posts.find((p) => p.ageCutoffDate)?.ageCutoffDate),
       published: !!job.published,
     },
     steps: job.selectionProcess ?? [],
@@ -240,6 +243,7 @@ async function saveCollections(jobId: string, data: JobData) {
       minChestCm: p.minChestCm,
       pwdTypes: p.pwdTypes ?? [],
       relaxationRules: p.relaxationRules ?? [],
+      ageCutoffDate: data.basics.ageCutoff || null,
     } as any);
   }
 }
