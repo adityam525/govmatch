@@ -10,7 +10,7 @@ export async function GET(request: Request) {
 
   const posts = await prisma.post.findMany({
     where: notificationId ? { notificationId } : undefined,
-    include: { qualification: true, qualifications: true, notification: true, branches: true, roles: true },
+    include: { qualification: true, qualifications: true, qualificationRules: true, notification: true, branches: true, roles: true },
     orderBy: { createdAt: 'desc' },
   });
   return NextResponse.json(posts);
@@ -84,7 +84,7 @@ export async function POST(request: Request) {
     const {
       branchIds, roleIds, qualificationIds,
       genderRestriction, minExperienceYears, requiredCertifications, domicileStateCode,
-      minHeightCm, minChestCm, pwdTypes, relaxationRules, ageCutoffDate,
+      minHeightCm, minChestCm, pwdTypes, relaxationRules, ageCutoffDate, qualificationRules,
       ...postData
     } = body;
 
@@ -93,6 +93,15 @@ export async function POST(request: Request) {
       minHeightCm, minChestCm, pwdTypes, relaxationRules, ageCutoffDate,
     });
     if (extras.error) return NextResponse.json({ message: extras.error }, { status: 400 });
+
+    const rulesToCreate = Array.isArray(qualificationRules)
+      ? qualificationRules
+          .filter((r: any) => r && typeof r.qualificationId === 'string' && r.qualificationId)
+          .map((r: any) => ({
+            qualificationId: r.qualificationId as string,
+            branchIds: Array.isArray(r.branchIds) ? (r.branchIds as unknown[]).filter((x): x is string => typeof x === 'string') : [],
+          }))
+      : [];
 
     const post = await prisma.post.create({
       data: {
@@ -104,6 +113,7 @@ export async function POST(request: Request) {
         branches: branchIds?.length ? { connect: branchIds.map((id: string) => ({ id })) } : undefined,
         roles: roleIds?.length ? { connect: roleIds.map((id: string) => ({ id })) } : undefined,
         qualifications: qualificationIds?.length ? { connect: qualificationIds.map((id: string) => ({ id })) } : undefined,
+        qualificationRules: rulesToCreate.length ? { create: rulesToCreate } : undefined,
       },
       include: { branches: true, roles: true, qualifications: true },
     });

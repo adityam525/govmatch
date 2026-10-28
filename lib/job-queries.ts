@@ -10,7 +10,7 @@ async function fetchPublishedJobs() {
     include: {
       organization: { include: { category: true } },
       states: true,
-      posts: { include: { qualification: true, qualifications: true, branches: true, roles: true } },
+      posts: { include: { qualification: true, qualifications: true, qualificationRules: true, branches: true, roles: true } },
       importantDates: true,
       admitCards: true,
       results: true,

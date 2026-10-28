@@ -15,7 +15,7 @@ const cases: [string, string | null, string][] = [
   ['age 28 on 1 Jan 2025 fits a limit of 28', '2025-01-01', 'eligible'],
   ['age 29 on 1 Jan 2026 is over a limit of 28', '2026-01-01', 'not-eligible'],
   ['age 28 on the day before the birthday', '2025-06-14', 'eligible'],
-  ['age 29 on the birthday itself', '2025-06-15', 'eligible'],
+  ['age 29 on the birthday itself, over a limit of 28', '2025-06-15', 'not-eligible'],
   ['age 30 on the next birthday', '2026-06-15', 'not-eligible'],
 ];
 

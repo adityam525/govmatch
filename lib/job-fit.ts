@@ -1,8 +1,8 @@
-import { prisma } from './prisma';
-import { fieldKey } from './field-keys';
-import { evaluateAge } from './age-rules';
-import { evaluateRequirements } from './requirements';
-import { computeCompleteness } from './profile-completeness';
+import { prisma } from "./prisma";
+import { fieldKey } from "./field-keys";
+import { evaluateAge } from "./age-rules";
+import { evaluateRequirements } from "./requirements";
+import { computeCompleteness } from "./profile-completeness";
 
 export interface QualRef {
   id: string;
@@ -45,13 +45,13 @@ export interface FitContext {
   qualifications: Map<string, QualRef>;
 }
 
-export type FitVerdict = 'eligible' | 'unknown' | 'not-eligible';
+export type FitVerdict = "eligible" | "unknown" | "not-eligible";
 
 export interface FitCheck {
   label: string;
   text: string;
   /** lower = does not block the job but lowers the match percentage */
-  state: 'ok' | 'fail' | 'unknown' | 'lower';
+  state: "ok" | "fail" | "unknown" | "lower";
 }
 
 export interface Evaluation {
@@ -84,7 +84,8 @@ export interface PostLike {
   employmentType?: string | null;
   qualification?: { id: string } | null;
   qualifications?: { id: string }[];
-  branches?: { name: string }[];
+  branches?: { id?: string; name: string }[];
+  qualificationRules?: { qualificationId: string; branchIds: string[] }[];
   roles?: { id: string }[];
 }
 
@@ -101,23 +102,38 @@ export async function loadFitContext(userId: string): Promise<FitContext> {
     prisma.userEducation.findMany({
       where: { userId },
       include: { branch: { select: { name: true } } },
-      orderBy: { createdAt: 'asc' },
+      orderBy: { createdAt: "asc" },
     }),
     prisma.qualification.findMany({
-      select: { id: true, name: true, level: true, categories: { select: { slug: true, name: true } } },
+      select: {
+        id: true,
+        name: true,
+        level: true,
+        categories: { select: { slug: true, name: true } },
+      },
     }),
   ]);
 
-  const qualifications = new Map<string, QualRef>(qualRows.map((q) => [q.id, q]));
-  const stateRows = await prisma.state.findMany({ select: { code: true, name: true } });
-  const stateNames = new Map<string, string>(stateRows.map((s) => [s.code, s.name]));
+  const qualifications = new Map<string, QualRef>(
+    qualRows.map((q) => [q.id, q]),
+  );
+  const stateRows = await prisma.state.findMany({
+    select: { code: true, name: true },
+  });
+  const stateNames = new Map<string, string>(
+    stateRows.map((s) => [s.code, s.name]),
+  );
 
   const educations: EducationFact[] = [];
   for (const row of rows) {
     const qualification = qualifications.get(row.qualificationId);
     if (!qualification) continue;
     const label = row.branch?.name ?? row.subject ?? null;
-    educations.push({ qualification, field: fieldKey(label), fieldLabel: label });
+    educations.push({
+      qualification,
+      field: fieldKey(label),
+      fieldLabel: label,
+    });
   }
 
   // Profiles saved before the education list existed still carry one qualification.
@@ -125,9 +141,16 @@ export async function loadFitContext(userId: string): Promise<FitContext> {
     const qualification = qualifications.get(profile.qualificationId);
     if (qualification) {
       const branch = profile.branchId
-        ? await prisma.branch.findUnique({ where: { id: profile.branchId }, select: { name: true } })
+        ? await prisma.branch.findUnique({
+            where: { id: profile.branchId },
+            select: { name: true },
+          })
         : null;
-      educations.push({ qualification, field: fieldKey(branch?.name), fieldLabel: branch?.name ?? null });
+      educations.push({
+        qualification,
+        field: fieldKey(branch?.name),
+        fieldLabel: branch?.name ?? null,
+      });
     }
   }
 
@@ -137,7 +160,9 @@ export async function loadFitContext(userId: string): Promise<FitContext> {
     category: profile?.category ?? null,
     gender: profile?.gender ?? null,
     phoneNumber: profile?.phoneNumber ?? null,
-    preferenceCount: (profile?.preferredRoles.length ?? 0) + (profile?.preferredEmploymentTypes.length ?? 0),
+    preferenceCount:
+      (profile?.preferredRoles.length ?? 0) +
+      (profile?.preferredEmploymentTypes.length ?? 0),
   });
 
   return {
@@ -161,7 +186,8 @@ export async function loadFitContext(userId: string): Promise<FitContext> {
       heightCm: profile?.heightCm ?? null,
       chestCm: profile?.chestCm ?? null,
       preferredRoleIds: profile?.preferredRoles.map((role) => role.id) ?? [],
-      preferredEmploymentTypes: (profile?.preferredEmploymentTypes ?? []) as string[],
+      preferredEmploymentTypes: (profile?.preferredEmploymentTypes ??
+        []) as string[],
     },
   };
 }
@@ -171,15 +197,26 @@ export async function loadFitContext(userId: string): Promise<FitContext> {
 // ---------------------------------------------------------------------------
 
 const LEVEL_SLUGS = new Set([
-  '8th-pass', '10th-pass', '12th-pass', 'iti', 'apprentice', 'diploma',
-  'graduate', 'post-graduate', 'postgraduate', 'doctorate', 'phd',
+  "8th-pass",
+  "10th-pass",
+  "12th-pass",
+  "iti",
+  "apprentice",
+  "diploma",
+  "graduate",
+  "post-graduate",
+  "postgraduate",
+  "doctorate",
+  "phd",
 ]);
 
 // A category that only names a level (Graduate, Diploma...) says nothing about the field.
 const isLevelCategory = (c: { slug: string; name: string }) =>
-  LEVEL_SLUGS.has(c.slug) || /(pass|^iti$|apprentice|diploma|graduate|doctorate)/i.test(c.name);
+  LEVEL_SLUGS.has(c.slug) ||
+  /(pass|^iti$|apprentice|diploma|graduate|doctorate)/i.test(c.name);
 
-const familyOf = (q: QualRef) => new Set(q.categories.filter((c) => !isLevelCategory(c)).map((c) => c.slug));
+const familyOf = (q: QualRef) =>
+  new Set(q.categories.filter((c) => !isLevelCategory(c)).map((c) => c.slug));
 
 function sharesFamily(a: QualRef, b: QualRef): boolean {
   const first = familyOf(a);
@@ -188,65 +225,99 @@ function sharesFamily(a: QualRef, b: QualRef): boolean {
 }
 
 const isVocational = (q: QualRef) =>
-  /\b(iti|apprentice|diploma)\b/i.test(q.name) || q.categories.some((c) => /\b(iti|apprentice|diploma)\b/i.test(c.name));
+  /\b(iti|apprentice|diploma)\b/i.test(q.name) ||
+  q.categories.some((c) => /\b(iti|apprentice|diploma)\b/i.test(c.name));
 
 // 8th, 10th and 12th Pass and "Any Graduate / Post Graduate" accept that level or higher.
 const isGeneric = (q: QualRef) => q.level <= 3 || /^any\b/i.test(q.name.trim());
 
 interface QualResult {
-  status: 'yes' | 'no' | 'unknown';
+  status: "yes" | "no" | "unknown";
   via?: EducationFact;
 }
 
-function checkQualification(educations: EducationFact[], accepted: QualRef, fields: Set<string>): QualResult {
+function checkQualification(
+  educations: EducationFact[],
+  accepted: QualRef,
+  fields: Set<string>,
+): QualResult {
   if (isGeneric(accepted)) {
     const via = educations.find(
-      (e) => e.qualification.level >= accepted.level && !(isVocational(e.qualification) && accepted.level >= 3),
+      (e) =>
+        e.qualification.level >= accepted.level &&
+        !(isVocational(e.qualification) && accepted.level >= 3),
     );
-    return via ? { status: 'yes', via } : { status: 'no' };
+    return via ? { status: "yes", via } : { status: "no" };
   }
 
   let missingField = false;
   for (const e of educations) {
     const exact = e.qualification.id === accepted.id;
-    const higher = !exact && e.qualification.level > accepted.level && sharesFamily(e.qualification, accepted);
+    const higher =
+      !exact &&
+      e.qualification.level > accepted.level &&
+      sharesFamily(e.qualification, accepted);
     if (!exact && !higher) continue;
-    if (fields.size === 0) return { status: 'yes', via: e };
-    if (e.field && fields.has(e.field)) return { status: 'yes', via: e };
+    if (fields.size === 0) return { status: "yes", via: e };
+    if (e.field && fields.has(e.field)) return { status: "yes", via: e };
     if (!e.field) missingField = true;
   }
-  return { status: missingField ? 'unknown' : 'no' };
+  return { status: missingField ? "unknown" : "no" };
 }
 
 // ---------------------------------------------------------------------------
 // Wording helpers
 // ---------------------------------------------------------------------------
 
-const describe = (e: EducationFact) => (e.fieldLabel ? `${e.qualification.name} (${e.fieldLabel})` : e.qualification.name);
+const describe = (e: EducationFact) =>
+  e.fieldLabel
+    ? `${e.qualification.name} (${e.fieldLabel})`
+    : e.qualification.name;
 
 const joinNames = (names: string[], max = 3) =>
-  names.length <= max ? names.join(' or ') : `${names.slice(0, max).join(', ')} or ${names.length - max} more`;
+  names.length <= max
+    ? names.join(" or ")
+    : `${names.slice(0, max).join(", ")} or ${names.length - max} more`;
 
 function summarize(educations: EducationFact[]): string {
-  const sorted = [...educations].sort((a, b) => b.qualification.level - a.qualification.level);
-  const shown = sorted.slice(0, 2).map(describe).join(', ');
+  const sorted = [...educations].sort(
+    (a, b) => b.qualification.level - a.qualification.level,
+  );
+  const shown = sorted.slice(0, 2).map(describe).join(", ");
   return sorted.length > 2 ? `${shown} and ${sorted.length - 2} more` : shown;
 }
 
 const TYPE_LABEL: Record<string, string> = {
-  PERMANENT: 'permanent', CONTRACT: 'contract', APPRENTICE: 'apprentice',
-  INTERNSHIP: 'internship', TEMPORARY: 'temporary', DEPUTATION: 'deputation',
+  PERMANENT: "permanent",
+  CONTRACT: "contract",
+  APPRENTICE: "apprentice",
+  INTERNSHIP: "internship",
+  TEMPORARY: "temporary",
+  DEPUTATION: "deputation",
 };
 
 // Age relaxation counts only when the notification states a number of years for the user's category.
-function relaxationFor(category: string | null, relaxation: unknown): { years: number; key: string } | null {
-  const wanted = (category ?? '').trim().toLowerCase();
-  if (!wanted || wanted === 'general') return null;
-  if (!relaxation || typeof relaxation !== 'object' || Array.isArray(relaxation)) return null;
+function relaxationFor(
+  category: string | null,
+  relaxation: unknown,
+): { years: number; key: string } | null {
+  const wanted = (category ?? "").trim().toLowerCase();
+  if (!wanted || wanted === "general") return null;
+  if (
+    !relaxation ||
+    typeof relaxation !== "object" ||
+    Array.isArray(relaxation)
+  )
+    return null;
 
   let best: { years: number; key: string } | null = null;
-  for (const [key, value] of Object.entries(relaxation as Record<string, unknown>)) {
-    const tokens = key.toLowerCase().split(/[^a-z]+/).filter(Boolean);
+  for (const [key, value] of Object.entries(
+    relaxation as Record<string, unknown>,
+  )) {
+    const tokens = key
+      .toLowerCase()
+      .split(/[^a-z]+/)
+      .filter(Boolean);
     if (!tokens.includes(wanted)) continue;
     const match = String(value).match(/\d{1,2}/);
     if (!match) continue;
@@ -260,51 +331,100 @@ function relaxationFor(category: string | null, relaxation: unknown): { years: n
 // Evaluation
 // ---------------------------------------------------------------------------
 
-export function evaluatePost(ctx: FitContext, post: PostLike, now: Date = new Date()): Evaluation {
+export function evaluatePost(
+  ctx: FitContext,
+  post: PostLike,
+  now: Date = new Date(),
+): Evaluation {
   const { user } = ctx;
 
   const accepted: QualRef[] = [];
-  for (const ref of [...(post.qualifications ?? []), ...(post.qualification ? [post.qualification] : [])]) {
+  for (const ref of [
+    ...(post.qualifications ?? []),
+    ...(post.qualification ? [post.qualification] : []),
+    ...(post.qualificationRules ?? []).map((r) => ({ id: r.qualificationId })),
+  ]) {
     const q = ctx.qualifications.get(ref.id);
     if (q && !accepted.some((a) => a.id === q.id)) accepted.push(q);
   }
   const branchNames = [...new Set((post.branches ?? []).map((b) => b.name))];
-  const fields = new Set(branchNames.map((name) => fieldKey(name)).filter((key): key is string => !!key));
+
+  // Each accepted qualification can carry its own branches. A rule with no branches means any branch.
+  const branchNameById = new Map(
+    (post.branches ?? []).map((b) => [b.id ?? "", b.name] as const),
+  );
+  const fieldsByQual = new Map<string, Set<string>>();
+  const namesByQual = new Map<string, string[]>();
+  const anyBranchFor = new Set<string>();
+  for (const rule of post.qualificationRules ?? []) {
+    const names = rule.branchIds
+      .map((id) => branchNameById.get(id))
+      .filter((n): n is string => !!n);
+    if (names.length === 0) anyBranchFor.add(rule.qualificationId);
+    const set = fieldsByQual.get(rule.qualificationId) ?? new Set<string>();
+    for (const n of names) {
+      const k = fieldKey(n);
+      if (k) set.add(k);
+    }
+    fieldsByQual.set(rule.qualificationId, set);
+    namesByQual.set(rule.qualificationId, [
+      ...new Set([...(namesByQual.get(rule.qualificationId) ?? []), ...names]),
+    ]);
+  }
+  const fieldsFor = (qualId: string): Set<string> =>
+    anyBranchFor.has(qualId)
+      ? new Set<string>()
+      : (fieldsByQual.get(qualId) ?? fields);
+  const branchNamesFor = (qualId: string): string[] =>
+    anyBranchFor.has(qualId) ? [] : (namesByQual.get(qualId) ?? branchNames);
 
   // --- Qualification
-  type QualStatus = 'yes' | 'no' | 'unknown' | 'na';
-  let qualStatus: QualStatus = 'na';
+  type QualStatus = "yes" | "no" | "unknown" | "na";
+  let qualStatus: QualStatus = "na";
   let qualCheck: FitCheck | null = null;
 
   if (accepted.length > 0) {
     if (user.educations.length === 0) {
-      qualStatus = 'unknown';
-      qualCheck = { label: 'Qualification', text: 'Add your education to your profile so we can check this job.', state: 'unknown' };
+      qualStatus = "unknown";
+      qualCheck = {
+        label: "Qualification",
+        text: "Add your education to your profile so we can check this job.",
+        state: "unknown",
+      };
     } else {
-      const results = accepted.map((a) => checkQualification(user.educations, a, fields));
-      const hit = results.find((r) => r.status === 'yes');
+      const results = accepted.map((a) =>
+        checkQualification(user.educations, a, fieldsFor(a.id)),
+      );
+      const hit = results.find((r) => r.status === "yes");
       if (hit) {
-        qualStatus = 'yes';
+        qualStatus = "yes";
         qualCheck = {
-          label: 'Qualification',
-          text: `Your ${hit.via ? describe(hit.via) : 'qualification'} meets the requirement.`,
-          state: 'ok',
+          label: "Qualification",
+          text: `Your ${hit.via ? describe(hit.via) : "qualification"} meets the requirement.`,
+          state: "ok",
         };
-      } else if (results.some((r) => r.status === 'unknown')) {
-        qualStatus = 'unknown';
+      } else if (results.some((r) => r.status === "unknown")) {
+        qualStatus = "unknown";
         qualCheck = {
-          label: 'Qualification',
+          label: "Qualification",
           text: `This job needs a specific branch (${joinNames(branchNames)}). Add your branch or subject to your education to check.`,
-          state: 'unknown',
+          state: "unknown",
         };
       } else {
-        qualStatus = 'no';
-        const need = joinNames(accepted.map((a) => a.name));
-        const inField = fields.size > 0 ? ` in ${joinNames(branchNames)}` : '';
+        qualStatus = "no";
+        const need = joinNames(
+          accepted.map((a) => {
+            const names = branchNamesFor(a.id);
+            return names.length > 0
+              ? `${a.name} (${joinNames(names)})`
+              : a.name;
+          }),
+        );
+        const inField = "";
         qualCheck = {
-          label: 'Qualification',
+          label: "Qualification",
           text: `Needs ${need}${inField}; you have ${summarize(user.educations)}.`,
-          state: 'fail',
+          state: "fail",
         };
       }
     }
@@ -330,7 +450,7 @@ export function evaluatePost(ctx: FitContext, post: PostLike, now: Date = new Da
     firstAgeCheck && post.ageCutoffDate
       ? {
           ...firstAgeCheck,
-          text: `${firstAgeCheck.text} (age as on ${ageAsOf.toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric', timeZone: 'Asia/Kolkata' })})`,
+          text: `${firstAgeCheck.text} (age as on ${ageAsOf.toLocaleDateString("en-IN", { day: "2-digit", month: "short", year: "numeric", timeZone: "Asia/Kolkata" })})`,
         }
       : firstAgeCheck;
 
@@ -354,38 +474,71 @@ export function evaluatePost(ctx: FitContext, post: PostLike, now: Date = new Da
   let prefCheck: FitCheck | null = null;
   if (prefs.length > 0 && post.employmentType) {
     if (prefs.includes(post.employmentType)) {
-      prefCheck = { label: 'Job type', text: 'Matches your job-type preference.', state: 'ok' };
+      prefCheck = {
+        label: "Job type",
+        text: "Matches your job-type preference.",
+        state: "ok",
+      };
     } else {
       prefFail = true;
-      const type = TYPE_LABEL[post.employmentType] ?? post.employmentType.toLowerCase();
-      prefCheck = { label: 'Job type', text: `This is a ${type} job, which is not in your job-type preferences.`, state: 'fail' };
+      const type =
+        TYPE_LABEL[post.employmentType] ?? post.employmentType.toLowerCase();
+      prefCheck = {
+        label: "Job type",
+        text: `This is a ${type} job, which is not in your job-type preferences.`,
+        state: "fail",
+      };
     }
   }
 
   // --- Field (only worth showing once the qualification itself is met)
-  const userFields = user.educations.map((e) => e.field).filter((key): key is string => !!key);
+  const userFields = user.educations
+    .map((e) => e.field)
+    .filter((key): key is string => !!key);
   const branchApplicable = fields.size > 0 && userFields.length > 0;
-  const branchMatch = branchApplicable && userFields.some((key) => fields.has(key));
+  const branchMatch =
+    branchApplicable && userFields.some((key) => fields.has(key));
   let fieldCheck: FitCheck | null = null;
-  if (qualStatus === 'yes' && fields.size > 0 && branchApplicable) {
-    const mine = [...new Set(user.educations.map((e) => e.fieldLabel).filter((l): l is string => !!l))];
+  if (qualStatus === "yes" && fields.size > 0 && branchApplicable) {
+    const mine = [
+      ...new Set(
+        user.educations
+          .map((e) => e.fieldLabel)
+          .filter((l): l is string => !!l),
+      ),
+    ];
     fieldCheck = branchMatch
-      ? { label: 'Field', text: `Your field matches (${joinNames(branchNames)}).`, state: 'ok' }
-      : { label: 'Field', text: `This job prefers ${joinNames(branchNames)}; your field is ${mine.join(', ')}.`, state: 'lower' };
+      ? {
+          label: "Field",
+          text: `Your field matches (${joinNames(branchNames)}).`,
+          state: "ok",
+        }
+      : {
+          label: "Field",
+          text: `This job prefers ${joinNames(branchNames)}; your field is ${mine.join(", ")}.`,
+          state: "lower",
+        };
   }
 
   // --- Roles (bonus only)
-  const roleApplicable = user.preferredRoleIds.length > 0 && (post.roles?.length ?? 0) > 0;
-  const roleMatch = roleApplicable && (post.roles ?? []).some((r) => user.preferredRoleIds.includes(r.id));
+  const roleApplicable =
+    user.preferredRoleIds.length > 0 && (post.roles?.length ?? 0) > 0;
+  const roleMatch =
+    roleApplicable &&
+    (post.roles ?? []).some((r) => user.preferredRoleIds.includes(r.id));
   const roleCheck: FitCheck | null = roleApplicable
     ? roleMatch
-      ? { label: 'Role', text: 'Matches a role you prefer.', state: 'ok' }
-      : { label: 'Role', text: 'This is not one of your preferred roles.', state: 'lower' }
+      ? { label: "Role", text: "Matches a role you prefer.", state: "ok" }
+      : {
+          label: "Role",
+          text: "This is not one of your preferred roles.",
+          state: "lower",
+        }
     : null;
 
   // --- Score (same weights as before: 40 qualification, 30 age, 20 field, 10 role)
-  const qualEarned = qualStatus === 'yes' || qualStatus === 'na' ? 40 : 0;
-  const ageEarned = ageStatus === 'yes' ? 30 : 0;
+  const qualEarned = qualStatus === "yes" || qualStatus === "na" ? 40 : 0;
+  const ageEarned = ageStatus === "yes" ? 30 : 0;
   const hard = qualEarned + ageEarned;
   const share = hard / 70;
   const branchEarned = branchApplicable ? (branchMatch ? 20 : 0) : 20 * share;
@@ -395,28 +548,43 @@ export function evaluatePost(ctx: FitContext, post: PostLike, now: Date = new Da
   // --- Verdict
   let verdict: FitVerdict;
   let label: string;
-  if (qualStatus === 'no' || ageStatus === 'no' || reqResult.status === 'no') {
-    verdict = 'not-eligible';
-    label = 'Not eligible';
+  if (qualStatus === "no" || ageStatus === "no" || reqResult.status === "no") {
+    verdict = "not-eligible";
+    label = "Not eligible";
   } else if (prefFail) {
-    verdict = 'not-eligible';
-    label = 'Not in your preferences';
-  } else if (qualStatus === 'unknown' || ageStatus === 'unknown' || reqResult.status === 'unknown') {
-    verdict = 'unknown';
-    label = 'Add details to check';
+    verdict = "not-eligible";
+    label = "Not in your preferences";
+  } else if (
+    qualStatus === "unknown" ||
+    ageStatus === "unknown" ||
+    reqResult.status === "unknown"
+  ) {
+    verdict = "unknown";
+    label = "Add details to check";
   } else {
-    verdict = 'eligible';
+    verdict = "eligible";
     label = `${score}% match`;
   }
 
-  const checks = [qualCheck, fieldCheck, ageCheck, ...reqResult.checks, roleCheck, prefCheck].filter((c): c is FitCheck => c !== null);
+  const checks = [
+    qualCheck,
+    fieldCheck,
+    ageCheck,
+    ...reqResult.checks,
+    roleCheck,
+    prefCheck,
+  ].filter((c): c is FitCheck => c !== null);
   return { verdict, score, label, checks };
 }
 
-const verdictRank = (v: FitVerdict) => (v === 'eligible' ? 2 : v === 'unknown' ? 1 : 0);
+const verdictRank = (v: FitVerdict) =>
+  v === "eligible" ? 2 : v === "unknown" ? 1 : 0;
 
 // The post that fits the user best decides how the whole job is shown.
-export function bestFitForJob(ctx: FitContext, posts: PostLike[]): JobFit | null {
+export function bestFitForJob(
+  ctx: FitContext,
+  posts: PostLike[],
+): JobFit | null {
   if (posts.length === 0) return null;
   let best: { post: PostLike; evaluation: Evaluation } | null = null;
   for (const post of posts) {
@@ -424,10 +592,18 @@ export function bestFitForJob(ctx: FitContext, posts: PostLike[]): JobFit | null
     if (
       !best ||
       verdictRank(evaluation.verdict) > verdictRank(best.evaluation.verdict) ||
-      (verdictRank(evaluation.verdict) === verdictRank(best.evaluation.verdict) && evaluation.score > best.evaluation.score)
+      (verdictRank(evaluation.verdict) ===
+        verdictRank(best.evaluation.verdict) &&
+        evaluation.score > best.evaluation.score)
     ) {
       best = { post, evaluation };
     }
   }
-  return best ? { evaluation: best.evaluation, postTitle: best.post.title ?? null, postCount: posts.length } : null;
+  return best
+    ? {
+        evaluation: best.evaluation,
+        postTitle: best.post.title ?? null,
+        postCount: posts.length,
+      }
+    : null;
 }

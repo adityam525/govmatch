@@ -235,6 +235,7 @@ model Post {
   minHeightCm            Int?
   minChestCm             Int?
   ageCutoffDate DateTime?
+  qualificationRules PostQualificationRule[]
 }
 
 model AdmitCard {
@@ -650,4 +651,16 @@ model ScheduleChange {
 
   @@index([eventId])
   @@index([createdAt])
+}
+
+// One accepted qualification of a post, with the branches that qualification is limited to.
+// An empty branch list means any branch of that qualification.
+model PostQualificationRule {
+  id              String   @id @default(cuid())
+  postId          String
+  post            Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  qualificationId String
+  branchIds       String[] @default([])
+
+  @@index([postId])
 }

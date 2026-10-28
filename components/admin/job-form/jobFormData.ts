@@ -113,9 +113,15 @@ export async function loadJob(jobId: string): Promise<JobData> {
         id: p.id,
         title: p.title,
         vacancies: str(p.vacancies),
-        qualificationBlocks: accepted.length
-          ? accepted.map((q: any) => ({ qualificationCategorySlug: categoryOf[q.id] ?? "", qualificationId: q.id, branchIds }))
-          : [{ qualificationCategorySlug: "", qualificationId: "", branchIds: [] }],
+        qualificationBlocks: (p.qualificationRules ?? []).length
+          ? p.qualificationRules.map((r: any) => ({
+              qualificationCategorySlug: categoryOf[r.qualificationId] ?? "",
+              qualificationId: r.qualificationId,
+              branchIds: r.branchIds ?? [],
+            }))
+          : accepted.length
+            ? accepted.map((q: any) => ({ qualificationCategorySlug: categoryOf[q.id] ?? "", qualificationId: q.id, branchIds }))
+            : [{ qualificationCategorySlug: "", qualificationId: "", branchIds: [] }],
         minAge: str(p.minAge),
         maxAge: str(p.maxAge),
         payScale: str(p.payScale),
@@ -234,6 +240,7 @@ async function saveCollections(jobId: string, data: JobData) {
       payScale: p.payScale || null,
       employmentType: p.employmentType,
       branchIds: [...new Set(blocks.flatMap((q) => q.branchIds))],
+      qualificationRules: blocks.map((q) => ({ qualificationId: q.qualificationId, branchIds: q.branchIds })),
       roleIds: p.roleId ? [p.roleId] : [],
       genderRestriction: p.genderRestriction || null,
       minExperienceYears: p.minExperienceYears,
