@@ -324,7 +324,10 @@ export default async function JobsPage({ searchParams }: JobsPageProps) {
 
   const matchByJobId = new Map<string, number>();
   const eligibleJobIds = new Set<string>();
-  const verdictByJobId = new Map<string, { score: number; verdict: { label: string; reasons: string[] } }>();
+  const verdictByJobId = new Map<
+    string,
+    { score: number; verdict: { label: string; reasons: string[] } }
+  >();
   const fitByJobId = new Map<string, JobFit>();
   let hasProfile = false;
   let profileComplete = false;
@@ -351,7 +354,10 @@ export default async function JobsPage({ searchParams }: JobsPageProps) {
               verdict: {
                 label: fit.evaluation.label,
                 reasons: fit.evaluation.checks
-                  .filter((check) => check.state === "fail" || check.state === "unknown")
+                  .filter(
+                    (check) =>
+                      check.state === "fail" || check.state === "unknown",
+                  )
                   .map((check) => check.text),
               },
             });
@@ -410,7 +416,10 @@ export default async function JobsPage({ searchParams }: JobsPageProps) {
           const v = fitByJobId.get(id)?.evaluation.verdict;
           return v === "eligible" ? 2 : v === "unknown" ? 1 : 0;
         };
-        return rank(b.id) - rank(a.id) || (matchByJobId.get(b.id) ?? 0) - (matchByJobId.get(a.id) ?? 0);
+        return (
+          rank(b.id) - rank(a.id) ||
+          (matchByJobId.get(b.id) ?? 0) - (matchByJobId.get(a.id) ?? 0)
+        );
       }
 
       /*
@@ -512,21 +521,36 @@ export default async function JobsPage({ searchParams }: JobsPageProps) {
           </p>
         </div>
       ) : (
-        <div className="mt-4 space-y-4">
-          {(view.preset && !params.sort
-            ? sortByIdOrder(jobs, viewIds)
-            : jobs
-          ).map((job) => (
-            <JobListItem
-              key={job.id}
-              job={job}
-              matchPercentage={profileComplete ? matchByJobId.get(job.id) : undefined}
-              eligible={profileComplete && fitByJobId.has(job.id) ? eligibleJobIds.has(job.id) : undefined}
-              verdict={verdictByJobId.get(job.id)?.verdict}
-              fit={profileComplete ? fitByJobId.get(job.id) : undefined}
-            />
-          ))}
-        </div>
+        <>
+          <div className="mt-4 hidden grid-cols-[minmax(0,1fr)_8.5rem_6rem_6.5rem_1rem] gap-4 px-5 text-[11px] font-semibold uppercase tracking-wide text-neutral-400 md:grid">
+            <span>Job</span>
+            <span>Match</span>
+            <span>Vacancies</span>
+            <span>Last date</span>
+            <span />
+          </div>
+          <div className="mt-2 space-y-4">
+            {(view.preset && !params.sort
+              ? sortByIdOrder(jobs, viewIds)
+              : jobs
+            ).map((job) => (
+              <JobListItem
+                key={job.id}
+                job={job}
+                matchPercentage={
+                  profileComplete ? matchByJobId.get(job.id) : undefined
+                }
+                eligible={
+                  profileComplete && fitByJobId.has(job.id)
+                    ? eligibleJobIds.has(job.id)
+                    : undefined
+                }
+                verdict={verdictByJobId.get(job.id)?.verdict}
+                fit={profileComplete ? fitByJobId.get(job.id) : undefined}
+              />
+            ))}
+          </div>
+        </>
       )}
     </div>
   );

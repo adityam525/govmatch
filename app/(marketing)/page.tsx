@@ -1,5 +1,8 @@
 import { auth } from "@/lib/auth";
-import { getRecommendations, type RecommendationResult } from "@/lib/recommendations";
+import {
+  getRecommendations,
+  type RecommendationResult,
+} from "@/lib/recommendations";
 import { getLastDateTodayJobs } from "@/lib/job-today";
 import type { PublishedJob } from "@/lib/job-queries";
 
@@ -56,7 +59,9 @@ export default async function HomePage() {
       loadPicks(userId),
       getLastDateTodayJobs().catch(() => [] as PublishedJob[]),
     ]);
-    const topScore = picks?.items.find((item) => item.eligible)?.matchScore ?? null;
+
+    const topScore =
+      picks?.items.find((item) => item.eligible)?.matchScore ?? null;
 
     return (
       <div className="bg-neutral-50">
@@ -64,8 +69,8 @@ export default async function HomePage() {
           <SearchHero matchScore={topScore} />
         </div>
 
-        {/* Phones: picks, then jobs, then the smaller cards. Desktop: jobs on the
-            left, picks and the smaller cards stacked on the right. */}
+        {/* Phones: picks, then jobs, then the smaller cards.
+            Desktop: jobs on the left, picks and smaller cards stacked on the right. */}
         <div className="mx-auto grid max-w-7xl gap-6 px-4 pt-8 sm:px-6 lg:grid-cols-10 lg:grid-rows-[auto_1fr] lg:gap-x-8 lg:pt-10">
           <aside className="order-1 min-w-0 lg:order-none lg:col-span-3 lg:col-start-8 lg:row-start-1">
             <JobPicksCard picks={picks} dueToday={dueToday} />
@@ -75,12 +80,14 @@ export default async function HomePage() {
             <QuickStatsBar />
             <HomeHotNews />
             <LatestJobsSection />
-            <UpcomingJobsSection hideWhenEmpty />
           </div>
 
           <div className="order-3 min-w-0 space-y-4 lg:order-none lg:col-span-3 lg:col-start-8 lg:row-start-2">
             {(picks?.strength ?? 0) < 100 && (
-              <ProfileStrengthCard strength={picks?.strength ?? 0} missing={picks?.missing ?? []} />
+              <ProfileStrengthCard
+                strength={picks?.strength ?? 0}
+                missing={picks?.missing ?? []}
+              />
             )}
             <NotificationPromptCard />
             <MockTestPromoCard />
@@ -88,6 +95,7 @@ export default async function HomePage() {
         </div>
 
         <div className="mx-auto max-w-7xl space-y-16 px-4 py-16 sm:px-6">
+          <UpcomingJobsSection hideWhenEmpty />
           <LowerSections />
         </div>
       </div>
@@ -99,9 +107,11 @@ export default async function HomePage() {
       <div className="mx-auto max-w-7xl px-4 pt-6 sm:px-6 sm:pt-8">
         <SearchHero />
       </div>
+
       <div className="mx-auto max-w-7xl px-4 pt-8 sm:px-6 lg:pt-10">
         <QuickStatsBar />
       </div>
+
       <div className="mx-auto max-w-7xl space-y-16 px-4 py-16 sm:px-6">
         <HomeHotNews />
         <LatestJobsWithToday />

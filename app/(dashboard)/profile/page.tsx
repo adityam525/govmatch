@@ -20,6 +20,7 @@ import SpecialCategoriesFields, {
 import ExtraProfileFields, {
   type ExtraState,
 } from "@/components/profile/ExtraProfileFields";
+import RecruiterPrefs from "@/components/profile/RecruiterPrefs";
 import { computeCompleteness } from "@/lib/profile-completeness";
 import { useAuth } from "@/features/auth/hooks";
 
@@ -37,6 +38,8 @@ const EMPTY_EXTRA: ExtraState = {
   preferredStateCodes: [],
   heightCm: "",
   chestCm: "",
+  preferredSectorSlugs: [],
+  preferredOrganizationSlugs: [],
 };
 
 const serialize = (parts: unknown, rows: EducationRowState[]) =>
@@ -191,6 +194,8 @@ export default function ProfilePage() {
         preferredStateCodes: p.preferredStateCodes ?? [],
         heightCm: p.heightCm != null ? String(p.heightCm) : "",
         chestCm: p.chestCm != null ? String(p.chestCm) : "",
+        preferredSectorSlugs: p.preferredSectorSlugs ?? [],
+        preferredOrganizationSlugs: p.preferredOrganizationSlugs ?? [],
       };
       const nextRows = rowsFromSaved(Array.isArray(education) ? education : []);
 
@@ -240,6 +245,10 @@ export default function ProfilePage() {
     gender: personal.gender || null,
     phoneNumber: personal.phoneNumber || null,
     preferenceCount: prefs.roleIds.length + prefs.types.length,
+    sectorPrefCount:
+      extra.preferredStateCodes.length +
+      extra.preferredSectorSlugs.length +
+      extra.preferredOrganizationSlugs.length,
   });
   const needs = (key: string) =>
     completeness.items.some((i) => i.key === key && !i.done && i.required);
@@ -374,6 +383,8 @@ export default function ProfilePage() {
           preferredStateCodes: extra.preferredStateCodes,
           heightCm: extra.heightCm,
           chestCm: extra.chestCm,
+          preferredSectorSlugs: extra.preferredSectorSlugs,
+          preferredOrganizationSlugs: extra.preferredOrganizationSlugs,
         }),
       });
       const profileData = await profileRes.json().catch(() => ({}));
@@ -569,6 +580,14 @@ export default function ProfilePage() {
             value={extra}
             onChange={(next) => {
               setExtra(next);
+              setMessage(null);
+            }}
+          />
+
+          <RecruiterPrefs
+            value={extra}
+            onChange={(next) => {
+              setExtra((e) => ({ ...e, ...next }));
               setMessage(null);
             }}
           />
