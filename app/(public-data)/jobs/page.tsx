@@ -406,7 +406,11 @@ export default async function JobsPage({ searchParams }: JobsPageProps) {
           return getCreatedAtValue(b) - getCreatedAtValue(a);
         }
 
-        return (matchByJobId.get(b.id) ?? 0) - (matchByJobId.get(a.id) ?? 0);
+        const rank = (id: string) => {
+          const v = fitByJobId.get(id)?.evaluation.verdict;
+          return v === "eligible" ? 2 : v === "unknown" ? 1 : 0;
+        };
+        return rank(b.id) - rank(a.id) || (matchByJobId.get(b.id) ?? 0) - (matchByJobId.get(a.id) ?? 0);
       }
 
       /*

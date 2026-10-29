@@ -157,6 +157,7 @@ export default async function DashboardPage() {
   const completeness = completenessResult.percent;
 
   const premium = isPremiumSubscription(user?.subscription);
+  const matchesHref = premium ? '/jobs?sort=relevance&eligible=1' : '/jobs?sort=relevance';
   const fits = (picks?.items ?? []).filter((item) => item.eligible);
   const topMatches = fits.slice(0, 5);
   const firstName = user?.name?.split(' ')[0] ?? 'there';
@@ -215,7 +216,7 @@ export default async function DashboardPage() {
       </div>
 
       <div className="mt-6 grid grid-cols-2 gap-3 lg:grid-cols-4 lg:gap-4">
-        <Kpi icon={<Briefcase size={18} />} tint="bg-green-50 text-success" value={picks && picks.status === 'ok' && !picks.incomplete ? String(fits.length) : '-'} label="Open jobs that fit you" href="/jobs?sort=relevance" />
+        <Kpi icon={<Briefcase size={18} />} tint="bg-green-50 text-success" value={picks && picks.status === 'ok' && !picks.incomplete ? String(fits.length) : '-'} label="Open jobs that fit you" href={matchesHref} />
         <Kpi icon={<Bookmark size={18} />} tint="bg-violet-50 text-violet-600" value={String(savedCount)} label="Saved jobs" href="/saved-jobs" />
         <Kpi icon={<ClipboardList size={18} />} tint="bg-amber-50 text-amber-600" value={String(applications.length)} label="Applications tracked" href="/applications" />
         <Kpi icon={<TrendingUp size={18} />} tint="bg-primary-50 text-primary-600" value={`${completeness}%`} label="Profile complete" href="/profile" />

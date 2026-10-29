@@ -287,6 +287,24 @@ function summarize(educations: EducationFact[]): string {
   return sorted.length > 2 ? `${shown} and ${sorted.length - 2} more` : shown;
 }
 
+const LEVEL_NAMES: Record<number, string> = {
+  1: "8th Pass level",
+  2: "10th Pass level",
+  3: "12th Pass level",
+  4: "ITI / Apprentice level",
+  5: "Diploma level",
+  6: "Graduate level",
+  7: "Post Graduate level",
+  8: "Doctorate level",
+};
+
+function highestLabel(educations: EducationFact[]): string {
+  const top = [...educations].sort((a, b) => b.qualification.level - a.qualification.level)[0];
+  if (!top) return "nothing added yet";
+  const level = LEVEL_NAMES[top.qualification.level] ?? `level ${top.qualification.level}`;
+  return `${level} (${describe(top)})`;
+}
+
 const TYPE_LABEL: Record<string, string> = {
   PERMANENT: "permanent",
   CONTRACT: "contract",
@@ -426,7 +444,7 @@ export function evaluatePost(
         const inField = "";
         qualCheck = {
           label: "Qualification",
-          text: `Needs ${need}${inField}; you have ${summarize(user.educations)}.`,
+          text: `Needs ${need}${accepted.every(isGeneric) ? " or higher" : ""}; your highest level is ${highestLabel(user.educations)}.`,
           state: "fail",
         };
       }
