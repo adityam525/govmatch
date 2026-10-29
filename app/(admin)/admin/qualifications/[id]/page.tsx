@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
 import LookupForm from '@/components/admin/LookupForm';
+import BranchManager from '@/components/admin/BranchManager';
 import { qualificationFields } from '@/components/admin/qualification-fields';
 import { adminApi } from '@/features/admin/api';
 
@@ -30,6 +31,7 @@ export default function EditQualificationPage() {
         onDelete={() => adminApi.remove('qualifications', id)}
         backHref="/admin/qualifications"
       />
+      {data.slug && <BranchManager qualificationId={id} qualificationSlug={data.slug} />}
     </div>
   );
 }

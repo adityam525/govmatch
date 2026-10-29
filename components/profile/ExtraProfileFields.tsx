@@ -11,6 +11,8 @@ export interface ExtraState {
   preferredStateCodes: string[];
   heightCm: string;
   chestCm: string;
+  preferredSectorSlugs: string[];
+  preferredOrganizationSlugs: string[];
 }
 
 interface StateOption { code: string; name: string }
