@@ -43,7 +43,8 @@ async function main() {
     ['Diploma with no branch given is "unknown"', ctx([edu('Diploma (Engineering)')]), split, 'unknown'],
     ['a post with no rules still works the old way: B.Tech Civil passes', ctx([edu('B.Tech / B.E', 'Civil')]), legacy, 'eligible'],
     ['Diploma open to any branch: Diploma Mechanical passes', ctx([edu('Diploma (Engineering)', 'Mechanical')]), anyField, 'eligible'],
-    ['same post: B.Tech Electrical still fails', ctx([edu('B.Tech / B.E', 'Electrical')]), anyField, 'not-eligible'],
+    ['same post: B.Tech Electrical counts via the any-branch Diploma (same family)', ctx([edu('B.Tech / B.E', 'Electrical')]), anyField, 'eligible'],
+    ['same post: B.Sc Physics fails both (different family)', ctx([edu('B.Sc', 'Physics')]), anyField, 'not-eligible'],
   ];
 
   let failed = 0;
