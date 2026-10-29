@@ -278,6 +278,7 @@ export default async function JobsPage({ searchParams }: JobsPageProps) {
         include: {
           qualification: true,
           qualifications: true,
+          qualificationRules: true,
           branches: true,
           roles: true,
         },

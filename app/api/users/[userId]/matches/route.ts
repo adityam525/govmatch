@@ -1,78 +1,67 @@
 import { NextResponse } from 'next/server';
-import { prisma } from '@/lib/prisma';
-import { computeMatch } from '@/features/matching/engine';
 import { requireSelf } from '@/lib/require-user';
+import { getPublishedJobs } from '@/lib/job-queries';
+import { evaluatePost, loadFitContext, type Evaluation } from '@/lib/job-fit';
+import { ageInYears } from '@/lib/eligibility-reasons';
 
 interface Params { params: Promise<{ userId: string }> }
+
+// The old response shape, rebuilt from the new checks so existing callers keep working.
+function legacyBreakdown(evaluation: Evaluation, dateOfBirth: Date | null) {
+  const find = (label: string) => evaluation.checks.find((c) => c.label === label);
+  const qualification = find('Qualification');
+  const age = find('Age');
+  const field = find('Field');
+  const role = find('Role');
+  return {
+    qualification: { match: !qualification || qualification.state === 'ok', weight: 40 },
+    age: { match: !age || age.state === 'ok', weight: 30, userAge: dateOfBirth ? ageInYears(dateOfBirth) : null },
+    branch: { match: field?.state === 'ok', weight: 20, applicable: !!field },
+    role: { match: role?.state === 'ok', weight: 10, applicable: !!role },
+  };
+}
+
+const rank = (verdict: string) => (verdict === 'eligible' ? 2 : verdict === 'unknown' ? 1 : 0);
 
 export async function GET(request: Request, { params }: Params) {
   const { userId } = await params;
   const guard = await requireSelf(userId);
   if (!guard.ok) return guard.response;
-  try {
-    const profile = await prisma.userProfile.findUnique({
-      where: { userId },
-      include: { preferredRoles: true },
-    });
 
-    if (!profile) {
+  try {
+    const ctx = await loadFitContext(userId);
+    if (!ctx.hasProfile) {
       return NextResponse.json({ message: 'No profile found for this user' }, { status: 404 });
     }
 
-    const userQualification = profile.qualificationId
-      ? await prisma.qualification.findUnique({ where: { id: profile.qualificationId } })
-      : null;
+    const jobs = (await getPublishedJobs()).filter(
+      (job) => (job.phase === 'LIVE' && job.applicationOpen) || job.phase === 'UPCOMING',
+    );
 
-    const notifications = await prisma.notification.findMany({
-      where: { status: 'LIVE', published: true },
-      include: {
-        organization: true,
-        posts: { include: { qualification: true, branches: true, roles: true } },
-      },
-    });
-
-    const matches = notifications.flatMap((notification) =>
-      notification.posts.map((post) => {
-        const result = computeMatch(
-          {
-            dateOfBirth: profile.dateOfBirth,
-            category: profile.category,
-            qualificationLevel: userQualification?.level ?? null,
-            branchId: profile.branchId,
-            preferredRoleIds: profile.preferredRoles.map((r) => r.id),
-            preferredEmploymentTypes: profile.preferredEmploymentTypes,
-          },
-          {
-            minAge: post.minAge,
-            maxAge: post.maxAge,
-            qualificationLevel: post.qualification?.level ?? null,
-            branchIds: post.branches.map((b) => b.id),
-            roleIds: post.roles.map((r) => r.id),
-            employmentType: post.employmentType,
-          }
-        );
-
+    const matches = jobs.flatMap((job) =>
+      job.posts.map((post) => {
+        const evaluation = evaluatePost(ctx, post as any);
         return {
-          notificationId: notification.id,
-          notificationTitle: notification.title,
-          slug: notification.slug,
-          organization: notification.organization?.name,
+          notificationId: job.id,
+          notificationTitle: job.title,
+          slug: job.slug,
+          organization: job.organization?.name,
           postId: post.id,
           postTitle: post.title,
           vacancies: post.vacancies,
-          applicationEndDate: notification.applicationEndDate,
-          matchScore: result.score,
-          eligible: result.eligible,
-          breakdown: result.breakdown,
+          applicationEndDate: job.applicationEndDate,
+          matchScore: evaluation.score,
+          eligible: evaluation.verdict === 'eligible',
+          verdict: evaluation.verdict,
+          label: evaluation.label,
+          checks: evaluation.checks,
+          breakdown: legacyBreakdown(evaluation, ctx.user.dateOfBirth),
         };
-      })
+      }),
     );
 
-    // Eligible + highest match first
-    matches.sort((a, b) => {
-      if (a.eligible !== b.eligible) return a.eligible ? -1 : 1;
-      return b.matchScore - a.matchScore;
-    });
+    // Clear yes first, then "add details to check", then the rest; best score first within each.
+    matches.sort((a, b) => rank(b.verdict) - rank(a.verdict) || b.matchScore - a.matchScore);
 
     return NextResponse.json(matches);
   } catch (error) {
