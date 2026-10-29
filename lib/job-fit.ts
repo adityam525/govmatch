@@ -163,6 +163,7 @@ export async function loadFitContext(userId: string): Promise<FitContext> {
     preferenceCount:
       (profile?.preferredRoles.length ?? 0) +
       (profile?.preferredEmploymentTypes.length ?? 0),
+    sectorPrefCount: (profile?.preferredStateCodes.length ?? 0) + (profile?.preferredSectorSlugs.length ?? 0) + (profile?.preferredOrganizationSlugs.length ?? 0),
   });
 
   return {

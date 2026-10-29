@@ -1,6 +1,7 @@
 import { getPublishedJobs } from '@/lib/job-queries';
 import { bestFitForJob, loadFitContext } from '@/lib/job-fit';
 import { daysBetween, todayIST } from '@/lib/job-status';
+import { PREFERENCE_BONUS, jobMatchesPreferences, loadPreferenceSets } from '@/lib/preferences';
 
 export interface Recommendation {
   id: string;
@@ -11,6 +12,8 @@ export interface Recommendation {
   orgLogoUrl: string | null;
   matchScore: number;
   eligible: boolean;
+  /** In a state, sector or organization the user prefers. */
+  preferred: boolean;
   bestPost: string | null;
   postCount: number;
   vacancies: number;
@@ -36,6 +39,7 @@ export async function getRecommendations(userId: string): Promise<Recommendation
   if (!ctx.hasProfile) return { status: 'no-profile', incomplete: true, strength: 0, missing: ctx.missing, items: [] };
 
   const today = todayIST();
+  const prefs = await loadPreferenceSets(userId);
   const jobs = (await getPublishedJobs()).filter(
     (job) => (job.phase === 'LIVE' && job.applicationOpen) || job.phase === 'UPCOMING',
   );
@@ -54,6 +58,14 @@ export async function getRecommendations(userId: string): Promise<Recommendation
       orgLogoUrl: job.organization?.logoUrl ?? null,
       matchScore: fit.evaluation.score,
       eligible: fit.evaluation.verdict === 'eligible',
+      preferred: jobMatchesPreferences(
+        {
+          organizationSlug: job.organization?.slug,
+          sectorSlug: job.organization?.category?.slug,
+          stateCodes: (job.states ?? []).map((s: any) => s.code),
+        },
+        prefs,
+      ),
       bestPost: fit.postTitle,
       postCount: fit.postCount,
       vacancies: job.vacancyTotal,
@@ -65,7 +77,9 @@ export async function getRecommendations(userId: string): Promise<Recommendation
 
   items.sort((a, b) => {
     if (a.eligible !== b.eligible) return a.eligible ? -1 : 1;
-    if (a.matchScore !== b.matchScore) return b.matchScore - a.matchScore;
+    const aRank = a.matchScore + (a.preferred ? PREFERENCE_BONUS : 0);
+    const bRank = b.matchScore + (b.preferred ? PREFERENCE_BONUS : 0);
+    if (aRank !== bRank) return bRank - aRank;
     const aEnd = a.lastDate ? a.lastDate.getTime() : Infinity;
     const bEnd = b.lastDate ? b.lastDate.getTime() : Infinity;
     return aEnd - bEnd;

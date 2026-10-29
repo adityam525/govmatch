@@ -151,6 +151,7 @@ export default async function DashboardPage() {
     gender: profile?.gender ?? null,
     phoneNumber: profile?.phoneNumber ?? null,
     preferenceCount: (profile?.preferredRoles.length ?? 0) + (profile?.preferredEmploymentTypes.length ?? 0),
+    sectorPrefCount: (profile?.preferredStateCodes.length ?? 0) + (profile?.preferredSectorSlugs.length ?? 0) + (profile?.preferredOrganizationSlugs.length ?? 0),
   });
   const checklist = completenessResult.items;
   const doneCount = checklist.filter((item) => item.done).length;
@@ -224,7 +225,7 @@ export default async function DashboardPage() {
 
       <div className="mt-6 grid gap-6 xl:grid-cols-3">
         <div className="min-w-0 space-y-6 xl:col-span-2">
-          <Panel title="Top matches" highlight action={{ href: '/jobs?sort=relevance', label: 'See all' }}>
+          <Panel title="Top matches" highlight action={{ href: matchesHref, label: 'See all' }}>
             {matchesBody}
           </Panel>
           {notices.length > 0 && (

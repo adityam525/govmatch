@@ -42,6 +42,9 @@ export default function RecommendedList({ items }: { items: Recommendation[] }) 
                 <span className={`shrink-0 rounded-full px-2 py-0.5 text-[11px] font-semibold ${matchTone(item.matchScore)}`}>
                   {item.matchScore}% match
                 </span>
+                {item.preferred && (
+                  <span className="shrink-0 rounded-full bg-violet-50 px-2 py-0.5 text-[11px] text-violet-700">Preferred</span>
+                )}
                 {time && (
                   <span
                     className={`shrink-0 rounded-full px-2 py-0.5 text-[11px] ${

@@ -107,6 +107,21 @@ export async function PATCH(request: Request, { params }: Params) {
       data.certifications = [...new Set(list as string[])];
     }
 
+    for (const [field, model] of [
+      ['preferredSectorSlugs', 'category'],
+      ['preferredOrganizationSlugs', 'organization'],
+    ] as const) {
+      if (!(field in body)) continue;
+      const list: unknown[] = Array.isArray(body[field]) ? body[field] : [];
+      if (list.length > 60 || list.some((v) => typeof v !== 'string')) return bad('Choose valid recruiters.');
+      const wanted = [...new Set(list as string[])];
+      const known = await (model === 'category'
+        ? prisma.category.findMany({ where: { slug: { in: wanted } }, select: { slug: true } })
+        : prisma.organization.findMany({ where: { slug: { in: wanted } }, select: { slug: true } }));
+      if (known.length !== wanted.length) return bad('One of the chosen recruiters no longer exists.');
+      data[field] = wanted;
+    }
+
     if ('domicileStateCode' in body || 'preferredStateCodes' in body) {
       const known = new Set((await prisma.state.findMany({ select: { code: true } })).map((s) => s.code));
       if ('domicileStateCode' in body) {

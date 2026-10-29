@@ -9,6 +9,8 @@ export interface CompletenessInput {
   phoneNumber: string | null | undefined;
   /** Preferred roles plus preferred job types. */
   preferenceCount: number;
+  /** Preferred states, sectors and organizations. */
+  sectorPrefCount?: number;
 }
 
 export interface CompletenessItem {
@@ -36,6 +38,7 @@ export function computeCompleteness(input: CompletenessInput): Completeness {
     { key: 'gender', label: 'Gender', short: 'gender', done: !!input.gender, required: false },
     { key: 'phone', label: 'Mobile number', short: 'mobile number', done: !!input.phoneNumber, required: false },
     { key: 'prefs', label: 'Job preferences (roles or job type)', short: 'job preferences', done: input.preferenceCount > 0, required: false },
+    { key: 'places', label: 'Preferred states, sectors or organizations', short: 'preferred states, sectors or organizations', done: (input.sectorPrefCount ?? 0) > 0, required: false },
   ];
   const done = items.filter((item) => item.done).length;
   const missingItems = items.filter((item) => !item.done).sort((a, b) => Number(b.required) - Number(a.required));

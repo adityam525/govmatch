@@ -393,6 +393,8 @@ model UserProfile {
   certifications      String[] @default([])
   heightCm            Int?
   chestCm             Int?
+  preferredSectorSlugs       String[] @default([])
+  preferredOrganizationSlugs String[] @default([])
 }
 
 model SavedJob {
