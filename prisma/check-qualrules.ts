@@ -36,13 +36,14 @@ async function main() {
   const cases: [string, FitContext, any, string][] = [
     ['Diploma Civil meets "Diploma Civil or B.Tech Mechanical"', ctx([edu('Diploma (Engineering)', 'Civil')]), split, 'eligible'],
     ['B.Tech Mechanical meets it', ctx([edu('B.Tech / B.E', 'Mechanical')]), split, 'eligible'],
-    ['B.Tech Civil does not', ctx([edu('B.Tech / B.E', 'Civil')]), split, 'not-eligible'],
+    ['B.Tech Civil counts via Diploma Civil (a higher degree in the same field)', ctx([edu('B.Tech / B.E', 'Civil')]), split, 'eligible'],
+    ['B.Tech Electrical does not', ctx([edu('B.Tech / B.E', 'Electrical')]), split, 'not-eligible'],
     ['Diploma Mechanical does not', ctx([edu('Diploma (Engineering)', 'Mechanical')]), split, 'not-eligible'],
     ['M.Tech Mechanical counts via B.Tech Mechanical', ctx([edu('M.Tech / M.E', 'Mechanical')]), split, 'eligible'],
     ['Diploma with no branch given is "unknown"', ctx([edu('Diploma (Engineering)')]), split, 'unknown'],
     ['a post with no rules still works the old way: B.Tech Civil passes', ctx([edu('B.Tech / B.E', 'Civil')]), legacy, 'eligible'],
     ['Diploma open to any branch: Diploma Mechanical passes', ctx([edu('Diploma (Engineering)', 'Mechanical')]), anyField, 'eligible'],
-    ['same post: B.Tech Civil still fails', ctx([edu('B.Tech / B.E', 'Civil')]), anyField, 'not-eligible'],
+    ['same post: B.Tech Electrical still fails', ctx([edu('B.Tech / B.E', 'Electrical')]), anyField, 'not-eligible'],
   ];
 
   let failed = 0;
@@ -52,7 +53,7 @@ async function main() {
     if (!ok) failed++;
     console.log(`${ok ? 'PASS' : 'FAIL'}  ${name}${ok ? '' : `  -> got ${r.verdict}: ${r.checks.map((x) => x.text).join(' | ')}`}`);
   }
-  const msg = evaluatePost(ctx([edu('B.Tech / B.E', 'Civil')]), split).checks.find((c) => c.label === 'Qualification')?.text ?? '';
+  const msg = evaluatePost(ctx([edu('B.Tech / B.E', 'Electrical')]), split).checks.find((c) => c.label === 'Qualification')?.text ?? '';
   const nice = msg.includes('Diploma (Engineering) (Civil)') && msg.includes('B.Tech / B.E (Mechanical)');
   if (!nice) failed++;
   console.log(`${nice ? 'PASS' : 'FAIL'}  the message names each qualification with its own branch${nice ? '' : `  -> ${msg}`}`);
