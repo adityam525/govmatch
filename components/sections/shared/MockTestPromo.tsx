@@ -56,9 +56,9 @@ import Button from "@/components/ui/Button";
 import TopicAccuracyChart from "@/components/shared/TopicAccuracyChart";
 
 const features = [
-  "Topic-wise accuracy tracking",
-  "Watermarked downloadable mock papers",
-  "Exam-tagged previous year questions",
+  "Your own questions, sections and timer",
+  "Marks and negative marking you control",
+  "Exam-style question palette and result review",
 ];
 
 export default function MockTestPromo() {
@@ -73,17 +73,16 @@ export default function MockTestPromo() {
         <div>
           <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-neutral-300">
             <Sparkles size={14} className="text-accent-amber" />
-            AI-powered exam practice
+            Build your own mock tests
           </div>
 
           <h2 className="mt-5 text-2xl font-bold leading-tight text-white md:text-4xl">
-            Practice smarter with mock tests built for your exact exam
+            Practice with mock tests you build yourself
           </h2>
 
           <p className="mt-4 max-w-lg text-sm leading-relaxed text-neutral-400 md:text-base">
-            Full-length and sectional tests for SSC, IBPS, RRB and State PSC
-            patterns with detailed
-            performance insights.
+            Create timed tests with your own questions, marks and negative marking, and
+            practise on an exam-style screen. Coming soon.
           </p>
 
           {/* Feature Cards */}
@@ -108,7 +107,7 @@ export default function MockTestPromo() {
               size="lg"
               className="group mt-7 flex items-center gap-2"
             >
-              Explore Prep Plans
+              Learn more
               <ArrowRight
                 size={18}
                 className="transition-transform group-hover:translate-x-1"
