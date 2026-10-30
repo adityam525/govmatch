@@ -18,6 +18,7 @@ import StickyTools from "@/components/jobs/StickyTools";
 import Link from "next/link";
 import { isPremiumUser } from "@/lib/plan";
 import { loadFitContext, bestFitForJob, type JobFit } from "@/lib/job-fit";
+import { PREFERENCE_BONUS, jobMatchesPreferences, loadPreferenceSets } from "@/lib/preferences";
 import {
   explainIneligibility,
   ageInYears,
@@ -268,6 +269,7 @@ export default async function JobsPage({ searchParams }: JobsPageProps) {
     },
 
     include: {
+      states: true,
       organization: {
         include: {
           category: true,
@@ -329,12 +331,14 @@ export default async function JobsPage({ searchParams }: JobsPageProps) {
     { score: number; verdict: { label: string; reasons: string[] } }
   >();
   const fitByJobId = new Map<string, JobFit>();
+  const preferredJobIds = new Set<string>();
   let hasProfile = false;
   let profileComplete = false;
 
   if (userId) {
     try {
       const fitContext = await loadFitContext(userId);
+      const prefs = await loadPreferenceSets(userId);
       hasProfile = fitContext.hasProfile;
       profileComplete = fitContext.profileComplete;
 
@@ -344,6 +348,16 @@ export default async function JobsPage({ searchParams }: JobsPageProps) {
           if (!fit) continue;
 
           fitByJobId.set(notification.id, fit);
+          if (
+            jobMatchesPreferences(
+              {
+                organizationSlug: notification.organization?.slug,
+                sectorSlug: (notification.organization as any)?.category?.slug,
+                stateCodes: ((notification as any).states ?? []).map((st: any) => st.code),
+              },
+              prefs,
+            )
+          ) preferredJobIds.add(notification.id);
           matchByJobId.set(notification.id, fit.evaluation.score);
 
           if (fit.evaluation.verdict === "eligible") {
@@ -418,7 +432,8 @@ export default async function JobsPage({ searchParams }: JobsPageProps) {
         };
         return (
           rank(b.id) - rank(a.id) ||
-          (matchByJobId.get(b.id) ?? 0) - (matchByJobId.get(a.id) ?? 0)
+          (matchByJobId.get(b.id) ?? 0) + (preferredJobIds.has(b.id) ? PREFERENCE_BONUS : 0) -
+            ((matchByJobId.get(a.id) ?? 0) + (preferredJobIds.has(a.id) ? PREFERENCE_BONUS : 0))
         );
       }
 
