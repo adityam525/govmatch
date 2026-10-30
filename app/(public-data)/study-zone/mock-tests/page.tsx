@@ -4,12 +4,25 @@ import { Suspense } from 'react';
 import { prisma } from '@/lib/prisma';
 import { DIFFICULTIES } from '@/lib/mock-difficulty';
 import MockFilters from '@/components/mock/MockFilters';
+import MockSearch from '@/components/mock/MockSearch';
 
 export const dynamic = 'force-dynamic';
 export const metadata: Metadata = {
   title: 'Mock tests | GovMatch',
   description: 'Practice mock tests for government exams, filtered by exam, organization, state, stage and difficulty.',
 };
+
+// Every word typed must appear somewhere in the test's text, in any order and any case.
+function matchesSearch(
+  t: { title: string; description: string | null; difficulty: string | null; examLevel: { name: string } | null; notification: { title: string; organization: { name: string } | null } | null },
+  search?: string,
+) {
+  const words = (search ?? '').toLowerCase().split(/\s+/).filter(Boolean);
+  if (words.length === 0) return true;
+  const haystack = [t.title, t.description, t.difficulty, t.examLevel?.name, t.notification?.title, t.notification?.organization?.name]
+    .filter(Boolean).join(' ').toLowerCase();
+  return words.every((w) => haystack.includes(w));
+}
 
 interface Props { searchParams: Promise<{ [key: string]: string | undefined }> }
 
@@ -38,12 +51,17 @@ export default async function MockCataloguePage({ searchParams }: Props) {
     (!q.organization || t.notification?.organization?.slug === q.organization) &&
     (!q.state || t.notification?.states.some((s) => s.code === q.state)) &&
     (!q.level || t.examLevel?.name === q.level) &&
-    (!q.difficulty || t.difficulty === q.difficulty));
+    (!q.difficulty || t.difficulty === q.difficulty) &&
+    matchesSearch(t, q.search));
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6">
       <h1 className="text-2xl font-bold text-neutral-900 sm:text-3xl">Mock tests</h1>
       <p className="mt-2 max-w-2xl text-sm text-neutral-600">Practice tests for government exams. Pick an exam to see the tests prepared for it.</p>
+
+      <Suspense fallback={null}>
+        <MockSearch />
+      </Suspense>
 
       <Suspense fallback={null}>
         <MockFilters
