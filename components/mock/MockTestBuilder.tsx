@@ -20,9 +20,10 @@ const input = 'w-full rounded-md border border-neutral-200 px-3 py-2 text-sm out
 const label = 'mb-1 block text-xs font-medium text-neutral-600';
 const stable = (f: Form) => JSON.stringify(f, (k, v) => (k === 'key' ? undefined : v));
 
-export default function MockTestBuilder({ testId }: { testId?: string }) {
+export default function MockTestBuilder({ testId, endpoint, backHref = '/mock-tests' }: { testId?: string; endpoint?: string; backHref?: string }) {
   const { user } = useAuth();
   const router = useRouter();
+  const base = endpoint ?? (user?.id ? `/api/users/${user.id}/mock-tests` : null);
   const [form, setForm] = useState<Form>(fresh);
   const [loading, setLoading] = useState(!!testId);
   const [loadError, setLoadError] = useState('');
@@ -31,8 +32,8 @@ export default function MockTestBuilder({ testId }: { testId?: string }) {
   const snapshot = useRef(stable(form));
 
   useEffect(() => {
-    if (!testId || !user?.id) return;
-    fetch(`/api/users/${user.id}/mock-tests/${testId}`)
+    if (!testId || !base) return;
+    fetch(`${base}/${testId}`)
       .then(async (r) => { const d = await r.json(); if (!r.ok) throw new Error(d.message); return d; })
       .then((t) => {
         const next: Form = {
@@ -50,7 +51,7 @@ export default function MockTestBuilder({ testId }: { testId?: string }) {
       })
       .catch((e) => setLoadError(e.message || 'This test could not be loaded.'))
       .finally(() => setLoading(false));
-  }, [testId, user?.id]);
+  }, [testId, base]);
 
   const dirty = !loading && stable(form) !== snapshot.current;
   useEffect(() => {
@@ -67,7 +68,7 @@ export default function MockTestBuilder({ testId }: { testId?: string }) {
   const total = form.sections.reduce((n, s) => n + s.questions.length, 0);
 
   const save = async () => {
-    if (!user?.id) return;
+    if (!base) return;
     const payload = {
       title: form.title, description: form.description, examStyle: 'SSC', durationMinutes: form.durationMinutes,
       sections: form.sections.map((s) => ({ name: s.name, questions: s.questions.map(({ key: _k, ...q }) => q) })),
@@ -77,13 +78,13 @@ export default function MockTestBuilder({ testId }: { testId?: string }) {
 
     setSaving(true); setError('');
     try {
-      const res = await fetch(testId ? `/api/users/${user.id}/mock-tests/${testId}` : `/api/users/${user.id}/mock-tests`, {
+      const res = await fetch(testId ? `${base}/${testId}` : base, {
         method: testId ? 'PUT' : 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload),
       });
       const data = await res.json().catch(() => ({}));
       if (!res.ok) { setError(data.message ?? 'Could not save the test.'); return; }
       snapshot.current = stable(form);
-      router.push('/mock-tests');
+      router.push(backHref);
     } catch {
       setError('Network error. Nothing was saved.');
     } finally {
@@ -190,7 +191,7 @@ export default function MockTestBuilder({ testId }: { testId?: string }) {
       <div className="sticky bottom-0 z-10 -mx-4 mt-6 border-t border-neutral-200 bg-white/95 px-4 py-3 backdrop-blur sm:-mx-6 sm:px-6">
         {error && <p className="mb-2 text-xs text-danger">{error}</p>}
         <div className="flex flex-wrap items-center gap-3">
-          <Button type="button" variant="secondary" disabled={saving} onClick={() => { if (!dirty || confirm('Leave without saving your changes?')) { snapshot.current = stable(form); router.push('/mock-tests'); } }}>Cancel</Button>
+          <Button type="button" variant="secondary" disabled={saving} onClick={() => { if (!dirty || confirm('Leave without saving your changes?')) { snapshot.current = stable(form); router.push(backHref); } }}>Cancel</Button>
           <Button type="button" variant="primary" disabled={saving} onClick={save}>{saving ? 'Saving...' : 'Save test'}</Button>
           {dirty && !error && <span className="text-xs text-amber-700">Unsaved changes</span>}
         </div>

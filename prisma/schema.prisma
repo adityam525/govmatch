@@ -694,14 +694,16 @@ model BlogPost {
 // A mock test a user built for themselves. Private to the owner.
 model MockTest {
   id              String        @id @default(cuid())
-  userId          String
-  user            User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId          String?
+  user            User?          @relation(fields: [userId], references: [id], onDelete: Cascade)
   title           String
   description     String?
   examStyle       String        @default("SSC")
   durationMinutes Int
   sections        MockSection[]
   attempts        MockAttempt[]
+  published Boolean @default(false)
+  source String @default("USER")
   createdAt       DateTime      @default(now())
   updatedAt       DateTime      @updatedAt
 
