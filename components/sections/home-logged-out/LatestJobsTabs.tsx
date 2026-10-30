@@ -21,7 +21,7 @@ export default function LatestJobsTabs({ items }: { items: LatestJobItem[] }) {
   return (
     <div className="@container">
       <TabFilterBar activeTab={activeTab} onChange={setActiveTab} />
-      <div className="mt-4 overflow-y-auto" style={{ maxHeight: "768px" }}>
+      <div className="mt-4 overflow-y-auto" style={{ maxHeight: "555px" }}>
         {visible.length === 0 ? (
           <p className="text-sm text-neutral-400 py-6 text-center">
             No jobs are open for applications in this category right now.

@@ -78,21 +78,18 @@ export default async function QuickStatsBar() {
           href={stat.href}
           className="bg-white border border-neutral-200 rounded-xl p-5 flex flex-col gap-3 hover:shadow-md hover:border-neutral-300 transition-all"
         >
-          <div className="w-11 h-6 rounded-lg flex gap-3 items-center justify-center">
-            <span
-              style={{
-                backgroundColor: `${stat.iconBg}14`,
-                color: stat.iconBg,
-              }}
-            >
-              {stat.icon}
-            </span>
-
-            <p className="text-2xl font-bold text-neutral-900 leading-none">
+          <div
+            className="flex h-11 w-11 items-center justify-center rounded-lg"
+            style={{ backgroundColor: `${stat.iconBg}14`, color: stat.iconBg }}
+          >
+            {stat.icon}
+          </div>
+          <div>
+            <p className="text-2xl font-bold leading-none text-neutral-900">
               {stat.value.toLocaleString("en-IN")}
             </p>
+            <p className="mt-1.5 text-xs text-neutral-500">{stat.label}</p>
           </div>
-          <p className="text-xs text-neutral-500 mt-1.5">{stat.label}</p>
         </Link>
       ))}
     </div>
