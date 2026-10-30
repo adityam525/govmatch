@@ -715,6 +715,7 @@ model MockTest {
   notification   Notification? @relation(fields: [notificationId], references: [id], onDelete: SetNull)
   examLevelId    String?
   examLevel      ExamLevel?    @relation(fields: [examLevelId], references: [id], onDelete: SetNull)
+  difficulty String?
 }
 
 model MockSection {

@@ -3,6 +3,7 @@ import { prisma } from '@/lib/prisma';
 import { isAdminRequest } from '@/lib/admin-session';
 import { toSectionCreate, validateTest } from '@/lib/mock-test';
 import { resolveLink } from '@/lib/mock-link';
+import { readDifficulty } from '@/lib/mock-difficulty';
 
 interface Params { params: Promise<{ id: string }> }
 const denied = () => NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
@@ -56,6 +57,11 @@ export async function PATCH(request: Request, { params }: Params) {
     if ('error' in link) return NextResponse.json({ message: link.error }, { status: 400 });
     data.notificationId = link.notificationId;
     data.examLevelId = link.examLevelId;
+  }
+  if ('difficulty' in body) {
+    const difficulty = readDifficulty(body.difficulty);
+    if (difficulty === undefined) return NextResponse.json({ message: 'Choose Easy, Medium or Hard.' }, { status: 400 });
+    data.difficulty = difficulty;
   }
   if (Object.keys(data).length === 0) return NextResponse.json({ message: 'Nothing to change.' }, { status: 400 });
   const updated = await prisma.mockTest.update({ where: { id }, data, select: { id: true, published: true } });
