@@ -1,7 +1,8 @@
 import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { isAdminRequest } from '@/lib/admin-session';
-import { toSectionCreate, validateTest } from '@/lib/mock-test';
+import { validateTest } from '@/lib/mock-test';
+import { readSectionTimes, toTimedSectionCreate } from '@/lib/mock-sections';
 import { resolveLink } from '@/lib/mock-link';
 
 export async function GET() {
@@ -21,17 +22,20 @@ export async function POST(request: Request) {
   if (!(await isAdminRequest())) return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
   try {
     const body = await request.json().catch(() => null);
-    const result = validateTest(body);
+    const times = readSectionTimes(body);
+    if ('error' in times) return NextResponse.json({ message: times.error }, { status: 400 });
+    const result = validateTest(times.payload);
     if ('error' in result) return NextResponse.json({ message: result.error }, { status: 400 });
     const link = await resolveLink(body ?? {});
     if ('error' in link) return NextResponse.json({ message: link.error }, { status: 400 });
+
     const { data } = result;
     const created = await prisma.mockTest.create({
       data: {
         userId: null, source: 'ADMIN', published: body?.published === true,
         notificationId: link.notificationId, examLevelId: link.examLevelId,
         title: data.title, description: data.description, examStyle: data.examStyle, durationMinutes: data.durationMinutes,
-        sections: { create: toSectionCreate(data.sections) },
+        sections: { create: toTimedSectionCreate(data.sections, times.times) },
       },
       select: { id: true },
     });

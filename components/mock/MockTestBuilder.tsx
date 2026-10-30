@@ -6,25 +6,30 @@ import { Plus, Trash2, X } from 'lucide-react';
 import Button from '@/components/ui/Button';
 import { useAuth } from '@/features/auth/hooks';
 import { LIMITS, validateTest } from '@/lib/mock-test';
+import { readSectionTimes } from '@/lib/mock-sections';
 
 interface Q { key: number; text: string; options: string[]; correctIndex: number; marks: string; negativeMarks: string; explanation: string }
-interface S { key: number; name: string; defMarks: string; defNeg: string; questions: Q[] }
+interface S { key: number; name: string; minutes: string; defMarks: string; defNeg: string; questions: Q[] }
 interface Form { title: string; description: string; durationMinutes: string; sections: S[] }
+interface PatternRow { id: string; name: string; totalMinutes: number; organization: { name: string }; sections: { name: string; questionCount: number; marks: number; negativeMarks: number; durationMinutes: number | null }[] }
 
 let counter = 1;
 const blankQ = (marks = '1', neg = '0'): Q => ({ key: counter++, text: '', options: ['', '', '', ''], correctIndex: -1, marks, negativeMarks: neg, explanation: '' });
-const blankS = (name = ''): S => ({ key: counter++, name, defMarks: '1', defNeg: '0', questions: [blankQ()] });
+const blankS = (name = ''): S => ({ key: counter++, name, minutes: '', defMarks: '1', defNeg: '0', questions: [blankQ()] });
 const fresh = (): Form => ({ title: '', description: '', durationMinutes: '60', sections: [blankS('Section 1')] });
 
 const input = 'w-full rounded-md border border-neutral-200 px-3 py-2 text-sm outline-none focus:border-primary-500';
 const label = 'mb-1 block text-xs font-medium text-neutral-600';
 const stable = (f: Form) => JSON.stringify(f, (k, v) => (k === 'key' ? undefined : v));
+const isBlankText = (f: Form) => !f.title && f.sections.every((s) => s.questions.every((q) => !q.text));
 
 export default function MockTestBuilder({ testId, endpoint, backHref = '/mock-tests' }: { testId?: string; endpoint?: string; backHref?: string }) {
   const { user } = useAuth();
   const router = useRouter();
   const base = endpoint ?? (user?.id ? `/api/users/${user.id}/mock-tests` : null);
+  const isAdmin = !!endpoint;
   const [form, setForm] = useState<Form>(fresh);
+  const [patterns, setPatterns] = useState<PatternRow[]>([]);
   const [loading, setLoading] = useState(!!testId);
   const [loadError, setLoadError] = useState('');
   const [saving, setSaving] = useState(false);
@@ -39,7 +44,8 @@ export default function MockTestBuilder({ testId, endpoint, backHref = '/mock-te
         const next: Form = {
           title: t.title, description: t.description ?? '', durationMinutes: String(t.durationMinutes),
           sections: t.sections.map((s: any) => ({
-            key: counter++, name: s.name, defMarks: String(s.questions[0]?.marks ?? 1), defNeg: String(s.questions[0]?.negativeMarks ?? 0),
+            key: counter++, name: s.name, minutes: s.durationMinutes ? String(s.durationMinutes) : '',
+            defMarks: String(s.questions[0]?.marks ?? 1), defNeg: String(s.questions[0]?.negativeMarks ?? 0),
             questions: s.questions.map((q: any) => ({
               key: counter++, text: q.text, options: q.options, correctIndex: q.correctIndex,
               marks: String(q.marks), negativeMarks: String(q.negativeMarks), explanation: q.explanation ?? '',
@@ -52,6 +58,11 @@ export default function MockTestBuilder({ testId, endpoint, backHref = '/mock-te
       .catch((e) => setLoadError(e.message || 'This test could not be loaded.'))
       .finally(() => setLoading(false));
   }, [testId, base]);
+
+  useEffect(() => {
+    if (!isAdmin) return;
+    fetch('/api/admin/mock-patterns').then((r) => r.json()).then((d) => setPatterns(Array.isArray(d) ? d : [])).catch(() => {});
+  }, [isAdmin]);
 
   const dirty = !loading && stable(form) !== snapshot.current;
   useEffect(() => {
@@ -67,13 +78,36 @@ export default function MockTestBuilder({ testId, endpoint, backHref = '/mock-te
     change((f) => ({ ...f, sections: f.sections.map((s, i) => (i === si ? { ...s, questions: s.questions.map((q, j) => (j === qi ? { ...q, ...patch } : q)) } : s)) }));
   const total = form.sections.reduce((n, s) => n + s.questions.length, 0);
 
+  const timedCount = form.sections.filter((s) => s.minutes.trim() !== '').length;
+  const allTimed = timedCount === form.sections.length && timedCount > 0;
+  const mixed = timedCount > 0 && !allTimed;
+  const sumMinutes = form.sections.reduce((n, s) => n + (Number(s.minutes) || 0), 0);
+  const shownTotal = allTimed ? String(sumMinutes) : form.durationMinutes;
+
+  const usePattern = (id: string) => {
+    const p = patterns.find((x) => x.id === id);
+    if (!p) return;
+    if (!isBlankText(form) && !confirm('Replace the sections and questions you have entered with this pattern?')) return;
+    change((f) => ({
+      ...f,
+      durationMinutes: String(p.totalMinutes),
+      sections: p.sections.map((s) => ({
+        key: counter++, name: s.name, minutes: s.durationMinutes ? String(s.durationMinutes) : '',
+        defMarks: String(s.marks), defNeg: String(s.negativeMarks),
+        questions: Array.from({ length: s.questionCount }, () => blankQ(String(s.marks), String(s.negativeMarks))),
+      })),
+    }));
+  };
+
   const save = async () => {
     if (!base) return;
     const payload = {
-      title: form.title, description: form.description, examStyle: 'SSC', durationMinutes: form.durationMinutes,
-      sections: form.sections.map((s) => ({ name: s.name, questions: s.questions.map(({ key: _k, ...q }) => q) })),
+      title: form.title, description: form.description, examStyle: 'SSC', durationMinutes: shownTotal,
+      sections: form.sections.map((s) => ({ name: s.name, durationMinutes: s.minutes, questions: s.questions.map(({ key: _k, ...q }) => q) })),
     };
-    const check = validateTest(payload);
+    const times = readSectionTimes(payload);
+    if ('error' in times) { setError(times.error); return; }
+    const check = validateTest(times.payload);
     if ('error' in check) { setError(check.error); return; }
 
     setSaving(true); setError('');
@@ -99,6 +133,16 @@ export default function MockTestBuilder({ testId, endpoint, backHref = '/mock-te
     <form onSubmit={(e) => e.preventDefault()} className="mx-auto max-w-4xl px-4 pt-6 sm:px-6">
       <h1 className="mb-4 text-lg font-bold text-neutral-900">{testId ? 'Edit mock test' : 'Create mock test'}</h1>
 
+      {isAdmin && !testId && patterns.length > 0 && (
+        <section className="mb-6 rounded-2xl border border-neutral-200 bg-white p-5 shadow-sm">
+          <label className={label}>Start from a pattern (optional)</label>
+          <select defaultValue="" onChange={(e) => { if (e.target.value) usePattern(e.target.value); e.target.value = ''; }} className={input}>
+            <option value="">Choose a pattern to pre-fill the sections</option>
+            {patterns.map((p) => <option key={p.id} value={p.id}>{p.organization.name}: {p.name}</option>)}
+          </select>
+        </section>
+      )}
+
       <section className="rounded-2xl border border-neutral-200 bg-white p-5 shadow-sm">
         <div className="grid gap-4 md:grid-cols-3">
           <div className="md:col-span-2">
@@ -106,15 +150,18 @@ export default function MockTestBuilder({ testId, endpoint, backHref = '/mock-te
             <input value={form.title} maxLength={LIMITS.titleMax} onChange={(e) => change((f) => ({ ...f, title: e.target.value }))} className={input} placeholder="e.g. SSC CGL Tier 1, Paper 3" />
           </div>
           <div>
-            <label className={label}>Time limit (minutes) *</label>
-            <input type="number" min={1} max={LIMITS.maxMinutes} value={form.durationMinutes} onChange={(e) => change((f) => ({ ...f, durationMinutes: e.target.value }))} className={input} />
+            <label className={label}>Total time (minutes) *</label>
+            <input type="number" min={1} max={LIMITS.maxMinutes} value={shownTotal} readOnly={allTimed} onChange={(e) => change((f) => ({ ...f, durationMinutes: e.target.value }))} className={`${input} ${allTimed ? 'bg-neutral-100' : ''}`} />
+            {allTimed && <p className="mt-1 text-[11px] text-neutral-500">The sum of the section times.</p>}
           </div>
           <div className="md:col-span-3">
             <label className={label}>Description (optional)</label>
             <input value={form.description} maxLength={LIMITS.descriptionMax} onChange={(e) => change((f) => ({ ...f, description: e.target.value }))} className={input} />
           </div>
         </div>
-        <p className="mt-3 text-xs text-neutral-500">Exam layout: SSC / IBPS style (more layouts will be added). {total} question{total === 1 ? '' : 's'} of {LIMITS.questions} allowed.</p>
+        <p className="mt-3 text-xs text-neutral-500">Exam layout: SSC / IBPS style. {total} question{total === 1 ? '' : 's'} of {LIMITS.questions} allowed.</p>
+        {mixed && <p className="mt-2 rounded-md bg-amber-50 px-3 py-2 text-xs text-amber-800">Give a time to every section, or to none. With section times, each section locks when its time ends, in order.</p>}
+        {allTimed && <p className="mt-2 text-xs text-neutral-600">Timed sections: candidates move through the sections in order and cannot return to a finished one.</p>}
       </section>
 
       <div className="mt-6 space-y-6">
@@ -124,6 +171,10 @@ export default function MockTestBuilder({ testId, endpoint, backHref = '/mock-te
               <div className="min-w-[12rem] flex-1">
                 <label className={label}>Section {si + 1} name *</label>
                 <input value={s.name} maxLength={LIMITS.nameMax} onChange={(e) => setSection(si, { name: e.target.value })} className={input} placeholder="e.g. General Awareness" />
+              </div>
+              <div className="w-28">
+                <label className={label}>Time (min)</label>
+                <input type="number" min={1} value={s.minutes} onChange={(e) => setSection(si, { minutes: e.target.value })} className={input} placeholder="Optional" />
               </div>
               <div className="w-24">
                 <label className={label}>Marks</label>

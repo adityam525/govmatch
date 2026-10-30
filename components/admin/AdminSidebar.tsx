@@ -18,6 +18,7 @@ const navSections = [
       { label: 'Messages', href: '/admin/messages', icon: Mail },
       { label: 'Blog', href: '/admin/blog', icon: Newspaper },
       { label: 'Mock tests', href: '/admin/mock-tests', icon: ClipboardCheck },
+      { label: 'Exam patterns', href: '/admin/mock-patterns', icon: ClipboardCheck },
     ],
   },
   {
