@@ -4,6 +4,7 @@ import { Suspense } from 'react';
 import { prisma } from '@/lib/prisma';
 import { DIFFICULTIES } from '@/lib/mock-difficulty';
 import MockFilters from '@/components/mock/MockFilters';
+import StartTestButton from '@/components/mock/StartTestButton';
 import MockSearch from '@/components/mock/MockSearch';
 
 export const dynamic = 'force-dynamic';
@@ -60,10 +61,6 @@ export default async function MockCataloguePage({ searchParams }: Props) {
       <p className="mt-2 max-w-2xl text-sm text-neutral-600">Practice tests for government exams. Pick an exam to see the tests prepared for it.</p>
 
       <Suspense fallback={null}>
-        <MockSearch />
-      </Suspense>
-
-      <Suspense fallback={null}>
         <MockFilters
           jobs={jobRows.map((j) => ({ id: j.slug, label: j.title }))}
           organizations={orgRows.map((o) => ({ id: o.slug, label: o.name }))}
@@ -94,7 +91,7 @@ export default async function MockCataloguePage({ searchParams }: Props) {
                   <span className="rounded-full bg-neutral-100 px-2 py-0.5">{t.sections.reduce((n, s) => n + s._count.questions, 0)} questions</span>
                   <span className="rounded-full bg-neutral-100 px-2 py-0.5">{t.durationMinutes} min</span>
                 </div>
-                <p className="mt-auto pt-4 text-xs text-neutral-400">The Start button arrives with the exam window, next.</p>
+                <div className="mt-auto pt-4"><StartTestButton testId={t.id} /></div>
               </article>
             );
           })}
