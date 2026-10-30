@@ -19,6 +19,7 @@ import { getScheduleNoticesForUser } from '@/lib/schedule-queries';
 import { formatShortDate } from '@/lib/job-status';
 import RecommendedList from '@/components/sections/home/RecommendedList';
 import PremiumDashboardCards from '@/components/dashboard/PremiumDashboardCards';
+import MockProgressCard from '@/components/dashboard/MockProgressCard';
 
 export const dynamic = 'force-dynamic';
 
@@ -240,6 +241,8 @@ export default async function DashboardPage() {
               </div>
             </Panel>
           )}
+
+          <MockProgressCard userId={userId} />
 
           <Panel title="Application tracker" action={{ href: '/applications', label: 'Manage' }}>
             {applications.length === 0 ? (
