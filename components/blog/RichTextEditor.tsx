@@ -52,7 +52,7 @@ export default function RichTextEditor({ value, onChange }: { value: string; onC
 
   // Loading a saved post sets the content once it arrives.
   useEffect(() => {
-    if (editor && value !== editor.getHTML() && !editor.isFocused) editor.commands.setContent(value, { emitUpdate: false });
+    if (editor && value !== editor.getHTML() && !editor.isFocused) editor.commands.setContent(value, false);
   }, [value, editor]);
 
   if (!editor) return <div className="h-72 rounded-xl border border-neutral-200 bg-neutral-50" />;
