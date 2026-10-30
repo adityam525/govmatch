@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { isAdminRequest } from '@/lib/admin-session';
 import { toSectionCreate, validateTest } from '@/lib/mock-test';
+import { resolveLink } from '@/lib/mock-link';
 
 export async function GET() {
   if (!(await isAdminRequest())) return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
@@ -22,10 +23,13 @@ export async function POST(request: Request) {
     const body = await request.json().catch(() => null);
     const result = validateTest(body);
     if ('error' in result) return NextResponse.json({ message: result.error }, { status: 400 });
+    const link = await resolveLink(body ?? {});
+    if ('error' in link) return NextResponse.json({ message: link.error }, { status: 400 });
     const { data } = result;
     const created = await prisma.mockTest.create({
       data: {
         userId: null, source: 'ADMIN', published: body?.published === true,
+        notificationId: link.notificationId, examLevelId: link.examLevelId,
         title: data.title, description: data.description, examStyle: data.examStyle, durationMinutes: data.durationMinutes,
         sections: { create: toSectionCreate(data.sections) },
       },

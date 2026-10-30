@@ -18,6 +18,7 @@ import {
 import Card from "@/components/ui/Card";
 import RecentJobsSidebar from "@/components/jobs/RecentJobsSidebar";
 import ScheduleSection from "@/components/jobs/ScheduleSection";
+import MockTestsLink from "@/components/jobs/MockTestsLink";
 import { getJobSchedule } from "@/lib/schedule-queries";
 import JobActionButtons from "@/components/jobs/JobActionButtons";
 import { prisma } from "@/lib/prisma";
@@ -590,6 +591,8 @@ export default async function JobDetailPage({ params }: PageProps) {
             </p>
           </Card>
         )}
+
+        <MockTestsLink notificationId={notification.id} slug={notification.slug} />
 
         <ScheduleSection schedule={schedule} />
 

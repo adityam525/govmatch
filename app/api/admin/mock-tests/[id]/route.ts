@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { isAdminRequest } from '@/lib/admin-session';
 import { toSectionCreate, validateTest } from '@/lib/mock-test';
+import { resolveLink } from '@/lib/mock-link';
 
 interface Params { params: Promise<{ id: string }> }
 const denied = () => NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
@@ -44,9 +45,20 @@ export async function PATCH(request: Request, { params }: Params) {
   if (!(await isAdminRequest())) return denied();
   const { id } = await params;
   const body = await request.json().catch(() => ({}));
-  if (typeof body.published !== 'boolean') return NextResponse.json({ message: 'published must be true or false' }, { status: 400 });
   if (!(await official(id))) return gone();
-  const updated = await prisma.mockTest.update({ where: { id }, data: { published: body.published }, select: { id: true, published: true } });
+  const data: Record<string, unknown> = {};
+  if ('published' in body) {
+    if (typeof body.published !== 'boolean') return NextResponse.json({ message: 'published must be true or false' }, { status: 400 });
+    data.published = body.published;
+  }
+  if ('notificationId' in body || 'examLevelId' in body) {
+    const link = await resolveLink(body);
+    if ('error' in link) return NextResponse.json({ message: link.error }, { status: 400 });
+    data.notificationId = link.notificationId;
+    data.examLevelId = link.examLevelId;
+  }
+  if (Object.keys(data).length === 0) return NextResponse.json({ message: 'Nothing to change.' }, { status: 400 });
+  const updated = await prisma.mockTest.update({ where: { id }, data, select: { id: true, published: true } });
   return NextResponse.json(updated);
 }
 

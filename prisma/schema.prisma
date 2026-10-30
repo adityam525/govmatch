@@ -162,6 +162,7 @@ model Notification {
   @@index([organizationId])
   @@index([isFeatured])
   scheduleEvents ScheduleEvent[]
+  mockTests MockTest[]
 }
 
 enum ApplicationMode {
@@ -535,6 +536,7 @@ model ExamLevel {
   createdAt DateTime @default(now())
 
   @@index([notificationId])
+  mockTests MockTest[]
 }
 
 model ApplicationFee {
@@ -708,6 +710,10 @@ model MockTest {
   updatedAt       DateTime      @updatedAt
 
   @@index([userId])
+  notificationId String?
+  notification   Notification? @relation(fields: [notificationId], references: [id], onDelete: SetNull)
+  examLevelId    String?
+  examLevel      ExamLevel?    @relation(fields: [examLevelId], references: [id], onDelete: SetNull)
 }
 
 model MockSection {
