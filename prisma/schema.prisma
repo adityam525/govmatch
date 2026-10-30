@@ -26,6 +26,7 @@ model Organization {
   notifications Notification[]
 
   @@index([categoryId])
+  mockPatterns MockPattern[]
 }
 
 model State {
@@ -725,6 +726,7 @@ model MockSection {
   questions MockQuestion[]
 
   @@index([testId])
+  durationMinutes Int?
 }
 
 model MockQuestion {
@@ -757,4 +759,19 @@ model MockAttempt {
   result      Json?
 
   @@index([userId, testId])
+}
+
+// A reusable exam layout (for example "SSC CGL Tier 1") that pre-fills the test builder.
+// `sections` is a list of { name, questionCount, marks, negativeMarks, durationMinutes? }.
+model MockPattern {
+  id             String       @id @default(cuid())
+  name           String
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  totalMinutes   Int
+  sections       Json
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+
+  @@index([organizationId])
 }
