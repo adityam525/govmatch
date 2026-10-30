@@ -6,6 +6,7 @@ import clsx from 'clsx';
 import {
   LayoutDashboard, Bell, Building2, MapPin, Tags, Users, GraduationCap, Mail, Upload, Layers,
 } from 'lucide-react';
+import { Newspaper } from 'lucide-react';
 
 const navSections = [
   {
@@ -15,6 +16,7 @@ const navSections = [
       { label: 'Import Jobs', href: '/admin/import', icon: Upload },
       { label: 'Users', href: '/admin/users', icon: Users },
       { label: 'Messages', href: '/admin/messages', icon: Mail },
+      { label: 'Blog', href: '/admin/blog', icon: Newspaper },
     ],
   },
   {

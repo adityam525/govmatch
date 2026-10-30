@@ -666,3 +666,25 @@ model PostQualificationRule {
 
   @@index([postId])
 }
+
+// A blog article. `content` is sanitized HTML from the rich-text editor.
+model BlogPost {
+  id              String    @id @default(cuid())
+  slug            String    @unique
+  title           String
+  excerpt         String    @default("")
+  content         String
+  coverImageUrl   String?
+  coverImageAlt   String?
+  authorName      String    @default("GovMatch Team")
+  tags            String[]  @default([])
+  metaTitle       String?
+  metaDescription String?
+  readMinutes     Int       @default(1)
+  published       Boolean   @default(false)
+  publishedAt     DateTime?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  @@index([published, publishedAt])
+}

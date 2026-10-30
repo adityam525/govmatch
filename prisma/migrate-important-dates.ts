@@ -14,9 +14,8 @@ async function main() {
   for (const row of rows) {
     const day = row.date.toISOString().slice(0, 10);
     const at = istToDate(day);
-    const exists = row.notification.scheduleEvents.some(
-      (e) => e.label.trim().toLowerCase() === row.label.trim().toLowerCase() && e.at && istDay(e.at) === day,
-    );
+    // Same calendar day already in the schedule counts as a duplicate, whatever the label says.
+    const exists = row.notification.scheduleEvents.some((e) => e.at && istDay(e.at) === day);
     if (!at || exists) { skipped++; continue; }
     console.log(`${apply ? 'moving' : 'would move'}: ${row.notification.title} | ${row.label} | ${day}`);
     moved++;
