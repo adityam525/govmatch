@@ -25,6 +25,7 @@ import HomeHotNews from "@/components/sections/home/HomeHotNews";
 import UpcomingJobsSection from "@/components/sections/home/UpcomingJobsSection";
 import LatestJobsWithToday from "@/components/sections/home/LatestJobsWithToday";
 import JobPicksCard from "@/components/sections/home/JobPicksCard";
+import BrowseAllOpenings from "@/components/ui/browse/BrowseAllOpenings";
 
 async function loadPicks(userId: string): Promise<RecommendationResult | null> {
   try {
@@ -38,6 +39,8 @@ async function loadPicks(userId: string): Promise<RecommendationResult | null> {
 function LowerSections() {
   return (
     <>
+      <BrowseAllOpenings />
+
       <CategoryStrip />
       <OrganizationStrip />
       <QualificationStrip />
