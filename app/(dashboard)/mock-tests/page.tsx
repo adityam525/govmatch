@@ -55,7 +55,7 @@ export default function MyMockTestsPage() {
           <h1 className="text-lg font-bold text-neutral-900">My mock tests</h1>
           <p className="mt-1 text-sm text-neutral-600">Your scores and progress across every test you have taken.</p>
         </div>
-        <Link href="/study-zone/mock-tests" className="rounded-lg bg-primary-600 px-4 py-2 text-sm font-semibold text-white hover:bg-primary-700">Take a test</Link>
+        <div className="flex flex-wrap gap-2"><Link href="/mock-tests/import" className="rounded-lg border border-neutral-200 px-4 py-2 text-sm font-medium text-neutral-700 hover:bg-neutral-50">Import a paper</Link><Link href="/study-zone/mock-tests" className="rounded-lg bg-primary-600 px-4 py-2 text-sm font-semibold text-white hover:bg-primary-700">Take a test</Link></div>
       </div>
 
       {running.length > 0 && (

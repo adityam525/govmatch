@@ -10,6 +10,20 @@ interface Info {
   sections: { name: string; durationMinutes: number | null; questions: number }[];
 }
 
+// An owner's private test: the same facts, worked out from their own copy.
+function infoFromOwn(t: any): Info {
+  const sections = (t.sections ?? []) as { name: string; durationMinutes: number | null; questions: { marks: number; negativeMarks: number }[] }[];
+  const timed = sections.length > 0 && sections.every((s) => s.durationMinutes != null);
+  const all = sections.flatMap((s) => s.questions);
+  return {
+    title: t.title, description: t.description ?? null, timed,
+    durationMinutes: timed ? sections.reduce((n, s) => n + (s.durationMinutes ?? 0), 0) : t.durationMinutes,
+    totalMarks: Math.round(all.reduce((n, q) => n + q.marks, 0) * 100) / 100,
+    negativeMarking: all.some((q) => q.negativeMarks > 0),
+    sections: sections.map((s) => ({ name: s.name, durationMinutes: s.durationMinutes ?? null, questions: s.questions.length })),
+  };
+}
+
 export default function ExamInstructionsPage() {
   const { testId } = useParams<{ testId: string }>();
   const router = useRouter();
@@ -20,11 +34,23 @@ export default function ExamInstructionsPage() {
   const [busy, setBusy] = useState(false);
 
   useEffect(() => {
-    fetch(`/api/mock-tests/${testId}`)
-      .then(async (r) => { const d = await r.json(); if (!r.ok) throw new Error(d.message); return d; })
-      .then(setInfo)
-      .catch((e) => setError(e.message || 'This test could not be loaded.'));
-  }, [testId]);
+    if (authLoading) return;
+    let cancelled = false;
+    (async () => {
+      try {
+        const pub = await fetch(`/api/mock-tests/${testId}`);
+        if (pub.ok) { if (!cancelled) setInfo(await pub.json()); return; }
+        if (user?.id) {
+          const own = await fetch(`/api/users/${user.id}/mock-tests/${testId}`);
+          if (own.ok) { if (!cancelled) setInfo(infoFromOwn(await own.json())); return; }
+        }
+        if (!cancelled) setError('This test is not available.');
+      } catch {
+        if (!cancelled) setError('This test could not be loaded.');
+      }
+    })();
+    return () => { cancelled = true; };
+  }, [testId, user?.id, authLoading]);
 
   const begin = async () => {
     if (!user?.id) return;
@@ -80,7 +106,7 @@ export default function ExamInstructionsPage() {
 
         {!isLoggedIn ? (
           <p className="mt-6 rounded-lg bg-amber-50 p-3 text-sm text-amber-800">
-            Please <Link href={`/login?callbackUrl=${encodeURIComponent(`/exam/${testId}`)}`} className="font-semibold underline">log in</Link> to take tis test, so your answers and result are saved to your account.
+            Please <Link href={`/login?callbackUrl=${encodeURIComponent(`/exam/${testId}`)}`} className="font-semibold underline">log i</Link> to take this test, so your answers and result are saved to your account.
           </p>
         ) : (
           <>
