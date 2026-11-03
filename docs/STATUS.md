@@ -43,6 +43,10 @@ check-fit, check-age, check-requirements, check-schedule, check-cutoff, check-qu
 - Organizations part 2 applied (about 107 added). Still to add: High Courts and judiciary, state departments, local bodies.
 - Excel export now includes disability groups, special statuses, rule lists, certificates, gender options.
 
+- Pre-testing cleanup: all sample jobs deleted (jobs to be added one by one), unused files removed, /admission removed.
+- Held until final deployment: email, payments, Google sign-in, Supabase uploads, password reset, mobile app, scanned papers, legal review.
+- Next: Study Zone content audit, Premium tools (calendar, photo resizer, compare jobs), then the dynamic question bank.
+
 ## Decisions
 - Imported papers are private to the user and Premium-gated until limits are set.
 - Section times are all-or-nothing; total is their sum.
