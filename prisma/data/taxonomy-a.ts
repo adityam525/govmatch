@@ -4,7 +4,7 @@ import type { QualDef } from './taxonomy-types';
 export const PART_A: QualDef[] = [
   { name: '12th Pass', slug: '12th-pass', level: 3, types: ['12th Pass'], branches: ['Science', 'Commerce', 'Arts', 'Humanities', 'Vocational'] },
   { name: 'ITI', slug: 'iti', level: 4, types: ['ITI'], branches: ['Electronics Mechanic'] },
-  { name: 'Apprentice (ITI Trade)', slug: 'apprentice-iti', level: 4, types: ['Apprentice'], branches: ['Engineering', 'Electrical', 'Mechanical', 'Electronics', 'Automobile', 'Civil', 'IT', 'Welding'] },
+  { name: 'Apprentice (ITI Trade)', slug: 'apprentice-iti', level: 4, types: ['Apprentice'], branches: ['Electrical', 'Mechanical', 'Electronics', 'Automobile', 'Civil', 'IT', 'Welding'] },
   { name: 'Diploma', slug: 'diploma', level: 5, types: ['Diploma', 'Engineering'], short: 'Diploma', branches: [
     'Civil Engineering', 'Mechanical Engineering', 'Electrical Engineering', 'Electronics & Communication Engineering', 'Computer Science Engineering',
     'Information Technology', 'Automobile Engineering', 'Chemical Engineering', 'Mining Engineering', 'Textile Engineering', 'Architecture',

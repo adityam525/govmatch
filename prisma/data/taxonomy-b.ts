@@ -26,7 +26,7 @@ export const PART_B: QualDef[] = [
   { name: 'M.Voc', slug: 'mvoc', level: 7, types: ['Post Graduate'], branches: ['Healthcare', 'IT', 'Retail', 'Hospitality', 'Agriculture', 'Automotive'] },
   { name: 'M.Lib', slug: 'mlib', level: 7, types: ['Post Graduate', 'Library Science'], branches: ['Library and Information Science'] },
   { name: 'M.Phil', slug: 'mphil', level: 7, types: ['Post Graduate'], branches: [] },
-  { name: 'PhD', slug: 'phd', level: 8, types: ['Doctorate'], branches: ['Engineering', 'Science', 'Arts', 'Commerce', 'Management', 'Law', 'Education', 'Agriculture', 'Medical', 'Computer Science', 'Social Sciences'] },
+  { name: 'PhD', slug: 'phd', level: 8, types: ['Doctorate'], branches: ['Science', 'Arts', 'Commerce', 'Management', 'Law', 'Education', 'Agriculture', 'Medical', 'Computer Science', 'Social Sciences'] },
   { name: 'D.Phil', slug: 'dphil', level: 8, types: ['Doctorate'], branches: [] },
   { name: 'DM', slug: 'dm', level: 8, types: ['Doctorate', 'Medical'], branches: ['Cardiology', 'Neurology', 'Nephrology', 'Gastroenterology', 'Endocrinology', 'Medical Oncology', 'Clinical Hematology', 'Critical Care'] },
   { name: 'MCh', slug: 'mch', level: 8, types: ['Doctorate', 'Medical'], branches: ['Neurosurgery', 'Cardiothoracic Surgery', 'Urology', 'Plastic Surgery', 'Surgical Oncology', 'Pediatric Surgery'] },

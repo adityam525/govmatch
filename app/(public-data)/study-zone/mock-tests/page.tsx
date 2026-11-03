@@ -5,7 +5,6 @@ import { prisma } from '@/lib/prisma';
 import { DIFFICULTIES } from '@/lib/mock-difficulty';
 import MockFilters from '@/components/mock/MockFilters';
 import StartTestButton from '@/components/mock/StartTestButton';
-import MockSearch from '@/components/mock/MockSearch';
 
 export const dynamic = 'force-dynamic';
 export const metadata: Metadata = {
