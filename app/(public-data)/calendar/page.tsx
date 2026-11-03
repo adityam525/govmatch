@@ -1,7 +1,11 @@
-import type { Metadata } from 'next';
-import ExamCalendar from '@/components/calendar/ExamCalendar';
+import type { Metadata } from "next";
+import ExamCalendar from "@/components/calendar/ExamCalendar";
 
-export const metadata: Metadata = { title: 'Exam calendar | GovMatch', description: 'Application, admit card, exam and result dates for government jobs, in one calendar.' };
+export const metadata: Metadata = {
+  title: "Exam calendar | GovMatch",
+  description:
+    "Application, admit card, exam and result dates for government jobs, in one calendar.",
+};
 
 export default function CalendarPage() {
   return (
