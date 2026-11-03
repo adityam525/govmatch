@@ -5,6 +5,8 @@ import { prisma } from '../lib/prisma';
 import { fieldKey } from '../lib/field-keys';
 import { EVENT_KINDS } from '../lib/schedule';
 import { DIFFICULTIES } from '../lib/mock-difficulty';
+import { BENCHMARK_DISABILITY_PERCENT, DISABILITY_TYPES, RULE_CATEGORIES, RULE_STATUSES, SPECIAL_STATUSES } from '../lib/special-categories';
+import { CERTIFICATIONS, GENDER_RESTRICTIONS } from '../lib/eligibility-options';
 
 function sheet(wb: ExcelJS.Workbook, name: string, headers: string[], rows: (string | number | null)[][], widths?: number[]) {
   const ws = wb.addWorksheet(name);
@@ -50,6 +52,14 @@ async function main() {
     ...DIFFICULTIES.map((d): [string, string, string] => ['Mock test difficulty', d.code, d.label]),
   ];
   sheet(wb, 'Fixed lists', ['List', 'Value', 'Label'], fixed);
+
+  sheet(wb, 'Disability groups', ['Code', 'Label', 'Short name'], DISABILITY_TYPES.map((d) => [d.code, d.label, d.short]), [16, 90, 40]);
+  sheet(wb, 'Special statuses', ['Code', 'Label'], SPECIAL_STATUSES.map((x) => [x.code, x.label]));
+  sheet(wb, 'Rule categories', ['Code', 'Label'], RULE_CATEGORIES.map((x) => [x.code, x.label]));
+  sheet(wb, 'Rule conditions', ['Code', 'Label'], RULE_STATUSES.map((x) => [x.code, x.label]));
+  sheet(wb, 'Certificates', ['Code', 'Label'], CERTIFICATIONS.map((x) => [x.code, x.label]), [18, 60]);
+  sheet(wb, 'Gender options', ['Code', 'Label'], GENDER_RESTRICTIONS.map((x) => [x.code || '(none)', x.label]));
+  sheet(wb, 'Settings', ['Name', 'Value'], [['Benchmark disability percent', BENCHMARK_DISABILITY_PERCENT]]);
 
   fs.mkdirSync('exports', { recursive: true });
   const file = 'exports/govmatch-reference-' + new Date().toISOString().slice(0, 10) + '.xlsx';

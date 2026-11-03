@@ -40,6 +40,9 @@ check-fit, check-age, check-requirements, check-schedule, check-cutoff, check-qu
 - Organizations part 2 drafted (PSUs, defence, education, research, healthcare, departments, union territories). Next: High Courts, state departments, local bodies.
 - Excel export of reference data: npx tsx prisma/export-reference.ts (writes exports/).
 
+- Organizations part 2 applied (about 107 added). Still to add: High Courts and judiciary, state departments, local bodies.
+- Excel export now includes disability groups, special statuses, rule lists, certificates, gender options.
+
 ## Decisions
 - Imported papers are private to the user and Premium-gated until limits are set.
 - Section times are all-or-nothing; total is their sum.
