@@ -23,6 +23,7 @@ import OrganizationStrip from "@/components/sections/home-logged-out/Organizatio
 import StateStrip from "@/components/sections/home-logged-out/StateStrip";
 import HomeHotNews from "@/components/sections/home/HomeHotNews";
 import UpcomingJobsSection from "@/components/sections/home/UpcomingJobsSection";
+import ExamCalendar from "@/components/calendar/ExamCalendar";
 import LatestJobsWithToday from "@/components/sections/home/LatestJobsWithToday";
 import JobPicksCard from "@/components/sections/home/JobPicksCard";
 import BrowseAllOpenings from "@/components/ui/browse/BrowseAllOpenings";
@@ -98,6 +99,7 @@ export default async function HomePage() {
         </div>
 
         <div className="mx-auto max-w-7xl space-y-16 px-4 py-16 sm:px-6">
+          <ExamCalendar />
           <UpcomingJobsSection hideWhenEmpty />
           <LowerSections />
         </div>
@@ -118,7 +120,8 @@ export default async function HomePage() {
       <div className="mx-auto max-w-7xl space-y-16 px-4 py-16 sm:px-6">
         <HomeHotNews />
         <LatestJobsWithToday />
-        <UpcomingJobsSection hideWhenEmpty />
+        <ExamCalendar />
+          <UpcomingJobsSection hideWhenEmpty />
         <LowerSections />
       </div>
     </div>
