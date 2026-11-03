@@ -41,10 +41,10 @@ function LowerSections() {
     <>
       <BrowseAllOpenings />
 
-      <CategoryStrip />
+      {/* <CategoryStrip />
       <OrganizationStrip />
       <QualificationStrip />
-      <StateStrip />
+      <StateStrip /> */}
       <LatestUpdatesGrid />
       <HowItWorks />
       <MockTestPromo />
