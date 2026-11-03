@@ -4,13 +4,14 @@ import { fieldKey } from '../lib/field-keys';
 import { NEW_TYPES, type QualDef } from './data/taxonomy-types';
 import { PART_A } from './data/taxonomy-a';
 import { PART_B } from './data/taxonomy-b';
+import { PART_C } from './data/taxonomy-c';
 
 const apply = process.argv.includes('--apply');
 const norm = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
 const slugify = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
 
 async function main() {
-  const defs: QualDef[] = [...PART_A, ...PART_B];
+  const defs: QualDef[] = [...PART_A, ...PART_B, ...PART_C];
   const quals = await prisma.qualification.findMany({ include: { branches: { select: { name: true } } } });
   const branchRows = await prisma.branch.findMany({ select: { name: true, slug: true } });
   const takenNames = new Set(branchRows.map((b) => norm(b.name)));

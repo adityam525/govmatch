@@ -36,6 +36,10 @@ check-fit, check-age, check-requirements, check-schedule, check-cutoff, check-qu
 - Organizations: part 1 applied (67 added); part 2 and local-body lists pending; websites blank on purpose.
 - Bulk import: each qualification can carry its own branches ({name, branches}); plain names still work.
 
+- Levels decided: Vocational follows its base level (no new qualification); PG Diploma and PGDM at level 7; CA/CMA/CS at level 6. Vocational rule limited to levels 5 and below.
+- Organizations part 2 drafted (PSUs, defence, education, research, healthcare, departments, union territories). Next: High Courts, state departments, local bodies.
+- Excel export of reference data: npx tsx prisma/export-reference.ts (writes exports/).
+
 ## Decisions
 - Imported papers are private to the user and Premium-gated until limits are set.
 - Section times are all-or-nothing; total is their sum.

@@ -23,7 +23,11 @@ async function main() {
   let made = 0, skipped = 0;
   const clashes: string[] = [];
   for (const [name, shortName, sector] of all) {
-    if (seen.has(norm(name)) || seen.has(norm(shortName))) { skipped++; continue; }
+    if (seen.has(norm(name)) || seen.has(norm(shortName))) {
+      skipped++;
+      if (!seen.has(norm(name))) console.log('skipped (short name already used): ' + name + ' [' + shortName + ']');
+      continue;
+    }
     let slug = slugify(shortName);
     if (shorts.has(shortName.toLowerCase()) || slugs.has(slug)) { clashes.push(`${name} (${shortName})`); continue; }
     shorts.add(shortName.toLowerCase()); slugs.add(slug); seen.add(norm(name)); seen.add(norm(shortName));

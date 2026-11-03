@@ -29,7 +29,7 @@ async function main() {
   console.log(`Rows: each qualification held alone. Columns: ${required.map((r) => r.name).join(' | ')}\n`);
   for (const q of rows) {
     const cells = required.map((req) => {
-      const expected = q.level >= req.level && !(vocational(q) && req.level >= 3);
+      const expected = q.level >= req.level && !(vocational(q) && q.level <= 5 && req.level >= 3);
       const post: any = { title: 'T', minAge: 18, maxAge: 60, employmentType: 'PERMANENT', qualifications: [{ id: req.id }] };
       const got = evaluatePost(ctxFor(q), post).verdict === 'eligible';
       if (got !== expected) wrong++;

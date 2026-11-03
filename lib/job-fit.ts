@@ -246,7 +246,7 @@ function checkQualification(
     const via = educations.find(
       (e) =>
         e.qualification.level >= accepted.level &&
-        !(isVocational(e.qualification) && accepted.level >= 3),
+        !(isVocational(e.qualification) && e.qualification.level <= 5 && accepted.level >= 3),
     );
     return via ? { status: "yes", via } : { status: "no" };
   }
