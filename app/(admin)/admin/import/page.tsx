@@ -53,7 +53,7 @@ function buildExample(): string {
               maxAge: 27,
               payScale: 'Level 2',
               employmentType: 'PERMANENT',
-              qualification: '10th-pass',
+              qualifications: [{ name: 'Diploma', branches: ['Civil'] }, { name: 'B.Tech / B.E', branches: ['Mechanical'] }],
               role: 'Clerk',
             },
           ],

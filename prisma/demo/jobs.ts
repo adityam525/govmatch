@@ -33,11 +33,11 @@ export const JOBS: JobDef[] = [
     post('Engineer (Mechanical)', ['B.Tech / B.E'], { field: 'Mechanical', maxAge: 32 }),
   ]),
   live('e-diploma-civil', 'Junior Engineer, Diploma Civil', 'DSSSB', [
-    post('Junior Engineer (Civil)', ['Diploma (Engineering)'], { field: 'Civil', maxAge: 30 }),
+    post('Junior Engineer (Civil)', ['Diploma'], { field: 'Civil', maxAge: 30 }),
   ]),
   live('e-ma-economics', 'Economist, M.A Economics', 'UPSC', [post('Economist', ['M.A'], { field: 'Economics' })]),
   live('e-multi-post', 'Two posts with different requirements', 'DSSSB', [
-    post('Junior Engineer (Civil)', ['Diploma (Engineering)'], { field: 'Civil', maxAge: 30 }),
+    post('Junior Engineer (Civil)', ['Diploma'], { field: 'Civil', maxAge: 30 }),
     post('Assistant', ['Any Graduate'], { maxAge: 30 }),
   ]),
   live('e-no-posts', 'Qualifying exam with no posts', 'UPSC', [], { direct: 'Class 10th pass or equivalent from a recognised board.' }),

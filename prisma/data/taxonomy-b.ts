@@ -1,0 +1,33 @@
+import type { QualDef } from './taxonomy-types';
+
+// Post graduate and doctorate. Existing qualifications only get missing branches.
+export const PART_B: QualDef[] = [
+  { name: 'M.A', slug: 'ma', level: 7, types: ['Post Graduate', 'Arts & Humanities'], branches: ['English', 'Hindi', 'History', 'Political Science', 'Economics', 'Sociology', 'Psychology', 'Geography', 'Philosophy', 'Public Administration', 'Journalism'] },
+  { name: 'M.Sc', slug: 'msc', level: 7, types: ['Post Graduate', 'Science'], short: 'M.Sc', branches: ['Physics', 'Chemistry', 'Mathematics', 'Biology', 'Computer Science', 'Information Technology', 'Statistics', 'Agriculture', 'Nursing', 'Biotechnology', 'Microbiology', 'Zoology', 'Botany', 'Environmental Science', 'Data Science', 'Geology'] },
+  { name: 'M.Com', slug: 'mcom', level: 7, types: ['Post Graduate', 'Commerce'], branches: ['Accounting', 'Finance', 'Taxation', 'Banking', 'Business Management', 'International Business'] },
+  { name: 'MBA', slug: 'mba', level: 7, types: ['Post Graduate', 'Management'], branches: ['Marketing', 'Finance', 'Human Resources', 'Operations', 'International Business', 'IT', 'Business Analytics', 'Supply Chain', 'Healthcare', 'Hospitality', 'Banking', 'Entrepreneurship'] },
+  { name: 'MCA', slug: 'mca', level: 7, types: ['Post Graduate', 'Computer Applications'], branches: ['Software Development', 'Computer Science', 'AI', 'Data Science', 'Cloud Computing', 'Cybersecurity', 'Networking', 'Web Development'] },
+  { name: 'M.Tech / M.E', slug: 'mtech-me', level: 7, types: ['Post Graduate', 'Engineering'], short: 'M.Tech', branches: ['Computer Science', 'Information Technology', 'Mechanical', 'Civil', 'Electrical', 'Electronics', 'VLSI', 'Structural', 'Chemical', 'Biotechnology', 'Aerospace', 'Data Science', 'AI', 'Power Systems', 'Thermal Engineering'] },
+  { name: 'M.Arch', slug: 'march', level: 7, types: ['Post Graduate', 'Architecture & Design'], branches: ['Architectural Design', 'Urban Design', 'Landscape Architecture', 'Sustainable Architecture', 'Interior Architecture'] },
+  { name: 'M.Pharm', slug: 'mpharm', level: 7, types: ['Post Graduate', 'Pharmacy'], branches: ['Pharmaceutics', 'Pharmacology', 'Pharmaceutical Chemistry', 'Pharmacognosy', 'Pharmacy Practice', 'Quality Assurance'] },
+  { name: 'LLM', slug: 'llm', level: 7, types: ['Post Graduate', 'Law'], branches: ['Corporate Law', 'Criminal Law', 'Constitutional Law', 'International Law', 'Tax Law', 'Human Rights Law', 'Intellectual Property Law'] },
+  { name: 'M.Ed', slug: 'med', level: 7, types: ['Post Graduate', 'Teaching & Education'], branches: ['Educational Psychology', 'Educational Administration', 'Curriculum Studies', 'Teacher Education', 'Educational Technology'] },
+  { name: 'MD / MS', slug: 'md-ms', level: 7, types: ['Post Graduate', 'Medical'], branches: ['General Medicine', 'Pediatrics', 'Dermatology', 'Psychiatry', 'Radiology', 'Anesthesiology', 'Pathology', 'Microbiology', 'General Surgery', 'Orthopedics', 'ENT', 'Ophthalmology', 'Obstetrics & Gynecology', 'Cardiology'] },
+  { name: 'DNB', slug: 'dnb', level: 7, types: ['Post Graduate', 'Medical'], branches: [] },
+  { name: 'M.Plan', slug: 'mplan', level: 7, types: ['Post Graduate', 'Architecture & Design'], branches: ['Urban Planning', 'Regional Planning', 'Environmental Planning', 'Transport Planning', 'Housing'] },
+  { name: 'M.Des', slug: 'mdes', level: 7, types: ['Post Graduate', 'Design & Fine Arts'], branches: ['Fashion Design', 'Product Design', 'Graphic Design', 'Industrial Design', 'Communication Design', 'Interior Design', 'Textile Design', 'UI/UX Design'] },
+  { name: 'MPH', slug: 'mph', level: 7, types: ['Post Graduate', 'Medical'], branches: ['Epidemiology', 'Public Health Administration', 'Health Policy', 'Community Health', 'Biostatistics'] },
+  { name: 'MFA', slug: 'mfa', level: 7, types: ['Post Graduate', 'Design & Fine Arts'], branches: ['Painting', 'Sculpture', 'Applied Arts', 'Photography', 'Printmaking'] },
+  { name: 'M.P.Ed', slug: 'mped', level: 7, types: ['Post Graduate', 'Physical Education'], branches: ['Sports Science', 'Physical Education', 'Sports Coaching', 'Sports Psychology'] },
+  { name: 'MVSc', slug: 'mvsc', level: 7, types: ['Post Graduate', 'Veterinary'], branches: ['Veterinary Surgery', 'Animal Nutrition', 'Veterinary Medicine', 'Veterinary Pathology', 'Veterinary Microbiology', 'Veterinary Gynaecology'] },
+  { name: 'MHM', slug: 'mhm', level: 7, types: ['Post Graduate', 'Hotel Management'], branches: ['Hospitality Management', 'Hotel Operations', 'Tourism', 'Food & Beverage'] },
+  { name: 'M.Stat', slug: 'mstat', level: 7, types: ['Post Graduate', 'Science'], branches: ['Statistics', 'Applied Statistics'] },
+  { name: 'M.Math', slug: 'mmath', level: 7, types: ['Post Graduate', 'Science'], branches: ['Pure Mathematics', 'Applied Mathematics'] },
+  { name: 'M.Voc', slug: 'mvoc', level: 7, types: ['Post Graduate'], branches: ['Healthcare', 'IT', 'Retail', 'Hospitality', 'Agriculture', 'Automotive'] },
+  { name: 'M.Lib', slug: 'mlib', level: 7, types: ['Post Graduate', 'Library Science'], branches: ['Library and Information Science'] },
+  { name: 'M.Phil', slug: 'mphil', level: 7, types: ['Post Graduate'], branches: [] },
+  { name: 'PhD', slug: 'phd', level: 8, types: ['Doctorate'], branches: ['Engineering', 'Science', 'Arts', 'Commerce', 'Management', 'Law', 'Education', 'Agriculture', 'Medical', 'Computer Science', 'Social Sciences'] },
+  { name: 'D.Phil', slug: 'dphil', level: 8, types: ['Doctorate'], branches: [] },
+  { name: 'DM', slug: 'dm', level: 8, types: ['Doctorate', 'Medical'], branches: ['Cardiology', 'Neurology', 'Nephrology', 'Gastroenterology', 'Endocrinology', 'Medical Oncology', 'Clinical Hematology', 'Critical Care'] },
+  { name: 'MCh', slug: 'mch', level: 8, types: ['Doctorate', 'Medical'], branches: ['Neurosurgery', 'Cardiothoracic Surgery', 'Urology', 'Plastic Surgery', 'Surgical Oncology', 'Pediatric Surgery'] },
+];

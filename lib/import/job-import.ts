@@ -23,7 +23,8 @@ export interface ImportRowResult {
 }
 
 type IdMap = Map<string, string>;
-interface Lookups { orgs: IdMap; states: IdMap; quals: IdMap; branches: IdMap; roles: IdMap; }
+import { readQualificationEntries, type BranchRow, type QualificationRule } from './qualification-entries';
+interface Lookups { orgs: IdMap; states: IdMap; quals: IdMap; branches: IdMap; roles: IdMap; branchRows: BranchRow[]; }
 
 interface PreparedPost {
   title: string;
@@ -34,6 +35,7 @@ interface PreparedPost {
   employmentType: EmploymentType;
   qualificationIds: string[];
   branchIds: string[];
+  qualificationRules: QualificationRule[];
   roleId: string | null;
 }
 
@@ -107,7 +109,7 @@ async function loadLookups(): Promise<Lookups> {
     prisma.organization.findMany({ select: { id: true, name: true, shortName: true } }),
     prisma.state.findMany({ select: { id: true, name: true, code: true } }),
     prisma.qualification.findMany({ select: { id: true, name: true, slug: true } }),
-    prisma.branch.findMany({ select: { id: true, name: true, slug: true } }),
+    prisma.branch.findMany({ select: { id: true, name: true, slug: true, qualificationId: true } }),
     prisma.role.findMany({ select: { id: true, name: true, slug: true } }),
   ]);
   return {
@@ -115,6 +117,7 @@ async function loadLookups(): Promise<Lookups> {
     states: buildMap(states, (s) => [s.name, s.code]),
     quals: buildMap(quals, (q) => [q.slug, q.name]),
     branches: buildMap(branches, (b) => [b.slug, b.name]),
+    branchRows: branches,
     roles: buildMap(roles, (r) => [r.slug, r.name]),
   };
 }
@@ -263,25 +266,13 @@ function prepareRow(
       errors.push(`${label}.employmentType must be one of ${EMPLOYMENT_TYPES.join(', ')}`);
     }
 
-    const qualTexts = [...asArray(p?.qualifications), ...(p?.qualification ? [p.qualification] : [])]
-      .map(clean)
-      .filter(Boolean);
-    const qualificationIds: string[] = [];
-    if (qualTexts.length === 0) {
-      errors.push(`${label} needs a qualification (name or slug)`);
-    }
-    for (const q of qualTexts) {
-      const id = lookups.quals.get(norm(q));
-      if (!id) errors.push(`${label}: qualification not found: "${q}"`);
-      else if (!qualificationIds.includes(id)) qualificationIds.push(id);
-    }
-
-    const branchIds: string[] = [];
-    for (const b of asArray(p?.branches).map(clean).filter(Boolean)) {
-      const id = lookups.branches.get(norm(b));
-      if (!id) errors.push(`${label}: branch not found: "${b}"`);
-      else if (!branchIds.includes(id)) branchIds.push(id);
-    }
+    const entries = readQualificationEntries(
+      { qualifications: p?.qualifications, qualification: p?.qualification, branches: p?.branches },
+      (t) => lookups.quals.get(norm(clean(t))),
+      lookups.branchRows,
+    );
+    for (const message of entries.errors) errors.push(label + ': ' + message);
+    const { qualificationIds, branchIds, qualificationRules } = entries;
 
     let roleId: string | null = null;
     const roleText = clean(p?.role);
@@ -300,6 +291,7 @@ function prepareRow(
       employmentType: empText as EmploymentType,
       qualificationIds,
       branchIds,
+      qualificationRules,
       roleId,
     });
   });
@@ -385,6 +377,7 @@ async function createJob(job: PreparedJob) {
               qualifications: { connect: p.qualificationIds.map((id) => ({ id })) },
               branches: p.branchIds.length ? { connect: p.branchIds.map((id) => ({ id })) } : undefined,
               roles: p.roleId ? { connect: [{ id: p.roleId }] } : undefined,
+              qualificationRules: p.qualificationRules.length ? { create: p.qualificationRules } : undefined,
             })),
           }
         : undefined,

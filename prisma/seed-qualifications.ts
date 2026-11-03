@@ -8,7 +8,7 @@ const qualifications = [
   { name: "ITI", slug: "iti", level: 4, categorySlugs: ["iti"] },
   { name: "Apprentice (ITI Trade)", slug: "apprentice-iti", level: 4, categorySlugs: ["apprentice"] },
 
-  { name: "Diploma (Engineering)", slug: "diploma", level: 5, categorySlugs: ["diploma", "engineering"] },
+  { name: "Diploma", slug: "diploma", level: 5, categorySlugs: ["diploma", "engineering"] },
   { name: "Diploma in Pharmacy", slug: "diploma-pharmacy", level: 5, categorySlugs: ["diploma", "pharmacy"] },
   { name: "Diploma in Education (D.El.Ed)", slug: "diploma-education", level: 5, categorySlugs: ["diploma", "teaching-education"] },
   { name: "Diploma in Nursing (GNM)", slug: "diploma-nursing", level: 5, categorySlugs: ["diploma", "nursing-paramedical"] },

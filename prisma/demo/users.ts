@@ -11,7 +11,7 @@ export const USERS: UserDef[] = [
   // ---- Education
   user('grad-cs', 'Demo B.Tech CS', 25, [...SCHOOL, edu('B.Tech / B.E', 'Computer Science')], { domicile: 'BR', height: 175, chest: 82 }),
   user('tenth-only', 'Demo 10th Pass', 22, [edu('10th Pass')], { gender: 'Female' }),
-  user('diploma-civil', 'Demo Diploma Civil', 24, [edu('10th Pass'), edu('Diploma (Engineering)', 'Civil')]),
+  user('diploma-civil', 'Demo Diploma Civil', 24, [edu('10th Pass'), edu('Diploma', 'Civil')]),
   user('iti', 'Demo ITI', 21, [edu('ITI')]),
   user('two-ma', 'Demo Two M.A', 28, [edu('B.A', 'History'), edu('M.A', 'History'), edu('M.A', 'Economics')], { gender: 'Female' }),
   user('mtech-cs', 'Demo M.Tech CS', 30, [edu('B.Tech / B.E', 'Mechanical'), edu('M.Tech / M.E', 'Computer Science')]),
