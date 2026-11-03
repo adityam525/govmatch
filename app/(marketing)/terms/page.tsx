@@ -1,39 +1,25 @@
 export default function TermsPage() {
+  const sections: [string, string][] = [
+    ['1. Acceptance of terms', 'By using GovMatch you agree to these terms. If you do not agree, please do not use the platform.'],
+    ['2. Nature of the service', 'GovMatch collects and organises government job notifications from official sources. We do not conduct recruitment and are not affiliated with any government body, PSU or recruiting organisation listed here.'],
+    ['3. Verify before you apply', 'Dates, vacancies, age limits and eligibility can change or contain errors. Our eligibility result is a guide based on the details you give and the notice as we read it. Always check the official notice and website before you apply. The official notice is final.'],
+    ['4. Your account', 'You are responsible for keeping your login details safe and for activity under your account. The details you enter should be accurate.'],
+    ['5. Question papers and mock tests', 'You may import only papers you have the right to use. Imported papers stay private to your account. Conversion from a file can contain mistakes, so check the questions and answers before relying on a test. We may remove content that breaks the law or others\u2019 rights.'],
+    ['6. Premium', 'Premium features are provided as described on the plans page. Online payment is not yet available. Premium is set up on request, and features may change.'],
+    ['7. Limitation of liability', 'GovMatch is not liable for loss arising from reliance on information on the platform, including missed deadlines, rejected applications or wrong eligibility results.'],
+    ['8. Changes', 'We may update these terms. Continued use after a change means you accept it.'],
+  ];
   return (
     <div className="max-w-3xl mx-auto px-6 py-12">
-      <h1 className="text-2xl font-bold text-neutral-900">Terms & Conditions</h1>
-      <p className="text-sm text-neutral-400 mt-1">Last updated: July 2026</p>
-
+      <h1 className="text-2xl font-bold text-neutral-900">Terms &amp; Conditions</h1>
+      <p className="text-sm text-neutral-400 mt-1">Last updated: November 2026</p>
       <div className="mt-8 space-y-6 text-sm text-neutral-600 leading-relaxed">
-        <section>
-          <h2 className="text-base font-semibold text-neutral-900 mb-2">1. Acceptance of Terms</h2>
-          <p>By accessing or using GovMatch, you agree to be bound by these Terms & Conditions. If you do not agree, please do not use the platform.</p>
-        </section>
-
-        <section>
-          <h2 className="text-base font-semibold text-neutral-900 mb-2">2. Nature of the Service</h2>
-          <p>GovMatch aggregates and organizes publicly available government job notifications from official sources. We do not conduct recruitment, and we are not affiliated with any government body, PSU, or recruiting organization listed on the platform.</p>
-        </section>
-
-        <section>
-          <h2 className="text-base font-semibold text-neutral-900 mb-2">3. No Guarantee of Accuracy</h2>
-          <p>While we make every effort to verify listings against official sources, notification details (dates, vacancies, eligibility) can change without notice. Always confirm details on the official website before applying.</p>
-        </section>
-
-        <section>
-          <h2 className="text-base font-semibold text-neutral-900 mb-2">4. User Accounts</h2>
-          <p>You are responsible for maintaining the confidentiality of your account credentials and for all activity under your account.</p>
-        </section>
-
-        <section>
-          <h2 className="text-base font-semibold text-neutral-900 mb-2">5. Limitation of Liability</h2>
-          <p>GovMatch is not liable for any loss or damage arising from reliance on information provided through the platform, including missed deadlines or application errors.</p>
-        </section>
-
-        <section>
-          <h2 className="text-base font-semibold text-neutral-900 mb-2">6. Changes to These Terms</h2>
-          <p>We may update these terms from time to time. Continued use of the platform after changes constitutes acceptance of the updated terms.</p>
-        </section>
+        {sections.map(([h, body]) => (
+          <section key={h}>
+            <h2 className="text-base font-semibold text-neutral-900 mb-2">{h}</h2>
+            <p>{body}</p>
+          </section>
+        ))}
       </div>
     </div>
   );
