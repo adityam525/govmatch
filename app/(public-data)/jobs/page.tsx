@@ -204,6 +204,12 @@ export default async function JobsPage({ searchParams }: JobsPageProps) {
         }
       : {}),
 
+    ...(params.women === "only"
+      ? { genderRestriction: "FEMALE" }
+      : params.women === "open"
+        ? { OR: [{ genderRestriction: null }, { genderRestriction: "" }, { genderRestriction: "FEMALE" }] }
+        : {}),
+
     ...(categoryFilter.post ?? {}),
   };
 
