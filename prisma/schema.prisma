@@ -238,6 +238,9 @@ model Post {
   minChestCm             Int?
   ageCutoffDate DateTime?
   qualificationRules PostQualificationRule[]
+  minMarksPercent    Float?
+  minMarksByCategory Json?
+  typingOptions      Json?
 }
 
 model AdmitCard {
@@ -399,6 +402,8 @@ model UserProfile {
   chestCm             Int?
   preferredSectorSlugs       String[] @default([])
   preferredOrganizationSlugs String[] @default([])
+  typingEnglishWpm Int?
+  typingHindiWpm   Int?
 }
 
 model SavedJob {

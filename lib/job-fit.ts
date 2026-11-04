@@ -3,6 +3,7 @@ import { fieldKey } from "./field-keys";
 import { evaluateAge } from "./age-rules";
 import { evaluateRequirements } from "./requirements";
 import { computeCompleteness } from "./profile-completeness";
+import { evaluateMarks, evaluateTyping, mergeResults } from "./skill-rules";
 
 export interface QualRef {
   id: string;
@@ -15,6 +16,7 @@ export interface EducationFact {
   qualification: QualRef;
   field: string | null;
   fieldLabel: string | null;
+  percentage?: number | null;
 }
 
 export interface UserFacts {
@@ -30,6 +32,8 @@ export interface UserFacts {
   certifications: string[];
   heightCm: number | null;
   chestCm: number | null;
+  typingEnglishWpm?: number | null;
+  typingHindiWpm?: number | null;
   preferredRoleIds: string[];
   preferredEmploymentTypes: string[];
 }
@@ -74,6 +78,9 @@ export interface PostLike {
   ageRelaxation?: unknown;
   relaxationRules?: unknown;
   ageCutoffDate?: Date | string | null;
+  minMarksPercent?: number | null;
+  minMarksByCategory?: unknown;
+  typingOptions?: unknown;
   pwdTypes?: string[];
   genderRestriction?: string | null;
   minExperienceYears?: number | null;
@@ -133,6 +140,7 @@ export async function loadFitContext(userId: string): Promise<FitContext> {
       qualification,
       field: fieldKey(label),
       fieldLabel: label,
+      percentage: row.percentage ?? null,
     });
   }
 
@@ -186,6 +194,8 @@ export async function loadFitContext(userId: string): Promise<FitContext> {
       certifications: profile?.certifications ?? [],
       heightCm: profile?.heightCm ?? null,
       chestCm: profile?.chestCm ?? null,
+      typingEnglishWpm: profile?.typingEnglishWpm ?? null,
+      typingHindiWpm: profile?.typingHindiWpm ?? null,
       preferredRoleIds: profile?.preferredRoles.map((role) => role.id) ?? [],
       preferredEmploymentTypes: (profile?.preferredEmploymentTypes ??
         []) as string[],
@@ -401,6 +411,7 @@ export function evaluatePost(
     anyBranchFor.has(qualId) ? [] : (namesByQual.get(qualId) ?? branchNames);
 
   // --- Qualification
+  let qualVia: EducationFact | undefined;
   type QualStatus = "yes" | "no" | "unknown" | "na";
   let qualStatus: QualStatus = "na";
   let qualCheck: FitCheck | null = null;
@@ -418,6 +429,7 @@ export function evaluatePost(
         checkQualification(user.educations, a, fieldsFor(a.id)),
       );
       const hit = results.find((r) => r.status === "yes");
+      qualVia = hit?.via;
       if (hit) {
         qualStatus = "yes";
         qualCheck = {
@@ -477,7 +489,7 @@ export function evaluatePost(
       : firstAgeCheck;
 
   // --- Gender, home state, experience, certificates and physical standards
-  const reqResult = evaluateRequirements(
+  const reqBase = evaluateRequirements(
     {
       gender: user.gender ?? null,
       domicileStateCode: user.domicileStateCode ?? null,
@@ -489,6 +501,12 @@ export function evaluatePost(
     post,
     (code) => ctx.stateNames?.get(code) ?? code,
   );
+
+  // Minimum marks (cut-off may differ by category) and typing speed.
+  const reqResult = mergeResults(reqBase, [
+    qualStatus === "yes" ? evaluateMarks(post, user.category, qualVia?.percentage) : { status: "yes" as const, checks: [] },
+    evaluateTyping(post.typingOptions, user.typingEnglishWpm, user.typingHindiWpm),
+  ]);
 
   // --- Job type preference (hard filter)
   const prefs = user.preferredEmploymentTypes;
