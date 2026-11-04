@@ -814,6 +814,7 @@ model QbTopic {
   exams     QbExamTopic[]
 
   @@unique([chapterId, slug])
+  templates QbTemplate[]
 }
 
 // An exam and stage, such as "IBPS PO Prelims". Its syllabus is the set of topics linked to it.
@@ -838,4 +839,21 @@ model QbExamTopic {
   weight  Int     @default(1)
 
   @@unique([examId, topicId])
+}
+
+// A question template. `definition` is the JSON that lib/qb/template.ts validates and draws from.
+model QbTemplate {
+  id              String   @id @default(cuid())
+  slug            String   @unique
+  title           String
+  topicId         String
+  topic           QbTopic  @relation(fields: [topicId], references: [id], onDelete: Restrict)
+  difficulty      String   @default("MEDIUM")
+  expectedSeconds Int      @default(60)
+  definition      Json
+  published       Boolean  @default(false)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@index([topicId, published])
 }

@@ -57,6 +57,8 @@ check-fit, check-age, check-requirements, check-schedule, check-cutoff, check-qu
 - Question bank step 2: models for subjects, chapters, topics, exams (IBPS PO/Clerk, SSC CGL/CHSL drafts) and exam-topic mapping. Mapping is a draft to verify against official notices.
 - Admin dropdowns converted to the site style (users plan menu and NotificationSelect still native).
 
+- Question bank step 3: QbTemplate model, template input checks, admin API (list, create, edit, publish, preview, delete; publishing blocked by the 200-draw report), 30 starter Quant templates with independent answer checks (prisma/check-qb-starters.ts). Next: admin editor screens, bulk import, serving questions, custom test builder.
+
 ## Decisions
 - Imported papers are private to the user and Premium-gated until limits are set.
 - Section times are all-or-nothing; total is their sum.
