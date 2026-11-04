@@ -14,6 +14,7 @@ import {
   sortByIdOrder,
 } from "@/lib/jobs-view";
 import JobsViewTabs from "@/components/jobs/JobsViewTabs";
+import WomenFilterTabs from "@/components/jobs/WomenFilterTabs";
 import StickyTools from "@/components/jobs/StickyTools";
 import Link from "next/link";
 import { isPremiumUser } from "@/lib/plan";
@@ -517,6 +518,7 @@ export default async function JobsPage({ searchParams }: JobsPageProps) {
       <StickyTools>
         <JobFiltersBar isPremium={isPremium} />
         <JobsViewTabs view={view} counts={phaseCounts} params={params} />
+          <WomenFilterTabs params={params} />
       </StickyTools>
 
       {userId && !profileComplete && (
