@@ -24,6 +24,7 @@ import StateStrip from "@/components/sections/home-logged-out/StateStrip";
 import HomeHotNews from "@/components/sections/home/HomeHotNews";
 import UpcomingJobsSection from "@/components/sections/home/UpcomingJobsSection";
 import ExamCalendar from "@/components/calendar/ExamCalendar";
+import { countPerfectMatches } from "@/lib/perfect-matches";
 import LatestJobsWithToday from "@/components/sections/home/LatestJobsWithToday";
 import JobPicksCard from "@/components/sections/home/JobPicksCard";
 import BrowseAllOpenings from "@/components/ui/browse/BrowseAllOpenings";
@@ -59,9 +60,10 @@ export default async function HomePage() {
   const userId = session?.user?.id;
 
   if (userId) {
-    const [picks, dueToday] = await Promise.all([
+    const [picks, dueToday, perfect] = await Promise.all([
       loadPicks(userId),
       getLastDateTodayJobs().catch(() => [] as PublishedJob[]),
+      countPerfectMatches(userId).catch(() => ({ count: 0, profileComplete: false })),
     ]);
 
     const topScore =
@@ -70,7 +72,7 @@ export default async function HomePage() {
     return (
       <div className="bg-neutral-50">
         <div className="mx-auto max-w-7xl px-4 pt-6 sm:px-6 sm:pt-8">
-          <SearchHero matchScore={topScore} />
+          <SearchHero perfectCount={perfect.count} perfectComplete={perfect.profileComplete} perfectHref="/jobs?sort=relevance&eligible=1" />
         </div>
 
         {/* Phones: picks, then jobs, then the smaller cards.

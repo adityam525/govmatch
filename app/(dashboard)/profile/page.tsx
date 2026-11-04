@@ -38,6 +38,8 @@ const EMPTY_EXTRA: ExtraState = {
   preferredStateCodes: [],
   heightCm: "",
   chestCm: "",
+  typingEnglishWpm: "",
+  typingHindiWpm: "",
   preferredSectorSlugs: [],
   preferredOrganizationSlugs: [],
 };
@@ -194,6 +196,8 @@ export default function ProfilePage() {
         preferredStateCodes: p.preferredStateCodes ?? [],
         heightCm: p.heightCm != null ? String(p.heightCm) : "",
         chestCm: p.chestCm != null ? String(p.chestCm) : "",
+        typingEnglishWpm: p.typingEnglishWpm != null ? String(p.typingEnglishWpm) : "",
+        typingHindiWpm: p.typingHindiWpm != null ? String(p.typingHindiWpm) : "",
         preferredSectorSlugs: p.preferredSectorSlugs ?? [],
         preferredOrganizationSlugs: p.preferredOrganizationSlugs ?? [],
       };
@@ -383,6 +387,8 @@ export default function ProfilePage() {
           preferredStateCodes: extra.preferredStateCodes,
           heightCm: extra.heightCm,
           chestCm: extra.chestCm,
+          typingEnglishWpm: extra.typingEnglishWpm,
+          typingHindiWpm: extra.typingHindiWpm,
           preferredSectorSlugs: extra.preferredSectorSlugs,
           preferredOrganizationSlugs: extra.preferredOrganizationSlugs,
         }),

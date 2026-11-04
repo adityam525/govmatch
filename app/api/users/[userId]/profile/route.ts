@@ -101,6 +101,12 @@ export async function PATCH(request: Request, { params }: Params) {
       if (chest === undefined) return bad('Chest must be between 50 and 150 cm.');
       data.chestCm = chest;
     }
+    for (const [field, label] of [['typingEnglishWpm', 'English'], ['typingHindiWpm', 'Hindi']] as const) {
+      if (!(field in body)) continue;
+      const speed = wholeNumber(body[field], 5, 200);
+      if (speed === undefined) return bad(label + ' typing speed must be a whole number from 5 to 200 WPM.');
+      data[field] = speed;
+    }
     if ('certifications' in body) {
       const list: unknown[] = Array.isArray(body.certifications) ? body.certifications : [];
       if (list.some((c) => typeof c !== 'string' || !CERT_CODES.has(c))) return bad('Choose valid certificates.');

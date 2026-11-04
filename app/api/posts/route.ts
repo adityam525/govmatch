@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { parseCategoryMarks, parseTypingOptions } from '@/lib/skill-rules';
 import { Prisma } from '@prisma/client';
 import { prisma } from '@/lib/prisma';
 import { CERT_CODES } from '@/lib/eligibility-options';
@@ -45,6 +46,14 @@ async function cleanRequirements(body: Record<string, unknown>) {
   if (chest === undefined) return fail('Minimum chest must be between 50 and 150 cm.');
   data.minChestCm = chest;
 
+  const marksBase = blank(body.minMarksPercent) ? null : Number(body.minMarksPercent);
+  if (marksBase !== null && !(Number.isFinite(marksBase) && marksBase >= 0 && marksBase <= 100)) return fail('Minimum marks must be a percentage from 0 to 100.');
+  data.minMarksPercent = marksBase;
+  const byCategory = parseCategoryMarks(body.minMarksByCategory);
+  data.minMarksByCategory = Object.keys(byCategory).length > 0 ? (byCategory as unknown as Prisma.InputJsonValue) : undefined;
+  const typing = parseTypingOptions(body.typingOptions);
+  data.typingOptions = typing.length > 0 ? (typing as unknown as Prisma.InputJsonValue) : undefined;
+
   const certs = Array.isArray(body.requiredCertifications) ? body.requiredCertifications : [];
   if (certs.some((c) => typeof c !== 'string' || !CERT_CODES.has(c))) return fail('One of the required certificates is not valid.');
   data.requiredCertifications = [...new Set(certs as string[])];
@@ -85,12 +94,14 @@ export async function POST(request: Request) {
       branchIds, roleIds, qualificationIds,
       genderRestriction, minExperienceYears, requiredCertifications, domicileStateCode,
       minHeightCm, minChestCm, pwdTypes, relaxationRules, ageCutoffDate, qualificationRules,
+      minMarksPercent, minMarksByCategory, typingOptions,
       ...postData
     } = body;
 
     const extras = await cleanRequirements({
       genderRestriction, minExperienceYears, requiredCertifications, domicileStateCode,
       minHeightCm, minChestCm, pwdTypes, relaxationRules, ageCutoffDate,
+      minMarksPercent, minMarksByCategory, typingOptions,
     });
     if (extras.error) return NextResponse.json({ message: extras.error }, { status: 400 });
 

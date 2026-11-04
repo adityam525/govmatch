@@ -11,6 +11,8 @@ export interface ExtraState {
   preferredStateCodes: string[];
   heightCm: string;
   chestCm: string;
+  typingEnglishWpm: string;
+  typingHindiWpm: string;
   preferredSectorSlugs: string[];
   preferredOrganizationSlugs: string[];
 }
@@ -146,6 +148,24 @@ export default function ExtraProfileFields({ value, onChange }: { value: ExtraSt
             <span className="mb-1 block text-xs font-medium text-neutral-600">Chest, not expanded (cm)</span>
             <input type="number" inputMode="numeric" min={50} max={150} value={value.chestCm} onChange={(e) => set({ chestCm: e.target.value })} className={input} />
             <span className="mt-1 block text-[11px] text-neutral-500">Used for posts that set a chest minimum, which is normally for men.</span>
+          </label>
+        </div>
+      </Block>
+
+      <Block
+        id="typing"
+        icon={<Ruler size={16} />}
+        title="Typing speed"
+        hint="Some clerk and assistant posts ask for a typing test, for example English 30 WPM or Hindi 25 WPM. Enter your speed in words per minute, or leave it empty."
+      >
+        <div className="grid gap-4 sm:grid-cols-2">
+          <label className="block">
+            <span className="mb-1 block text-xs font-medium text-neutral-600">English typing (WPM)</span>
+            <input type="number" inputMode="numeric" min={5} max={200} value={value.typingEnglishWpm} onChange={(e) => set({ typingEnglishWpm: e.target.value })} className={input} />
+          </label>
+          <label className="block">
+            <span className="mb-1 block text-xs font-medium text-neutral-600">Hindi typing (WPM)</span>
+            <input type="number" inputMode="numeric" min={5} max={200} value={value.typingHindiWpm} onChange={(e) => set({ typingHindiWpm: e.target.value })} className={input} />
           </label>
         </div>
       </Block>

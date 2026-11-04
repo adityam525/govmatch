@@ -28,6 +28,13 @@ export interface PostDraft {
   employmentType: string;
   roleId: string;
   genderRestriction: string;
+  minMarksPercent?: string;
+  marksOBC?: string;
+  marksSC?: string;
+  marksST?: string;
+  marksEWS?: string;
+  typingEnglish?: string;
+  typingHindi?: string;
   minExperienceYears: string;
   requiredCertifications: string[];
   domicileStateCode: string;
@@ -94,7 +101,7 @@ const chip = (active: boolean) =>
 const ruleCount = (post: PostDraft) =>
   post.relaxationRules.length +
   post.requiredCertifications.length +
-  [post.genderRestriction, post.domicileStateCode, post.minExperienceYears, post.minHeightCm, post.minChestCm].filter(Boolean).length;
+  [post.genderRestriction, post.domicileStateCode, post.minExperienceYears, post.minHeightCm, post.minChestCm, post.minMarksPercent, post.typingEnglish, post.typingHindi].filter(Boolean).length;
 
 export default function PostsFieldArray({ posts, onChange }: PostsFieldArrayProps) {
   const [roles, setRoles] = useState<RoleOption[]>([]);
@@ -242,6 +249,26 @@ export default function PostsFieldArray({ posts, onChange }: PostsFieldArrayProp
                     <div>
                       <label className={labelCls}>Minimum chest (cm)</label>
                       <input type="number" min={50} max={150} value={post.minChestCm} onChange={(e) => updatePost(index, "minChestCm", e.target.value)} className={inputCls} />
+                    </div>
+                  </div>
+
+                  <div>
+                    <p className={labelCls}>Minimum marks (%) in the qualifying degree</p>
+                    <div className="grid gap-3 sm:grid-cols-5">
+                      <div><span className="mb-1 block text-[11px] text-neutral-500">General (base)</span><input type="number" min={0} max={100} step="0.01" value={post.minMarksPercent ?? ""} onChange={(e) => updatePost(index, "minMarksPercent", e.target.value)} className={inputCls} /></div>
+                      <div><span className="mb-1 block text-[11px] text-neutral-500">OBC</span><input type="number" min={0} max={100} step="0.01" value={post.marksOBC ?? ""} onChange={(e) => updatePost(index, "marksOBC", e.target.value)} className={inputCls} /></div>
+                      <div><span className="mb-1 block text-[11px] text-neutral-500">SC</span><input type="number" min={0} max={100} step="0.01" value={post.marksSC ?? ""} onChange={(e) => updatePost(index, "marksSC", e.target.value)} className={inputCls} /></div>
+                      <div><span className="mb-1 block text-[11px] text-neutral-500">ST</span><input type="number" min={0} max={100} step="0.01" value={post.marksST ?? ""} onChange={(e) => updatePost(index, "marksST", e.target.value)} className={inputCls} /></div>
+                      <div><span className="mb-1 block text-[11px] text-neutral-500">EWS</span><input type="number" min={0} max={100} step="0.01" value={post.marksEWS ?? ""} onChange={(e) => updatePost(index, "marksEWS", e.target.value)} className={inputCls} /></div>
+                    </div>
+                    <p className="mt-1 text-[11px] text-neutral-500">Leave a category empty to use the base figure. Leave everything empty if the notice sets no minimum.</p>
+                  </div>
+
+                  <div>
+                    <p className={labelCls}>Typing speed (either one is enough)</p>
+                    <div className="grid gap-3 sm:grid-cols-2">
+                      <div><span className="mb-1 block text-[11px] text-neutral-500">English (words per minute)</span><input type="number" min={5} max={200} value={post.typingEnglish ?? ""} onChange={(e) => updatePost(index, "typingEnglish", e.target.value)} className={inputCls} /></div>
+                      <div><span className="mb-1 block text-[11px] text-neutral-500">Hindi (words per minute)</span><input type="number" min={5} max={200} value={post.typingHindi ?? ""} onChange={(e) => updatePost(index, "typingHindi", e.target.value)} className={inputCls} /></div>
                     </div>
                   </div>
 

@@ -1,6 +1,6 @@
 import SearchBar from "./SearchBar";
 import PopularSearchTags from "./PopularSearchTags";
-import MatchScoreCard from "./MatchScoreCard";
+import PerfectMatchCard from "./PerfectMatchCard";
 import Image from "next/image";
 
 interface SearchHeroProps {
@@ -8,13 +8,18 @@ interface SearchHeroProps {
   highlight?: string;
   subtitle?: string;
   matchScore?: number | null;
+  perfectCount?: number | null;
+  perfectComplete?: boolean;
+  perfectHref?: string;
 }
 
 export default function SearchHero({
   title = "Find Government Jobs That",
   highlight = "Match Your Profile",
   subtitle = "Get personalized job recommendations, timely alerts, exam updates, study resources and everything you need to build a successful government career.",
-  matchScore,
+  perfectCount,
+  perfectComplete,
+  perfectHref,
 }: SearchHeroProps) {
   return (
     <section className="w-full py-8 sm:py-10 lg:py-16">
@@ -55,9 +60,9 @@ export default function SearchHero({
             className="h-auto w-3/4 max-w-sm object-contain sm:w-2/3 md:w-full md:max-w-lg lg:max-w-none"
           />
 
-          {matchScore != null && (
+          {perfectCount != null && (
             <div className="absolute bottom-0 left-4 sm:bottom-2 sm:left-[15%] lg:-bottom-6 lg:left-0">
-              <MatchScoreCard score={matchScore} />
+              <PerfectMatchCard count={perfectCount} profileComplete={perfectComplete ?? false} href={perfectHref ?? "/jobs"} />
             </div>
           )}
         </div>
