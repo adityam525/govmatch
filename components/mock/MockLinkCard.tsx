@@ -1,5 +1,6 @@
 'use client';
 
+import Select from '@/components/ui/Select';
 import { useEffect, useState } from 'react';
 import Button from '@/components/ui/Button';
 import { DIFFICULTIES } from '@/lib/mock-difficulty';
@@ -57,24 +58,15 @@ export default function MockLinkCard({ testId }: { testId: string }) {
       <div className="mt-4 grid gap-3 md:grid-cols-3">
         <div>
           <label className="mb-1 block text-xs font-medium text-neutral-600">Job / exam</label>
-          <select value={jobId} onChange={(e) => { setJobId(e.target.value); setLevelId(''); setMsg(null); }} className={sel}>
-            <option value="">Not linked</option>
-            {jobs.map((j) => <option key={j.id} value={j.id}>{j.title}</option>)}
-          </select>
+          <Select value={jobId} onChange={(v) => { setJobId(v); setLevelId(''); setMsg(null); }} options={[{ value: '', label: 'Not linked' }, ...jobs.map((j) => ({ value: j.id, label: j.title }))]} />
         </div>
         <div>
           <label className="mb-1 block text-xs font-medium text-neutral-600">Exam stage (optional)</label>
-          <select value={levelId} disabled={!jobId || levels.length === 0} onChange={(e) => { setLevelId(e.target.value); setMsg(null); }} className={`${sel} disabled:bg-neutral-100`}>
-            <option value="">{jobId && levels.length === 0 ? 'This job has no stages' : 'Any stage'}</option>
-            {levels.map((l) => <option key={l.id} value={l.id}>{l.name}</option>)}
-          </select>
+          <Select value={levelId} disabled={!jobId || levels.length === 0} onChange={(v) => { setLevelId(v); setMsg(null); }} options={[{ value: '', label: jobId && levels.length === 0 ? 'This job has no stages' : 'Any stage' }, ...levels.map((l) => ({ value: l.id, label: l.name }))]} />
         </div>
         <div>
           <label className="mb-1 block text-xs font-medium text-neutral-600">Difficulty (optional)</label>
-          <select value={difficulty} onChange={(e) => { setDifficulty(e.target.value); setMsg(null); }} className={sel}>
-            <option value="">Not set</option>
-            {DIFFICULTIES.map((d) => <option key={d.code} value={d.code}>{d.label}</option>)}
-          </select>
+          <Select value={difficulty} onChange={(v) => { setDifficulty(v); setMsg(null); }} options={[{ value: '', label: 'Not set' }, ...DIFFICULTIES.map((d) => ({ value: d.code, label: d.label }))]} />
         </div>
       </div>
       <div className="mt-4 flex items-center gap-3">

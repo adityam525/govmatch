@@ -1,5 +1,6 @@
 'use client';
 
+import Select from '@/components/ui/Select';
 import { Trash2 } from 'lucide-react';
 import Button from '@/components/ui/Button';
 import { EVENT_KINDS, describeChange, istDay, istTime } from '@/lib/schedule';
@@ -118,11 +119,7 @@ export default function ScheduleEditor({ rows, onChange }: { rows: ScheduleRow[]
           return (
             <div key={row.key} className="rounded-lg border border-neutral-200 p-3">
               <div className="grid gap-2 sm:grid-cols-[9.5rem_1fr_9.5rem_7rem_auto]">
-                <select value={row.kind} onChange={(e) => update(row.key, { kind: e.target.value })} className={input} aria-label="Event type">
-                  {EVENT_KINDS.map((k) => (
-                    <option key={k.code} value={k.code}>{k.label}</option>
-                  ))}
-                </select>
+                <Select value={row.kind} onChange={(v) => update(row.key, { kind: v })} options={EVENT_KINDS.map((k) => ({ value: k.code, label: k.label }))} />
                 <input type="text" value={row.label} maxLength={120} onChange={(e) => update(row.key, { label: e.target.value })} placeholder="Name, e.g. Prelims exam" className={input} aria-label="Event name" />
                 <input type="date" value={row.day} onChange={(e) => update(row.key, { day: e.target.value, ...(e.target.value ? {} : { time: '' }) })} className={input} aria-label="Date" />
                 <input type="time" value={row.time} disabled={!row.day} onChange={(e) => update(row.key, { time: e.target.value })} className={`${input} disabled:bg-neutral-100`} aria-label="Time (optional)" />

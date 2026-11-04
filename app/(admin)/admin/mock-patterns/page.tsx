@@ -1,5 +1,6 @@
 'use client';
 
+import Select from '@/components/ui/Select';
 import { useEffect, useState } from 'react';
 import { Pencil, Plus, Trash2, X } from 'lucide-react';
 import Button from '@/components/ui/Button';
@@ -73,9 +74,7 @@ export default function MockPatternsPage() {
             <div className="md:col-span-2"><label className={label}>Pattern name *</label><input value={draft.name} onChange={(e) => setDraft({ ...draft, name: e.target.value })} className={input} placeholder="e.g. SSC CGL Tier 1" /></div>
             <div>
               <label className={label}>Organization *</label>
-              <select value={draft.organizationId} onChange={(e) => setDraft({ ...draft, organizationId: e.target.value })} className={input}>
-                <option value="">Choose...</option>{orgs.map((o) => <option key={o.id} value={o.id}>{o.name}</option>)}
-              </select>
+              <Select value={draft.organizationId} onChange={(v) => setDraft({ ...draft, organizationId: v })} options={[{ value: '', label: 'Choose...' }, ...orgs.map((o) => ({ value: o.id, label: o.name }))]} />
             </div>
             <div>
               <label className={label}>Total time (min)</label>

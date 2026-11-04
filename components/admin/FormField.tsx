@@ -1,6 +1,14 @@
-'use client';
+"use client";
+import Select from "@/components/ui/Select";
 
-export type FieldType = 'text' | 'number' | 'date' | 'select' | 'textarea' | 'checkbox' | 'relation';
+export type FieldType =
+  | "text"
+  | "number"
+  | "date"
+  | "select"
+  | "textarea"
+  | "checkbox"
+  | "relation";
 
 export interface FieldConfig {
   name: string;
@@ -19,9 +27,14 @@ interface FormFieldProps {
   error?: string;
 }
 
-export default function FormField({ field, value, onChange, error }: FormFieldProps) {
+export default function FormField({
+  field,
+  value,
+  onChange,
+  error,
+}: FormFieldProps) {
   const baseInputClass =
-    'w-full text-sm border border-neutral-200 rounded-md px-3 py-2 outline-none focus:border-primary-500 focus:ring-1 focus:ring-primary-500';
+    "w-full text-sm border border-neutral-200 rounded-md px-3 py-2 outline-none focus:border-primary-500 focus:ring-1 focus:ring-primary-500";
 
   return (
     <div>
@@ -30,38 +43,43 @@ export default function FormField({ field, value, onChange, error }: FormFieldPr
         {field.required && <span className="text-danger ml-0.5">*</span>}
       </label>
 
-      {field.type === 'text' && (
+      {field.type === "text" && (
         <input
           type="text"
-          value={value ?? ''}
+          value={value ?? ""}
           placeholder={field.placeholder}
           onChange={(e) => onChange(field.name, e.target.value)}
           className={baseInputClass}
         />
       )}
 
-      {field.type === 'number' && (
+      {field.type === "number" && (
         <input
           type="number"
-          value={value ?? ''}
+          value={value ?? ""}
           placeholder={field.placeholder}
-          onChange={(e) => onChange(field.name, e.target.value === '' ? null : Number(e.target.value))}
+          onChange={(e) =>
+            onChange(
+              field.name,
+              e.target.value === "" ? null : Number(e.target.value),
+            )
+          }
           className={baseInputClass}
         />
       )}
 
-      {field.type === 'date' && (
+      {field.type === "date" && (
         <input
           type="date"
-          value={value ?? ''}
+          value={value ?? ""}
           onChange={(e) => onChange(field.name, e.target.value)}
           className={baseInputClass}
         />
       )}
 
-      {field.type === 'textarea' && (
+      {field.type === "textarea" && (
         <textarea
-          value={value ?? ''}
+          value={value ?? ""}
           placeholder={field.placeholder}
           onChange={(e) => onChange(field.name, e.target.value)}
           rows={4}
@@ -69,22 +87,21 @@ export default function FormField({ field, value, onChange, error }: FormFieldPr
         />
       )}
 
-      {(field.type === 'select' || field.type === 'relation') && (
-        <select
-          value={value ?? ''}
-          onChange={(e) => onChange(field.name, e.target.value)}
-          className={baseInputClass}
-        >
-          <option value="">Select...</option>
-          {field.options?.map((opt) => (
-            <option key={opt.value} value={opt.value}>
-              {opt.label}
-            </option>
-          ))}
-        </select>
+      {(field.type === "select" || field.type === "relation") && (
+        <Select
+          value={String(value ?? "")}
+          onChange={(v) => onChange(field.name, v)}
+          options={[
+            { value: "", label: "Select..." },
+            ...(field.options ?? []).map((o) => ({
+              value: String(o.value),
+              label: String(o.label),
+            })),
+          ]}
+        />
       )}
 
-      {field.type === 'checkbox' && (
+      {field.type === "checkbox" && (
         <label className="flex items-center gap-2 mt-1">
           <input
             type="checkbox"

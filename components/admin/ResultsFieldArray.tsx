@@ -1,5 +1,6 @@
 'use client';
 
+import Select from '@/components/ui/Select';
 import { Plus, Trash2 } from 'lucide-react';
 import Button from '@/components/ui/Button';
 
@@ -65,19 +66,12 @@ export default function ResultsFieldArray({ items, onChange, examLevels }: Resul
               />
               <div>
                 <label className="block text-xs font-medium text-neutral-600 mb-1">Result Type</label>
-                <select value={item.resultType} onChange={(e) => update(i, 'resultType', e.target.value)} className="w-full text-sm border border-neutral-200 rounded-md px-3 py-2 outline-none focus:border-primary-500">
-                  {RESULT_TYPES.map((t) => <option key={t.value} value={t.value}>{t.label}</option>)}
-                </select>
+                <Select value={item.resultType} onChange={(v) => update(i, 'resultType', v)} options={RESULT_TYPES.map((t) => ({ value: t.value, label: t.label }))} />
               </div>
               {examLevels.length > 0 && (
                 <div>
                   <label className="block text-xs font-medium text-neutral-600 mb-1">Exam Level</label>
-                  <select value={item.examLevelId} onChange={(e) => update(i, 'examLevelId', e.target.value)} className="w-full text-sm border border-neutral-200 rounded-md px-3 py-2 outline-none focus:border-primary-500">
-                    <option value="">Optional</option>
-                    {examLevels.map((lvl, idx) => (
-                      <option key={lvl.id ?? idx} value={lvl.id ?? ''}>{lvl.name}</option>
-                    ))}
-                  </select>
+                  <Select value={item.examLevelId} onChange={(v) => update(i, 'examLevelId', v)} options={[{ value: '', label: 'Optional' }, ...examLevels.filter((l) => l.id).map((l) => ({ value: l.id as string, label: l.name }))]} />
                 </div>
               )}
               <div>

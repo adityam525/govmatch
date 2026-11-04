@@ -27,6 +27,7 @@ model Organization {
 
   @@index([categoryId])
   mockPatterns MockPattern[]
+  qbExams QbExam[]
 }
 
 model State {
@@ -780,4 +781,61 @@ model MockPattern {
   updatedAt      DateTime     @updatedAt
 
   @@index([organizationId])
+}
+
+// Question bank: subject > chapter > topic. Exams pick topics through QbExamTopic.
+model QbSubject {
+  id       String      @id @default(cuid())
+  name     String      @unique
+  slug     String      @unique
+  order    Int         @default(0)
+  chapters QbChapter[]
+}
+
+model QbChapter {
+  id        String    @id @default(cuid())
+  subjectId String
+  subject   QbSubject @relation(fields: [subjectId], references: [id], onDelete: Cascade)
+  name      String
+  slug      String
+  order     Int       @default(0)
+  topics    QbTopic[]
+
+  @@unique([subjectId, slug])
+}
+
+model QbTopic {
+  id        String          @id @default(cuid())
+  chapterId String
+  chapter   QbChapter       @relation(fields: [chapterId], references: [id], onDelete: Cascade)
+  name      String
+  slug      String
+  order     Int             @default(0)
+  exams     QbExamTopic[]
+
+  @@unique([chapterId, slug])
+}
+
+// An exam and stage, such as "IBPS PO Prelims". Its syllabus is the set of topics linked to it.
+model QbExam {
+  id             String        @id @default(cuid())
+  slug           String        @unique
+  name           String
+  stage          String?
+  organizationId String?
+  organization   Organization? @relation(fields: [organizationId], references: [id], onDelete: SetNull)
+  topics         QbExamTopic[]
+
+  @@index([organizationId])
+}
+
+model QbExamTopic {
+  id      String  @id @default(cuid())
+  examId  String
+  exam    QbExam  @relation(fields: [examId], references: [id], onDelete: Cascade)
+  topicId String
+  topic   QbTopic @relation(fields: [topicId], references: [id], onDelete: Cascade)
+  weight  Int     @default(1)
+
+  @@unique([examId, topicId])
 }

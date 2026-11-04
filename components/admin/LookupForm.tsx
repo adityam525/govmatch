@@ -1,5 +1,6 @@
 'use client';
 
+import Select from '@/components/ui/Select';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Card from '@/components/ui/Card';
@@ -129,12 +130,7 @@ export default function LookupForm({
                 })}
               </div>
             ) : f.type === 'select' ? (
-              <select value={values[f.name] ?? ''} onChange={(e) => set(f.name, e.target.value)} className={input}>
-                <option value="">Select...</option>
-                {f.options?.map((o) => (
-                  <option key={o.value} value={o.value}>{o.label}</option>
-                ))}
-              </select>
+              <Select value={String(values[f.name] ?? '')} onChange={(v) => set(f.name, v)} options={[{ value: '', label: 'Select...' }, ...(f.options ?? []).map((o) => ({ value: String(o.value), label: String(o.label) }))]} />
             ) : (
               <input
                 type={f.type}

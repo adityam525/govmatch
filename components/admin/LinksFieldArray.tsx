@@ -1,5 +1,6 @@
 'use client';
 
+import Select from '@/components/ui/Select';
 import { Plus, Trash2 } from 'lucide-react';
 import Button from '@/components/ui/Button';
 
@@ -61,13 +62,7 @@ export default function LinksFieldArray({ links, onChange }: LinksFieldArrayProp
               <Trash2 size={14} />
             </button>
             <div className="grid md:grid-cols-3 gap-3 pr-6">
-              <select
-                value={link.linkType}
-                onChange={(e) => updateLink(index, 'linkType', e.target.value)}
-                className="text-sm border border-neutral-200 rounded-md px-3 py-2 outline-none focus:border-primary-500"
-              >
-                {LINK_TYPES.map((t) => <option key={t.value} value={t.value}>{t.label}</option>)}
-              </select>
+              <Select value={link.linkType} onChange={(v) => updateLink(index, 'linkType', v)} options={LINK_TYPES.map((t) => ({ value: t.value, label: t.label }))} />
               <input
                 type="text"
                 value={link.label}

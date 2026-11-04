@@ -1,5 +1,6 @@
 'use client';
 
+import Select from '@/components/ui/Select';
 import { Plus, Trash2 } from 'lucide-react';
 import Button from '@/components/ui/Button';
 
@@ -56,16 +57,7 @@ export default function AdmitCardsFieldArray({ items, onChange, examLevels }: Ad
                 className="text-sm border border-neutral-200 rounded-md px-3 py-2 outline-none focus:border-primary-500 md:col-span-2"
               />
               {examLevels.length > 0 && (
-                <select
-                  value={item.examLevelId}
-                  onChange={(e) => update(i, 'examLevelId', e.target.value)}
-                  className="text-sm border border-neutral-200 rounded-md px-3 py-2 outline-none focus:border-primary-500 md:col-span-2"
-                >
-                  <option value="">Link to exam level (optional)</option>
-                  {examLevels.map((lvl, idx) => (
-                    <option key={lvl.id ?? idx} value={lvl.id ?? ''}>{lvl.name}</option>
-                  ))}
-                </select>
+                <div className="md:col-span-2"><Select value={item.examLevelId} onChange={(v) => update(i, 'examLevelId', v)} options={[{ value: '', label: 'Link to exam level (optional)' }, ...examLevels.filter((l) => l.id).map((l) => ({ value: l.id as string, label: l.name }))]} /></div>
               )}
               <div>
                 <label className="block text-xs font-medium text-neutral-600 mb-1">Release Date</label>

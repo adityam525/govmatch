@@ -1,5 +1,6 @@
 "use client";
 
+import Select from '@/components/ui/Select';
 import { useState, useEffect } from "react";
 import { Plus, Trash2, X } from "lucide-react";
 import Button from "@/components/ui/Button";
@@ -186,11 +187,7 @@ export default function PostsFieldArray({ posts, onChange }: PostsFieldArrayProp
 
               <div>
                 <label className={labelCls}>Employment Type</label>
-                <select value={post.employmentType} onChange={(e) => updatePost(index, "employmentType", e.target.value)} className={inputCls}>
-                  {EMPLOYMENT_TYPES.map((t) => (
-                    <option key={t.value} value={t.value}>{t.label}</option>
-                  ))}
-                </select>
+                <Select value={post.employmentType} onChange={(v) => updatePost(index, "employmentType", v)} options={EMPLOYMENT_TYPES.map((t) => ({ value: t.value, label: t.label }))} />
               </div>
 
               <PostQualificationCascade blocks={post.qualificationBlocks} onChange={(blocks) => updatePost(index, "qualificationBlocks", blocks)} />
@@ -223,20 +220,11 @@ export default function PostsFieldArray({ posts, onChange }: PostsFieldArrayProp
                   <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
                     <div>
                       <label className={labelCls}>Open to</label>
-                      <select value={post.genderRestriction} onChange={(e) => updatePost(index, "genderRestriction", e.target.value)} className={inputCls}>
-                        {GENDER_RESTRICTIONS.map((g) => (
-                          <option key={g.code} value={g.code}>{g.label}</option>
-                        ))}
-                      </select>
+                      <Select value={post.genderRestriction} onChange={(v) => updatePost(index, "genderRestriction", v)} options={GENDER_RESTRICTIONS.map((g) => ({ value: g.code, label: g.label }))} />
                     </div>
                     <div>
                       <label className={labelCls}>Only for residents of</label>
-                      <select value={post.domicileStateCode} onChange={(e) => updatePost(index, "domicileStateCode", e.target.value)} className={inputCls}>
-                        <option value="">Any state</option>
-                        {states.map((s) => (
-                          <option key={s.code} value={s.code}>{s.name}</option>
-                        ))}
-                      </select>
+                      <Select value={post.domicileStateCode} onChange={(v) => updatePost(index, "domicileStateCode", v)} options={[{ value: '', label: 'Any state' }, ...states.map((s) => ({ value: s.code, label: s.name }))]} />
                     </div>
                     <div>
                       <label className={labelCls}>Minimum experience (years)</label>
@@ -312,16 +300,8 @@ export default function PostsFieldArray({ posts, onChange }: PostsFieldArrayProp
                     <div className="space-y-2">
                       {post.relaxationRules.map((rule, ri) => (
                         <div key={ri} className="grid gap-2 rounded-lg border border-neutral-200 p-2 sm:grid-cols-[1fr_1fr_5.5rem_5.5rem_auto]">
-                          <select value={rule.category} onChange={(e) => updateRule(index, ri, { category: e.target.value })} className={inputCls} aria-label="Category">
-                            {RULE_CATEGORIES.map((c) => (
-                              <option key={c.code} value={c.code}>{c.label}</option>
-                            ))}
-                          </select>
-                          <select value={rule.status} onChange={(e) => updateRule(index, ri, { status: e.target.value })} className={inputCls} aria-label="Applies to">
-                            {RULE_STATUSES.map((s) => (
-                              <option key={s.code} value={s.code}>{s.label}</option>
-                            ))}
-                          </select>
+                          <Select value={rule.category} onChange={(v) => updateRule(index, ri, { category: v })} options={RULE_CATEGORIES.map((c) => ({ value: c.code, label: c.label }))} />
+                          <Select value={rule.status} onChange={(v) => updateRule(index, ri, { status: v })} options={RULE_STATUSES.map((s) => ({ value: s.code, label: s.label }))} />
                           <input type="number" min={0} max={40} placeholder="+ years" value={rule.years} onChange={(e) => updateRule(index, ri, { years: e.target.value })} className={inputCls} aria-label="Extra years" />
                           <input type="number" min={14} max={80} placeholder="or max age" value={rule.maxAge} onChange={(e) => updateRule(index, ri, { maxAge: e.target.value })} className={inputCls} aria-label="Maximum age" />
                           <button type="button" onClick={() => removeRule(index, ri)} aria-label="Remove row" className="justify-self-end rounded-md p-2 text-neutral-400 hover:bg-red-50 hover:text-danger">
