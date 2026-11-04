@@ -1,5 +1,6 @@
 'use client';
 
+import Select from '@/components/ui/Select';
 import { useEffect, useState } from 'react';
 import { Plus, Trash2 } from 'lucide-react';
 
@@ -139,27 +140,18 @@ function EducationRow({
       <div className="grid gap-3 sm:grid-cols-2">
         <label className="block">
           <span className="mb-1 block text-xs font-medium text-neutral-600">Education type</span>
-          <select value={row.categorySlug} onChange={(e) => onChange({ categorySlug: e.target.value, qualificationId: '', branchId: '' })} className={inputClass}>
-            <option value="">Select...</option>
-            {categories.map((c) => <option key={c.id} value={c.slug}>{c.name}</option>)}
-          </select>
+          <Select value={row.categorySlug} onChange={(v) => onChange({ categorySlug: v, qualificationId: '', branchId: '' })} options={[{ value: '', label: 'Select...' }, ...categories.map((c) => ({ value: c.slug, label: c.name }))]} />
         </label>
 
         <label className="block">
           <span className="mb-1 block text-xs font-medium text-neutral-600">Qualification</span>
-          <select value={row.qualificationId} disabled={!row.categorySlug} onChange={(e) => onChange({ qualificationId: e.target.value, branchId: '' })} className={`${inputClass} disabled:bg-neutral-100`}>
-            <option value="">{row.categorySlug ? 'Select...' : 'Choose a type first'}</option>
-            {quals.map((q) => <option key={q.id} value={q.id}>{q.name}</option>)}
-          </select>
+          <Select value={row.qualificationId} disabled={!row.categorySlug} onChange={(v) => onChange({ qualificationId: v, branchId: '' })} options={[{ value: '', label: row.categorySlug ? 'Select...' : 'Choose a type first' }, ...quals.map((q) => ({ value: q.id, label: q.name }))]} />
         </label>
 
         {branches.length > 0 && (
           <label className="block">
             <span className="mb-1 block text-xs font-medium text-neutral-600">Branch / stream</span>
-            <select value={row.branchId} onChange={(e) => onChange({ branchId: e.target.value })} className={inputClass}>
-              <option value="">Select...</option>
-              {branches.map((b) => <option key={b.id} value={b.id}>{b.name}</option>)}
-            </select>
+            <Select value={row.branchId} onChange={(v) => onChange({ branchId: v })} options={[{ value: '', label: 'Select...' }, ...branches.map((b) => ({ value: b.id, label: b.name }))]} />
           </label>
         )}
 

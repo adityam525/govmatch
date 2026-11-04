@@ -1,5 +1,6 @@
 'use client';
 
+import Select from '@/components/ui/Select';
 import { useEffect, useState } from 'react';
 import { Briefcase, MapPin, Ruler } from 'lucide-react';
 import { CERTIFICATIONS } from '@/lib/eligibility-options';
@@ -100,12 +101,7 @@ export default function ExtraProfileFields({ value, onChange }: { value: ExtraSt
       >
         <label className="block max-w-xs">
           <span className="mb-1 block text-xs font-medium text-neutral-600">Home state (domicile)</span>
-          <select value={value.domicileStateCode} onChange={(e) => set({ domicileStateCode: e.target.value })} className={input}>
-            <option value="">Select...</option>
-            {states.map((s) => (
-              <option key={s.code} value={s.code}>{s.name}</option>
-            ))}
-          </select>
+          <Select value={value.domicileStateCode} onChange={(v) => set({ domicileStateCode: v })} options={[{ value: '', label: 'Select...' }, ...states.map((s) => ({ value: s.code, label: s.name }))]} />
         </label>
 
         <div className="mt-4">

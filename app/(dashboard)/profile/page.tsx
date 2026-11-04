@@ -1,5 +1,6 @@
 "use client";
 
+import Select from '@/components/ui/Select';
 import { useEffect, useRef, useState } from "react";
 import { AlertCircle, CheckCircle2, Circle } from "lucide-react";
 import Card from "@/components/ui/Card";
@@ -520,33 +521,13 @@ export default function ProfilePage() {
                 <span className="mb-1 block text-xs font-medium text-neutral-600">
                   Category{needs("category") && <RequiredTag />}
                 </span>
-                <select
-                  value={personal.category}
-                  onChange={(e) => updatePersonal("category", e.target.value)}
-                  className={fieldClass(needs("category"))}
-                >
-                  <option value="">Select...</option>
-                  <option value="General">General</option>
-                  <option value="OBC">OBC</option>
-                  <option value="SC">SC</option>
-                  <option value="ST">ST</option>
-                  <option value="EWS">EWS</option>
-                </select>
+                <div className={needs("category") ? "rounded-xl ring-2 ring-amber-300" : ""}><Select value={personal.category} onChange={(v) => updatePersonal("category", v)} options={[{"value": "", "label": "Select..."}, {"value": "General", "label": "General"}, {"value": "OBC", "label": "OBC"}, {"value": "SC", "label": "SC"}, {"value": "ST", "label": "ST"}, {"value": "EWS", "label": "EWS"}]} /></div>
               </label>
               <label className="block">
                 <span className="mb-1 block text-xs font-medium text-neutral-600">
                   Gender
                 </span>
-                <select
-                  value={personal.gender}
-                  onChange={(e) => updatePersonal("gender", e.target.value)}
-                  className={fieldClass(false)}
-                >
-                  <option value="">Select...</option>
-                  <option value="Male">Male</option>
-                  <option value="Female">Female</option>
-                  <option value="Other">Other</option>
-                </select>
+                <div className={false ? "rounded-xl ring-2 ring-amber-300" : ""}><Select value={personal.gender} onChange={(v) => updatePersonal("gender", v)} options={[{"value": "", "label": "Select..."}, {"value": "Male", "label": "Male"}, {"value": "Female", "label": "Female"}, {"value": "Other", "label": "Other"}]} /></div>
               </label>
               <label className="block">
                 <span className="mb-1 block text-xs font-medium text-neutral-600">
