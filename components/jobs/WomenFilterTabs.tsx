@@ -14,14 +14,14 @@ function hrefFor(params: Params, value: string) {
 export default function WomenFilterTabs({ params }: { params: Params }) {
   const current = params.women === 'only' || params.women === 'open' ? params.women : '';
   return (
-    <div className="mb-2 flex flex-wrap items-center gap-2" aria-label="Posts for women">
+    <div className="flex flex-wrap items-center gap-1.5" aria-label="Posts for women">
       <span className="text-xs font-medium text-neutral-500">Posts:</span>
       {OPTIONS.map(([value, label]) => (
         <Link
           key={value || 'all'}
           href={hrefFor(params, value)}
           aria-current={current === value ? 'page' : undefined}
-          className={'rounded-full border px-3 py-1 text-xs font-medium ' + (current === value ? 'border-primary-600 bg-primary-600 text-white' : 'border-neutral-200 bg-white text-neutral-700 hover:bg-neutral-50')}
+          className={'whitespace-nowrap rounded-full border px-3 py-1 text-xs font-medium ' + (current === value ? 'border-primary-600 bg-primary-600 text-white' : 'border-neutral-200 bg-white text-neutral-700 hover:bg-neutral-50')}
         >
           {label}
         </Link>

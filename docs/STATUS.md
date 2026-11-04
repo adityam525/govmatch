@@ -51,6 +51,9 @@ check-fit, check-age, check-requirements, check-schedule, check-cutoff, check-qu
 - Eligibility: minimum marks with per-category cut-offs, typing speed (English or Hindi), women-only filter, perfect-match hero count.
 - Next: compare jobs, photo and signature resizer, document checklist, syllabus per job, dynamic question bank.
 
+- Question bank step 1 done: safe formula engine (lib/qb), seeded generation, options and explanations, 200-draw validation report, taxonomy draft (prisma/data/qb-taxonomy.ts). Next: database models, admin template editor, serving questions, custom test builder.
+- Held: Engineering plus Qualification filter fix (user will confirm). Admin dropdown conversion pending (awaiting markup).
+
 ## Decisions
 - Imported papers are private to the user and Premium-gated until limits are set.
 - Section times are all-or-nothing; total is their sum.
