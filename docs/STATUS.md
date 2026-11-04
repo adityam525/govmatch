@@ -47,6 +47,10 @@ check-fit, check-age, check-requirements, check-schedule, check-cutoff, check-qu
 - Held until final deployment: email, payments, Google sign-in, Supabase uploads, password reset, mobile app, scanned papers, legal review.
 - Next: Study Zone content audit, Premium tools (calendar, photo resizer, compare jobs), then the dynamic question bank.
 
+- Exam calendar (all exams / my exams, .ics) on homepage and /calendar.
+- Eligibility: minimum marks with per-category cut-offs, typing speed (English or Hindi), women-only filter, perfect-match hero count.
+- Next: compare jobs, photo and signature resizer, document checklist, syllabus per job, dynamic question bank.
+
 ## Decisions
 - Imported papers are private to the user and Premium-gated until limits are set.
 - Section times are all-or-nothing; total is their sum.
