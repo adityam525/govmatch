@@ -396,8 +396,8 @@ export async function importJobs(rawJobs: unknown[], dryRun: boolean): Promise<I
   }));
 
   const valid = rows.filter((r) => r.job).map((r) => r.job as PreparedJob);
-  const existingSlugs = new Set<string>();
-  const existingAdv = new Set<string>();
+  const existingSlugs = new Map<string, string>();
+  const existingAdv = new Map<string, string>();
 
   if (valid.length > 0) {
     const advNos = valid.map((j) => j.advertisementNo).filter((a): a is string => !!a);
@@ -408,11 +408,12 @@ export async function importJobs(rawJobs: unknown[], dryRun: boolean): Promise<I
           ...(advNos.length ? [{ advertisementNo: { in: advNos } }] : []),
         ],
       },
-      select: { slug: true, advertisementNo: true, organizationId: true },
+      select: { slug: true, advertisementNo: true, organizationId: true, title: true, published: true },
     });
     for (const e of existing) {
-      existingSlugs.add(e.slug);
-      if (e.advertisementNo) existingAdv.add(`${e.organizationId}:${e.advertisementNo}`);
+      const label = '"' + e.title + '" (' + (e.published ? 'published' : 'saved as a draft') + ')';
+      existingSlugs.set(e.slug, label);
+      if (e.advertisementNo) existingAdv.set(`${e.organizationId}:${e.advertisementNo}`, label);
     }
   }
 
@@ -430,9 +431,9 @@ export async function importJobs(rawJobs: unknown[], dryRun: boolean): Promise<I
 
     let duplicateMessage: string | null = null;
     if (existingSlugs.has(job.slug)) {
-      duplicateMessage = 'A job with this title already exists - change the title to import it anyway';
+      duplicateMessage = 'Already in your jobs: ' + existingSlugs.get(job.slug) + '. Delete that one or change the title to import this again.';
     } else if (advKey && existingAdv.has(advKey)) {
-      duplicateMessage = 'A job with this organization and advertisement number already exists';
+      duplicateMessage = 'Already in your jobs with the same organization and advertisement number: ' + (existingAdv.get(advKey as string) ?? '') + '.';
     } else if (seenSlugs.has(job.slug) || (advKey && seenAdv.has(advKey))) {
       duplicateMessage = 'Duplicate of an earlier row in this file';
     }

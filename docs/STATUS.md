@@ -62,6 +62,10 @@ check-fit, check-age, check-requirements, check-schedule, check-cutoff, check-qu
 
 - Question bank step 3: QbTemplate model, template input checks, admin API (list, create, edit, publish, preview, delete; publishing blocked by the 200-draw report), 30 starter Quant templates with independent answer checks (prisma/check-qb-starters.ts). Next: admin editor screens, bulk import, serving questions, custom test builder.
 
+- Security and SEO: CSRF origin check on all API writes (proxy.ts, lib/csrf.ts), noindex for private pages and filtered /jobs, metadata on public pages. Job page structured data pending.
+- Import: duplicate messages now name the existing job. Pending: NEW: branches, importantDates into the schedule, newer eligibility fields.
+- Question bank: 30 starter templates verified (30/30). Next: template admin screens, bulk import, serving questions, test builder.
+
 ## Decisions
 
 - Imported papers are private to the user and Premium-gated until limits are set.
