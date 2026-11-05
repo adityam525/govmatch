@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 import { ADMIN_SESSION_COOKIE, verifyAdminSessionToken } from '@/lib/admin-token';
+import { csrfProblem } from '@/lib/csrf';
 
 // Admin-only APIs: every method requires the admin session.
 const ADMIN_ONLY_PREFIXES = ['/api/admin-users', '/api/admin/'];
@@ -28,7 +29,10 @@ const WRITE_PROTECTED_PREFIXES = [
   '/api/documents',
 ];
 
-export async function proxy(request: NextRequest) {
+// Pages that should never appear in search results.
+const PRIVATE_PREFIXES = ['/admin', '/dashboard', '/profile', '/applications', '/saved-jobs', '/mock-tests', '/exam', '/login', '/signup'];
+
+async function guard(request: NextRequest): Promise<NextResponse> {
   const { pathname } = request.nextUrl;
   const isRead = request.method === 'GET' || request.method === 'HEAD';
   const token = request.cookies.get(ADMIN_SESSION_COOKIE)?.value;
@@ -59,6 +63,35 @@ export async function proxy(request: NextRequest) {
   return NextResponse.next();
 }
 
+export async function proxy(request: NextRequest) {
+  const { pathname, searchParams } = request.nextUrl;
+
+  if (pathname.startsWith('/api/')) {
+    const problem = csrfProblem({
+      method: request.method,
+      path: pathname,
+      origin: request.headers.get('origin'),
+      referer: request.headers.get('referer'),
+      secFetchSite: request.headers.get('sec-fetch-site'),
+      host: request.headers.get('host'),
+      siteUrl: process.env.NEXT_PUBLIC_SITE_URL,
+    });
+    if (problem) return NextResponse.json({ message: problem }, { status: 403 });
+  }
+
+  const response = await guard(request);
+
+  if (PRIVATE_PREFIXES.some((p) => pathname === p || pathname.startsWith(p + '/'))) {
+    response.headers.set('X-Robots-Tag', 'noindex, nofollow');
+  } else if (pathname === '/jobs' && [...searchParams.keys()].length > 0) {
+    response.headers.set('X-Robots-Tag', 'noindex, follow');
+  }
+  return response;
+}
+
 export const config = {
-  matcher: ['/admin/:path*', '/api/:path*'],
+  matcher: [
+    '/admin/:path*', '/api/:path*', '/dashboard/:path*', '/profile/:path*', '/applications/:path*',
+    '/saved-jobs/:path*', '/mock-tests/:path*', '/exam/:path*', '/login', '/signup', '/jobs',
+  ],
 };

@@ -187,11 +187,11 @@ function staticErrors(t: TemplateDef): string[] {
       if (!known.has(id) && id !== 'pi') errors.push(label + ' uses "' + id + '", which is not defined before it.');
     }
   };
-  for (const c of t.constraints ?? []) checkExpr(c, 'Rule "' + c + '"');
   for (const dv of t.derived ?? []) {
     checkExpr(dv.expr, 'Value "' + dv.name + '"');
     declare(dv.name, 'Value');
   }
+  for (const c of t.constraints ?? []) checkExpr(c, 'Rule "' + c + '"');
   checkExpr(t.answer?.expr, 'Answer formula');
   (t.distractors ?? []).forEach((d, i) => checkExpr(d, 'Wrong-answer formula ' + (i + 1)));
 
