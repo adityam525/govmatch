@@ -23,6 +23,7 @@ import { getJobSchedule } from "@/lib/schedule-queries";
 import JobActionButtons from "@/components/jobs/JobActionButtons";
 import { prisma } from "@/lib/prisma";
 import type { Metadata } from "next";
+import { SITE_URL } from "@/lib/blog";
 
 function formatDate(dateStr: Date | string | null) {
   if (!dateStr) return "To Be Announced";
@@ -87,6 +88,13 @@ export async function generateMetadata({
   return {
     title: `${notification.title} - ${orgName} | GovMatch`,
     description: `${notification.title}. ${notification.totalVacancies} vacancies. Apply before ${formatDate(notification.applicationEndDate)}.`,
+    alternates: { canonical: `${SITE_URL}/jobs/${notification.slug}` },
+    openGraph: {
+      type: "article",
+      title: `${notification.title} - ${orgName}`,
+      description: `${notification.totalVacancies} vacancies. Last date: ${formatDate(notification.applicationEndDate)}.`,
+      url: `${SITE_URL}/jobs/${notification.slug}`,
+    },
   };
 }
 
@@ -140,8 +148,39 @@ export default async function JobDetailPage({ params }: PageProps) {
           { label: "Exam Date", date: notification.examDate },
         ];
 
+  const n = notification as any;
+  const EMPLOYMENT: Record<string, string> = { PERMANENT: "FULL_TIME", CONTRACT: "CONTRACTOR", TEMPORARY: "TEMPORARY", INTERNSHIP: "INTERN", APPRENTICE: "OTHER", DEPUTATION: "OTHER" };
+  const closeDay = n.applicationEndDate ? new Date(n.applicationEndDate).toISOString().slice(0, 10) : null;
+  const postedDay = new Date(n.notificationDate ?? n.createdAt).toISOString().slice(0, 10);
+  const jobLd =
+    closeDay && n.status !== "CANCELLED"
+      ? {
+          "@context": "https://schema.org",
+          "@type": "JobPosting",
+          title: n.title,
+          description:
+            `${n.title}. ${orgName} is recruiting` +
+            (posts.length > 0 ? ` for ${posts.map((p: any) => p.title).join(", ")}` : "") +
+            "." + (n.totalVacancies > 0 ? ` Total vacancies: ${n.totalVacancies}.` : "") +
+            " Check the official notification before applying.",
+          datePosted: postedDay,
+          validThrough: `${closeDay}T23:59:59+05:30`,
+          employmentType: EMPLOYMENT[posts[0]?.employmentType as string] ?? "OTHER",
+          hiringOrganization: { "@type": "Organization", name: orgName, ...(n.organization?.website ? { sameAs: n.organization.website } : {}) },
+          jobLocation: {
+            "@type": "Place",
+            address: { "@type": "PostalAddress", addressCountry: "IN", ...((n.states ?? []).length === 1 ? { addressRegion: n.states[0].name } : {}) },
+          },
+          directApply: false,
+        }
+      : null;
+
   return (
     <div className="max-w-7xl mx-auto px-6 py-8 grid lg:grid-cols-10 gap-6 items-start">
+      {jobLd && (
+        // "<" is escaped so the data cannot close the script tag.
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jobLd).replace(/</g, "\\u003c") }} />
+      )}
       <div className="order-last lg:order-none lg:col-span-3 lg:sticky lg:top-28">
         <RecentJobsSidebar excludeSlug={notification.slug} />
       </div>

@@ -36,6 +36,14 @@ const dup = run({ qualifications: [{ name: 'Diploma', branches: ['Civil'] }, { n
 check('a repeated qualification merges, and any branch wins', dup.qualificationRules.length === 1 && dup.qualificationRules[0].branchIds.length === 0);
 check('the single qualification field still works', run({ qualification: 'Diploma' }).qualificationIds.join() === D);
 
+const nb = run({ qualifications: [{ name: 'B.Tech / B.E', branches: ['NEW: Marine Engineering'] }] });
+check('NEW: queues a branch to create', nb.newBranches.length === 1 && nb.newBranches[0].name === 'Marine Engineering' && nb.errors.length === 0);
+check('NEW: never counts as an error or a found branch', nb.branchIds.length === 0);
+check('NEW: for an existing branch reuses it', (() => { const r = run({ qualifications: [{ name: 'B.Tech / B.E', branches: ['NEW: Mechanical'] }] }); return r.newBranches.length === 0 && r.qualificationRules[0].branchIds.join() === 'b-mech'; })());
+check('NEW: for a name used under another qualification is refused', has(run({ qualifications: [{ name: 'Diploma', branches: ['NEW: Mechanical Engineering'] }] }), 'another qualification'));
+check('NEW: with no name is an error', has(run({ qualifications: [{ name: 'Diploma', branches: ['NEW:'] }] }), 'needs a branch name'));
+check('the same NEW: branch twice is queued once', run({ qualifications: [{ name: 'Diploma', branches: ['NEW: Marine', 'new: marine'] }] }).newBranches.length === 1);
+
 let failed = 0;
 for (const [n, ok] of results) { if (!ok) failed++; console.log((ok ? 'PASS' : 'FAIL') + '  ' + n); }
 console.log('\n' + (results.length - failed) + ' of ' + results.length + ' cases passed.');

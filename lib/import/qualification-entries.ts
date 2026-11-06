@@ -2,7 +2,8 @@ import { fieldKey } from '../field-keys';
 
 export interface BranchRow { id: string; name: string; slug: string; qualificationId: string }
 export interface QualificationRule { qualificationId: string; branchIds: string[] }
-export interface Entries { qualificationIds: string[]; branchIds: string[]; qualificationRules: QualificationRule[]; errors: string[] }
+export interface NewBranch { qualificationId: string; name: string }
+export interface Entries { qualificationIds: string[]; branchIds: string[]; qualificationRules: QualificationRule[]; newBranches: NewBranch[]; errors: string[] }
 
 const norm = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
 const text = (v: unknown) => (typeof v === 'string' ? v.trim() : typeof v === 'number' ? String(v) : '');
@@ -27,6 +28,7 @@ export function readQualificationEntries(
   const qualificationIds: string[] = [];
   const branchIds: string[] = [];
   const merged = new Map<string, string[] | 'any'>();
+  const newBranches: NewBranch[] = [];
 
   for (const entry of entries) {
     const qText = text(isObject(entry) ? entry.name : entry);
@@ -38,7 +40,18 @@ export function readQualificationEntries(
 
     const wanted = (isObject(entry) ? list(entry.branches) : flat).map(text).filter(Boolean);
     const ids: string[] = [];
-    for (const t of wanted) {
+    for (const rawName of wanted) {
+      const isNew = /^new\s*:/i.test(rawName);
+      const t = isNew ? rawName.replace(/^new\s*:\s*/i, '').trim() : rawName;
+      if (isNew) {
+        if (!t) { errors.push('"NEW:" needs a branch name'); continue; }
+        const key = fieldKey(t);
+        const same = rows.find((r) => r.qualificationId === qid && (norm(r.name) === norm(t) || (key && fieldKey(r.name) === key)));
+        if (same) { if (!ids.includes(same.id)) ids.push(same.id); continue; }
+        if (byName.has(norm(t))) { errors.push('branch "' + t + '" already exists under another qualification. Use a more specific name, such as "' + t + ' (' + qText + ')"'); continue; }
+        if (!newBranches.some((n) => n.qualificationId === qid && norm(n.name) === norm(t))) newBranches.push({ qualificationId: qid, name: t });
+        continue;
+      }
       const exact = byName.get(norm(t));
       let hit: BranchRow | undefined = exact && exact.qualificationId === qid ? exact : undefined;
       if (!hit) {
@@ -60,10 +73,10 @@ export function readQualificationEntries(
       if (!row) errors.push('branch not found: "' + t + '"');
       else if (!branchIds.includes(row.id)) branchIds.push(row.id);
     }
-    return { qualificationIds, branchIds, qualificationRules: [], errors };
+    return { qualificationIds, branchIds, qualificationRules: [], newBranches: [], errors };
   }
 
   const qualificationRules: QualificationRule[] = [...merged.entries()].map(([qualificationId, v]) => ({ qualificationId, branchIds: v === 'any' ? [] : v }));
   for (const r of qualificationRules) for (const id of r.branchIds) if (!branchIds.includes(id)) branchIds.push(id);
-  return { qualificationIds, branchIds, qualificationRules, errors };
+  return { qualificationIds, branchIds, qualificationRules, newBranches, errors };
 }

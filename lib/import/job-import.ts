@@ -1,6 +1,7 @@
 import { EmploymentType, ApplicationMode, NotificationStatus, LinkType } from '@prisma/client';
 import { prisma } from '@/lib/prisma';
 import { validateNotificationDates } from '@/features/jobs/validation';
+import { EVENT_KINDS, istDay, istToDate } from '@/lib/schedule';
 
 export const MAX_JOBS_PER_IMPORT = 100;
 
@@ -23,7 +24,7 @@ export interface ImportRowResult {
 }
 
 type IdMap = Map<string, string>;
-import { readQualificationEntries, type BranchRow, type QualificationRule } from './qualification-entries';
+import { readQualificationEntries, type BranchRow, type NewBranch, type QualificationRule } from './qualification-entries';
 interface Lookups { orgs: IdMap; states: IdMap; quals: IdMap; branches: IdMap; roles: IdMap; branchRows: BranchRow[]; }
 
 interface PreparedPost {
@@ -36,6 +37,7 @@ interface PreparedPost {
   qualificationIds: string[];
   branchIds: string[];
   qualificationRules: QualificationRule[];
+  newBranches: NewBranch[];
   roleId: string | null;
 }
 
@@ -58,6 +60,7 @@ interface PreparedJob {
   fees: { categoryLabel: string; amount: string }[];
   links: { label: string; url: string; linkType: LinkType }[];
   importantDates: { label: string; date: Date }[];
+  scheduleEvents: { kind: string; label: string; at: Date; timeKnown: boolean }[];
   faqs: { question: string; answer: string }[];
   posts: PreparedPost[];
   totalVacancies: number;
@@ -272,7 +275,8 @@ function prepareRow(
       lookups.branchRows,
     );
     for (const message of entries.errors) errors.push(label + ': ' + message);
-    const { qualificationIds, branchIds, qualificationRules } = entries;
+    const { qualificationIds, branchIds, qualificationRules, newBranches } = entries;
+    for (const nb of newBranches) warnings.push('will create branch "' + nb.name + '"');
 
     let roleId: string | null = null;
     const roleText = clean(p?.role);
@@ -292,6 +296,7 @@ function prepareRow(
       qualificationIds,
       branchIds,
       qualificationRules,
+      newBranches,
       roleId,
     });
   });
@@ -299,6 +304,44 @@ function prepareRow(
   if (posts.length === 0 && !directEligibility) {
     warnings.push('no posts and no directEligibility - the job page will say eligibility is coming soon');
   }
+
+  // Schedule: explicit events (with optional times), then the four main dates, then other dates.
+  const kindCodes: string[] = EVENT_KINDS.map((k) => k.code);
+  const sched: PreparedJob['scheduleEvents'] = [];
+  asArray(raw.schedule).forEach((e: any, i) => {
+    const kind = clean(e?.kind).toUpperCase();
+    const day = clean(e?.date);
+    const time = clean(e?.time);
+    if (!kindCodes.includes(kind)) { errors.push(`schedule[${i}].kind must be one of ${kindCodes.join(', ')}`); return; }
+    if (!isIsoDate(day)) { errors.push(`schedule[${i}].date must be a real date in YYYY-MM-DD format`); return; }
+    if (time && !/^([01]\d|2[0-3]):[0-5]\d$/.test(time)) { errors.push(`schedule[${i}].time must look like 17:00`); return; }
+    const at = istToDate(day, time || null);
+    if (!at) { errors.push(`schedule[${i}] has an invalid date or time`); return; }
+    sched.push({ kind, label: clean(e?.label) || (EVENT_KINDS.find((k) => k.code === kind)?.label ?? kind), at, timeKnown: !!time });
+  });
+  const mainDates: [string, string, string | undefined][] = [
+    ['NOTIFICATION', 'Notification published', dates.notificationDate],
+    ['APPLICATION_OPEN', 'Applications open', dates.applicationStartDate],
+    ['APPLICATION_CLOSE', 'Applications close', dates.applicationEndDate],
+    ['EXAM', 'Exam', dates.examDate],
+  ];
+  for (const [kind, label, day] of mainDates) {
+    if (!day || sched.some((x) => x.kind === kind)) continue;
+    const at = istToDate(day, null);
+    if (at) sched.push({ kind, label, at, timeKnown: false });
+  }
+  for (const d of importantDates) {
+    const day = d.date.toISOString().slice(0, 10);
+    if (sched.some((x) => istDay(x.at) === day)) continue;
+    const at = istToDate(day, null);
+    if (at) sched.push({ kind: 'OTHER', label: d.label, at, timeKnown: false });
+  }
+  // The older date columns follow the schedule when only the schedule gave a date.
+  const firstOf = (kind: string) => sched.find((x) => x.kind === kind);
+  if (!dates.notificationDate && firstOf('NOTIFICATION')) dates.notificationDate = istDay(firstOf('NOTIFICATION')!.at);
+  if (!dates.applicationStartDate && firstOf('APPLICATION_OPEN')) dates.applicationStartDate = istDay(firstOf('APPLICATION_OPEN')!.at);
+  if (!dates.applicationEndDate && firstOf('APPLICATION_CLOSE')) dates.applicationEndDate = istDay(firstOf('APPLICATION_CLOSE')!.at);
+  if (!dates.examDate && firstOf('EXAM')) dates.examDate = istDay(firstOf('EXAM')!.at);
 
   if (errors.length > 0) return { errors, warnings };
 
@@ -325,6 +368,7 @@ function prepareRow(
       fees,
       links,
       importantDates,
+      scheduleEvents: sched,
       faqs,
       posts,
       totalVacancies: posts.reduce((sum, p) => sum + p.vacancies, 0),
@@ -332,7 +376,27 @@ function prepareRow(
   };
 }
 
+// Creates the branches a row asked for with "NEW:", and adds them to the post and its qualification rule.
+async function materializeBranches(job: PreparedJob) {
+  for (const p of job.posts) {
+    for (const nb of p.newBranches) {
+      const qual = await prisma.qualification.findUnique({ where: { id: nb.qualificationId }, select: { name: true } });
+      if (!qual) continue;
+      let branch = await prisma.branch.findUnique({ where: { name: nb.name }, select: { id: true } });
+      if (!branch) {
+        let slug = slugify(nb.name);
+        if (await prisma.branch.findUnique({ where: { slug }, select: { id: true } })) slug = slugify(nb.name + ' ' + qual.name);
+        branch = await prisma.branch.create({ data: { name: nb.name, slug, qualificationGroup: qual.name, qualificationId: nb.qualificationId }, select: { id: true } });
+      }
+      if (!p.branchIds.includes(branch.id)) p.branchIds.push(branch.id);
+      const rule = p.qualificationRules.find((r) => r.qualificationId === nb.qualificationId);
+      if (rule && !rule.branchIds.includes(branch.id)) rule.branchIds.push(branch.id);
+    }
+  }
+}
+
 async function createJob(job: PreparedJob) {
+  await materializeBranches(job);
   return prisma.notification.create({
     data: {
       title: job.title,
@@ -358,8 +422,15 @@ async function createJob(job: PreparedJob) {
       links: job.links.length
         ? { create: job.links.map((l, i) => ({ ...l, order: i })) }
         : undefined,
-      importantDates: job.importantDates.length
-        ? { create: job.importantDates.map((d, i) => ({ ...d, order: i })) }
+      scheduleEvents: job.scheduleEvents.length
+        ? {
+            create: [...job.scheduleEvents]
+              .sort((a, b) => a.at.getTime() - b.at.getTime())
+              .map((e, i) => ({
+                kind: e.kind, label: e.label, at: e.at, timeKnown: e.timeKnown, order: i,
+                history: { create: { kind: 'ANNOUNCED', newAt: e.at, newTimeKnown: e.timeKnown } },
+              })),
+          }
         : undefined,
       faqs: job.faqs.length
         ? { create: job.faqs.map((f, i) => ({ ...f, order: i })) }

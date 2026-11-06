@@ -66,6 +66,9 @@ check-fit, check-age, check-requirements, check-schedule, check-cutoff, check-qu
 - Import: duplicate messages now name the existing job. Pending: NEW: branches, importantDates into the schedule, newer eligibility fields.
 - Question bank: 30 starter templates verified (30/30). Next: template admin screens, bulk import, serving questions, test builder.
 
+- Import: dates and optional times go into the schedule; NEW: branches (dry run lists them); duplicate messages name the job. Pending: newer eligibility fields (age relaxation, gender, marks, typing, cut-off date).
+- Job page SEO: canonical, Open Graph, JobPosting data (needs verified jobs; check in Google Rich Results Test). Real 404 for missing jobs pending.
+
 ## Decisions
 
 - Imported papers are private to the user and Premium-gated until limits are set.
