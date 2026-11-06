@@ -71,6 +71,10 @@ check-fit, check-age, check-requirements, check-schedule, check-cutoff, check-qu
 
 - Import: only the title decides duplicates (advertisement numbers may repeat). Organization websites filled for about 170 organizations (verify with check-org-websites.ts). Perfect-match count is a badge on the user icon.
 
+- Fixed: real 404 for missing jobs; qualification filter matches all accepted qualifications; import duplicates by title only; import reads post eligibility rules (gender, marks, typing, relaxation, cut-off date).
+- Next, in order: job-fit marks across all degrees and field line; posts as separate listing entries; question template admin and user test builder; login popup; compare jobs.
+- Held: Supabase, email, payments, Google sign-in, mobile app, legal review.
+
 ## Decisions
 
 - Imported papers are private to the user and Premium-gated until limits are set.

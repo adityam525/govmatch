@@ -23,6 +23,7 @@ import { getJobSchedule } from "@/lib/schedule-queries";
 import JobActionButtons from "@/components/jobs/JobActionButtons";
 import { prisma } from "@/lib/prisma";
 import type { Metadata } from "next";
+import { notFound } from "next/navigation";
 import { SITE_URL } from "@/lib/blog";
 
 function formatDate(dateStr: Date | string | null) {
@@ -81,7 +82,7 @@ export async function generateMetadata({
   const notification = await getNotification(slug);
 
   if (!notification) {
-    return { title: "Job Not Found | GovMatch" };
+    return { title: "Job Not Found | GovMatch", robots: { index: false, follow: false } };
   }
 
   const orgName = notification.organization?.name ?? "";
@@ -102,13 +103,7 @@ export default async function JobDetailPage({ params }: PageProps) {
   const { slug } = await params;
   const notification = await getNotification(slug);
 
-  if (!notification) {
-    return (
-      <div className="max-w-4xl mx-auto px-6 py-8 text-sm text-neutral-600">
-        Job not found.
-      </div>
-    );
-  }
+  if (!notification) notFound();
 
   const schedule = await getJobSchedule(notification.id).catch(() => ({ events: [], recentlyChanged: false }));
   const orgName = notification.organization?.name ?? "Unknown Organization";

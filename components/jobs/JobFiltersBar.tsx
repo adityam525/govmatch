@@ -497,23 +497,6 @@ export default function JobFiltersBar({ isPremium = false }: { isPremium?: boole
 
             <div className="flex-1 overflow-y-auto">
               <div className="border-b border-neutral-100 px-5 py-3.5">
-                <p className="text-sm font-semibold text-neutral-900">Posts for women</p>
-                <div className="mt-2 flex flex-wrap gap-2">
-                  {[["", "All jobs"], ["only", "Women only"], ["open", "Open to women"]].map(([value, label]) => (
-                    <button
-                      key={value || "all"}
-                      type="button"
-                      aria-pressed={women === value}
-                      onClick={() => push({ women: value })}
-                      className={`rounded-full border px-3 py-1.5 text-xs font-medium ${women === value ? "border-primary-600 bg-primary-600 text-white" : "border-neutral-200 bg-white text-neutral-700 hover:bg-neutral-50"}`}
-                    >
-                      {label}
-                    </button>
-                  ))}
-                </div>
-                <p className="mt-1 text-xs text-neutral-500">&quot;Women only&quot; shows jobs with a post reserved for women. &quot;Open to women&quot; also includes posts open to everyone.</p>
-              </div>
-              <div className="border-b border-neutral-100 px-5 py-3.5">
                 <button type="button" onClick={onEligibleClick} className="flex w-full items-center justify-between gap-3 text-left">
                   <span className="min-w-0">
                     <span className="flex items-center gap-1.5 text-sm font-semibold text-neutral-900">

@@ -107,7 +107,7 @@ export default function MockTestPromo() {
               size="lg"
               className="group mt-7 flex items-center gap-2"
             >
-              Learn more
+              Explore mock tests
               <ArrowRight
                 size={18}
                 className="transition-transform group-hover:translate-x-1"

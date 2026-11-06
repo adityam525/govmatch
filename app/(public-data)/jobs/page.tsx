@@ -188,9 +188,7 @@ export default async function JobsPage({ searchParams }: JobsPageProps) {
 
   const postFilter: Prisma.PostWhereInput = {
     ...(hasQualificationFilter
-      ? {
-          qualification: qualificationFilter,
-        }
+      ? { AND: [{ OR: [{ qualification: qualificationFilter }, { qualifications: { some: qualificationFilter } }] }] }
       : {}),
 
     ...(branchSlugs.length > 0

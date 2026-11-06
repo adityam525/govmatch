@@ -684,13 +684,8 @@ export async function importJobs(
         "Already in your jobs: " +
         existingSlugs.get(job.slug) +
         ". Delete that one or change the title to import this again.";
-    } else if (advKey && existingAdv.has(advKey)) {
-      duplicateMessage =
-        "Already in your jobs with the same organization and advertisement number: " +
-        (existingAdv.get(advKey as string) ?? "") +
-        ".";
-    } else if (seenSlugs.has(job.slug) || (advKey && seenAdv.has(advKey))) {
-      duplicateMessage = "Duplicate of an earlier row in this file";
+    } else if (seenSlugs.has(job.slug)) {
+      duplicateMessage = 'Same title as an earlier row in this file. Every job needs a different title.';
     }
     if (duplicateMessage) {
       results.push({
