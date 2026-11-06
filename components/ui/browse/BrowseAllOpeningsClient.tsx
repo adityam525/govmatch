@@ -69,7 +69,7 @@ export default function BrowseAllOpeningsClient({
       {/* Main container */}
       <div className="min-w-0 rounded-2xl border border-neutral-200 bg-white shadow-sm">
         {/* Sticky Tabs and Search Header */}
-        <div className="sticky top-16 z-30 rounded-t-2xl border-b border-neutral-100 bg-white p-4 shadow-sm sm:p-5">
+        <div className="rounded-t-2xl border-b border-neutral-100 bg-white p-4 shadow-sm sm:p-5">
           <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
             {/* Tabs */}
             <div className="flex max-w-full gap-1 overflow-x-auto rounded-xl border border-neutral-200 bg-neutral-50 p-1">
@@ -197,7 +197,7 @@ export default function BrowseAllOpeningsClient({
         <div className="rounded-b-2xl border-t border-neutral-100 bg-neutral-50/50 px-4 py-3 sm:px-5">
           <p className="text-xs text-neutral-500">
             Showing {filteredItems.length} of {currentTab?.items.length ?? 0}{" "}
-            openings
+            {getActiveTab(activeTab)}
           </p>
         </div>
       </div>
@@ -213,3 +213,12 @@ function getIcon(name: string) {
     Icons.Briefcase
   );
 }
+
+const TAB_MAP: Record<string, string> = {
+  organization: "organizations",
+  category: "categories",
+  qualification: "qualifications",
+  state: "states and union territories",
+};
+
+const getActiveTab = (tab: string) => TAB_MAP[tab];

@@ -66,18 +66,6 @@ export default async function BrowseAllOpenings() {
   // Normalize all datasets into a common structure
   const tabs = [
     {
-      id: "category",
-      label: "By Category",
-      items: categories.map((item) => ({
-        id: item.id,
-        title: item.title,
-        description: item.description,
-        iconName: item.iconName,
-        iconBg: accentColorMap[item.colorKey],
-        href: `/jobs?category=${item.slug}`,
-      })),
-    },
-    {
       id: "organization",
       label: "By Organisation",
       items: organizations.map((item) => {
@@ -97,6 +85,18 @@ export default async function BrowseAllOpenings() {
           href: `/jobs?organizations=${encodeURIComponent(item.slug)}`,
         };
       }),
+    },
+    {
+      id: "category",
+      label: "By Category",
+      items: categories.map((item) => ({
+        id: item.id,
+        title: item.title,
+        description: item.description,
+        iconName: item.iconName,
+        iconBg: accentColorMap[item.colorKey],
+        href: `/jobs?category=${item.slug}`,
+      })),
     },
     {
       id: "qualification",

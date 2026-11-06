@@ -655,12 +655,7 @@ export async function importJobs(
         ")";
       existingSlugs.set(e.slug, label);
       if (e.advertisementNo)
-        console.log(
-          "@@@@@@@@@@@@@@@@@@@@@@@",
-          e.organizationId,
-          e.advertisementNo,
-        );
-      existingAdv.set(`${e.organizationId}:${e.advertisementNo}`, label);
+        existingAdv.set(`${e.organizationId}:${e.advertisementNo}`, label);
     }
   }
 
