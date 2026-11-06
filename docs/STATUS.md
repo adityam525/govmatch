@@ -69,6 +69,8 @@ check-fit, check-age, check-requirements, check-schedule, check-cutoff, check-qu
 - Import: dates and optional times go into the schedule; NEW: branches (dry run lists them); duplicate messages name the job. Pending: newer eligibility fields (age relaxation, gender, marks, typing, cut-off date).
 - Job page SEO: canonical, Open Graph, JobPosting data (needs verified jobs; check in Google Rich Results Test). Real 404 for missing jobs pending.
 
+- Import: only the title decides duplicates (advertisement numbers may repeat). Organization websites filled for about 170 organizations (verify with check-org-websites.ts). Perfect-match count is a badge on the user icon.
+
 ## Decisions
 
 - Imported papers are private to the user and Premium-gated until limits are set.

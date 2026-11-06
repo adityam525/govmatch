@@ -7,6 +7,7 @@ import NavLink from "./NavLink";
 import NavDropdown from "./NavDropdown";
 import Button from "@/components/ui/Button";
 import { useAuth } from "@/features/auth/hooks";
+import PerfectMatchBadge from "@/components/layout/PerfectMatchBadge";
 
 const MOBILE_LINKS = [
   { label: "Home", href: "/" },
@@ -102,8 +103,9 @@ export default function Navbar() {
                   href="/profile"
                   className="flex items-center gap-2 text-sm font-medium text-neutral-900"
                 >
-                  <div className="w-7 h-7 rounded-full bg-primary-100 text-primary-600 flex items-center justify-center">
+                  <div className="relative w-7 h-7 rounded-full bg-primary-100 text-primary-600 flex items-center justify-center">
                     <User size={14} />
+                    <PerfectMatchBadge />
                   </div>
                   {user?.name?.split(" ")[0] ?? "Account"}
                 </Link>
@@ -204,8 +206,9 @@ export default function Navbar() {
                   onClick={closeMobile}
                   className="flex items-center gap-2 text-sm font-medium text-neutral-900 px-2 py-2"
                 >
-                  <div className="w-7 h-7 rounded-full bg-primary-100 text-primary-600 flex items-center justify-center">
+                  <div className="relative w-7 h-7 rounded-full bg-primary-100 text-primary-600 flex items-center justify-center">
                     <User size={14} />
+                    <PerfectMatchBadge />
                   </div>
                   {user?.name?.split(" ")[0] ?? "Account"}
                 </Link>
