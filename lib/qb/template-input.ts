@@ -58,7 +58,7 @@ export function coerceDefinition(raw: unknown): { error: string } | { def: Templ
   return { def };
 }
 
-export interface TemplateMeta { title: string; slug: string; topicId: string; difficulty: string; expectedSeconds: number }
+export interface TemplateMeta { title: string; slug: string; topicId: string; difficulty: string; expectedSeconds: number; organizationId: string | null; examId: string | null }
 
 export function cleanMeta(body: Record<string, unknown>): { error: string } | { meta: TemplateMeta } {
   const title = str(body.title);
@@ -72,5 +72,5 @@ export function cleanMeta(body: Record<string, unknown>): { error: string } | { 
   const secondsRaw = num(body.expectedSeconds);
   const expectedSeconds = secondsRaw === undefined ? 60 : secondsRaw;
   if (!Number.isInteger(expectedSeconds) || expectedSeconds < 10 || expectedSeconds > 600) return { error: 'Expected time must be a whole number of seconds from 10 to 600.' };
-  return { meta: { title, slug, topicId, difficulty, expectedSeconds } };
+  return { meta: { title, slug, topicId, difficulty, expectedSeconds, organizationId: str(body.organizationId) || null, examId: str(body.examId) || null } };
 }

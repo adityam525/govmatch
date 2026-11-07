@@ -28,6 +28,7 @@ model Organization {
   @@index([categoryId])
   mockPatterns MockPattern[]
   qbExams QbExam[]
+  qbTemplates QbTemplate[]
 }
 
 model State {
@@ -828,6 +829,7 @@ model QbExam {
   topics         QbExamTopic[]
 
   @@index([organizationId])
+  templates QbTemplate[]
 }
 
 model QbExamTopic {
@@ -856,4 +858,8 @@ model QbTemplate {
   updatedAt       DateTime @updatedAt
 
   @@index([topicId, published])
+  organizationId String?
+  organization   Organization? @relation(fields: [organizationId], references: [id], onDelete: SetNull)
+  examId         String?
+  exam           QbExam?       @relation(fields: [examId], references: [id], onDelete: SetNull)
 }

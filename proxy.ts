@@ -32,6 +32,11 @@ const WRITE_PROTECTED_PREFIXES = [
 // Pages that should never appear in search results.
 const PRIVATE_PREFIXES = ['/admin', '/dashboard', '/profile', '/applications', '/saved-jobs', '/mock-tests', '/exam', '/login', '/signup'];
 
+// Pages that need a logged-in user. This only checks for a session cookie; APIs check the real session.
+const USER_PREFIXES = ['/dashboard', '/profile', '/applications', '/saved-jobs', '/mock-tests', '/exam/run'];
+const hasSession = (request: NextRequest) =>
+  request.cookies.getAll().some((c) => /^(__Secure-)?(authjs|next-auth)\.session-token/.test(c.name));
+
 async function guard(request: NextRequest): Promise<NextResponse> {
   const { pathname } = request.nextUrl;
   const isRead = request.method === 'GET' || request.method === 'HEAD';
@@ -77,6 +82,14 @@ export async function proxy(request: NextRequest) {
       siteUrl: process.env.NEXT_PUBLIC_SITE_URL,
     });
     if (problem) return NextResponse.json({ message: problem }, { status: 403 });
+  }
+
+  if (USER_PREFIXES.some((p) => pathname === p || pathname.startsWith(p + '/')) && !hasSession(request)) {
+    const url = new URL('/login', request.url);
+    url.searchParams.set('callbackUrl', pathname + request.nextUrl.search);
+    const redirect = NextResponse.redirect(url);
+    redirect.headers.set('X-Robots-Tag', 'noindex, nofollow');
+    return redirect;
   }
 
   const response = await guard(request);

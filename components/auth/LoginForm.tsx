@@ -54,7 +54,7 @@ export default function LoginForm({ onSuccess, signedUp = false, completeProfile
       </form>
 
       <p className="mt-4 text-center text-xs text-neutral-600">
-        New here? <Link href="/signup" className="font-semibold text-primary-600 hover:underline">Create a free account</Link>
+        New here? <Link href="/signup" replace className="font-semibold text-primary-600 hover:underline">Create a free account</Link>
       </p>
     </div>
   );
