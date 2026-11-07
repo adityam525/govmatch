@@ -3,9 +3,11 @@ import {
   ApplicationMode,
   NotificationStatus,
   LinkType,
+  Prisma,
 } from "@prisma/client";
 import { prisma } from "@/lib/prisma";
 import { validateNotificationDates } from "@/features/jobs/validation";
+import { readPostRules, type PostRules } from './post-rules';
 import { EVENT_KINDS, istDay, istToDate } from "@/lib/schedule";
 
 export const MAX_JOBS_PER_IMPORT = 100;
@@ -68,6 +70,7 @@ interface PreparedPost {
   branchIds: string[];
   qualificationRules: QualificationRule[];
   newBranches: NewBranch[];
+  rules: PostRules;
   roleId: string | null;
 }
 
@@ -363,6 +366,8 @@ function prepareRow(
     for (const message of entries.errors) errors.push(label + ": " + message);
     const { qualificationIds, branchIds, qualificationRules, newBranches } =
       entries;
+    const ruleRead = readPostRules(p);
+    for (const m of ruleRead.errors) errors.push(label + ': ' + m);
     for (const nb of newBranches)
       warnings.push('will create branch "' + nb.name + '"');
 
@@ -385,6 +390,7 @@ function prepareRow(
       branchIds,
       qualificationRules,
       newBranches,
+      rules: ruleRead.rules,
       roleId,
     });
   });
@@ -603,6 +609,19 @@ async function createJob(job: PreparedJob) {
               qualificationRules: p.qualificationRules.length
                 ? { create: p.qualificationRules }
                 : undefined,
+              genderRestriction: p.rules.genderRestriction,
+              minExperienceYears: p.rules.minExperienceYears,
+              requiredCertifications: p.rules.requiredCertifications,
+              domicileStateCode: p.rules.domicileStateCode,
+              minHeightCm: p.rules.minHeightCm,
+              minChestCm: p.rules.minChestCm,
+              pwdTypes: p.rules.pwdTypes,
+              ageCutoffDate: p.rules.ageCutoffDate,
+              minMarksPercent: p.rules.minMarksPercent,
+              relaxationRules: p.rules.relaxationRules.length ? (p.rules.relaxationRules as unknown as Prisma.InputJsonValue) : undefined,
+              ageRelaxation: p.rules.relaxationRules.length ? (p.rules.ageRelaxation as unknown as Prisma.InputJsonValue) : undefined,
+              minMarksByCategory: Object.keys(p.rules.minMarksByCategory).length ? (p.rules.minMarksByCategory as unknown as Prisma.InputJsonValue) : undefined,
+              typingOptions: p.rules.typingOptions.length ? (p.rules.typingOptions as unknown as Prisma.InputJsonValue) : undefined,
             })),
           }
         : undefined,

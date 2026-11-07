@@ -8,7 +8,9 @@ async function visit(url: string): Promise<string> {
     const res = await fetch(url, { signal: ctl.signal, redirect: 'follow', headers: { 'User-Agent': 'Mozilla/5.0 (GovMatch link check)' } });
     return res.status < 400 ? 'ok' : 'HTTP ' + res.status;
   } catch (e) {
-    return e instanceof Error && e.name === 'AbortError' ? 'slow (15s)' : 'cannot connect';
+    if (e instanceof Error && e.name === 'AbortError') return 'slow (15s)';
+    const code = (e as any)?.cause?.code ?? (e as any)?.code ?? 'unknown';
+    return 'cannot connect (' + code + ')';
   } finally { clearTimeout(timer); }
 }
 
