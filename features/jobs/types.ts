@@ -13,6 +13,10 @@ export interface Job {
   deadline?: string | null;
   createdAt?: string;
   slug: string;
+  /** Set when the row is one post of a notice. */
+  postTitle?: string | null;
+  postId?: string | null;
+  notificationId?: string;
 }
 
 export interface RecommendedJob {

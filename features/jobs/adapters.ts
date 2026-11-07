@@ -68,3 +68,19 @@ export function notificationToJobs(notification: any): Job[] {
     },
   ];
 }
+
+// One Job per post of a notice, for listings. The id is "<notificationId>:<postId>" so rows stay unique.
+// A notice with no posts stays a single row.
+export function notificationToPostJobs(notification: any): Job[] {
+  const posts: any[] = notification.posts ?? [];
+  const base = notificationToJobs(notification)[0];
+  if (posts.length === 0) return [{ ...base, notificationId: notification.id }];
+  return posts.map((post) => ({
+    ...base,
+    id: notification.id + ':' + post.id,
+    notificationId: notification.id,
+    postId: post.id,
+    postTitle: post.title,
+    vacancies: post.vacancies ?? 0,
+  }));
+}

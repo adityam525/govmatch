@@ -55,6 +55,7 @@ function Cell({ label, children }: { label: string; children: React.ReactNode })
 export default function JobListItem({ job, fit, matchPercentage, eligible, verdict }: JobListItemProps) {
   const tierName = tierFor(fit, matchPercentage, eligible);
   const tier = TIERS[tierName];
+  const heading = job.postTitle ?? job.title;
 
   let hint: React.ReactNode = <span className="text-sm text-neutral-300">-</span>;
   if (fit) {
@@ -86,11 +87,12 @@ export default function JobListItem({ job, fit, matchPercentage, eligible, verdi
             {/* This link covers the whole row, so any click opens the job. */}
             <Link
               href={`/jobs/${job.slug}`}
-              title={job.title}
+              title={job.postTitle ? `${job.postTitle} (${job.title})` : job.title}
               className="line-clamp-2 text-[15px] font-semibold leading-6 text-neutral-900 after:absolute after:inset-0 after:content-[''] group-hover:text-primary-700"
             >
-              {job.title}
+              {heading}
             </Link>
+            {job.postTitle && <p className="line-clamp-1 text-xs text-neutral-500">{job.title}</p>}
             <p className="mt-0.5 flex min-w-0 items-center gap-2 text-sm text-neutral-600">
               <span className="truncate">{job.org}</span>
               <span className="hidden shrink-0 items-center gap-1 text-xs text-neutral-400 sm:inline-flex">

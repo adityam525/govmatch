@@ -1,7 +1,7 @@
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { computeMatch } from "@/features/matching/engine";
-import { notificationToJobs } from "@/features/jobs/adapters";
+import { notificationToPostJobs } from "@/features/jobs/adapters";
 import JobListItem from "@/components/jobs/JobListItem";
 import JobFiltersBar from "@/components/jobs/JobFiltersBar";
 import SectionHeader from "@/components/ui/SectionHeader";
@@ -301,7 +301,7 @@ export default async function JobsPage({ searchParams }: JobsPageProps) {
    * Convert notifications to jobs
    */
 
-  let jobs = notifications.flatMap(notificationToJobs);
+  let jobs = notifications.flatMap(notificationToPostJobs);
 
   /*
    * Search
@@ -312,9 +312,7 @@ export default async function JobsPage({ searchParams }: JobsPageProps) {
 
     jobs = jobs.filter((job) => {
       const haystack = (
-        job.title +
-        " " +
-        job.org +
+        job.title + " " + (job.postTitle ?? "") + " " + job.org +
         " " +
         job.category
       ).toLowerCase();
@@ -349,37 +347,32 @@ export default async function JobsPage({ searchParams }: JobsPageProps) {
 
       if (fitContext.hasProfile) {
         for (const notification of notifications) {
-          const fit = bestFitForJob(fitContext, notification.posts as any[]);
-          if (!fit) continue;
-
-          fitByJobId.set(notification.id, fit);
-          if (
-            jobMatchesPreferences(
-              {
-                organizationSlug: notification.organization?.slug,
-                sectorSlug: (notification.organization as any)?.category?.slug,
-                stateCodes: ((notification as any).states ?? []).map((st: any) => st.code),
-              },
-              prefs,
-            )
-          ) preferredJobIds.add(notification.id);
-          matchByJobId.set(notification.id, fit.evaluation.score);
-
-          if (fit.evaluation.verdict === "eligible") {
-            eligibleJobIds.add(notification.id);
-          } else {
-            verdictByJobId.set(notification.id, {
-              score: fit.evaluation.score,
-              verdict: {
-                label: fit.evaluation.label,
-                reasons: fit.evaluation.checks
-                  .filter(
-                    (check) =>
-                      check.state === "fail" || check.state === "unknown",
-                  )
-                  .map((check) => check.text),
-              },
-            });
+          const preferred = jobMatchesPreferences(
+            {
+              organizationSlug: notification.organization?.slug,
+              sectorSlug: (notification.organization as any)?.category?.slug,
+              stateCodes: ((notification as any).states ?? []).map((st: any) => st.code),
+            },
+            prefs,
+          );
+          for (const post of ((notification.posts as any[]) ?? [])) {
+            const key = notification.id + ":" + post.id;
+            const fit = bestFitForJob(fitContext, [post]);
+            if (!fit) continue;
+            fitByJobId.set(key, fit);
+            if (preferred) preferredJobIds.add(key);
+            matchByJobId.set(key, fit.evaluation.score);
+            if (fit.evaluation.verdict === "eligible") {
+              eligibleJobIds.add(key);
+            } else {
+              verdictByJobId.set(key, {
+                score: fit.evaluation.score,
+                verdict: {
+                  label: fit.evaluation.label,
+                  reasons: fit.evaluation.checks.filter((c) => c.state === "fail" || c.state === "unknown").map((c) => c.text),
+                },
+              });
+            }
           }
         }
       }

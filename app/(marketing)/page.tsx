@@ -80,13 +80,13 @@ export default async function HomePage() {
             <JobPicksCard picks={picks} dueToday={dueToday} />
           </aside>
 
-          <div className="order-2 min-w-0 space-y-8 lg:order-none lg:col-span-7 lg:col-start-1 lg:row-span-2 lg:row-start-1 lg:space-y-10">
+          <div className="order-2 min-w-0 space-y-10 lg:order-none lg:col-span-7 lg:col-start-1 lg:row-span-2 lg:row-start-1 lg:space-y-10">
             <QuickStatsBar />
             <HomeHotNews />
             <LatestJobsSection />
           </div>
 
-          <div className="order-3 min-w-0 space-y-4 lg:order-none lg:col-span-3 lg:col-start-8 lg:row-start-2">
+          <div className="order-3 min-w-0 space-y-5 lg:order-none lg:col-span-3 lg:col-start-8 lg:row-start-2">
             {(picks?.strength ?? 0) < 100 && (
               <ProfileStrengthCard
                 strength={picks?.strength ?? 0}
@@ -98,7 +98,7 @@ export default async function HomePage() {
           </div>
         </div>
 
-        <div className="mx-auto max-w-7xl space-y-16 px-4 py-16 sm:px-6">
+        <div className="mx-auto max-w-7xl space-y-10 px-4 py-10 sm:px-6">
           <ExamCalendar />
           <UpcomingJobsSection hideWhenEmpty />
           <LowerSections />
@@ -117,11 +117,11 @@ export default async function HomePage() {
         <QuickStatsBar />
       </div>
 
-      <div className="mx-auto max-w-7xl space-y-16 px-4 py-16 sm:px-6">
+      <div className="mx-auto max-w-7xl space-y-10 px-4 py-10 sm:px-6">
         <HomeHotNews />
         <LatestJobsWithToday />
         <ExamCalendar />
-          <UpcomingJobsSection hideWhenEmpty />
+        <UpcomingJobsSection hideWhenEmpty />
         <LowerSections />
       </div>
     </div>

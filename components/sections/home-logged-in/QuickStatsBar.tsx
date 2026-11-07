@@ -85,7 +85,7 @@ export default async function QuickStatsBar() {
             {stat.icon}
           </div>
           <div>
-            <p className="text-2xl font-bold leading-none text-neutral-900">
+            <p className="text-3xl font-bold leading-none text-neutral-900">
               {stat.value.toLocaleString("en-IN")}
             </p>
             <p className="mt-1.5 text-xs text-neutral-500">{stat.label}</p>
