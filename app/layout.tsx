@@ -11,11 +11,14 @@ export const metadata: Metadata = {
   description: 'Personalized government job recommendations for Indian job seekers.',
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({ children, modal }: { children: React.ReactNode; modal: React.ReactNode }) {
   return (
     <html lang="en">
       <body suppressHydrationWarning>
-        <SessionProvider>{children}</SessionProvider>
+        <SessionProvider>
+          {children}
+          {modal}
+        </SessionProvider>
       </body>
     </html>
   );

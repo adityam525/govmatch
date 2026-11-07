@@ -75,6 +75,10 @@ check-fit, check-age, check-requirements, check-schedule, check-cutoff, check-qu
 - Next, in order: job-fit marks across all degrees and field line; posts as separate listing entries; question template admin and user test builder; login popup; compare jobs.
 - Held: Supabase, email, payments, Google sign-in, mobile app, legal review.
 
+- Login opens as a dialog over the current page (intercepting route app/@modal); /login stays as a full page. Signup not yet.
+- Homepage section gaps 48/80/128px. Question bank admin built (list, editor with 200-draw check, JSON import). Still to build: syllabus mapping screen, serving generated questions, learner test builder.
+- Security: next must be 16.4.5 or later (audit critical).
+
 ## Decisions
 
 - Imported papers are private to the user and Premium-gated until limits are set.
