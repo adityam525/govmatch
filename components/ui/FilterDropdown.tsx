@@ -6,6 +6,8 @@ import { Plus, Check, X } from "lucide-react";
 export interface FilterOption {
   id: string;
   label: string;
+  /** Extra words that search also matches, such as an organization short name. */
+  keywords?: string;
   group?: string;
 }
 
@@ -76,7 +78,7 @@ export default function FilterDropdown({
   }, [open]);
 
   const filteredOptions = query.trim()
-    ? options.filter((o) => o.label.toLowerCase().includes(query.toLowerCase()))
+    ? options.filter((o) => (o.label + ' ' + (o.keywords ?? '')).toLowerCase().includes(query.trim().toLowerCase()))
     : options;
 
   const hasGroups = filteredOptions.some((o) => o.group);

@@ -5,7 +5,7 @@ import { useAuth } from '@/features/auth/hooks';
 import Card from '@/components/ui/Card';
 import SectionHeader from '@/components/ui/SectionHeader';
 import JobListItem from '@/components/jobs/JobListItem';
-import { notificationToJobs } from '@/features/jobs/adapters';
+import { notificationToPostJobs } from '@/features/jobs/adapters';
 
 export default function SavedJobsPage() {
   const { user, isLoggedIn, loading: authLoading } = useAuth();
@@ -30,7 +30,7 @@ export default function SavedJobsPage() {
     );
   }
 
-  const jobs = notifications.flatMap(notificationToJobs);
+  const jobs = notifications.flatMap(notificationToPostJobs);
 
   return (
     <div className="max-w-4xl mx-auto px-6 py-8">

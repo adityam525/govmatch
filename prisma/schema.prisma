@@ -216,8 +216,8 @@ model Post {
 
   employmentType EmploymentType @default(PERMANENT)
 
-  minAge             Int?
-  maxAge             Int?
+  minAge             Float?
+  maxAge             Float?
   ageRelaxationNotes String?
   ageRelaxation      Json?
   physicalCriteria   Json?

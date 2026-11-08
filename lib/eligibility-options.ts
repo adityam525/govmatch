@@ -12,6 +12,7 @@ export const CERTIFICATIONS = [
   { code: 'DL_HMV', label: 'Driving licence (heavy vehicle)' },
   { code: 'NCC', label: 'NCC certificate' },
   { code: 'SPORTS', label: 'Sports achievement (state or national level)' },
+  { code: 'COMPUTER', label: 'Working knowledge of computer applications (MS Office etc.)' },
 ] as const;
 
 export const CERT_CODES = new Set<string>(CERTIFICATIONS.map((c) => c.code));

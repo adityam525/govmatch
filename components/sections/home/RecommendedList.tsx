@@ -17,12 +17,13 @@ function timing(item: Recommendation): { text: string; urgent: boolean } | null 
   return { text: `${item.daysLeft} days left`, urgent: item.daysLeft <= 3 };
 }
 
-// Every row has the same fixed height, so exactly three fit in the card's list area.
+// One row per post. Every row has the same fixed height, so exactly three fit in the card's list area.
 export default function RecommendedList({ items }: { items: Recommendation[] }) {
   return (
     <div className="divide-y divide-neutral-100">
       {items.map((item) => {
         const time = timing(item);
+        const heading = item.bestPost ?? item.title;
         return (
           <Link
             key={item.id}
@@ -32,12 +33,14 @@ export default function RecommendedList({ items }: { items: Recommendation[] }) 
             <OrgLogo name={item.organization} shortName={item.orgShortName} logoUrl={item.orgLogoUrl} size={36} />
             <div className="min-w-0 flex-1">
               <p
-                title={item.title}
+                title={item.bestPost ? `${heading} (${item.title})` : heading}
                 className="line-clamp-2 text-[13px] font-semibold leading-snug text-neutral-900 group-hover:text-primary-700"
               >
-                {item.title}
+                {heading}
               </p>
-              <p className="mt-0.5 truncate text-[11px] text-neutral-500">{item.organization}</p>
+              <p className="mt-0.5 truncate text-[11px] text-neutral-500">
+                {[item.bestPost ? item.title : null, item.organization].filter(Boolean).join(' · ')}
+              </p>
               <div className="mt-1.5 flex flex-nowrap items-center gap-1.5 overflow-hidden">
                 <span className={`shrink-0 rounded-full px-2 py-0.5 text-[11px] font-semibold ${matchTone(item.matchScore)}`}>
                   {item.matchScore}% match
@@ -46,11 +49,7 @@ export default function RecommendedList({ items }: { items: Recommendation[] }) 
                   <span className="shrink-0 rounded-full bg-violet-50 px-2 py-0.5 text-[11px] text-violet-700">Preferred</span>
                 )}
                 {time && (
-                  <span
-                    className={`shrink-0 rounded-full px-2 py-0.5 text-[11px] ${
-                      time.urgent ? 'bg-red-50 text-red-600' : 'bg-neutral-100 text-neutral-600'
-                    }`}
-                  >
+                  <span className={`shrink-0 rounded-full px-2 py-0.5 text-[11px] ${time.urgent ? 'bg-re-50 text-red-600' : 'bg-neutral-100 text-neutral-600'}`}>
                     {time.text}
                   </span>
                 )}

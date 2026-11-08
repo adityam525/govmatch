@@ -136,8 +136,8 @@ function parseAge(
 ): number | null {
   if (value === undefined || value === null || value === "") return null;
   const n = Number(value);
-  if (!Number.isInteger(n) || n < 0 || n > 100) {
-    errors.push(`${field} must be a whole number between 0 and 100`);
+  if (!Number.isFinite(n) || n < 0 || n > 100 || Math.round(n * 10) / 10 !== n) {
+    errors.push(`${field} must be a number from 0 to 100 with at most one decimal, such as 19.5`);
     return null;
   }
   return n;
@@ -212,6 +212,7 @@ function prepareRow(
   if (!officialLink) errors.push("officialLink is required");
   else if (!isHttpUrl(officialLink))
     errors.push("officialLink must be a valid http(s) URL");
+  if (officialLink && /\.pdf(\?|#|$)/i.test(officialLink)) warnings.push('officialLink is a file. Use the organization website here and put the PDF under links with type NOTIFICATION_PDF');
 
   const modeText = clean(raw.applicationMode).toUpperCase() || "ONLINE";
   if (!APPLICATION_MODES.includes(modeText)) {

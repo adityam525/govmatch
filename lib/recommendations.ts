@@ -45,12 +45,13 @@ export async function getRecommendations(userId: string): Promise<Recommendation
   );
 
   const items: Recommendation[] = [];
-  for (const job of jobs) {
-    const fit = bestFitForJob(ctx, job.posts);
+  const entries = jobs.flatMap((job) => job.posts.map((post) => ({ job, post })));
+  for (const { job, post } of entries) {
+    const fit = bestFitForJob(ctx, [post]);
     if (!fit) continue; // nothing to score without posts
 
     items.push({
-      id: job.id,
+      id: job.id + ':' + post.id,
       slug: job.slug,
       title: job.title,
       organization: job.organization?.name ?? 'Unknown',
@@ -68,7 +69,7 @@ export async function getRecommendations(userId: string): Promise<Recommendation
       ),
       bestPost: fit.postTitle,
       postCount: fit.postCount,
-      vacancies: job.vacancyTotal,
+      vacancies: post.vacancies,
       opensOn: job.phase === 'UPCOMING' ? job.applicationStartDate : null,
       lastDate: job.applicationEndDate,
       daysLeft: job.applicationEndDate ? daysBetween(today, job.applicationEndDate) : null,
