@@ -3,7 +3,7 @@ import { fieldKey } from "./field-keys";
 import { evaluateAge } from "./age-rules";
 import { evaluateRequirements } from "./requirements";
 import { computeCompleteness } from "./profile-completeness";
-import { evaluateMarks, evaluateTyping, mergeResults, evaluateMaxEducation } from "./skill-rules";
+import { evaluateMarks, evaluateTyping, mergeResults, evaluateMaxEducation, evaluateShorthand } from "./skill-rules";
 
 export interface QualRef {
   id: string;
@@ -34,6 +34,7 @@ export interface UserFacts {
   chestCm: number | null;
   typingEnglishWpm?: number | null;
   typingHindiWpm?: number | null;
+  shorthandEnglishWpm?: number | null;
   preferredRoleIds: string[];
   preferredEmploymentTypes: string[];
 }
@@ -80,6 +81,7 @@ export interface PostLike {
   ageCutoffDate?: Date | string | null;
   minMarksPercent?: number | null;
   maxQualificationLevel?: number | null;
+  shorthandWpm?: number | null;
   minMarksByCategory?: unknown;
   typingOptions?: unknown;
   pwdTypes?: string[];
@@ -197,6 +199,7 @@ export async function loadFitContext(userId: string): Promise<FitContext> {
       chestCm: profile?.chestCm ?? null,
       typingEnglishWpm: profile?.typingEnglishWpm ?? null,
       typingHindiWpm: profile?.typingHindiWpm ?? null,
+      shorthandEnglishWpm: profile?.shorthandEnglishWpm ?? null,
       preferredRoleIds: profile?.preferredRoles.map((role) => role.id) ?? [],
       preferredEmploymentTypes: (profile?.preferredEmploymentTypes ??
         []) as string[],
@@ -507,6 +510,7 @@ export function evaluatePost(
   const reqResult = mergeResults(reqBase, [
     qualStatus === "yes" ? evaluateMarks(post, user.category, qualVia?.percentage) : { status: "yes" as const, checks: [] },
     evaluateTyping(post.typingOptions, user.typingEnglishWpm, user.typingHindiWpm),
+    evaluateShorthand(post.shorthandWpm, user.shorthandEnglishWpm),
     evaluateMaxEducation(post.maxQualificationLevel, user.educations.map((e) => e.qualification.level)),
   ]);
 

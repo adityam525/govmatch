@@ -91,3 +91,11 @@ export function evaluateMaxEducation(max: number | null | undefined, levels: num
   if (highest <= max) return { status: 'yes', checks: [{ label: 'Education limit', text: 'Your highest education (' + levelName(highest) + ') is within the limit of ' + levelName(max) + '.', state: 'ok' }] };
   return { status: 'no', checks: [{ label: 'Education limit', text: 'This post is for candidates up to ' + levelName(max) + '. Your highest education is ' + levelName(highest) + '.', state: 'fail' }] };
 }
+
+// English shorthand speed (for example 110 WPM), handled like typing: meet it, miss it, or add details.
+export function evaluateShorthand(required: number | null | undefined, mine: number | null | undefined): RuleResult {
+  if (required == null) return YES;
+  if (mine == null) return { status: 'unknown', checks: [{ label: 'Shorthand', text: 'Needs English shorthand at ' + required + ' WPM. Add your shorthand speed to your profile to check.', state: 'unknown' }] };
+  if (mine >= required) return { status: 'yes', checks: [{ label: 'Shorthand', text: 'Your shorthand speed (' + mine + ' WPM) meets the ' + required + ' WPM requirement.', state: 'ok' }] };
+  return { status: 'no', checks: [{ label: 'Shorthand', text: 'Needs English shorthand at ' + required + ' WPM; your speed is ' + mine + ' WPM.', state: 'fail' }] };
+}

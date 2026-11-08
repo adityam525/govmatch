@@ -1,4 +1,4 @@
-import { evaluateMarks, evaluateTyping, marksCutoff, mergeResults, parseCategoryMarks, parseTypingOptions, evaluateMaxEducation } from '../lib/skill-rules';
+import { evaluateMarks, evaluateTyping, marksCutoff, mergeResults, parseCategoryMarks, parseTypingOptions, evaluateMaxEducation, evaluateShorthand } from '../lib/skill-rules';
 
 const results: [string, boolean][] = [];
 const check = (n: string, ok: boolean) => { results.push([n, ok]); };
@@ -44,6 +44,11 @@ check('max education: above the limit fails', evaluateMaxEducation(3, [2, 6]).st
 check('max education: the highest degree decides', evaluateMaxEducation(6, [3, 6]).status === 'yes' && evaluateMaxEducation(6, [3, 7]).status === 'no');
 check('max education: no education entered is unknown', evaluateMaxEducation(3, []).status === 'unknown');
 check('max education: the message names both levels', evaluateMaxEducation(3, [6]).checks[0].text.includes('12th Pass') && evaluateMaxEducation(3, [6]).checks[0].text.includes('Graduate'));
+
+check('shorthand: no requirement gives no check', evaluateShorthand(null, 50).checks.length === 0);
+check('shorthand: meeting it passes', evaluateShorthand(110, 120).status === 'yes');
+check('shorthand: below it fails', evaluateShorthand(110, 80).status === 'no');
+check('shorthand: no speed entered is unknown', evaluateShorthand(110, null).status === 'unknown');
 
 let failed = 0;
 for (const [n, pass] of results) { if (!pass) failed++; console.log((pass ? 'PASS' : 'FAIL') + '  ' + n); }

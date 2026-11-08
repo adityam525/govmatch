@@ -112,3 +112,12 @@ export function explainIneligibility(user: ReasonUser, post: ReasonPost): Eligib
   }
   return { label: preferenceOnly ? 'Not in your preferences' : 'Not eligible', reasons };
 }
+
+// Age in years including the fraction of the current year, for limits such as 27.5.
+export function ageExact(dob: Date | string, now: Date = new Date()): number {
+  const birth = new Date(dob);
+  const years = ageInYears(birth, now);
+  const last = new Date(birth); last.setFullYear(birth.getFullYear() + years);
+  const next = new Date(birth); next.setFullYear(birth.getFullYear() + years + 1);
+  return years + (now.getTime() - last.getTime()) / (next.getTime() - last.getTime());
+}

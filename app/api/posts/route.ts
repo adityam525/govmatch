@@ -49,6 +49,9 @@ async function cleanRequirements(body: Record<string, unknown>) {
   const maxLevel = whole(body.maxQualificationLevel, 1, 8);
   if (maxLevel === undefined) return fail('Highest education allowed must be a level from 1 to 8.');
   data.maxQualificationLevel = maxLevel;
+  const shorthand = whole(body.shorthandWpm, 40, 200);
+  if (shorthand === undefined) return fail('Shorthand speed must be a whole number from 40 to 200 WPM.');
+  data.shorthandWpm = shorthand;
 
   const marksBase = blank(body.minMarksPercent) ? null : Number(body.minMarksPercent);
   if (marksBase !== null && !(Number.isFinite(marksBase) && marksBase >= 0 && marksBase <= 100)) return fail('Minimum marks must be a percentage from 0 to 100.');
@@ -98,14 +101,14 @@ export async function POST(request: Request) {
       branchIds, roleIds, qualificationIds,
       genderRestriction, minExperienceYears, requiredCertifications, domicileStateCode,
       minHeightCm, minChestCm, pwdTypes, relaxationRules, ageCutoffDate, qualificationRules,
-      minMarksPercent, minMarksByCategory, typingOptions, maxQualificationLevel,
+      minMarksPercent, minMarksByCategory, typingOptions, maxQualificationLevel, shorthandWpm,
       ...postData
     } = body;
 
     const extras = await cleanRequirements({
       genderRestriction, minExperienceYears, requiredCertifications, domicileStateCode,
       minHeightCm, minChestCm, pwdTypes, relaxationRules, ageCutoffDate,
-      minMarksPercent, minMarksByCategory, typingOptions, maxQualificationLevel,
+      minMarksPercent, minMarksByCategory, typingOptions, maxQualificationLevel, shorthandWpm,
     });
     if (extras.error) return NextResponse.json({ message: extras.error }, { status: 400 });
 

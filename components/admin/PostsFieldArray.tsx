@@ -31,6 +31,7 @@ export interface PostDraft {
   genderRestriction: string;
   minMarksPercent?: string;
   maxEducationLevel?: string;
+  shorthandWpm?: string;
   marksOBC?: string;
   marksSC?: string;
   marksST?: string;
@@ -216,11 +217,11 @@ export default function PostsFieldArray({ posts, onChange }: PostsFieldArrayProp
               <div className="grid grid-cols-2 gap-2">
                 <div>
                   <label className={labelCls}>Min Age</label>
-                  <input type="number" value={post.minAge} onChange={(e) => updatePost(index, "minAge", e.target.value)} className={inputCls} />
+                  <input type="number" step="0.1" min={0} value={post.minAge} onChange={(e) => updatePost(index, "minAge", e.target.value)} className={inputCls} />
                 </div>
                 <div>
                   <label className={labelCls}>Max Age</label>
-                  <input type="number" value={post.maxAge} onChange={(e) => updatePost(index, "maxAge", e.target.value)} className={inputCls} />
+                  <input type="number" step="0.1" min={0} value={post.maxAge} onChange={(e) => updatePost(index, "maxAge", e.target.value)} className={inputCls} />
                 </div>
               </div>
 
@@ -266,6 +267,11 @@ export default function PostsFieldArray({ posts, onChange }: PostsFieldArrayProp
                       <div><span className="mb-1 block text-[11px] text-neutral-500">EWS</span><input type="number" min={0} max={100} step="0.01" value={post.marksEWS ?? ""} onChange={(e) => updatePost(index, "marksEWS", e.target.value)} className={inputCls} /></div>
                     </div>
                     <p className="mt-1 text-[11px] text-neutral-500">Leave a category empty to use the base figure. Leave everything empty if the notice sets no minimum.</p>
+                  </div>
+
+                  <div>
+                    <p className={labelCls}>English shorthand speed (WPM, optional)</p>
+                    <input type="number" min={40} max={200} value={post.shorthandWpm ?? ""} onChange={(e) => updatePost(index, "shorthandWpm", e.target.value)} className={inputCls + " max-w-xs"} placeholder="e.g. 110" />
                   </div>
 
                   <div>
@@ -325,8 +331,8 @@ export default function PostsFieldArray({ posts, onChange }: PostsFieldArrayProp
                         <div key={ri} className="grid gap-2 rounded-lg border border-neutral-200 p-2 sm:grid-cols-[1fr_1fr_5.5rem_5.5rem_auto]">
                           <Select value={rule.category} onChange={(v) => updateRule(index, ri, { category: v })} options={RULE_CATEGORIES.map((c) => ({ value: c.code, label: c.label }))} />
                           <Select value={rule.status} onChange={(v) => updateRule(index, ri, { status: v })} options={RULE_STATUSES.map((s) => ({ value: s.code, label: s.label }))} />
-                          <input type="number" min={0} max={40} placeholder="+ years" value={rule.years} onChange={(e) => updateRule(index, ri, { years: e.target.value })} className={inputCls} aria-label="Extra years" />
-                          <input type="number" min={14} max={80} placeholder="or max age" value={rule.maxAge} onChange={(e) => updateRule(index, ri, { maxAge: e.target.value })} className={inputCls} aria-label="Maximum age" />
+                          <input type="number" step="0.1" min={0} max={40} placeholder="+ years" value={rule.years} onChange={(e) => updateRule(index, ri, { years: e.target.value })} className={inputCls} aria-label="Extra years" />
+                          <input type="number" step="0.1" min={14} max={80} placeholder="or max age" value={rule.maxAge} onChange={(e) => updateRule(index, ri, { maxAge: e.target.value })} className={inputCls} aria-label="Maximum age" />
                           <button type="button" onClick={() => removeRule(index, ri)} aria-label="Remove row" className="justify-self-end rounded-md p-2 text-neutral-400 hover:bg-red-50 hover:text-danger">
                             <X size={14} />
                           </button>

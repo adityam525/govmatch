@@ -61,7 +61,7 @@ export default function RecentJobsSidebar({ excludeSlug }: RecentJobsSidebarProp
         )}
       </div>
 
-      <Link href="/jobs" className="shrink-0 border-t border-neutral-100 px-4 py-3 text-center text-xs font-medium text-primay-600 hover:underline">View all jobs</Link>
+      <Link href="/jobs" className="shrink-0 border-t border-neutral-100 px-4 py-3 text-center text-xs font-medium text-primary-600 hover:underline">View all jobs</Link>
     </section>
   );
 }

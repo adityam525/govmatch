@@ -10,6 +10,7 @@ export interface PostRules {
   minHeightCm: number | null;
   minChestCm: number | null;
   maxQualificationLevel: number | null;
+  shorthandWpm: number | null;
   pwdTypes: string[];
   relaxationRules: RelaxationRule[];
   ageRelaxation: Record<string, string>;
@@ -46,6 +47,8 @@ export function readPostRules(p: any): { rules: PostRules; errors: string[] } {
   const chest = whole(src.minChestCm, 50, 150);
   if (chest === undefined) errors.push('minChestCm must be between 50 and 150');
 
+  const shorthand = whole(src.shorthandWpm, 40, 200);
+  if (shorthand === undefined) errors.push('shorthandWpm must be a whole number from 40 to 200');
   const maxLevel = whole(src.maxQualificationLevel, 1, 8);
   if (maxLevel === undefined) errors.push('maxQualificationLevel must be a level from 1 to 8');
 
@@ -97,7 +100,7 @@ export function readPostRules(p: any): { rules: PostRules; errors: string[] } {
     errors,
     rules: {
       genderRestriction, minExperienceYears: exp ?? null, requiredCertifications: [...new Set(certs)], domicileStateCode: domicile,
-      minHeightCm: height ?? null, minChestCm: chest ?? null, maxQualificationLevel: maxLevel ?? null, pwdTypes: [...new Set(pwd)], relaxationRules,
+      minHeightCm: height ?? null, minChestCm: chest ?? null, maxQualificationLevel: maxLevel ?? null, shorthandWpm: shorthand ?? null, pwdTypes: [...new Set(pwd)], relaxationRules,
       ageRelaxation: relaxationRules.length ? legacyRelaxationMap(relaxationRules) : {}, ageCutoffDate: cutoff,
       minMarksPercent: marksBase, minMarksByCategory: byCategory, typingOptions: typing,
     },

@@ -41,6 +41,7 @@ const EMPTY_EXTRA: ExtraState = {
   chestCm: "",
   typingEnglishWpm: "",
   typingHindiWpm: "",
+  shorthandEnglishWpm: "",
   preferredSectorSlugs: [],
   preferredOrganizationSlugs: [],
 };
@@ -199,6 +200,7 @@ export default function ProfilePage() {
         chestCm: p.chestCm != null ? String(p.chestCm) : "",
         typingEnglishWpm: p.typingEnglishWpm != null ? String(p.typingEnglishWpm) : "",
         typingHindiWpm: p.typingHindiWpm != null ? String(p.typingHindiWpm) : "",
+        shorthandEnglishWpm: p.shorthandEnglishWpm != null ? String(p.shorthandEnglishWpm) : "",
         preferredSectorSlugs: p.preferredSectorSlugs ?? [],
         preferredOrganizationSlugs: p.preferredOrganizationSlugs ?? [],
       };
@@ -390,6 +392,7 @@ export default function ProfilePage() {
           chestCm: extra.chestCm,
           typingEnglishWpm: extra.typingEnglishWpm,
           typingHindiWpm: extra.typingHindiWpm,
+          shorthandEnglishWpm: extra.shorthandEnglishWpm,
           preferredSectorSlugs: extra.preferredSectorSlugs,
           preferredOrganizationSlugs: extra.preferredOrganizationSlugs,
         }),

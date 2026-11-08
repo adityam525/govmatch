@@ -14,6 +14,7 @@ export interface ExtraState {
   chestCm: string;
   typingEnglishWpm: string;
   typingHindiWpm: string;
+  shorthandEnglishWpm: string;
   preferredSectorSlugs: string[];
   preferredOrganizationSlugs: string[];
 }
@@ -147,6 +148,14 @@ export default function ExtraProfileFields({ value, onChange }: { value: ExtraSt
           </label>
         </div>
       </Block>
+
+      <Block id="shorthand" icon={<Ruler size={16} />} title="Shorthand" hint="Some stenographer and assistant posts ask for English shorthand, for example 110 WPM. Enter your speed, or leave it empty.">
+        <label className="block sm:max-w-xs">
+          <span className="mb-1 block text-xs font-medium text-neutral-600">English shorthand (WPM)</span>
+          <input type="number" inputMode="numeric" min={40} max={200} value={value.shorthandEnglishWpm} onChange={(e) => set({ shorthandEnglishWpm: e.target.value })} className={input} />
+        </label>
+      </Block>
+
 
       <Block
         id="typing"

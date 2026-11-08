@@ -1,4 +1,4 @@
-import { ageInYears } from './eligibility-reasons';
+import { ageInYears, ageExact } from './eligibility-reasons';
 import {
   DISABILITY_TYPES,
   ruleLabel,
@@ -67,13 +67,14 @@ export function evaluateAge(user: AgeUser, post: AgePost, now: Date = new Date()
   }
 
   const age = ageInYears(user.dateOfBirth, now);
+  const exact = ageExact(user.dateOfBirth, now);
   const range =
     minAge != null && maxAge != null ? `${minAge} to ${maxAge}` : maxAge != null ? `up to ${maxAge}` : `${minAge} and above`;
 
-  if (minAge != null && age < minAge) {
+  if (minAge != null && (Number.isInteger(minAge) ? age : exact) < minAge) {
     return { status: 'no', checks: [{ label: 'Age', text: `Minimum age is ${minAge} years; you are ${age}.`, state: 'fail' }] };
   }
-  if (maxAge == null || age <= maxAge) {
+  if (maxAge == null || (Number.isInteger(maxAge) ? age : exact) <= maxAge) {
     return { status: 'yes', checks: [{ label: 'Age', text: `Your age (${age}) fits the limit of ${range} years.`, state: 'ok' }] };
   }
 

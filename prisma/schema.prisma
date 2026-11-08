@@ -244,6 +244,7 @@ model Post {
   minMarksByCategory Json?
   typingOptions      Json?
   maxQualificationLevel Int?
+  shorthandWpm Int?
 }
 
 model AdmitCard {
@@ -407,6 +408,7 @@ model UserProfile {
   preferredOrganizationSlugs String[] @default([])
   typingEnglishWpm Int?
   typingHindiWpm   Int?
+  shorthandEnglishWpm Int?
 }
 
 model SavedJob {

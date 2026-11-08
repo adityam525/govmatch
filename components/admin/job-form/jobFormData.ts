@@ -129,6 +129,7 @@ export async function loadJob(jobId: string): Promise<JobData> {
         roleId: (p.roles ?? [])[0]?.id ?? "",
         genderRestriction: str(p.genderRestriction),
         maxEducationLevel: str(p.maxQualificationLevel),
+        shorthandWpm: str(p.shorthandWpm),
         minMarksPercent: str(p.minMarksPercent),
         marksOBC: str(p.minMarksByCategory?.OBC),
         marksSC: str(p.minMarksByCategory?.SC),
@@ -252,6 +253,7 @@ async function saveCollections(jobId: string, data: JobData) {
       roleIds: p.roleId ? [p.roleId] : [],
       genderRestriction: p.genderRestriction || null,
       maxQualificationLevel: p.maxEducationLevel || null,
+      shorthandWpm: p.shorthandWpm || null,
       minMarksPercent: p.minMarksPercent ?? "",
       minMarksByCategory: { OBC: p.marksOBC ?? "", SC: p.marksSC ?? "", ST: p.marksST ?? "", EWS: p.marksEWS ?? "" },
       typingOptions: [
