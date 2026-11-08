@@ -257,7 +257,7 @@ export default function JobFiltersBar({ isPremium = false }: { isPremium?: boole
     load<ApiNamed>("/api/categories", (rows) => rows.map((c) => ({ id: c.slug, label: c.name })), setCategories);
     load<ApiNamed>("/api/qualification-categories", (rows) => rows.map((c) => ({ id: c.slug, label: c.name })), setQualCategories);
     load<ApiState>("/api/states", (rows) => rows.map((s) => ({ id: s.code, label: s.name })), setStates);
-    load<ApiNamed>("/api/organizations", (rows) => rows.map((o) => ({ id: o.slug, label: o.name })), setOrganizations);
+    load<ApiNamed>("/api/organizations", (rows) => rows.map((o) => ({ id: o.slug, label: o.name, keywords: (o as any).shortName ?? '' })), setOrganizations);
   }, []);
 
   useEffect(() => {

@@ -112,15 +112,28 @@ export function sortByIdOrder<T extends { id: string }>(items: T[], ids: string[
 }
 
 // Tab counts, computed inside the active preset (if any).
-export async function getPhaseCounts(preset: UpdatePreset | null = null): Promise<Record<PhaseFilter, number>> {
+type PostLike = { genderRestriction?: string | null };
+
+// How many listing rows a job produces: one per post (after the women filter), or one when it has no posts.
+function postsIn(job: { posts: PostLike[] }, women?: string): number {
+  if (job.posts.length === 0) return women ? 0 : 1;
+  if (women === 'only') return job.posts.filter((p) => p.genderRestriction === 'FEMALE').length;
+  if (women === 'open') return job.posts.filter((p) => !p.genderRestriction || p.genderRestriction === 'FEMALE').length;
+  return job.posts.length;
+}
+
+// Tab counts, in posts, computed inside the active preset (if any).
+export async function getPhaseCounts(preset: UpdatePreset | null = null, women?: string): Promise<Record<PhaseFilter, number>> {
   const today = todayIST();
   const [jobs, allowed] = await Promise.all([getPublishedJobs(), presetJobIds(preset)]);
   const counts: Record<PhaseFilter, number> = { all: 0, open: 0, today: 0, upcoming: 0, progress: 0, closed: 0 };
   for (const job of jobs) {
     if (allowed && !allowed.has(job.id)) continue;
-    counts.all += 1;
-    counts[tabOf(job)] += 1;
-    if (isLastDateToday(job, today)) counts.today += 1;
+    const n = postsIn(job, women);
+    if (n === 0) continue;
+    counts.all += n;
+    counts[tabOf(job)] += n;
+    if (isLastDateToday(job, today)) counts.today += n;
   }
   return counts;
 }

@@ -66,6 +66,12 @@ export interface RelaxationRule {
 
 const present = (value: unknown) => value !== undefined && value !== null && value !== '';
 
+function toDec(value: unknown, min: number, max: number): number | null {
+  if (!present(value)) return null;
+  const n = Number(value);
+  return Number.isFinite(n) && n >= min && n <= max && Math.round(n * 10) / 10 === n ? n : null;
+}
+
 function toInt(value: unknown, min: number, max: number): number | null {
   if (!present(value)) return null;
   const n = Number(value);
@@ -93,14 +99,14 @@ export function parseRules(raw: unknown): { rules: RelaxationRule[]; errors: str
       errors.push(`Relaxation rule ${n}: choose who it applies to.`);
       return;
     }
-    const years = toInt(r.years, 0, 40);
-    const maxAge = toInt(r.maxAge, 14, 80);
+    const years = toDec(r.years, 0, 40);
+    const maxAge = toDec(r.maxAge, 14, 80);
     if (present(r.years) && years === null) {
-      errors.push(`Relaxation rule ${n}: extra years must be a whole number from 0 to 40.`);
+      errors.push(`Relaxation rule ${n}: extra years must be a number from 0 to 40 with at most one decimal.`);
       return;
     }
     if (present(r.maxAge) && maxAge === null) {
-      errors.push(`Relaxation rule ${n}: the maximum age must be a whole number from 14 to 80.`);
+      errors.push(`Relaxation rule ${n}: the maximum age must be a number from 14 to 80 with at most one decimal.`);
       return;
     }
     if (years === null && maxAge === null) {

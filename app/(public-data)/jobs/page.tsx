@@ -133,7 +133,7 @@ export default async function JobsPage({ searchParams }: JobsPageProps) {
   const selectedSort = getSortType(params.sort);
   const view = parseView(params);
   const viewIds = await getViewIds(view);
-  const phaseCounts = await getPhaseCounts(view.preset);
+  const phaseCounts = await getPhaseCounts(view.preset, params.women);
 
   const session = await auth();
   const userId = (session?.user as any)?.id;
@@ -282,6 +282,7 @@ export default async function JobsPage({ searchParams }: JobsPageProps) {
       },
 
       posts: {
+        where: hasPostLevelFilter ? postFilter : undefined,
         include: {
           qualification: true,
           qualifications: true,

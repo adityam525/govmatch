@@ -21,7 +21,12 @@ interface OrgOption { id: string; name: string; website: string | null }
 interface StateOption { id: string; name: string }
 type Status = "required" | "check" | "done" | "optional";
 
-const SELECTION_STEPS = ["Written Exam", "Skill Test", "Physical Test", "Document Verification", "Medical Examination", "Interview"];
+const SELECTION_STEPS = [
+  "Scrutiny of Applications", "Written Exam", "Preliminary Exam", "Main Exam", "Descriptive Test", "Computer Based Test",
+  "Skill Test", "Typing Test", "Shorthand Test", "Computer Proficiency Test", "Trade Test", "Aptitude Test", "Psychological Test",
+  "Physical Standard Test", "Physical Efficiency Test", "Physical Test", "Group Discussion", "Interview", "Personality Test",
+  "Walk-in Interview", "Merit List", "Document Verification", "Character Verification", "Medical Examination",
+];
 const STATUS_OPTIONS = [
   { id: "LIVE", label: "Automatic (follows the dates)" },
   { id: "UPCOMING", label: "Announced, dates awaited" },

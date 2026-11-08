@@ -108,6 +108,8 @@ const ruleCount = (post: PostDraft) =>
 export default function PostsFieldArray({ posts, onChange }: PostsFieldArrayProps) {
   const [roles, setRoles] = useState<RoleOption[]>([]);
   const [states, setStates] = useState<StateOption[]>([]);
+  const [collapsed, setCollapsed] = useState<Set<number>>(new Set());
+  const toggleCollapsed = (i: number) => setCollapsed((prev) => { const next = new Set(prev); if (next.has(i)) next.delete(i); else next.add(i); return next; });
 
   useEffect(() => {
     adminApi.list<RoleOption>("roles").then(setRoles).catch(() => {});
@@ -130,12 +132,20 @@ export default function PostsFieldArray({ posts, onChange }: PostsFieldArrayProp
     updatePost(pi, "relaxationRules", posts[pi].relaxationRules.filter((_, i) => i !== ri));
 
   const addPost = () => onChange([...posts, { ...emptyPost, qualificationBlocks: [blankBlock()], requiredCertifications: [], pwdTypes: [], relaxationRules: [] }]);
-  const removePost = (index: number) => onChange(posts.filter((_, i) => i !== index));
+  const removePost = (index: number) => { setCollapsed(new Set()); onChange(posts.filter((_, i) => i !== index)); };
 
   return (
     <div className="md:col-span-2 border-t border-neutral-100 pt-5 mt-2">
       <div className="flex items-center justify-between mb-3">
-        <p className="text-sm font-semibold text-neutral-900">Posts</p>
+        <div className="flex items-center gap-3">
+          <p className="text-sm font-semibold text-neutral-900">Posts ({posts.length})</p>
+          {posts.length > 1 && (
+            <>
+              <button type="button" onClick={() => setCollapsed(new Set(posts.map((_, i) => i)))} className="text-xs text-primary-600 hover:underline">Collapse all</button>
+              <button type="button" onClick={() => setCollapsed(new Set())} className="text-xs text-primary-600 hover:underline">Expand all</button>
+            </>
+          )}
+        </div>
         <Button type="button" variant="secondary" size="sm" icon={<Plus size={14} />} onClick={addPost}>
           Add Post
         </Button>
@@ -150,7 +160,12 @@ export default function PostsFieldArray({ posts, onChange }: PostsFieldArrayProp
               <Trash2 size={14} />
             </button>
 
-            <div className="grid md:grid-cols-2 gap-3 pr-6">
+            <button type="button" onClick={() => toggleCollapsed(index)} aria-expanded={!collapsed.has(index)} className="mb-3 flex w-full items-center gap-2 pr-8 text-left text-sm font-semibold text-neutral-800">
+              <span aria-hidden className="text-neutral-400">{collapsed.has(index) ? "\u25B8" : "\u25BE"}</span>
+              <span className="truncate">Post {index + 1}: {post.title || "Untitled post"}</span>
+              {collapsed.has(index) && post.vacancies !== "" && <span className="shrink-0 text-xs font-normal text-neutral-500">{String(post.vacancies)} vacancies</span>}
+            </button>
+            <div className={`grid md:grid-cols-2 gap-3 pr-6 ${collapsed.has(index) ? "hidden" : ""}`}>
               <div className="md:col-span-2">
                 <label className={labelCls}>Post Title</label>
                 <input type="text" value={post.title} onChange={(e) => updatePost(index, "title", e.target.value)} placeholder="e.g. Junior Engineer (Civil)" className={inputCls} />
