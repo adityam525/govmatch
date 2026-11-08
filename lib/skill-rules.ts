@@ -77,3 +77,17 @@ export function mergeResults(base: RuleResult, extra: RuleResult[]): RuleResult 
   const status = all.some((r) => r.status === 'no') ? 'no' : all.some((r) => r.status === 'unknown') ? 'unknown' : 'yes';
   return { status, checks: all.flatMap((r) => r.checks) };
 }
+
+const LEVEL_NAMES: Record<number, string> = { 1: '8th Pass', 2: '10th Pass', 3: '12th Pass', 4: 'ITI / Apprentice', 5: 'Diploma', 6: 'Graduate', 7: 'Post Graduate', 8: 'Doctorate' };
+const levelName = (n: number) => LEVEL_NAMES[n] ?? 'level ' + n;
+
+// Some notices bar candidates whose education is higher than a stated limit.
+export function evaluateMaxEducation(max: number | null | undefined, levels: number[]): RuleResult {
+  if (max == null) return YES;
+  if (levels.length === 0) {
+    return { status: 'unknown', checks: [{ label: 'Education limit', text: 'Candidates above ' + levelName(max) + ' cannot apply. Add your education to check.', state: 'unknown' }] };
+  }
+  const highest = Math.max(...levels);
+  if (highest <= max) return { status: 'yes', checks: [{ label: 'Education limit', text: 'Your highest education (' + levelName(highest) + ') is within the limit of ' + levelName(max) + '.', state: 'ok' }] };
+  return { status: 'no', checks: [{ label: 'Education limit', text: 'This post is for candidates up to ' + levelName(max) + '. Your highest education is ' + levelName(highest) + '.', state: 'fail' }] };
+}

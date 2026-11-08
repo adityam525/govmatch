@@ -243,6 +243,7 @@ model Post {
   minMarksPercent    Float?
   minMarksByCategory Json?
   typingOptions      Json?
+  maxQualificationLevel Int?
 }
 
 model AdmitCard {

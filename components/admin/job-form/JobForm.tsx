@@ -224,7 +224,7 @@ export default function JobForm({ mode, jobId }: JobFormProps) {
                 <label className="mb-1.5 block text-xs font-medium text-neutral-600">Organization *</label>
                 <FilterDropdown
                   label="Select organization"
-                  options={organizations.map((o) => ({ id: o.id, label: o.name }))}
+                  options={organizations.map((o: any) => ({ id: o.id, label: o.shortName && o.shortName.toLowerCase() !== o.name.toLowerCase() ? o.name + ' (' + o.shortName + ')' : o.name }))}
                   selected={b.organizationId ? [b.organizationId] : []}
                   onChange={(ids) => chooseOrganization(ids[0] ?? "")}
                   multi={false}

@@ -46,6 +46,10 @@ async function cleanRequirements(body: Record<string, unknown>) {
   if (chest === undefined) return fail('Minimum chest must be between 50 and 150 cm.');
   data.minChestCm = chest;
 
+  const maxLevel = whole(body.maxQualificationLevel, 1, 8);
+  if (maxLevel === undefined) return fail('Highest education allowed must be a level from 1 to 8.');
+  data.maxQualificationLevel = maxLevel;
+
   const marksBase = blank(body.minMarksPercent) ? null : Number(body.minMarksPercent);
   if (marksBase !== null && !(Number.isFinite(marksBase) && marksBase >= 0 && marksBase <= 100)) return fail('Minimum marks must be a percentage from 0 to 100.');
   data.minMarksPercent = marksBase;
@@ -94,14 +98,14 @@ export async function POST(request: Request) {
       branchIds, roleIds, qualificationIds,
       genderRestriction, minExperienceYears, requiredCertifications, domicileStateCode,
       minHeightCm, minChestCm, pwdTypes, relaxationRules, ageCutoffDate, qualificationRules,
-      minMarksPercent, minMarksByCategory, typingOptions,
+      minMarksPercent, minMarksByCategory, typingOptions, maxQualificationLevel,
       ...postData
     } = body;
 
     const extras = await cleanRequirements({
       genderRestriction, minExperienceYears, requiredCertifications, domicileStateCode,
       minHeightCm, minChestCm, pwdTypes, relaxationRules, ageCutoffDate,
-      minMarksPercent, minMarksByCategory, typingOptions,
+      minMarksPercent, minMarksByCategory, typingOptions, maxQualificationLevel,
     });
     if (extras.error) return NextResponse.json({ message: extras.error }, { status: 400 });
 

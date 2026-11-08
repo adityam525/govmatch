@@ -30,6 +30,7 @@ export interface PostDraft {
   roleId: string;
   genderRestriction: string;
   minMarksPercent?: string;
+  maxEducationLevel?: string;
   marksOBC?: string;
   marksSC?: string;
   marksST?: string;
@@ -252,6 +253,13 @@ export default function PostsFieldArray({ posts, onChange }: PostsFieldArrayProp
                     <p className="mt-1 text-[11px] text-neutral-500">Leave a category empty to use the base figure. Leave everything empty if the notice sets no minimum.</p>
                   </div>
 
+                  <div>
+                    <p className={labelCls}>Highest education allowed (optional)</p>
+                    <div className="max-w-xs">
+                      <Select value={post.maxEducationLevel ?? ""} onChange={(v) => updatePost(index, "maxEducationLevel", v)} options={[{ value: "", label: "No upper limit" }, { value: "1", label: "8th Pass" }, { value: "2", label: "10th Pass" }, { value: "3", label: "12th Pass" }, { value: "4", label: "ITI / Apprentice" }, { value: "5", label: "Diploma" }, { value: "6", label: "Graduate" }, { value: "7", label: "Post Graduate" }]} />
+                    </div>
+                    <p className="mt-1 text-[11px] text-neutral-500">Candidates whose highest education is above this cannot apply. Leave empty if the notice sets no maximum.</p>
+                  </div>
                   <div>
                     <p className={labelCls}>Typing speed (either one is enough)</p>
                     <div className="grid gap-3 sm:grid-cols-2">

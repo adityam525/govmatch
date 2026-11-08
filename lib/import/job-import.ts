@@ -615,6 +615,7 @@ async function createJob(job: PreparedJob) {
               domicileStateCode: p.rules.domicileStateCode,
               minHeightCm: p.rules.minHeightCm,
               minChestCm: p.rules.minChestCm,
+              maxQualificationLevel: p.rules.maxQualificationLevel,
               pwdTypes: p.rules.pwdTypes,
               ageCutoffDate: p.rules.ageCutoffDate,
               minMarksPercent: p.rules.minMarksPercent,

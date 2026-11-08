@@ -1,4 +1,4 @@
-import { evaluateMarks, evaluateTyping, marksCutoff, mergeResults, parseCategoryMarks, parseTypingOptions } from '../lib/skill-rules';
+import { evaluateMarks, evaluateTyping, marksCutoff, mergeResults, parseCategoryMarks, parseTypingOptions, evaluateMaxEducation } from '../lib/skill-rules';
 
 const results: [string, boolean][] = [];
 const check = (n: string, ok: boolean) => { results.push([n, ok]); };
@@ -37,6 +37,13 @@ const no = { status: 'no' as const, checks: [] };
 check('merge: a failure beats unknown', mergeResults(unk, [no]).status === 'no');
 check('merge: unknown beats yes', mergeResults(ok, [unk]).status === 'unknown');
 check('merge: all yes stays yes', mergeResults(ok, [ok, ok]).status === 'yes');
+
+check('max education: no limit gives no check', evaluateMaxEducation(null, [6]).checks.length === 0);
+check('max education: within the limit passes', evaluateMaxEducation(3, [2, 3]).status === 'yes');
+check('max education: above the limit fails', evaluateMaxEducation(3, [2, 6]).status === 'no');
+check('max education: the highest degree decides', evaluateMaxEducation(6, [3, 6]).status === 'yes' && evaluateMaxEducation(6, [3, 7]).status === 'no');
+check('max education: no education entered is unknown', evaluateMaxEducation(3, []).status === 'unknown');
+check('max education: the message names both levels', evaluateMaxEducation(3, [6]).checks[0].text.includes('12th Pass') && evaluateMaxEducation(3, [6]).checks[0].text.includes('Graduate'));
 
 let failed = 0;
 for (const [n, pass] of results) { if (!pass) failed++; console.log((pass ? 'PASS' : 'FAIL') + '  ' + n); }

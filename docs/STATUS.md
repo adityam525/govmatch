@@ -79,6 +79,9 @@ check-fit, check-age, check-requirements, check-schedule, check-cutoff, check-qu
 - Homepage section gaps 48/80/128px. Question bank admin built (list, editor with 200-draw check, JSON import). Still to build: syllabus mapping screen, serving generated questions, learner test builder.
 - Security: next must be 16.4.5 or later (audit critical).
 
+- Branches are unique per qualification (same branch under B.Tech and M.Tech). Posts can set a highest education allowed. Posts show as separate rows on Last date today and Saved jobs.
+- Pending: posts as entries in Recommended, quick links, Recently posted, Top matches, applications; decimal ages; multi-select age relaxation and DB-backed options; PwD vacancy counts; FilterDropdown short-name search.
+
 ## Decisions
 
 - Imported papers are private to the user and Premium-gated until limits are set.

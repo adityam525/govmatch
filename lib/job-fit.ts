@@ -3,7 +3,7 @@ import { fieldKey } from "./field-keys";
 import { evaluateAge } from "./age-rules";
 import { evaluateRequirements } from "./requirements";
 import { computeCompleteness } from "./profile-completeness";
-import { evaluateMarks, evaluateTyping, mergeResults } from "./skill-rules";
+import { evaluateMarks, evaluateTyping, mergeResults, evaluateMaxEducation } from "./skill-rules";
 
 export interface QualRef {
   id: string;
@@ -79,6 +79,7 @@ export interface PostLike {
   relaxationRules?: unknown;
   ageCutoffDate?: Date | string | null;
   minMarksPercent?: number | null;
+  maxQualificationLevel?: number | null;
   minMarksByCategory?: unknown;
   typingOptions?: unknown;
   pwdTypes?: string[];
@@ -506,6 +507,7 @@ export function evaluatePost(
   const reqResult = mergeResults(reqBase, [
     qualStatus === "yes" ? evaluateMarks(post, user.category, qualVia?.percentage) : { status: "yes" as const, checks: [] },
     evaluateTyping(post.typingOptions, user.typingEnglishWpm, user.typingHindiWpm),
+    evaluateMaxEducation(post.maxQualificationLevel, user.educations.map((e) => e.qualification.level)),
   ]);
 
   // --- Job type preference (hard filter)

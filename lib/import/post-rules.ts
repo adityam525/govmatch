@@ -9,6 +9,7 @@ export interface PostRules {
   domicileStateCode: string | null;
   minHeightCm: number | null;
   minChestCm: number | null;
+  maxQualificationLevel: number | null;
   pwdTypes: string[];
   relaxationRules: RelaxationRule[];
   ageRelaxation: Record<string, string>;
@@ -44,6 +45,9 @@ export function readPostRules(p: any): { rules: PostRules; errors: string[] } {
   if (height === undefined) errors.push('minHeightCm must be between 100 and 230');
   const chest = whole(src.minChestCm, 50, 150);
   if (chest === undefined) errors.push('minChestCm must be between 50 and 150');
+
+  const maxLevel = whole(src.maxQualificationLevel, 1, 8);
+  if (maxLevel === undefined) errors.push('maxQualificationLevel must be a level from 1 to 8');
 
   const certs = list(src.requiredCertifications).map((c) => String(c).trim().toUpperCase());
   for (const c of certs) if (!CERT_CODES.has(c)) errors.push('requiredCertifications has an unknown code "' + c + '"');
@@ -93,7 +97,7 @@ export function readPostRules(p: any): { rules: PostRules; errors: string[] } {
     errors,
     rules: {
       genderRestriction, minExperienceYears: exp ?? null, requiredCertifications: [...new Set(certs)], domicileStateCode: domicile,
-      minHeightCm: height ?? null, minChestCm: chest ?? null, pwdTypes: [...new Set(pwd)], relaxationRules,
+      minHeightCm: height ?? null, minChestCm: chest ?? null, maxQualificationLevel: maxLevel ?? null, pwdTypes: [...new Set(pwd)], relaxationRules,
       ageRelaxation: relaxationRules.length ? legacyRelaxationMap(relaxationRules) : {}, ageCutoffDate: cutoff,
       minMarksPercent: marksBase, minMarksByCategory: byCategory, typingOptions: typing,
     },

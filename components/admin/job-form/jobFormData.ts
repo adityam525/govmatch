@@ -128,6 +128,7 @@ export async function loadJob(jobId: string): Promise<JobData> {
         employmentType: p.employmentType ?? "PERMANENT",
         roleId: (p.roles ?? [])[0]?.id ?? "",
         genderRestriction: str(p.genderRestriction),
+        maxEducationLevel: str(p.maxQualificationLevel),
         minMarksPercent: str(p.minMarksPercent),
         marksOBC: str(p.minMarksByCategory?.OBC),
         marksSC: str(p.minMarksByCategory?.SC),
@@ -250,6 +251,7 @@ async function saveCollections(jobId: string, data: JobData) {
       qualificationRules: blocks.map((q) => ({ qualificationId: q.qualificationId, branchIds: q.branchIds })),
       roleIds: p.roleId ? [p.roleId] : [],
       genderRestriction: p.genderRestriction || null,
+      maxQualificationLevel: p.maxEducationLevel || null,
       minMarksPercent: p.minMarksPercent ?? "",
       minMarksByCategory: { OBC: p.marksOBC ?? "", SC: p.marksSC ?? "", ST: p.marksST ?? "", EWS: p.marksEWS ?? "" },
       typingOptions: [

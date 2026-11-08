@@ -448,7 +448,7 @@ export default function TemplateEditor({ id }: { id?: string }) {
               }}
               options={[
                 { value: "", label: "Any organization" },
-                ...orgs.map((o) => ({ value: o.id, label: o.name })),
+                ...orgs.map((o: any) => ({ value: o.id, label: o.shortName && o.shortName.toLowerCase() !== o.name.toLowerCase() ? o.name + ' (' + o.shortName + ')' : o.name })),
               ]}
             />
           </div>
