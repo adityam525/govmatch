@@ -26,6 +26,7 @@ export const RULE_CATEGORIES = [
   { code: 'ANY', label: 'All categories' },
   { code: 'GENERAL', label: 'General' },
   { code: 'OBC', label: 'OBC' },
+  { code: 'OBC_NCL', label: 'OBC (Non-Creamy Layer)' },
   { code: 'SC', label: 'SC' },
   { code: 'ST', label: 'ST' },
   { code: 'EWS', label: 'EWS' },

@@ -8,7 +8,11 @@ export default function PrivacyPage() {
     ['6. Third-party sign-in', 'If sign-in with Google is offered and you use it, we receive your name and email from Google, under Google\u2019s own privacy policy.'],
     ['7. Your choices', 'You can change or remove profile details at any time from your profile page. To have your account and its data deleted, contact us through the contact page and we will do it.'],
     ['8. Cookies', 'We use cookies to keep you signed in. We do not use third-party tracking or advertising cookies.'],
-    ['9. Changes', 'We may update this policy. The date below shows the latest version.'],
+    ['9. Who processes your data', 'We use hosting, database and email providers to run the service. They process data only on our behalf. Your data is not sold or used for advertising.'],
+    ['10. How long we keep it', 'We keep your account data while your account exists. When you delete your account from your profile page, your profile, saved jobs, applications and test history are deleted.'],
+    ['11. Age', 'GovMatch is meant for people aged 18 and over. If you are under 18, please do not create an account.'],
+    ['12. Contact and complaints', 'For questions, corrections or complaints about your data, write to us from the contact page. If you think your data has been exposed, tell us at once.'],
+    ['13. Changes', 'We may update this policy. The date below shows the latest version.'],
   ];
   return (
     <div className="max-w-3xl mx-auto px-6 py-12">

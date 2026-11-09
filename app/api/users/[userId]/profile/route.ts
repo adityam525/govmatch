@@ -107,6 +107,12 @@ export async function PATCH(request: Request, { params }: Params) {
       if (speed === undefined) return bad(label + ' typing speed must be a whole number from 5 to 200 WPM.');
       data[field] = speed;
     }
+    if ('obcLayer' in body) {
+      const layer = body.obcLayer === '' || body.obcLayer == null ? null : String(body.obcLayer);
+      if (layer !== null && layer !== 'CREAMY' && layer !== 'NON_CREAMY') return bad('Choose creamy or non-creamy layer.');
+      data.obcLayer = layer;
+    }
+    if ('category' in body && String(body.category ?? '').toUpperCase() !== 'OBC') data.obcLayer = null;
     if ('drivingExperienceYears' in body) {
       const years = wholeNumber(body.drivingExperienceYears, 0, 50);
       if (years === undefined) return bad('Driving experience must be a whole number of years from 0 to 50.');

@@ -36,6 +36,7 @@ export interface UserFacts {
   typingHindiWpm?: number | null;
   shorthandEnglishWpm?: number | null;
   drivingExperienceYears?: number | null;
+  obcLayer?: string | null;
   preferredRoleIds: string[];
   preferredEmploymentTypes: string[];
 }
@@ -203,6 +204,7 @@ export async function loadFitContext(userId: string): Promise<FitContext> {
       typingHindiWpm: profile?.typingHindiWpm ?? null,
       shorthandEnglishWpm: profile?.shorthandEnglishWpm ?? null,
       drivingExperienceYears: profile?.drivingExperienceYears ?? null,
+      obcLayer: profile?.obcLayer ?? null,
       preferredRoleIds: profile?.preferredRoles.map((role) => role.id) ?? [],
       preferredEmploymentTypes: (profile?.preferredEmploymentTypes ??
         []) as string[],

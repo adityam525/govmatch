@@ -1,0 +1,16 @@
+name: ci
+on: [pull_request, push]
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    env:
+      DATABASE_URL: postgresql://user:pass@localhost:5432/db
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22, cache: npm }
+      - run: npm ci
+      - run: npx prisma generate
+      - run: npx tsc --noEmit
+      - run: |
+          for t in qb qb-input qb-starters qb-compose csrf calendar skills age-decimal import-rules obc; do npx tsx prisma/check-$t.ts; done

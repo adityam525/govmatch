@@ -137,6 +137,7 @@ export default function ProfilePage() {
     dateOfBirth: "",
     gender: "",
     category: "",
+    obcLayer: "",
   });
   const [special, setSpecial] = useState<SpecialState>({
     disabilityTypes: [],
@@ -180,6 +181,7 @@ export default function ProfilePage() {
         dateOfBirth: p.dateOfBirth ? String(p.dateOfBirth).slice(0, 10) : "",
         gender: p.gender ?? "",
         category: p.category ?? "",
+        obcLayer: p.obcLayer ?? "",
       };
       const nextSpecial: SpecialState = {
         disabilityTypes: p.disabilityTypes ?? [],
@@ -251,6 +253,7 @@ export default function ProfilePage() {
     dateOfBirth: personal.dateOfBirth || null,
     educationCount: rows.filter((r) => r.qualificationId).length,
     category: personal.category || null,
+    obcLayer: personal.category === "OBC" ? personal.obcLayer || null : null,
     gender: personal.gender || null,
     phoneNumber: personal.phoneNumber || null,
     preferenceCount: prefs.roleIds.length + prefs.types.length,
@@ -528,6 +531,7 @@ export default function ProfilePage() {
                   Category{needs("category") && <RequiredTag />}
                 </span>
                 <div className={needs("category") ? "rounded-xl ring-2 ring-amber-300" : ""}><Select value={personal.category} onChange={(v) => updatePersonal("category", v)} options={[{"value": "", "label": "Select..."}, {"value": "General", "label": "General"}, {"value": "OBC", "label": "OBC"}, {"value": "SC", "label": "SC"}, {"value": "ST", "label": "ST"}, {"value": "EWS", "label": "EWS"}]} /></div>
+                {personal.category === "OBC" && (<div className="mt-3"><span className="mb-1 block text-xs font-medium text-neutral-600">OBC layer (optional)</span><Select value={personal.obcLayer} onChange={(v) => updatePersonal("obcLayer", v)} options={[{ value: "", label: "Not sure / skip" }, { value: "NON_CREAMY", label: "Non-Creamy Layer" }, { value: "CREAMY", label: "Creamy Layer" }]} /></div>)}
               </label>
               <label className="block">
                 <span className="mb-1 block text-xs font-medium text-neutral-600">

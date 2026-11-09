@@ -359,6 +359,7 @@ model User {
   educations UserEducation[]
   mockTests    MockTest[]
   mockAttempts MockAttempt[]
+  passwordResetTokens PasswordResetToken[]
 }
 
 enum AuthProvider {
@@ -867,4 +868,21 @@ model QbTemplate {
   organization   Organization? @relation(fields: [organizationId], references: [id], onDelete: SetNull)
   examId         String?
   exam           QbExam?       @relation(fields: [examId], references: [id], onDelete: SetNull)
+}
+
+model PasswordResetToken {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  tokenHash String   @unique
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+}
+
+model AppSetting {
+  key       String   @id
+  value     Json
+  updatedAt DateTime @updatedAt
 }

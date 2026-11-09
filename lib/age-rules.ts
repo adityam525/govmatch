@@ -13,6 +13,7 @@ export interface AgeUser {
   disabilityTypes?: string[];
   disabilityPercent?: number | null;
   specialStatuses?: string[];
+  obcLayer?: string | null;
 }
 
 export interface AgePost {
@@ -95,7 +96,10 @@ export function evaluateAge(user: AgeUser, post: AgePost, now: Date = new Date()
   const typeMismatch: string[] = [];
 
   for (const rule of rules) {
-    if (rule.category !== 'ANY' && rule.category !== wantedCategory) continue;
+    if (rule.category === 'OBC_NCL') {
+      if (wantedCategory !== 'OBC' || user.obcLayer === 'CREAMY') continue;
+      if (user.obcLayer !== 'NON_CREAMY') { unclaimed.push(ruleLabel(rule)); continue; }
+    } else if (rule.category !== 'ANY' && rule.category !== wantedCategory) continue;
 
     if (rule.status === 'PWD') {
       if (!pwd) {

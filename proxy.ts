@@ -30,7 +30,7 @@ const WRITE_PROTECTED_PREFIXES = [
 ];
 
 // Pages that should never appear in search results.
-const PRIVATE_PREFIXES = ['/admin', '/dashboard', '/profile', '/applications', '/saved-jobs', '/mock-tests', '/exam', '/login', '/signup'];
+const PRIVATE_PREFIXES = ['/admin', '/dashboard', '/profile', '/applications', '/saved-jobs', '/mock-tests', '/exam', '/login', '/signup', '/forgot-password', '/reset-password'];
 
 // Pages that need a logged-in user. This only checks for a session cookie; APIs check the real session.
 const USER_PREFIXES = ['/dashboard', '/profile', '/applications', '/saved-jobs', '/mock-tests', '/exam/run'];
