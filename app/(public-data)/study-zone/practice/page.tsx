@@ -66,13 +66,15 @@ export default function PracticePage() {
     if (!user?.id) return;
     setBusy(true); setError('');
     try {
+      const win = window.open('', '_blank', 'popup=yes,left=0,top=0,width=' + window.screen.availWidth + ',height=' + window.screen.availHeight);
       const res = await fetch('/api/users/' + user.id + '/practice', {
         method: 'POST', headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ topicIds: [...picked].filter((id) => available.has(id)), count, mix: { EASY: easy, MEDIUM: medium, HARD: hard }, durationMinutes: minutes, marks, negativeMarks: negative }),
       });
       const d = await res.json().catch(() => ({}));
-      if (!res.ok) { setError(d.message ?? 'Could not create the set.'); return; }
-      router.push('/exam/run/' + d.attemptId);
+      if (!res.ok) { win?.close(); setError(d.message ?? 'Could not create the set.'); return; }
+      const url = '/exam/run/' + d.attemptId + '?from=practice';
+      if (win) { win.location.href = url; win.focus(); } else router.push(url);
     } catch { setError('Network error. Please try again.'); } finally { setBusy(false); }
   };
 
@@ -93,7 +95,12 @@ export default function PracticePage() {
       <div>
         <h1 className="text-xl font-bold text-neutral-900">Practice by topic</h1>
         <p className="mt-1 text-sm text-neutral-600">Every question has fresh numbers each time, with a worked explanation after the test.</p>
-        {left !== null && <p className="mt-2 text-xs text-neutral-500">{left} of {usage?.limit} free sets left today.</p>}
+        {left !== null && (
+          <p role="status" className={'mt-3 rounded-lg border px-4 py-3 text-sm font-semibold ' + (left === 0 ? 'border-red-200 bg-red-50 text-red-700' : left === 1 ? 'border-amber-200 bg-amber-50 text-amber-800' : 'border-primary-200 bg-primary-50 text-primary-700')}>
+            {left === 0 ? 'You have used all ' + usage?.limit + ' free practice sets for today. They reset at midnight, or go Premium for no daily limit.' : left + ' of ' + usage?.limit + ' free practice sets left today.'}
+            {left === 0 && <> <Link href="/pricing" className="underline">See Premium</Link></>}
+          </p>
+        )}
       </div>
 
       <section className="rounded-2xl border border-neutral-200 bg-white p-5">
