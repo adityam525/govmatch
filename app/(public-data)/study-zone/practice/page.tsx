@@ -66,15 +66,14 @@ export default function PracticePage() {
     if (!user?.id) return;
     setBusy(true); setError('');
     try {
-      const win = window.open('', '_blank', 'popup=yes,left=0,top=0,width=' + window.screen.availWidth + ',height=' + window.screen.availHeight);
-      const res = await fetch('/api/users/' + user.id + '/practice', {
+      try { await document.documentElement.requestFullscreen?.(); } catch { /* the exam still works without it */ }
+            const res = await fetch('/api/users/' + user.id + '/practice', {
         method: 'POST', headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ topicIds: [...picked].filter((id) => available.has(id)), count, mix: { EASY: easy, MEDIUM: medium, HARD: hard }, durationMinutes: minutes, marks, negativeMarks: negative }),
       });
       const d = await res.json().catch(() => ({}));
-      if (!res.ok) { win?.close(); setError(d.message ?? 'Could not create the set.'); return; }
-      const url = '/exam/run/' + d.attemptId + '?from=practice';
-      if (win) { win.location.href = url; win.focus(); } else router.push(url);
+      if (!res.ok) { if (document.fullscreenElement) await document.exitFullscreen().catch(() => {}); setError(d.message ?? 'Could not create the set.'); return; }
+      router.push('/exam/run/' + d.attemptId + '?from=practice');
     } catch { setError('Network error. Please try again.'); } finally { setBusy(false); }
   };
 

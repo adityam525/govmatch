@@ -1,9 +1,13 @@
 'use client';
 
 import Link from 'next/link';
+import { useEffect, useState } from 'react';
 import type { ExamData } from './exam-types';
 
 export default function ExamResult({ data }: { data: ExamData }) {
+  const [practice, setPractice] = useState(false);
+  useEffect(() => { setPractice(new URLSearchParams(window.location.search).get('from') === 'practice'); }, []);
+  const closeWindow = () => { if (window.opener) window.close(); else window.location.href = '/dashboard'; };
   const r = data.result;
   if (!r) return <div className="p-8 text-center text-sm text-neutral-500">Result not available.</div>;
   const status = new Map(r.perQuestion.map((p) => [p.id, p]));
@@ -81,8 +85,11 @@ export default function ExamResult({ data }: { data: ExamData }) {
         ))}
 
         <div className="mt-6 flex flex-wrap gap-3">
-          <Link href="/study-zone/mock-tests" className="rounded-lg bg-primary-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-primary-700">More mock tests</Link>
-          <button type="button" onClick={() => window.close()} className="rounded-lg border border-neutral-200 px-4 py-2.5 text-sm text-neutral-700 hover:bg-neutral-50">Close window</button>
+          {practice
+            ? <Link href="/study-zone/practice" className="rounded-lg bg-primary-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-primary-700">Practice again</Link>
+            : <Link href="/study-zone/mock-tests" className="rounded-lg bg-primary-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-primary-700">More mock tests</Link>}
+          {practice && <Link href="/mock-tests" className="rounded-lg border border-neutral-200 px-4 py-2.5 text-sm text-neutral-700 hover:bg-neutral-50">My progress</Link>}
+          <button type="button" onClick={closeWindow} className="rounded-lg border border-neutral-200 px-4 py-2.5 text-sm text-neutral-700 hover:bg-neutral-50">{practice ? 'Back to dashboard' : 'Close window'}</button>
         </div>
       </div>
     </div>
