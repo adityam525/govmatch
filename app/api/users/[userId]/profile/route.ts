@@ -107,6 +107,11 @@ export async function PATCH(request: Request, { params }: Params) {
       if (speed === undefined) return bad(label + ' typing speed must be a whole number from 5 to 200 WPM.');
       data[field] = speed;
     }
+    if ('drivingExperienceYears' in body) {
+      const years = wholeNumber(body.drivingExperienceYears, 0, 50);
+      if (years === undefined) return bad('Driving experience must be a whole number of years from 0 to 50.');
+      data.drivingExperienceYears = years;
+    }
     if ('certifications' in body) {
       const list: unknown[] = Array.isArray(body.certifications) ? body.certifications : [];
       if (list.some((c) => typeof c !== 'string' || !CERT_CODES.has(c))) return bad('Choose valid certificates.');

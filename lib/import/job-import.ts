@@ -618,6 +618,7 @@ async function createJob(job: PreparedJob) {
               minChestCm: p.rules.minChestCm,
               maxQualificationLevel: p.rules.maxQualificationLevel,
               shorthandWpm: p.rules.shorthandWpm,
+              minDrivingYears: p.rules.minDrivingYears,
               pwdTypes: p.rules.pwdTypes,
               ageCutoffDate: p.rules.ageCutoffDate,
               minMarksPercent: p.rules.minMarksPercent,

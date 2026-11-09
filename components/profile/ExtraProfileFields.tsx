@@ -15,6 +15,7 @@ export interface ExtraState {
   typingEnglishWpm: string;
   typingHindiWpm: string;
   shorthandEnglishWpm: string;
+  drivingExperienceYears: string;
   preferredSectorSlugs: string[];
   preferredOrganizationSlugs: string[];
 }
@@ -148,6 +149,14 @@ export default function ExtraProfileFields({ value, onChange }: { value: ExtraSt
           </label>
         </div>
       </Block>
+
+      <Block id="driving" icon={<Ruler size={16} />} title="Driving experience" hint="Driver posts often ask for a number of years of driving experience. Enter your years, or leave it empty.">
+        <label className="block sm:max-w-xs">
+          <span className="mb-1 block text-xs font-medium text-neutral-600">Years of driving experience</span>
+          <input type="number" inputMode="numeric" min={0} max={50} value={value.drivingExperienceYears} onChange={(e) => set({ drivingExperienceYears: e.target.value })} className={input} />
+        </label>
+      </Block>
+
 
       <Block id="shorthand" icon={<Ruler size={16} />} title="Shorthand" hint="Some stenographer and assistant posts ask for English shorthand, for example 110 WPM. Enter your speed, or leave it empty.">
         <label className="block sm:max-w-xs">

@@ -99,3 +99,11 @@ export function evaluateShorthand(required: number | null | undefined, mine: num
   if (mine >= required) return { status: 'yes', checks: [{ label: 'Shorthand', text: 'Your shorthand speed (' + mine + ' WPM) meets the ' + required + ' WPM requirement.', state: 'ok' }] };
   return { status: 'no', checks: [{ label: 'Shorthand', text: 'Needs English shorthand at ' + required + ' WPM; your speed is ' + mine + ' WPM.', state: 'fail' }] };
 }
+
+// Years of driving experience, for driver posts. Separate from general experience and from the licence.
+export function evaluateDriving(required: number | null | undefined, mine: number | null | undefined): RuleResult {
+  if (required == null || required <= 0) return YES;
+  if (mine == null) return { status: 'unknown', checks: [{ label: 'Driving experience', text: 'Needs ' + required + ' years of driving experience. Add your driving experience to your profile to check.', state: 'unknown' }] };
+  if (mine >= required) return { status: 'yes', checks: [{ label: 'Driving experience', text: 'Your ' + mine + ' years of driving experience meets the ' + required + ' years needed.', state: 'ok' }] };
+  return { status: 'no', checks: [{ label: 'Driving experience', text: 'Needs ' + required + ' years of driving experience; you have ' + mine + '.', state: 'fail' }] };
+}

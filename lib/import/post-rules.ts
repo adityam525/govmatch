@@ -11,6 +11,7 @@ export interface PostRules {
   minChestCm: number | null;
   maxQualificationLevel: number | null;
   shorthandWpm: number | null;
+  minDrivingYears: number | null;
   pwdTypes: string[];
   relaxationRules: RelaxationRule[];
   ageRelaxation: Record<string, string>;
@@ -47,6 +48,8 @@ export function readPostRules(p: any): { rules: PostRules; errors: string[] } {
   const chest = whole(src.minChestCm, 50, 150);
   if (chest === undefined) errors.push('minChestCm must be between 50 and 150');
 
+  const driving = whole(src.minDrivingYears, 0, 50);
+  if (driving === undefined) errors.push('minDrivingYears must be a whole number from 0 to 50');
   const shorthand = whole(src.shorthandWpm, 40, 200);
   if (shorthand === undefined) errors.push('shorthandWpm must be a whole number from 40 to 200');
   const maxLevel = whole(src.maxQualificationLevel, 1, 8);
@@ -100,7 +103,7 @@ export function readPostRules(p: any): { rules: PostRules; errors: string[] } {
     errors,
     rules: {
       genderRestriction, minExperienceYears: exp ?? null, requiredCertifications: [...new Set(certs)], domicileStateCode: domicile,
-      minHeightCm: height ?? null, minChestCm: chest ?? null, maxQualificationLevel: maxLevel ?? null, shorthandWpm: shorthand ?? null, pwdTypes: [...new Set(pwd)], relaxationRules,
+      minHeightCm: height ?? null, minChestCm: chest ?? null, maxQualificationLevel: maxLevel ?? null, shorthandWpm: shorthand ?? null, minDrivingYears: driving ?? null, pwdTypes: [...new Set(pwd)], relaxationRules,
       ageRelaxation: relaxationRules.length ? legacyRelaxationMap(relaxationRules) : {}, ageCutoffDate: cutoff,
       minMarksPercent: marksBase, minMarksByCategory: byCategory, typingOptions: typing,
     },

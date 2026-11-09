@@ -32,6 +32,7 @@ export interface PostDraft {
   minMarksPercent?: string;
   maxEducationLevel?: string;
   shorthandWpm?: string;
+  minDrivingYears?: string;
   marksOBC?: string;
   marksSC?: string;
   marksST?: string;
@@ -267,6 +268,11 @@ export default function PostsFieldArray({ posts, onChange }: PostsFieldArrayProp
                       <div><span className="mb-1 block text-[11px] text-neutral-500">EWS</span><input type="number" min={0} max={100} step="0.01" value={post.marksEWS ?? ""} onChange={(e) => updatePost(index, "marksEWS", e.target.value)} className={inputCls} /></div>
                     </div>
                     <p className="mt-1 text-[11px] text-neutral-500">Leave a category empty to use the base figure. Leave everything empty if the notice sets no minimum.</p>
+                  </div>
+
+                  <div>
+                    <p className={labelCls}>Driving experience (years, optional)</p>
+                    <input type="number" min={0} max={50} value={post.minDrivingYears ?? ""} onChange={(e) => updatePost(index, "minDrivingYears", e.target.value)} className={inputCls + " max-w-xs"} placeholder="e.g. 3" />
                   </div>
 
                   <div>

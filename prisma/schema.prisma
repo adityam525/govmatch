@@ -245,6 +245,7 @@ model Post {
   typingOptions      Json?
   maxQualificationLevel Int?
   shorthandWpm Int?
+  minDrivingYears Int?
 }
 
 model AdmitCard {
@@ -409,6 +410,7 @@ model UserProfile {
   typingEnglishWpm Int?
   typingHindiWpm   Int?
   shorthandEnglishWpm Int?
+  drivingExperienceYears Int?
 }
 
 model SavedJob {

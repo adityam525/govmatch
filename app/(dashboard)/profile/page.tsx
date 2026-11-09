@@ -42,6 +42,7 @@ const EMPTY_EXTRA: ExtraState = {
   typingEnglishWpm: "",
   typingHindiWpm: "",
   shorthandEnglishWpm: "",
+  drivingExperienceYears: "",
   preferredSectorSlugs: [],
   preferredOrganizationSlugs: [],
 };
@@ -201,6 +202,7 @@ export default function ProfilePage() {
         typingEnglishWpm: p.typingEnglishWpm != null ? String(p.typingEnglishWpm) : "",
         typingHindiWpm: p.typingHindiWpm != null ? String(p.typingHindiWpm) : "",
         shorthandEnglishWpm: p.shorthandEnglishWpm != null ? String(p.shorthandEnglishWpm) : "",
+        drivingExperienceYears: p.drivingExperienceYears != null ? String(p.drivingExperienceYears) : "",
         preferredSectorSlugs: p.preferredSectorSlugs ?? [],
         preferredOrganizationSlugs: p.preferredOrganizationSlugs ?? [],
       };
@@ -393,6 +395,7 @@ export default function ProfilePage() {
           typingEnglishWpm: extra.typingEnglishWpm,
           typingHindiWpm: extra.typingHindiWpm,
           shorthandEnglishWpm: extra.shorthandEnglishWpm,
+          drivingExperienceYears: extra.drivingExperienceYears,
           preferredSectorSlugs: extra.preferredSectorSlugs,
           preferredOrganizationSlugs: extra.preferredOrganizationSlugs,
         }),

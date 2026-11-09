@@ -1,4 +1,4 @@
-import { evaluateMarks, evaluateTyping, marksCutoff, mergeResults, parseCategoryMarks, parseTypingOptions, evaluateMaxEducation, evaluateShorthand } from '../lib/skill-rules';
+import { evaluateMarks, evaluateTyping, marksCutoff, mergeResults, parseCategoryMarks, parseTypingOptions, evaluateMaxEducation, evaluateShorthand, evaluateDriving } from '../lib/skill-rules';
 
 const results: [string, boolean][] = [];
 const check = (n: string, ok: boolean) => { results.push([n, ok]); };
@@ -49,6 +49,11 @@ check('shorthand: no requirement gives no check', evaluateShorthand(null, 50).ch
 check('shorthand: meeting it passes', evaluateShorthand(110, 120).status === 'yes');
 check('shorthand: below it fails', evaluateShorthand(110, 80).status === 'no');
 check('shorthand: no speed entered is unknown', evaluateShorthand(110, null).status === 'unknown');
+
+check('driving: no requirement gives no check', evaluateDriving(null, 2).checks.length === 0);
+check('driving: meeting it passes', evaluateDriving(3, 5).status === 'yes');
+check('driving: below it fails', evaluateDriving(3, 1).status === 'no');
+check('driving: nothing entered is unknown', evaluateDriving(3, null).status === 'unknown');
 
 let failed = 0;
 for (const [n, pass] of results) { if (!pass) failed++; console.log((pass ? 'PASS' : 'FAIL') + '  ' + n); }
