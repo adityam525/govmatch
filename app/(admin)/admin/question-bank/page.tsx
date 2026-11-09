@@ -53,6 +53,7 @@ export default function QuestionBankPage() {
           <p className="text-sm text-neutral-600">Question templates. Each draws new numbers every time it is used.</p>
         </div>
         <div className="flex gap-2">
+          <Link href="/admin/question-bank/syllabus"><Button variant="secondary" size="sm">Exam syllabus</Button></Link>
           <Link href="/admin/question-bank/import"><Button variant="secondary" size="sm" icon={<FileJson size={14} />}>Import JSON</Button></Link>
           <Link href="/admin/question-bank/new"><Button variant="primary" size="sm" icon={<Plus size={14} />}>New template</Button></Link>
         </div>
