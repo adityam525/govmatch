@@ -52,7 +52,7 @@ export async function POST(request: Request, { params }: Params) {
     if (topicIds.length === 0) return NextResponse.json({ message: 'Choose at least one topic.' }, { status: 400 });
 
     const templates = await prisma.qbTemplate.findMany({
-      where: { published: true, topicId: { in: topicIds } },
+      where: { published: true, topicId: { in: topicIds }, ...(typeof body.examId === 'string' && body.examId ? { OR: [{ examId: null }, { examId: body.examId }] } : {}) },
       select: { id: true, title: true, difficulty: true, expectedSeconds: true, definition: true },
     });
     const pool = templates.map((t) => ({ id: t.id, title: t.title, difficulty: t.difficulty, expectedSeconds: t.expectedSeconds, def: t.definition as unknown as TemplateDef }));

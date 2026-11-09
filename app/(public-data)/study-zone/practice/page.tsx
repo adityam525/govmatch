@@ -69,7 +69,7 @@ export default function PracticePage() {
       try { await document.documentElement.requestFullscreen?.(); } catch { /* the exam still works without it */ }
             const res = await fetch('/api/users/' + user.id + '/practice', {
         method: 'POST', headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ topicIds: [...picked].filter((id) => available.has(id)), count, mix: { EASY: easy, MEDIUM: medium, HARD: hard }, durationMinutes: minutes, marks, negativeMarks: negative }),
+        body: JSON.stringify({ examId, topicIds: [...picked].filter((id) => available.has(id)), count, mix: { EASY: easy, MEDIUM: medium, HARD: hard }, durationMinutes: minutes, marks, negativeMarks: negative }),
       });
       const d = await res.json().catch(() => ({}));
       if (!res.ok) { if (document.fullscreenElement) await document.exitFullscreen().catch(() => {}); setError(d.message ?? 'Could not create the set.'); return; }
