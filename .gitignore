@@ -6,3 +6,4 @@ node_modules/
 .DS_Store
 prisma/org-logos.csv
 exports/
+next-env.d.ts
