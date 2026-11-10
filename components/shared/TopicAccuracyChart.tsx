@@ -33,7 +33,7 @@ export default function TopicAccuracyChart() {
                 style={{ height: `${topic.percent}%` }}
               />
             </div>
-            <span className="text-[10px] text-neutral-400">{topic.label}</span>
+            <span className="text-3xs text-neutral-400">{topic.label}</span>
           </div>
         ))}
       </div>

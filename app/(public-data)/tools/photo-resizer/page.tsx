@@ -120,7 +120,7 @@ export default function PhotoResizerPage() {
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src={result.url} alt="Resized preview" width={result.width} height={result.height} className="mt-3 max-w-full rounded border border-neutral-200 bg-white" style={{ imageRendering: 'auto' }} />
           <a href={result.url} download={'resized-' + result.width + 'x' + result.height + '.jpg'} className="mt-4 inline-block rounded-lg bg-primary-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-primary-700">Download</a>
-          <p className="mt-2 text-[11px] text-neutral-500">Some forms count a KB as 1000 bytes, others as 1024. Keep a little room inside your limits if the form is strict.</p>
+          <p className="mt-2 text-2xs text-neutral-500">Some forms count a KB as 1000 bytes, others as 1024. Keep a little room inside your limits if the form is strict.</p>
         </section>
       )}
     </div>

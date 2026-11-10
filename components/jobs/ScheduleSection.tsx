@@ -12,7 +12,7 @@ export default function ScheduleSection({ schedule }: { schedule: JobScheduleVie
         <CalendarClock size={18} className="text-primary-600" />
         <h2 className="text-sm font-bold text-neutral-900">Schedule</h2>
         {schedule.recentlyChanged && (
-          <span className="rounded-full bg-amber-100 px-2 py-0.5 text-[11px] font-semibold text-amber-800">Recently postponed</span>
+          <span className="rounded-full bg-amber-100 px-2 py-0.5 text-2xs font-semibold text-amber-800">Recently postponed</span>
         )}
       </div>
 
@@ -23,7 +23,7 @@ export default function ScheduleSection({ schedule }: { schedule: JobScheduleVie
               <p className="text-sm font-medium text-neutral-900">{event.label}</p>
               <p className={`text-sm font-semibold ${event.at ? 'text-neutral-900' : 'text-amber-700'}`}>
                 {formatEventMoment(event.at, event.timeKnown)}
-                {event.at && !event.timeKnown && <span className="ml-1 text-[11px] font-normal text-neutral-400">time not announced</span>}
+                {event.at && !event.timeKnown && <span className="ml-1 text-2xs font-normal text-neutral-400">time not announced</span>}
               </p>
             </div>
             {event.postponed && event.lastChange && (
@@ -31,10 +31,10 @@ export default function ScheduleSection({ schedule }: { schedule: JobScheduleVie
             )}
             {event.history.length > 1 && (
               <details className="mt-1.5">
-                <summary className="cursor-pointer text-[11px] text-neutral-500">Change history ({event.history.length - 1})</summary>
+                <summary className="cursor-pointer text-2xs text-neutral-500">Change history ({event.history.length - 1})</summary>
                 <ul className="mt-1 space-y-0.5">
                   {event.history.map((h, i) => (
-                    <li key={i} className="text-[11px] text-neutral-500">
+                    <li key={i} className="text-2xs text-neutral-500">
                       {new Date(h.when).toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric', timeZone: 'Asia/Kolkata' })}
                       {': '}
                       {h.text}
@@ -46,7 +46,7 @@ export default function ScheduleSection({ schedule }: { schedule: JobScheduleVie
           </div>
         ))}
       </div>
-      <p className="mt-3 text-[11px] text-neutral-400">Times are in IST. Always confirm dates on the official notification.</p>
+      <p className="mt-3 text-2xs text-neutral-400">Times are in IST. Always confirm dates on the official notification.</p>
     </Card>
   );
 }

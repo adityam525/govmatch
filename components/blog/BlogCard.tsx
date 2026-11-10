@@ -30,7 +30,7 @@ export default function BlogCard({ post }: { post: BlogCardData }) {
       )}
       <div className="flex flex-1 flex-col p-4">
         {post.tags[0] && (
-          <span className="text-[11px] font-semibold uppercase tracking-wide text-primary-600">
+          <span className="text-2xs font-semibold uppercase tracking-wide text-primary-600">
             {post.tags[0]}
           </span>
         )}

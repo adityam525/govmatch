@@ -152,7 +152,7 @@ export default function MockTestBuilder({ testId, endpoint, backHref = '/mock-te
           <div>
             <label className={label}>Total time (minutes) *</label>
             <input type="number" min={1} max={LIMITS.maxMinutes} value={shownTotal} readOnly={allTimed} onChange={(e) => change((f) => ({ ...f, durationMinutes: e.target.value }))} className={`${input} ${allTimed ? 'bg-neutral-100' : ''}`} />
-            {allTimed && <p className="mt-1 text-[11px] text-neutral-500">The sum of the section times.</p>}
+            {allTimed && <p className="mt-1 text-2xs text-neutral-500">The sum of the section times.</p>}
           </div>
           <div className="md:col-span-3">
             <label className={label}>Description (optional)</label>
@@ -189,7 +189,7 @@ export default function MockTestBuilder({ testId, endpoint, backHref = '/mock-te
                 <button type="button" aria-label={`Remove section ${si + 1}`} onClick={() => { if (confirm(`Remove "${s.name || `Section ${si + 1}`}" and its questions?`)) change((f) => ({ ...f, sections: f.sections.filter((_, i) => i !== si) })); }} className="rounded-md p-2 text-neutral-400 hover:bg-red-50 hover:text-danger"><Trash2 size={16} /></button>
               )}
             </div>
-            <p className="mt-2 text-[11px] text-neutral-500">Marks and Negative are the defaults for new questions in this section. Each question can differ.</p>
+            <p className="mt-2 text-2xs text-neutral-500">Marks and Negative are the defaults for new questions in this section. Each question can differ.</p>
 
             <div className="mt-4 space-y-4">
               {s.questions.map((q, qi) => (

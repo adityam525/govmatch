@@ -47,7 +47,7 @@ export default function JobsViewTabs({
             >
               {tab.label}
               <span
-                className={`rounded-full px-1.5 py-0.5 text-[11px] font-semibold leading-none ${
+                className={`rounded-full px-1.5 py-0.5 text-2xs font-semibold leading-none ${
                   active
                     ? 'bg-primary-50 text-primary-700'
                     : urgent

@@ -25,7 +25,7 @@ const SITE = (process.env.NEXT_PUBLIC_SITE_URL ?? '').replace(/^https?:\/\//, ''
 // Shows how many characters are used, turning amber near the limit and red over it.
 function Counter({ value, max }: { value: string; max: number }) {
   const n = value.length;
-  return <span className={`text-[11px] ${n > max ? 'text-danger' : n > max * 0.9 ? 'text-amber-600' : 'text-neutral-400'}`}>{n}/{max}</span>;
+  return <span className={`text-2xs ${n > max ? 'text-danger' : n > max * 0.9 ? 'text-amber-600' : 'text-neutral-400'}`}>{n}/{max}</span>;
 }
 
 const toLocalInput = (iso: string | null) => {
@@ -160,7 +160,7 @@ export default function BlogForm({ postId }: { postId?: string }) {
             <div>
               <label className={label}>Address (slug)</label>
               <input value={form.slug} onChange={(e) => { setSlugTouched(true); set({ slug: slugify(e.target.value) }); }} className={input} placeholder="how-to-prepare-for-ssc" />
-              {postId && form.published && <p className="mt-1 text-[11px] text-amber-700">Changing the address of a published post breaks links to it.</p>}
+              {postId && form.published && <p className="mt-1 text-2xs text-amber-700">Changing the address of a published post breaks links to it.</p>}
             </div>
             <div>
               <label className={label}>Author</label>
@@ -173,7 +173,7 @@ export default function BlogForm({ postId }: { postId?: string }) {
             <div>
               <label className={label}>Publish date and time</label>
               <input type="datetime-local" value={form.publishedAt} onChange={(e) => set({ publishedAt: e.target.value })} className={input} />
-              <p className="mt-1 text-[11px] text-neutral-500">Optional. A future date schedules the post. Empty means now.</p>
+              <p className="mt-1 text-2xs text-neutral-500">Optional. A future date schedules the post. Empty means now.</p>
             </div>
             <div className="md:col-span-2">
               <label className={label}>Cover image address</label>

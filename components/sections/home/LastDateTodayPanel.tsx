@@ -19,7 +19,7 @@ export default function LastDateTodayPanel({ jobs }: { jobs: PublishedJob[] }) {
           </span>
           Last date today
         </h2>
-        <span className="rounded-full bg-red-50 px-2 py-0.5 text-[11px] font-semibold text-red-600">
+        <span className="rounded-full bg-red-50 px-2 py-0.5 text-2xs font-semibold text-red-600">
           {jobs.length}
         </span>
       </div>
@@ -43,15 +43,15 @@ export default function LastDateTodayPanel({ jobs }: { jobs: PublishedJob[] }) {
             <div className="min-w-0 flex-1">
               <p
                 title={job.title}
-                className="line-clamp-2 text-[13px] font-semibold leading-snug text-neutral-900 group-hover:text-primary-700"
+                className="line-clamp-2 text-xs font-semibold leading-snug text-neutral-900 group-hover:text-primary-700"
               >
                 {job.title}
               </p>
-              <p className="mt-0.5 truncate text-[11px] text-neutral-500">
+              <p className="mt-0.5 truncate text-2xs text-neutral-500">
                 {job.organization?.name}
               </p>
               {job.vacancyTotal > 0 && (
-                <p className="mt-1 text-[11px] font-medium text-neutral-600">
+                <p className="mt-1 text-2xs font-medium text-neutral-600">
                   {job.vacancyTotal.toLocaleString("en-IN")} vacancies
                 </p>
               )}

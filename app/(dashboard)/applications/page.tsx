@@ -75,11 +75,11 @@ export default function ApplicationsPage() {
                   .map((app) => (
                     <div key={app.id} className="bg-white border border-neutral-200 rounded-lg p-3">
                       <p className="text-xs font-semibold text-neutral-900">{app.notification?.title ?? 'Unknown'}</p>
-                      <p className="text-[10px] text-neutral-400 mt-0.5">{app.notification?.organization?.name}</p>
+                      <p className="text-3xs text-neutral-400 mt-0.5">{app.notification?.organization?.name}</p>
                       <select
                         value={app.status}
                         onChange={(e) => updateStatus(app.id, e.target.value)}
-                        className="mt-2 w-full text-[10px] border border-neutral-200 rounded px-1.5 py-1"
+                        className="mt-2 w-full text-3xs border border-neutral-200 rounded px-1.5 py-1"
                       >
                         {columns.map((c) => <option key={c.key} value={c.key}>{c.label}</option>)}
                       </select>

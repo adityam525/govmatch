@@ -58,7 +58,7 @@ const inRange = (value: string, min: number, max: number) =>
 
 function RequiredTag() {
   return (
-    <span className="ml-1.5 rounded-full bg-amber-100 px-1.5 py-0.5 text-[10px] font-semibold text-amber-800">
+    <span className="ml-1.5 rounded-full bg-amber-100 px-1.5 py-0.5 text-3xs font-semibold text-amber-800">
       Required
     </span>
   );
@@ -90,7 +90,7 @@ function SectionIndex({
              rounded-xl border border-gray-200
              bg-gray-50 p-3 shadow-sm"
       >
-        <p className="mb-2 px-2 text-[11px] font-semibold uppercase tracking-wide text-neutral-400">
+        <p className="mb-2 px-2 text-2xs font-semibold uppercase tracking-wide text-neutral-400">
           Sections
         </p>
         <ul className="space-y-0.5">
@@ -104,7 +104,7 @@ function SectionIndex({
                 {icon(item.status)}
                 <span className="min-w-0 flex-1 truncate">{item.label}</span>
                 {item.status === "required" && (
-                  <span className="rounded-full bg-amber-100 px-1.5 py-0.5 text-[10px] font-semibold text-amber-800">
+                  <span className="rounded-full bg-amber-100 px-1.5 py-0.5 text-3xs font-semibold text-amber-800">
                     Needed
                   </span>
                 )}

@@ -164,7 +164,7 @@ export default function HorizontalScroller({
             type="button"
             aria-pressed={userPaused}
             onClick={() => setUserPaused((paused) => !paused)}
-            className="flex items-center gap-1 rounded-full px-2 py-1 text-[11px] text-neutral-500 hover:bg-neutral-100"
+            className="flex items-center gap-1 rounded-full px-2 py-1 text-2xs text-neutral-500 hover:bg-neutral-100"
           >
             {userPaused ? <Play size={12} /> : <Pause size={12} />}
             {userPaused ? 'Play' : 'Pause'} auto-scroll

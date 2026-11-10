@@ -27,7 +27,7 @@ export default function PerfectMatchBadge() {
         tabIndex={0}
         role="status"
         aria-label={message}
-        className="flex h-[18px] min-w-[18px] items-center justify-center rounded-full bg-red-600 px-1 text-[10px] font-bold leading-none text-white ring-2 ring-white outline-none focus-visible:ring-primary-400"
+        className="flex h-[18px] min-w-[18px] items-center justify-center rounded-full bg-red-600 px-1 text-3xs font-bold leading-none text-white ring-2 ring-white outline-none focus-visible:ring-primary-400"
       >
         {count > 99 ? '99+' : count}
       </span>

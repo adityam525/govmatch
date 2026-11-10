@@ -217,13 +217,13 @@ export default function ExamRunner({ attemptId }: { attemptId: string }) {
                 className={`h-9 rounded-md text-xs font-semibold ${PALETTE[paletteStatus(answers[x.id])]} ${i === qi ? 'outline outline-2 outline-offset-1 outline-primary-600' : ''}`}>{i + 1}</button>
             ))}
           </div>
-          <ul className="mt-4 space-y-1 text-[11px] text-neutral-600">
+          <ul className="mt-4 space-y-1 text-2xs text-neutral-600">
             {([['answered', 'Answered'], ['not-answered', 'Not answered'], ['not-visited', 'Not visited'], ['marked', 'Marked for review'], ['answered-marked', 'Answered and marked']] as [PaletteStatus, string][]).map(([k, label]) => (
               <li key={k} className="flex items-center gap-2"><span className={`inline-block h-4 w-4 rounded ${PALETTE[k]}`} />{label}</li>
             ))}
           </ul>
           <button type="button" onClick={() => setSummary(true)} className="mt-5 w-full rounded-md bg-primary-600 py-2.5 text-sm font-semibold text-white hover:bg-primary-700">Submit test</button>
-          <p className="mt-2 text-center text-[11px] text-neutral-400">{saveNote}</p>
+          <p className="mt-2 text-center text-2xs text-neutral-400">{saveNote}</p>
         </aside>
       </div>
 

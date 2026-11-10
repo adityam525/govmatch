@@ -26,7 +26,7 @@ export default function ExamResult({ data }: { data: ExamData }) {
             ['Accuracy', r.accuracy === null ? '-' : `${r.accuracy}%`],
           ].map(([label, value]) => (
             <div key={String(label)} className="rounded-lg bg-neutral-50 p-3 text-center">
-              <p className="text-[11px] uppercase text-neutral-500">{label}</p>
+              <p className="text-2xs uppercase text-neutral-500">{label}</p>
               <p className="mt-1 text-lg font-bold text-neutral-900">{value}</p>
             </div>
           ))}

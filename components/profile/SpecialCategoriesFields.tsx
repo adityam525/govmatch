@@ -66,7 +66,7 @@ export default function SpecialCategoriesFields({
               placeholder="e.g. 45"
               className="h-10 w-full rounded-lg border border-neutral-200 bg-white px-3 text-sm outline-none transition focus:border-primary-400 focus:ring-2 focus:ring-primary-100"
             />
-            <span className={`mt-1 block text-[11px] ${underBenchmark ? 'text-amber-700' : 'text-neutral-500'}`}>
+            <span className={`mt-1 block text-2xs ${underBenchmark ? 'text-amber-700' : 'text-neutral-500'}`}>
               {underBenchmark
                 ? `Benchmark disability is ${BENCHMARK_DISABILITY_PERCENT}% or more, so PwD relaxation will not apply.`
                 : `Benchmark disability is ${BENCHMARK_DISABILITY_PERCENT}% or more.`}

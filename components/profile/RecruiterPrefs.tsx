@@ -32,7 +32,7 @@ export default function RecruiterPrefs({ value, onChange }: Props) {
       <div className="flex items-center gap-2">
         <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary-50 text-primary-600"><Building2 size={16} /></span>
         <h2 className="text-base font-bold text-neutral-900">Preferred recruiters</h2>
-        <span className="rounded-full bg-neutral-100 px-2 py-0.5 text-[11px] text-neutral-500">Optional</span>
+        <span className="rounded-full bg-neutral-100 px-2 py-0.5 text-2xs text-neutral-500">Optional</span>
       </div>
       <p className="mt-1.5 text-sm text-neutral-600">
         Jobs from these sectors and organizations are shown higher in your recommendations. Other jobs are never hidden.

@@ -80,11 +80,11 @@ export default async function MockCataloguePage({ searchParams }: Props) {
             const diff = DIFFICULTIES.find((d) => d.code === t.difficulty);
             return (
               <article key={t.id} className="flex flex-col rounded-2xl border border-neutral-200 bg-white p-4 shadow-sm">
-                {t.notification?.organization && <p className="text-[11px] font-semibold uppercase tracking-wide text-primary-600">{t.notification.organization.name}</p>}
+                {t.notification?.organization && <p className="text-2xs font-semibold uppercase tracking-wide text-primary-600">{t.notification.organization.name}</p>}
                 <h2 className="mt-1 text-base font-bold text-neutral-900">{t.title}</h2>
                 {t.notification && <Link href={`/jobs/${t.notification.slug}`} className="mt-1 line-clamp-1 text-xs text-neutral-500 hover:text-primary-700">For: {t.notification.title}</Link>}
                 {t.description && <p className="mt-2 line-clamp-2 text-sm text-neutral-600">{t.description}</p>}
-                <div className="mt-3 flex flex-wrap gap-1.5 text-[11px] text-neutral-600">
+                <div className="mt-3 flex flex-wrap gap-1.5 text-2xs text-neutral-600">
                   {diff && <span className={`rounded-full px-2 py-0.5 font-medium ${diff.tone}`}>{diff.label}</span>}
                   {t.examLevel && <span className="rounded-full bg-violet-50 px-2 py-0.5 text-violet-700">{t.examLevel.name}</span>}
                   <span className="rounded-full bg-neutral-100 px-2 py-0.5">{t.sections.reduce((n, s) => n + s._count.questions, 0)} questions</span>

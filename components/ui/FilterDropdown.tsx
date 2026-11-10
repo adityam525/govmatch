@@ -257,7 +257,7 @@ export default function FilterDropdown({
               ) : hasGroups ? (
                 Object.entries(groupedOptions).map(([group, opts]) => (
                   <div key={group} className="mb-1">
-                    <p className="px-3 py-1 text-[10px] font-semibold uppercase tracking-wide text-neutral-400">
+                    <p className="px-3 py-1 text-3xs font-semibold uppercase tracking-wide text-neutral-400">
                       {group}
                     </p>
                     {opts.map(renderOption)}
@@ -274,7 +274,7 @@ export default function FilterDropdown({
               <button
                 type="button"
                 onClick={() => setCreating(true)}
-                className="flex items-center gap-1.5 text-[11px] text-primary-600 hover:underline"
+                className="flex items-center gap-1.5 text-2xs text-primary-600 hover:underline"
               >
                 <Plus size={12} /> Add Custom...
               </button>
@@ -286,7 +286,7 @@ export default function FilterDropdown({
               <button
                 type="button"
                 onClick={() => onChange([])}
-                className="text-[11px] text-primary-600 hover:underline"
+                className="text-2xs text-primary-600 hover:underline"
               >
                 Clear {label.toLowerCase()}
               </button>

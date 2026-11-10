@@ -47,7 +47,7 @@ export default function SidebarTabs({ tabs }: { tabs: SidebarTab[] }) {
                 {tab.label}
                 {tab.count !== undefined && (
                   <span
-                    className={`rounded-full px-1.5 py-0.5 text-[10px] leading-none ${
+                    className={`rounded-full px-1.5 py-0.5 text-3xs leading-none ${
                       selected
                         ? "bg-primary-50 text-primary-700"
                         : tab.tone === "urgent"

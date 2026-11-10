@@ -25,9 +25,9 @@ export default function MockupPreviewCard({ jobs }: MockupPreviewCardProps) {
                 <p className="text-xs font-medium text-neutral-900">
                   {job.title}
                 </p>
-                <p className="text-[10px] text-neutral-400">{job.org}</p>
+                <p className="text-3xs text-neutral-400">{job.org}</p>
               </div>
-              <div className="flex items-center justify-center w-8 h-8 rounded-full bg-green-50 text-success text-[10px] font-bold">
+              <div className="flex items-center justify-center w-8 h-8 rounded-full bg-green-50 text-success text-3xs font-bold">
                 {job.matchPercent}%
               </div>
             </div>

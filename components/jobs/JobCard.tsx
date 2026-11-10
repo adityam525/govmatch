@@ -32,7 +32,7 @@ export default function JobCard({ job }: { job: JobCardData }) {
       <div className="flex items-start justify-between mb-3">
         <OrgLogo name={job.org} shortName={job.orgShortName} logoUrl={job.orgLogoUrl} size={44} />
         {job.badge && (
-          <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${job.badge === "NEW" ? "bg-green-50 text-success" : job.badge === "POSTPONED" ? "bg-amber-100 text-amber-800" : "bg-orange-50 text-accent-orange"}`}>
+          <span className={`text-3xs font-bold px-2 py-0.5 rounded-full ${job.badge === "NEW" ? "bg-green-50 text-success" : job.badge === "POSTPONED" ? "bg-amber-100 text-amber-800" : "bg-orange-50 text-accent-orange"}`}>
             {job.badge}
           </span>
         )}
@@ -45,16 +45,16 @@ export default function JobCard({ job }: { job: JobCardData }) {
       {job.payScale && <p className="text-xs font-medium text-neutral-600 mt-2 line-clamp-2">{job.payScale}</p>}
       {job.qualificationName && (
         <div className="flex flex-wrap gap-1.5 mt-2">
-          <span className="text-[10px] bg-neutral-100 text-neutral-600 px-2 py-1 rounded-full">{job.qualificationName}</span>
+          <span className="text-3xs bg-neutral-100 text-neutral-600 px-2 py-1 rounded-full">{job.qualificationName}</span>
         </div>
       )}
 
       <div className="flex items-center justify-between mt-3 pt-3 border-t border-neutral-100">
         <div>
           <p className="text-sm font-bold text-neutral-900">{job.vacancies.toLocaleString("en-IN")}</p>
-          <p className="text-[10px] text-neutral-400">Vacancies</p>
+          <p className="text-3xs text-neutral-400">Vacancies</p>
         </div>
-        {daysLeftLabel && <p className={`text-[11px] font-medium ${daysLeftColor}`}>{daysLeftLabel}</p>}
+        {daysLeftLabel && <p className={`text-2xs font-medium ${daysLeftColor}`}>{daysLeftLabel}</p>}
       </div>
 
       <Link href={`/jobs/${job.slug}`} className="mt-3">

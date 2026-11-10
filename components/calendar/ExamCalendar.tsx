@@ -188,7 +188,7 @@ export default function ExamCalendar({
           </p>
         ) : (
           <>
-            <div className="mt-3 grid grid-cols-7 gap-1 text-center text-[11px] font-medium text-neutral-500">
+            <div className="mt-3 grid grid-cols-7 gap-1 text-center text-2xs font-medium text-neutral-500">
               {["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].map((d) => (
                 <span key={d}>{d}</span>
               ))}
@@ -240,7 +240,7 @@ export default function ExamCalendar({
               })}
             </div>
 
-            <ul className="mt-3 flex flex-wrap gap-x-4 gap-y-1 text-[11px] text-neutral-600">
+            <ul className="mt-3 flex flex-wrap gap-x-4 gap-y-1 text-2xs text-neutral-600">
               {[
                 "APPLICATION_OPEN",
                 "APPLICATION_CLOSE",
@@ -330,7 +330,7 @@ export default function ExamCalendar({
                         </p>
                       </div>
                       {e.postponed && (
-                        <span className="shrink-0 rounded-full bg-amber-50 px-2 py-0.5 text-[11px] font-medium text-amber-700">
+                        <span className="shrink-0 rounded-full bg-amber-50 px-2 py-0.5 text-2xs font-medium text-amber-700">
                           Postponed
                         </span>
                       )}

@@ -24,9 +24,9 @@ export default async function MockProgressCard({ userId }: { userId: string }) {
         </p>
       ) : (
         <div className="grid grid-cols-3 gap-3 p-4 text-center">
-          <div><p className="text-xl font-bold text-neutral-900">{s.count}</p><p className="text-[11px] text-neutral-500">Taken</p></div>
-          <div><p className="text-xl font-bold text-neutral-900">{s.averagePercent}%</p><p className="text-[11px] text-neutral-500">Average</p></div>
-          <div><p className="text-xl font-bold text-neutral-900">{s.latestPercent}%</p><p className="text-[11px] text-neutral-500">Latest{s.change !== null ? ` (${s.change > 0 ? '+' : ''}${s.change})` : ''}</p></div>
+          <div><p className="text-xl font-bold text-neutral-900">{s.count}</p><p className="text-2xs text-neutral-500">Taken</p></div>
+          <div><p className="text-xl font-bold text-neutral-900">{s.averagePercent}%</p><p className="text-2xs text-neutral-500">Average</p></div>
+          <div><p className="text-xl font-bold text-neutral-900">{s.latestPercent}%</p><p className="text-2xs text-neutral-500">Latest{s.change !== null ? ` (${s.change > 0 ? '+' : ''}${s.change})` : ''}</p></div>
         </div>
       )}
     </section>

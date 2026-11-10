@@ -208,7 +208,7 @@ export default function EducationFields({
       <div className="flex flex-wrap items-center gap-2">
         <h2 className="text-base font-bold text-neutral-900">Education</h2>
         {highlight && (
-          <span className="rounded-full bg-amber-100 px-2 py-0.5 text-[11px] font-semibold text-amber-800">
+          <span className="rounded-full bg-amber-100 px-2 py-0.5 text-2xs font-semibold text-amber-800">
             Required for job matching
           </span>
         )}

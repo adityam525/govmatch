@@ -89,9 +89,9 @@ export default function ExamInstructionsPage() {
         {info.description && <p className="mt-1 text-sm text-neutral-600">{info.description}</p>}
 
         <dl className="mt-4 grid grid-cols-3 gap-3 text-center">
-          <div className="rounded-lg bg-neutral-50 p-3"><dt className="text-[11px] uppercase text-neutral-500">Duration</dt><dd className="mt-1 text-lg font-bold">{info.durationMinutes} min</dd></div>
-          <div className="rounded-lg bg-neutral-50 p-3"><dt className="text-[11px] uppercase text-neutral-500">Questions</dt><dd className="mt-1 text-lg font-bold">{info.sections.reduce((n, s) => n + s.questions, 0)}</dd></div>
-          <div className="rounded-lg bg-neutral-50 p-3"><dt className="text-[11px] uppercase text-neutral-500">Total marks</dt><dd className="mt-1 text-lg font-bold">{info.totalMarks}</dd></div>
+          <div className="rounded-lg bg-neutral-50 p-3"><dt className="text-2xs uppercase text-neutral-500">Duration</dt><dd className="mt-1 text-lg font-bold">{info.durationMinutes} min</dd></div>
+          <div className="rounded-lg bg-neutral-50 p-3"><dt className="text-2xs uppercase text-neutral-500">Questions</dt><dd className="mt-1 text-lg font-bold">{info.sections.reduce((n, s) => n + s.questions, 0)}</dd></div>
+          <div className="rounded-lg bg-neutral-50 p-3"><dt className="text-2xs uppercase text-neutral-500">Total marks</dt><dd className="mt-1 text-lg font-bold">{info.totalMarks}</dd></div>
         </dl>
 
         <h2 className="mt-5 text-sm font-bold text-neutral-900">Sections</h2>

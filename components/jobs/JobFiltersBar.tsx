@@ -66,7 +66,7 @@ function Section({
         <span className="flex items-center gap-2 text-sm font-semibold text-neutral-900">
           {title}
           {count > 0 && (
-            <span className="rounded-full bg-primary-600 px-1.5 text-[10px] font-semibold text-white">{count}</span>
+            <span className="rounded-full bg-primary-600 px-1.5 text-3xs font-semibold text-white">{count}</span>
           )}
         </span>
         <ChevronDown size={16} className={`text-neutral-400 transition-transform ${open ? "rotate-180" : ""}`} />
@@ -134,7 +134,7 @@ function OptionList({
         ) : hasGroups ? (
           Object.entries(grouped).map(([group, opts]) => (
             <div key={group}>
-              <p className="px-1.5 pb-1 pt-2 text-[10px] font-semibold uppercase tracking-wide text-neutral-400">
+              <p className="px-1.5 pb-1 pt-2 text-3xs font-semibold uppercase tracking-wide text-neutral-400">
                 {group}
               </p>
               {opts.map(row)}
@@ -441,7 +441,7 @@ export default function JobFiltersBar({ isPremium = false }: { isPremium?: boole
             <SlidersHorizontal size={16} />
             Filters
             {chips.length > 0 && (
-              <span className="rounded-full bg-primary-600 px-1.5 text-[10px] font-semibold text-white">{chips.length}</span>
+              <span className="rounded-full bg-primary-600 px-1.5 text-3xs font-semibold text-white">{chips.length}</span>
             )}
           </button>
 

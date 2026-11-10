@@ -708,7 +708,7 @@ export default function TemplateEditor({ id }: { id?: string }) {
           "e.g. L / t",
           "Add wrong-answer formula",
         )}
-        <p className="mt-2 text-[11px] text-neutral-500">
+        <p className="mt-2 text-2xs text-neutral-500">
           If fewer than three are usable, nearby numbers fill the gap.
         </p>
       </section>

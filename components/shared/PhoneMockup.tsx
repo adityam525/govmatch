@@ -10,7 +10,7 @@ export default function PhoneMockup({ score = 78 }: PhoneMockupProps) {
       <div className="bg-white rounded-[2rem] overflow-hidden">
         {/* Status bar */}
         <div className="flex items-center justify-between px-5 pt-3 pb-2">
-          <span className="text-[10px] font-semibold text-neutral-900">
+          <span className="text-3xs font-semibold text-neutral-900">
             9:41
           </span>
           <div className="flex gap-1">
@@ -31,10 +31,10 @@ export default function PhoneMockup({ score = 78 }: PhoneMockupProps) {
         {/* Notification card */}
         <div className="px-4 pt-4">
           <div className="bg-primary-50 border border-primary-100 rounded-xl p-3 mb-3">
-            <p className="text-[11px] font-semibold text-primary-700">
+            <p className="text-2xs font-semibold text-primary-700">
               New match found!
             </p>
-            <p className="text-[10px] text-neutral-600 mt-0.5">
+            <p className="text-3xs text-neutral-600 mt-0.5">
               ISRO Scientist/Engineer &apos;SC&apos;
             </p>
           </div>
@@ -46,7 +46,7 @@ export default function PhoneMockup({ score = 78 }: PhoneMockupProps) {
                 {score}%
               </span>
             </div>
-            <p className="text-[10px] text-neutral-400 mt-2">
+            <p className="text-3xs text-neutral-400 mt-2">
               Your Match Score
             </p>
           </div>
@@ -65,11 +65,11 @@ export default function PhoneMockup({ score = 78 }: PhoneMockupProps) {
                   <div className="w-6 h-6 rounded-md bg-neutral-200 flex items-center justify-center shrink-0">
                     <Briefcase size={12} className="text-neutral-500" />
                   </div>
-                  <span className="text-[10px] font-medium text-neutral-900">
+                  <span className="text-3xs font-medium text-neutral-900">
                     {job.title}
                   </span>
                 </div>
-                <span className="text-[10px] font-bold text-success">
+                <span className="text-3xs font-bold text-success">
                   {job.tag}
                 </span>
               </div>

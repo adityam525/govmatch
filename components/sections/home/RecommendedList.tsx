@@ -34,22 +34,22 @@ export default function RecommendedList({ items }: { items: Recommendation[] }) 
             <div className="min-w-0 flex-1">
               <p
                 title={item.bestPost ? `${heading} (${item.title})` : heading}
-                className="line-clamp-2 text-[13px] font-semibold leading-snug text-neutral-900 group-hover:text-primary-700"
+                className="line-clamp-2 text-xs font-semibold leading-snug text-neutral-900 group-hover:text-primary-700"
               >
                 {heading}
               </p>
-              <p className="mt-0.5 truncate text-[11px] text-neutral-500">
+              <p className="mt-0.5 truncate text-2xs text-neutral-500">
                 {[item.bestPost ? item.title : null, item.organization].filter(Boolean).join(' · ')}
               </p>
               <div className="mt-1.5 flex flex-nowrap items-center gap-1.5 overflow-hidden">
-                <span className={`shrink-0 rounded-full px-2 py-0.5 text-[11px] font-semibold ${matchTone(item.matchScore)}`}>
+                <span className={`shrink-0 rounded-full px-2 py-0.5 text-2xs font-semibold ${matchTone(item.matchScore)}`}>
                   {item.matchScore}% match
                 </span>
                 {item.preferred && (
-                  <span className="shrink-0 rounded-full bg-violet-50 px-2 py-0.5 text-[11px] text-violet-700">Preferred</span>
+                  <span className="shrink-0 rounded-full bg-violet-50 px-2 py-0.5 text-2xs text-violet-700">Preferred</span>
                 )}
                 {time && (
-                  <span className={`shrink-0 rounded-full px-2 py-0.5 text-[11px] ${time.urgent ? 'bg-re-50 text-red-600' : 'bg-neutral-100 text-neutral-600'}`}>
+                  <span className={`shrink-0 rounded-full px-2 py-0.5 text-2xs ${time.urgent ? 'bg-re-50 text-red-600' : 'bg-neutral-100 text-neutral-600'}`}>
                     {time.text}
                   </span>
                 )}

@@ -55,7 +55,7 @@ export default function JobPicksCard({
     matches = (
       <>
         {picks.incomplete && (
-          <div className="mx-4 mt-3 rounded-lg bg-amber-50 px-3 py-2 text-[11px] leading-relaxed text-amber-800">
+          <div className="mx-4 mt-3 rounded-lg bg-amber-50 px-3 py-2 text-2xs leading-relaxed text-amber-800">
             Matches are rough until you add your qualification and date of birth.{' '}
             <Link href="/profile" className="font-semibold underline">
               Update profile
@@ -101,7 +101,7 @@ export default function JobPicksCard({
           <Sparkles size={15} />
         </span>
         <h2 className="text-sm font-bold text-neutral-900">Recommended for you</h2>
-        <span className="ml-auto rounded-full bg-primary-600 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-white">
+        <span className="ml-auto rounded-full bg-primary-600 px-2 py-0.5 text-3xs font-semibold uppercase tracking-wide text-white">
           For you
         </span>
       </div>

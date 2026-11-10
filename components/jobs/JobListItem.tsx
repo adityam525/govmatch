@@ -46,7 +46,7 @@ interface JobListItemProps {
 function Cell({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <div className="min-w-0">
-      <p className="text-[10px] font-medium uppercase tracking-wide text-neutral-400 md:hidden">{label}</p>
+      <p className="text-3xs font-medium uppercase tracking-wide text-neutral-400 md:hidden">{label}</p>
       <div className="mt-0.5 md:mt-0">{children}</div>
     </div>
   );
@@ -73,7 +73,7 @@ export default function JobListItem({ job, fit, matchPercentage, eligible, verdi
   } else if (eligible === false) {
     hint = <EligibilityHint label={verdict?.label ?? "Not eligible"} reasons={verdict?.reasons ?? ["This job does not fit your profile."]} />;
   } else if (matchPercentage !== undefined) {
-    hint = <span title={tier.title} className={`rounded-full px-2 py-0.5 text-[11px] font-semibold ${tier.badge}`}>{matchPercentage}% match</span>;
+    hint = <span title={tier.title} className={`rounded-full px-2 py-0.5 text-2xs font-semibold ${tier.badge}`}>{matchPercentage}% match</span>;
   }
 
   return (
@@ -88,7 +88,7 @@ export default function JobListItem({ job, fit, matchPercentage, eligible, verdi
             <Link
               href={`/jobs/${job.slug}`}
               title={job.postTitle ? `${job.postTitle} (${job.title})` : job.title}
-              className="line-clamp-2 text-[15px] font-semibold leading-6 text-neutral-900 after:absolute after:inset-0 after:content-[''] group-hover:text-primary-700"
+              className="line-clamp-2 text-sm font-semibold leading-6 text-neutral-900 after:absolute after:inset-0 after:content-[''] group-hover:text-primary-700"
             >
               {heading}
             </Link>
@@ -100,7 +100,7 @@ export default function JobListItem({ job, fit, matchPercentage, eligible, verdi
               </span>
             </p>
             {job.phaseLabel && (
-              <span className="mt-1 inline-block rounded-full bg-amber-50 px-2.5 py-0.5 text-[11px] font-medium text-amber-700">{job.phaseLabel}</span>
+              <span className="mt-1 inline-block rounded-full bg-amber-50 px-2.5 py-0.5 text-2xs font-medium text-amber-700">{job.phaseLabel}</span>
             )}
           </div>
         </div>

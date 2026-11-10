@@ -108,7 +108,7 @@ export default function FitHint({
           else if (open) hide();
           else show();
         }}
-        className={`inline-flex items-center gap-1 rounded-full border px-2 py-0.5 text-[11px] font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 ${style.pill}`}
+        className={`inline-flex items-center gap-1 rounded-full border px-2 py-0.5 text-2xs font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 ${style.pill}`}
       >
         <PillIcon size={12} aria-hidden />
         {pill}

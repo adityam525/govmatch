@@ -277,7 +277,7 @@ export default async function DashboardPage() {
                             {job ? ' · ' : ''}applied {formatShortDate(application.appliedAt)}
                           </p>
                         </div>
-                        <span className={`shrink-0 rounded-full px-2.5 py-1 text-[11px] font-semibold ${stage?.tone ?? 'bg-neutral-100 text-neutral-600'}`}>
+                        <span className={`shrink-0 rounded-full px-2.5 py-1 text-2xs font-semibold ${stage?.tone ?? 'bg-neutral-100 text-neutral-600'}`}>
                           {stage?.label ?? application.status}
                         </span>
                       </div>

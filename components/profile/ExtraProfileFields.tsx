@@ -44,7 +44,7 @@ function Block({
       <div className="flex items-center gap-2">
         <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary-50 text-primary-600">{icon}</span>
         <h2 className="text-base font-bold text-neutral-900">{title}</h2>
-        <span className="rounded-full bg-neutral-100 px-2 py-0.5 text-[11px] text-neutral-500">Optional</span>
+        <span className="rounded-full bg-neutral-100 px-2 py-0.5 text-2xs text-neutral-500">Optional</span>
       </div>
       <p className="mt-1.5 text-sm text-neutral-600">{hint}</p>
       <div className="mt-4">{children}</div>
@@ -145,7 +145,7 @@ export default function ExtraProfileFields({ value, onChange }: { value: ExtraSt
           <label className="block">
             <span className="mb-1 block text-xs font-medium text-neutral-600">Chest, not expanded (cm)</span>
             <input type="number" inputMode="numeric" min={50} max={150} value={value.chestCm} onChange={(e) => set({ chestCm: e.target.value })} className={input} />
-            <span className="mt-1 block text-[11px] text-neutral-500">Used for posts that set a chest minimum, which is normally for men.</span>
+            <span className="mt-1 block text-2xs text-neutral-500">Used for posts that set a chest minimum, which is normally for men.</span>
           </label>
         </div>
       </Block>

@@ -37,7 +37,7 @@ function UpcomingCard({ job, today }: { job: PublishedJob; today: Date }) {
 
         {start ? (
           <div className="flex w-14 shrink-0 flex-col items-center justify-center rounded-xl bg-primary-50 py-2 text-primary-700">
-            <span className="text-[10px] font-semibold uppercase tracking-wide">
+            <span className="text-3xs font-semibold uppercase tracking-wide">
               {start.toLocaleDateString("en-IN", {
                 month: "short",
                 timeZone: "UTC",
@@ -54,7 +54,7 @@ function UpcomingCard({ job, today }: { job: PublishedJob; today: Date }) {
         )}
 
         <div className="min-w-0 flex-1">
-          <span className="inline-block rounded-full bg-amber-50 px-2 py-0.5 text-[10px] font-semibold text-amber-700">
+          <span className="inline-block rounded-full bg-amber-50 px-2 py-0.5 text-3xs font-semibold text-amber-700">
             {start ? opensIn(start, today) : "Dates awaited"}
           </span>
           <p
@@ -71,7 +71,7 @@ function UpcomingCard({ job, today }: { job: PublishedJob; today: Date }) {
             {chips.map((chip) => (
               <span
                 key={chip}
-                className="rounded-full bg-neutral-100 px-2 py-0.5 text-[10px] text-neutral-600"
+                className="rounded-full bg-neutral-100 px-2 py-0.5 text-3xs text-neutral-600"
               >
                 {chip}
               </span>
@@ -79,7 +79,7 @@ function UpcomingCard({ job, today }: { job: PublishedJob; today: Date }) {
           </div>
 
           {end && (
-            <p className="mt-2 text-[11px] text-neutral-400">
+            <p className="mt-2 text-2xs text-neutral-400">
               Last date {formatShortDate(end)}
             </p>
           )}

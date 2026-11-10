@@ -53,7 +53,7 @@ export default function RecentJobsSidebar({ excludeSlug }: RecentJobsSidebarProp
                 <OrgLogo name={job.organization?.name ?? 'Organization'} shortName={job.organization?.shortName} logoUrl={job.organization?.logoUrl} size={32} />
                 <div className="min-w-0">
                   <p className="line-clamp-2 text-xs font-semibold leading-tight text-neutral-900">{heading}</p>
-                  <p className="mt-1 truncate text-[10px] text-neutral-400">{[notice, job.organization?.name].filter(Boolean).join(' · ')}</p>
+                  <p className="mt-1 truncate text-3xs text-neutral-400">{[notice, job.organization?.name].filter(Boolean).join(' · ')}</p>
                 </div>
               </Link>
             ))}
