@@ -136,6 +136,7 @@ export async function loadJob(jobId: string): Promise<JobData> {
         marksSC: str(p.minMarksByCategory?.SC),
         marksST: str(p.minMarksByCategory?.ST),
         marksEWS: str(p.minMarksByCategory?.EWS),
+        marksOBCNCL: str(p.minMarksByCategory?.OBC_NCL),
         typingEnglish: str((Array.isArray(p.typingOptions) ? p.typingOptions : []).find((t: any) => t.lang === "EN")?.wpm),
         typingHindi: str((Array.isArray(p.typingOptions) ? p.typingOptions : []).find((t: any) => t.lang === "HI")?.wpm),
         minExperienceYears: str(p.minExperienceYears),
@@ -257,7 +258,7 @@ async function saveCollections(jobId: string, data: JobData) {
       shorthandWpm: p.shorthandWpm || null,
       minDrivingYears: p.minDrivingYears || null,
       minMarksPercent: p.minMarksPercent ?? "",
-      minMarksByCategory: { OBC: p.marksOBC ?? "", SC: p.marksSC ?? "", ST: p.marksST ?? "", EWS: p.marksEWS ?? "" },
+      minMarksByCategory: { OBC: p.marksOBC ?? "", SC: p.marksSC ?? "", ST: p.marksST ?? "", EWS: p.marksEWS ?? "", OBC_NCL: p.marksOBCNCL ?? "" },
       typingOptions: [
         ...(p.typingEnglish ? [{ lang: "EN", wpm: Number(p.typingEnglish) }] : []),
         ...(p.typingHindi ? [{ lang: "HI", wpm: Number(p.typingHindi) }] : []),

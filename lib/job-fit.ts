@@ -533,7 +533,7 @@ export function evaluatePost(
   // Minimum marks (cut-off may differ by category) and typing speed.
   const reqResult = mergeResults(reqBase, [
     qualStatus === "yes"
-      ? evaluateMarks(post, user.category, qualVia?.percentage)
+      ? evaluateMarks(post, user.category, qualVia?.percentage, user.obcLayer)
       : { status: "yes" as const, checks: [] },
     evaluateTyping(
       post.typingOptions,

@@ -1,4 +1,5 @@
 "use client";
+import MultiRuleAdder from '@/components/admin/MultiRuleAdder';
 
 import Select from '@/components/ui/Select';
 import { useState, useEffect } from "react";
@@ -37,6 +38,7 @@ export interface PostDraft {
   marksSC?: string;
   marksST?: string;
   marksEWS?: string;
+  marksOBCNCL?: string;
   typingEnglish?: string;
   typingHindi?: string;
   minExperienceYears: string;
@@ -260,12 +262,13 @@ export default function PostsFieldArray({ posts, onChange }: PostsFieldArrayProp
 
                   <div>
                     <p className={labelCls}>Minimum marks (%) in the qualifying degree</p>
-                    <div className="grid gap-3 sm:grid-cols-5">
+                    <div className="grid gap-3 sm:grid-cols-6">
                       <div><span className="mb-1 block text-[11px] text-neutral-500">General (base)</span><input type="number" min={0} max={100} step="0.01" value={post.minMarksPercent ?? ""} onChange={(e) => updatePost(index, "minMarksPercent", e.target.value)} className={inputCls} /></div>
                       <div><span className="mb-1 block text-[11px] text-neutral-500">OBC</span><input type="number" min={0} max={100} step="0.01" value={post.marksOBC ?? ""} onChange={(e) => updatePost(index, "marksOBC", e.target.value)} className={inputCls} /></div>
                       <div><span className="mb-1 block text-[11px] text-neutral-500">SC</span><input type="number" min={0} max={100} step="0.01" value={post.marksSC ?? ""} onChange={(e) => updatePost(index, "marksSC", e.target.value)} className={inputCls} /></div>
                       <div><span className="mb-1 block text-[11px] text-neutral-500">ST</span><input type="number" min={0} max={100} step="0.01" value={post.marksST ?? ""} onChange={(e) => updatePost(index, "marksST", e.target.value)} className={inputCls} /></div>
                       <div><span className="mb-1 block text-[11px] text-neutral-500">EWS</span><input type="number" min={0} max={100} step="0.01" value={post.marksEWS ?? ""} onChange={(e) => updatePost(index, "marksEWS", e.target.value)} className={inputCls} /></div>
+                      <div><span className="mb-1 block text-[11px] text-neutral-500">OBC non-creamy</span><input type="number" min={0} max={100} step="0.01" value={post.marksOBCNCL ?? ""} onChange={(e) => updatePost(index, "marksOBCNCL", e.target.value)} className={inputCls} /></div>
                     </div>
                     <p className="mt-1 text-[11px] text-neutral-500">Leave a category empty to use the base figure. Leave everything empty if the notice sets no minimum.</p>
                   </div>
@@ -331,6 +334,8 @@ export default function PostsFieldArray({ posts, onChange }: PostsFieldArrayProp
                     <p className="mb-2 text-[11px] text-neutral-500">
                       Copy these from the notice. A candidate gets the most generous row they qualify for. Rows are alternatives, not added together, so enter combined values such as OBC + PwD as their own row.
                     </p>
+
+                    <MultiRuleAdder onAdd={(rules) => updatePost(index, "relaxationRules", [...post.relaxationRules, ...rules])} />
 
                     <div className="space-y-2">
                       {post.relaxationRules.map((rule, ri) => (

@@ -32,16 +32,17 @@ export function parseCategoryMarks(raw: unknown): Record<string, number> {
 export interface MarksPost { minMarksPercent?: number | null; minMarksByCategory?: unknown }
 
 /** The cut-off for one category: its own figure if the notice gives one, otherwise the base minimum. */
-export function marksCutoff(post: MarksPost, category: string | null | undefined): number | 'unknown-category' | null {
+export function marksCutoff(post: MarksPost, category: string | null | undefined, layer?: string | null): number | 'unknown-category' | null {
   const byCategory = parseCategoryMarks(post.minMarksByCategory);
   const base = post.minMarksPercent != null && post.minMarksPercent >= 0 ? post.minMarksPercent : null;
   const key = (category ?? '').trim().toUpperCase();
   if (!key) return Object.keys(byCategory).length > 0 ? 'unknown-category' : base;
+  if (key === 'OBC' && layer === 'NON_CREAMY' && byCategory.OBC_NCL !== undefined) return byCategory.OBC_NCL;
   return byCategory[key] ?? base;
 }
 
-export function evaluateMarks(post: MarksPost, category: string | null | undefined, percentage: number | null | undefined): RuleResult {
-  const cutoff = marksCutoff(post, category);
+export function evaluateMarks(post: MarksPost, category: string | null | undefined, percentage: number | null | undefined, layer?: string | null): RuleResult {
+  const cutoff = marksCutoff(post, category, layer);
   if (cutoff === null) return YES;
   if (cutoff === 'unknown-category') {
     return { status: 'unknown', checks: [{ label: 'Marks', text: 'The minimum marks depend on your category. Add your category to check.', state: 'unknown' }] };

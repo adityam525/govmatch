@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { ClipboardList, FileText, BookOpen, Calculator } from 'lucide-react';
+import { ClipboardList, FileText, BookOpen, Calculator, Image as ImageIcon } from 'lucide-react';
 import Card from '@/components/ui/Card';
 
 const cards = [
@@ -8,6 +8,7 @@ const cards = [
   { icon: FileText, title: 'Previous Year Papers', description: 'Question papers from earlier exams, as they are added', href: '/resources', color: '#7c3aed' },
   { icon: BookOpen, title: 'Syllabus & Exam Pattern', description: 'Syllabus and marking scheme for exams, as they are added', href: '/resources', color: '#16a34a' },
   { icon: Calculator, title: 'GATE Score Estimator', description: 'Estimate where your GATE score stands for PSU recruitment and M.Tech admission', href: '/resources/gate-calculator', color: '#f97316' },
+  { icon: ImageIcon, title: 'Photo and signature resizer', description: 'Fit your photo or signature to the exact size an application form asks for', href: '/tools/photo-resizer', color: '#db2777' },
 ];
 
 export default function StudyZonePage() {
