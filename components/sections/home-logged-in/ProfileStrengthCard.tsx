@@ -26,13 +26,13 @@ export default function ProfileStrengthCard({ strength, missing = [] }: ProfileS
         </div>
         <div className="relative h-16 w-16 shrink-0">
           <svg className="h-full w-full -rotate-90" viewBox="0 0 64 64">
-            <circle cx="32" cy="32" r={radius} fill="none" stroke="#e2e8f0" strokeWidth="6" />
+            <circle cx="32" cy="32" r={radius} fill="none" stroke="var(--color-neutral-200)" strokeWidth="6" />
             <circle
               cx="32"
               cy="32"
               r={radius}
               fill="none"
-              stroke="#2563eb"
+              stroke="var(--color-primary-600)"
               strokeWidth="6"
               strokeDasharray={circumference}
               strokeDashoffset={offset}

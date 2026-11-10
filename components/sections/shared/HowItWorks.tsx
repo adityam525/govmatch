@@ -387,7 +387,7 @@ export default function HowItWorks() {
             <polyline
               points={linePoints}
               fill="none"
-              stroke="#e5e7eb"
+              stroke="var(--color-neutral-200)"
               strokeWidth="1.5"
               strokeLinecap="round"
               strokeLinejoin="round"

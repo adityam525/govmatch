@@ -16,9 +16,9 @@ function Trend({ points }: { points: Summary['trend'] }) {
   const y = (p: number) => H - pad - (Math.max(0, Math.min(100, p)) * (H - pad * 2)) / 100;
   return (
     <svg viewBox={`0 0 ${W} ${H}`} className="h-28 w-full" role="img" aria-label="Score percentage over your last tests">
-      {[0, 50, 100].map((g) => <line key={g} x1={pad} x2={W - pad} y1={y(g)} y2={y(g)} stroke="#e5e7eb" strokeWidth="1" />)}
-      <polyline fill="none" stroke="#2563eb" strokeWidth="2" points={points.map((p, i) => `${x(i)},${y(p.percent)}`).join(' ')} />
-      {points.map((p, i) => <circle key={p.id} cx={x(i)} cy={y(p.percent)} r="3.5" fill="#2563eb"><title>{`${p.title}: ${p.percent}% on ${fmt(p.date)}`}</title></circle>)}
+      {[0, 50, 100].map((g) => <line key={g} x1={pad} x2={W - pad} y1={y(g)} y2={y(g)} stroke="var(--color-neutral-200)" strokeWidth="1" />)}
+      <polyline fill="none" stroke="var(--color-primary-600)" strokeWidth="2" points={points.map((p, i) => `${x(i)},${y(p.percent)}`).join(' ')} />
+      {points.map((p, i) => <circle key={p.id} cx={x(i)} cy={y(p.percent)} r="3.5" fill="var(--color-primary-600)"><title>{`${p.title}: ${p.percent}% on ${fmt(p.date)}`}</title></circle>)}
     </svg>
   );
 }
