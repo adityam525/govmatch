@@ -412,6 +412,7 @@ model UserProfile {
   typingHindiWpm   Int?
   shorthandEnglishWpm Int?
   drivingExperienceYears Int?
+  obcLayer String?
 }
 
 model SavedJob {

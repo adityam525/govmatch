@@ -3,7 +3,14 @@ import { fieldKey } from "./field-keys";
 import { evaluateAge } from "./age-rules";
 import { evaluateRequirements } from "./requirements";
 import { computeCompleteness } from "./profile-completeness";
-import { evaluateMarks, evaluateTyping, mergeResults, evaluateMaxEducation, evaluateShorthand, evaluateDriving } from "./skill-rules";
+import {
+  evaluateMarks,
+  evaluateTyping,
+  mergeResults,
+  evaluateMaxEducation,
+  evaluateShorthand,
+  evaluateDriving,
+} from "./skill-rules";
 
 export interface QualRef {
   id: string;
@@ -177,7 +184,10 @@ export async function loadFitContext(userId: string): Promise<FitContext> {
     preferenceCount:
       (profile?.preferredRoles.length ?? 0) +
       (profile?.preferredEmploymentTypes.length ?? 0),
-    sectorPrefCount: (profile?.preferredStateCodes.length ?? 0) + (profile?.preferredSectorSlugs.length ?? 0) + (profile?.preferredOrganizationSlugs.length ?? 0),
+    sectorPrefCount:
+      (profile?.preferredStateCodes.length ?? 0) +
+      (profile?.preferredSectorSlugs.length ?? 0) +
+      (profile?.preferredOrganizationSlugs.length ?? 0),
   });
 
   return {
@@ -265,7 +275,11 @@ function checkQualification(
     const via = educations.find(
       (e) =>
         e.qualification.level >= accepted.level &&
-        !(isVocational(e.qualification) && e.qualification.level <= 5 && accepted.level >= 3),
+        !(
+          isVocational(e.qualification) &&
+          e.qualification.level <= 5 &&
+          accepted.level >= 3
+        ),
     );
     return via ? { status: "yes", via } : { status: "no" };
   }
@@ -319,9 +333,12 @@ const LEVEL_NAMES: Record<number, string> = {
 };
 
 function highestLabel(educations: EducationFact[]): string {
-  const top = [...educations].sort((a, b) => b.qualification.level - a.qualification.level)[0];
+  const top = [...educations].sort(
+    (a, b) => b.qualification.level - a.qualification.level,
+  )[0];
   if (!top) return "nothing added yet";
-  const level = LEVEL_NAMES[top.qualification.level] ?? `level ${top.qualification.level}`;
+  const level =
+    LEVEL_NAMES[top.qualification.level] ?? `level ${top.qualification.level}`;
   return `${level} (${describe(top)})`;
 }
 
@@ -387,7 +404,9 @@ export function evaluatePost(
   }
   const branchNames = [...new Set((post.branches ?? []).map((b) => b.name))];
   const fields = new Set(
-    branchNames.map((name) => fieldKey(name)).filter((key): key is string => !!key),
+    branchNames
+      .map((name) => fieldKey(name))
+      .filter((key): key is string => !!key),
   );
 
   // Each accepted qualification can carry its own branches. A rule with no branches means any branch.
@@ -513,11 +532,20 @@ export function evaluatePost(
 
   // Minimum marks (cut-off may differ by category) and typing speed.
   const reqResult = mergeResults(reqBase, [
-    qualStatus === "yes" ? evaluateMarks(post, user.category, qualVia?.percentage) : { status: "yes" as const, checks: [] },
-    evaluateTyping(post.typingOptions, user.typingEnglishWpm, user.typingHindiWpm),
+    qualStatus === "yes"
+      ? evaluateMarks(post, user.category, qualVia?.percentage)
+      : { status: "yes" as const, checks: [] },
+    evaluateTyping(
+      post.typingOptions,
+      user.typingEnglishWpm,
+      user.typingHindiWpm,
+    ),
     evaluateShorthand(post.shorthandWpm, user.shorthandEnglishWpm),
     evaluateDriving(post.minDrivingYears, user.drivingExperienceYears),
-    evaluateMaxEducation(post.maxQualificationLevel, user.educations.map((e) => e.qualification.level)),
+    evaluateMaxEducation(
+      post.maxQualificationLevel,
+      user.educations.map((e) => e.qualification.level),
+    ),
   ]);
 
   // --- Job type preference (hard filter)

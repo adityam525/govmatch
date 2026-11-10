@@ -253,7 +253,6 @@ export default function ProfilePage() {
     dateOfBirth: personal.dateOfBirth || null,
     educationCount: rows.filter((r) => r.qualificationId).length,
     category: personal.category || null,
-    obcLayer: personal.category === "OBC" ? personal.obcLayer || null : null,
     gender: personal.gender || null,
     phoneNumber: personal.phoneNumber || null,
     preferenceCount: prefs.roleIds.length + prefs.types.length,
