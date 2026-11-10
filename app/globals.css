@@ -512,3 +512,24 @@ body {
     display: none;
   }
 }
+
+
+/* Shared spacing and heading scale, so sections look the same on every screen. */
+.section-stack > * + * { margin-top: 3rem; }
+.section-head { margin-bottom: 1rem; }
+.page-x { padding-left: 1rem; padding-right: 1rem; }
+.page-title { font-size: 1.375rem; line-height: 1.75rem; font-weight: 700; }
+.section-title { font-size: 1.125rem; line-height: 1.6rem; font-weight: 700; }
+@media (min-width: 768px) {
+  .section-stack > * + * { margin-top: 5rem; }
+  .section-head { margin-bottom: 1.25rem; }
+  .page-x { padding-left: 1.5rem; padding-right: 1.5rem; }
+  .page-title { font-size: 1.625rem; line-height: 2rem; }
+  .section-title { font-size: 1.25rem; line-height: 1.75rem; }
+}
+@media (min-width: 1024px) {
+  .section-stack > * + * { margin-top: 8rem; }
+  .section-head { margin-bottom: 1.5rem; }
+  .page-title { font-size: 1.875rem; line-height: 2.25rem; }
+  .section-title { font-size: 1.375rem; line-height: 1.8rem; }
+}

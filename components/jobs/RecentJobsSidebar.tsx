@@ -38,18 +38,18 @@ export default function RecentJobsSidebar({ excludeSlug }: RecentJobsSidebarProp
     .slice(0, MAX_ROWS);
 
   return (
-    <section className="flex h-96 flex-col overflow-hidden rounded-2xl border border-neutral-200 bg-white shadow-sm lg:h-[calc(100dvh-8.5rem)] lg:max-h-[60rem]">
+    <section className="flex flex-col overflow-hidden rounded-2xl border border-neutral-200 bg-white shadow-sm lg:h-[calc(100dvh-8.5rem)] lg:max-h-[60rem]">
       <h2 className="shrink-0 border-b border-neutral-100 px-4 py-3 text-sm font-bold text-neutral-900">Recently Posted Jobs</h2>
 
-      <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain">
+      <div className="min-h-0 flex-1 lg:overflow-y-auto lg:overscroll-contain">
         {loading ? (
           <p className="py-6 text-center text-xs text-neutral-400">Loading...</p>
         ) : rows.length === 0 ? (
           <p className="px-4 py-6 text-center text-xs text-neutral-400">No other jobs available.</p>
         ) : (
           <div className="divide-y divide-neutral-100">
-            {rows.map(({ key, job, heading, notice }) => (
-              <Link key={key} href={`/jobs/${job.slug}`} className="flex items-start gap-2.5 px-4 py-3 transition-colors hover:bg-neutral-50">
+            {rows.map(({ key, job, heading, notice }, i) => (
+              <Link key={key} href={`/jobs/${job.slug}`} className={"items-start gap-2.5 px-4 py-3 transition-colors hover:bg-neutral-50 " + (i >= 6 ? "hidden lg:flex" : "flex")}>
                 <OrgLogo name={job.organization?.name ?? 'Organization'} shortName={job.organization?.shortName} logoUrl={job.organization?.logoUrl} size={32} />
                 <div className="min-w-0">
                   <p className="line-clamp-2 text-xs font-semibold leading-tight text-neutral-900">{heading}</p>
