@@ -13,13 +13,13 @@ interface DocumentItem {
   notification?: { title: string };
 }
 
-const docTypeConfig: Record<string, { icon: any; label: string; color: string }> = {
-  SYLLABUS: { icon: BookOpen, label: 'Syllabus', color: '#2563eb' },
-  EXAM_PATTERN: { icon: ListChecks, label: 'Exam Pattern', color: '#7c3aed' },
-  SELECTION_PROCESS: { icon: FileStack, label: 'Selection Process', color: '#16a34a' },
-  PREVIOUS_PAPER: { icon: FileText, label: 'Previous Year Paper', color: '#f97316' },
-  EXAM_CALENDAR: { icon: CalendarDays, label: 'Exam Calendar', color: '#ca8a04' },
-  OTHER: { icon: FileText, label: 'Document', color: '#94a3b8' },
+const docTypeConfig: Record<string, { icon: any; label: string; tone: string }> = {
+  SYLLABUS: { icon: BookOpen, label: 'Syllabus', tone: 'bg-blue-50 text-blue-600' },
+  EXAM_PATTERN: { icon: ListChecks, label: 'Exam Pattern', tone: 'bg-violet-50 text-violet-600' },
+  SELECTION_PROCESS: { icon: FileStack, label: 'Selection Process', tone: 'bg-green-50 text-green-600' },
+  PREVIOUS_PAPER: { icon: FileText, label: 'Previous Year Paper', tone: 'bg-orange-50 text-orange-600' },
+  EXAM_CALENDAR: { icon: CalendarDays, label: 'Exam Calendar', tone: 'bg-amber-50 text-amber-700' },
+  OTHER: { icon: FileText, label: 'Document', tone: 'bg-neutral-100 text-neutral-500' },
 };
 
 export default function ResourcesPage() {
@@ -68,10 +68,7 @@ export default function ResourcesPage() {
               return (
                 <a key={doc.id} href={doc.fileUrl} target="_blank" rel="noopener noreferrer">
                   <Card hoverable padding="md" className="flex items-start gap-3 h-full">
-                    <div
-                      className="w-9 h-9 rounded-lg flex items-center justify-center shrink-0"
-                      style={{ backgroundColor: `${config.color}1A`, color: config.color }}
-                    >
+                    <div className={"w-9 h-9 rounded-lg flex items-center justify-center shrink-0 " + config.tone}>
                       <Icon size={18} />
                     </div>
                     <div className="min-w-0">
