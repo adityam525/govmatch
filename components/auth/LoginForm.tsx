@@ -49,7 +49,7 @@ export default function LoginForm({ onSuccess, signedUp = false, completeProfile
       <form onSubmit={submit} className="space-y-3">
         <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} className={field} autoComplete="email" required />
         <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} className={field} autoComplete="current-password" required />
-        <div className="text-right"><Link href="/forgot-password" className="text-xs text-primary-600 hover:underline">Forgot password?</Link></div>
+        <div className="text-right"><Link href="/forgot-password" replace className="text-xs text-primary-600 hover:underline">Forgot password?</Link></div>
         {error && <p role="alert" className="text-xs text-danger">{error}</p>}
         <Button type="submit" variant="primary" fullWidth disabled={loading}>{loading ? 'Logging in...' : 'Log in'}</Button>
       </form>
