@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import PageHeader from '@/components/layout/PageHeader';
 import BlogCard from '@/components/blog/BlogCard';
 import { SITE_URL, getBlogPage, getBlogTags } from '@/lib/blog';
 
@@ -37,11 +38,8 @@ export default async function BlogListPage({ searchParams }: Props) {
     `shrink-0 rounded-full border px-3.5 py-1.5 text-sm font-medium ${on ? 'border-primary-600 bg-primary-600 text-white' : 'border-neutral-200 bg-white text-neutral-600 hover:bg-neutral-50'}`;
 
   return (
-    <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6">
-      <header className="mb-6">
-        <h1 className="text-2xl font-bold text-neutral-900 sm:text-3xl">GovMatch Blog</h1>
-        <p className="mt-2 max-w-2xl text-sm text-neutral-600 sm:text-base">Guides, exam tips and updates on government jobs in India.</p>
-      </header>
+    <div className="page-x mx-auto w-full max-w-7xl py-8">
+      <PageHeader title="GovMatch Blog" subtitle="Guides, exam tips and updates on government jobs in India." />
 
       {tags.length > 0 && (
         <nav aria-label="Topics" className="mb-6 flex gap-2 overflow-x-auto pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">

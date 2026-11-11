@@ -15,7 +15,7 @@ for (const [group, v] of Object.entries(colors)) {
 }
 
 // Drift guard: hard-coded hex colours and pixel font sizes outside the allowed list.
-const BASELINE = { hex: 26, px: 2 };
+const BASELINE = { hex: 3, px: 0 };
 const SKIP = ['(admin)', '/admin', 'pwa-icon', 'HowItWorks'];
 let hex = 0, px = 0;
 const walk = (d: string) => { for (const f of fs.readdirSync(d, { withFileTypes: true })) {
