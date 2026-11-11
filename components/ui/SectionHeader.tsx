@@ -40,14 +40,14 @@ export default function SectionHeader({
 
   return (
     <div
-      className={`flex flex-col gap-4 md:flex-row md:justify-between my-6 ${alignment} ${className}`}
+      className={`flex flex-col gap-4 md:flex-row md:justify-between section-head ${alignment} ${className}`}
     >
       <div>
-        <h2 className="text-3xl font-bold tracking-tight text-neutral-900">
+        <h2 className="section-title text-neutral-900">
           {title}
         </h2>
 
-        {text && <p className="mt-2 max-w-3xl text-neutral-600">{text}</p>}
+        {text && <p className="mt-1 max-w-3xl text-sm text-neutral-600">{text}</p>}
       </div>
 
       {action}
