@@ -90,7 +90,7 @@ export default function PracticePage() {
 
   const left = usage && usage.limit !== null ? Math.max(0, usage.limit - usage.used) : null;
   return (
-    <div className="mx-auto max-w-4xl space-y-6 px-4 py-8 sm:px-6">
+    <div className="page-x mx-auto w-full max-w-4xl space-y-6 py-8">
       <div>
         <h1 className="text-xl font-bold text-neutral-900">Practice by topic</h1>
         <p className="mt-1 text-sm text-neutral-600">Every question has fresh numbers each time, with a worked explanation after the test.</p>
