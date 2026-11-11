@@ -98,7 +98,7 @@ export default async function HomePage() {
           </div>
         </div>
 
-        <div className="mx-auto max-w-7xl space-y-10 px-4 py-10 sm:px-6">
+        <div className="section-stack mx-auto max-w-7xl px-4 py-12 sm:px-6 md:py-20 lg:py-32">
           <ExamCalendar />
           <UpcomingJobsSection hideWhenEmpty />
           <LowerSections />
@@ -117,7 +117,7 @@ export default async function HomePage() {
         <QuickStatsBar />
       </div>
 
-      <div className="mx-auto max-w-7xl space-y-10 px-4 py-10 sm:px-6">
+      <div className="section-stack mx-auto max-w-7xl px-4 py-12 sm:px-6 md:py-20 lg:py-32">
         <HomeHotNews />
         <LatestJobsWithToday />
         <ExamCalendar />
