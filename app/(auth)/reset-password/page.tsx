@@ -1,5 +1,6 @@
 'use client';
 
+import PasswordInput from '@/components/ui/PasswordInput';
 import Link from 'next/link';
 import { Suspense, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
@@ -31,8 +32,8 @@ function ResetForm() {
         <p className="text-sm text-neutral-600">{message} <Link href="/login" className="font-semibold text-primary-600 hover:underline">Log in</Link></p>
       ) : (
         <form onSubmit={submit} className="space-y-3">
-          <input type="password" required minLength={8} value={password} onChange={(e) => setPassword(e.target.value)} placeholder="New password" autoComplete="new-password" className={field} />
-          <input type="password" required minLength={8} value={confirm} onChange={(e) => setConfirm(e.target.value)} placeholder="Confirm new password" autoComplete="new-password" className={field} />
+          <PasswordInput required minLength={8} value={password} onChange={(e) => setPassword(e.target.value)} placeholder="New password" autoComplete="new-password" className={field} />
+          <PasswordInput required minLength={8} value={confirm} onChange={(e) => setConfirm(e.target.value)} placeholder="Confirm new password" autoComplete="new-password" className={field} />
           {message && <p role="alert" className="text-xs text-danger">{message}</p>}
           <Button type="submit" variant="primary" fullWidth disabled={busy || !token}>{busy ? 'Saving...' : 'Change password'}</Button>
         </form>

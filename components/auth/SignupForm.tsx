@@ -1,5 +1,6 @@
 'use client';
 
+import PasswordInput from '@/components/ui/PasswordInput';
 import { useState } from 'react';
 import Link from 'next/link';
 import Button from '@/components/ui/Button';
@@ -43,8 +44,8 @@ export default function SignupForm({ onSuccess }: { onSuccess: () => void }) {
       <form onSubmit={submit} className="space-y-4">
         <div><label className={label}>Full name *</label><input required value={form.name} onChange={(e) => set('name', e.target.value)} className={field} autoComplete="name" /></div>
         <div><label className={label}>Email *</label><input required type="email" value={form.email} onChange={(e) => set('email', e.target.value)} className={field} autoComplete="email" /></div>
-        <div><label className={label}>Password *</label><input required type="password" minLength={8} value={form.password} onChange={(e) => set('password', e.target.value)} className={field} autoComplete="new-password" /></div>
-        <div><label className={label}>Confirm password *</label><input required type="password" minLength={8} value={form.confirmPassword} onChange={(e) => set('confirmPassword', e.target.value)} className={field} autoComplete="new-password" /></div>
+        <div><label className={label}>Password *</label><PasswordInput required minLength={8} value={form.password} onChange={(e) => set('password', e.target.value)} className={field} autoComplete="new-password" /></div>
+        <div><label className={label}>Confirm password *</label><PasswordInput required minLength={8} value={form.confirmPassword} onChange={(e) => set('confirmPassword', e.target.value)} className={field} autoComplete="new-password" /></div>
         {error && <p role="alert" className="text-xs text-danger">{error}</p>}
         <Button type="submit" variant="primary" fullWidth disabled={loading}>{loading ? 'Creating account...' : 'Create account'}</Button>
       </form>
