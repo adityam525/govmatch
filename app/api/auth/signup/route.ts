@@ -34,6 +34,9 @@ export async function POST(request: Request) {
     if (password.length < 8) {
       return NextResponse.json({ message: 'Password must be at least 8 characters' }, { status: 400 });
     }
+    if (/\s/.test(password)) {
+      return NextResponse.json({ message: 'Password cannot contain spaces' }, { status: 400 });
+    }
     // bcrypt only uses the first 72 bytes; reject longer input instead of silently truncating
     if (Buffer.byteLength(password, 'utf8') > 72) {
       return NextResponse.json({ message: 'Password is too long (max 72 characters)' }, { status: 400 });

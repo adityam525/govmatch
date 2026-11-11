@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { Mail, Clock3, MapPin, ShieldCheck, MessageCircle } from "lucide-react";
 
 const items = [
@@ -57,9 +58,9 @@ export default function ContactInfo() {
           Frequently Asked Questions.
         </p>
 
-        <button className="mt-8 rounded-xl bg-white px-5 py-3 font-medium text-primary-700 transition hover:bg-primary-50">
+        <Link href="/about#faq" className="mt-8 inline-block rounded-xl bg-white px-5 py-3 font-medium text-primary-700 transition hover:bg-primary-50">
           Browse FAQs
-        </button>
+        </Link>
       </div>
 
       <div className="rounded-3xl border border-green-200 bg-green-50 p-6">

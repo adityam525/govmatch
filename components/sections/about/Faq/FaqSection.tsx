@@ -4,7 +4,7 @@ import { faqs } from "./data";
 
 export default function FaqSection() {
   return (
-    <section className="bg-neutral-50 py-20">
+    <section id="faq" className="bg-neutral-50 py-20">
       <div className="mx-auto max-w-4xl px-4">
 
         <SectionHeader
