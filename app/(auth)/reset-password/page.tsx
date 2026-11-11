@@ -17,6 +17,7 @@ function ResetForm() {
   const submit = async (e: React.FormEvent) => {
     e.preventDefault(); setMessage('');
     if (password !== confirm) { setMessage('Passwords do not match.'); return; }
+    if (password.length < 8 || password.length > 72 || /\s/.test(password)) { setMessage('Password must be 8 to 72 characters with no spaces.'); return; }
     setBusy(true);
     try {
       const res = await fetch('/api/password-reset/confirm', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ token, password }) });
@@ -32,6 +33,7 @@ function ResetForm() {
         <p className="text-sm text-neutral-600">{message} <Link href="/login" className="font-semibold text-primary-600 hover:underline">Log in</Link></p>
       ) : (
         <form onSubmit={submit} className="space-y-3">
+          <p className="rounded-md bg-neutral-50 px-3 py-2 text-xs text-neutral-600">Password: 8 to 72 characters, no spaces. Letters, numbers and symbols are all fine.</p>
           <PasswordInput required minLength={8} value={password} onChange={(e) => setPassword(e.target.value)} placeholder="New password" autoComplete="new-password" className={field} />
           <PasswordInput required minLength={8} value={confirm} onChange={(e) => setConfirm(e.target.value)} placeholder="Confirm new password" autoComplete="new-password" className={field} />
           {message && <p role="alert" className="text-xs text-danger">{message}</p>}

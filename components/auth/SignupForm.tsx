@@ -15,7 +15,8 @@ export default function SignupForm({ onSuccess }: { onSuccess: () => void }) {
     e.preventDefault();
     setError('');
     if (form.password !== form.confirmPassword) { setError('Passwords do not match.'); return; }
-    if (form.password.length < 8) { setError('Password must be at least 8 characters.'); return; }
+    if (form.password.length < 8 || form.password.length > 72) { setError('Password must be 8 to 72 characters.'); return; }
+    if (/\s/.test(form.password)) { setError('Password cannot contain spaces.'); return; }
     setLoading(true);
     try {
       const res = await fetch('/api/auth/signup', {
@@ -42,6 +43,7 @@ export default function SignupForm({ onSuccess }: { onSuccess: () => void }) {
       <h1 className="mb-1 text-xl font-bold text-neutral-900">Create your GovMatch account</h1>
       <p className="mb-6 text-sm text-neutral-600">Get started in seconds. You can complete your profile right after.</p>
       <form onSubmit={submit} className="space-y-4">
+        <p className="rounded-md bg-neutral-50 px-3 py-2 text-xs text-neutral-600">Password: 8 to 72 characters, no spaces. Letters, numbers and symbols are all fine.</p>
         <div><label className={label}>Full name *</label><input required value={form.name} onChange={(e) => set('name', e.target.value)} className={field} autoComplete="name" /></div>
         <div><label className={label}>Email *</label><input required type="email" value={form.email} onChange={(e) => set('email', e.target.value)} className={field} autoComplete="email" /></div>
         <div><label className={label}>Password *</label><PasswordInput required minLength={8} value={form.password} onChange={(e) => set('password', e.target.value)} className={field} autoComplete="new-password" /></div>

@@ -31,7 +31,7 @@ export default function BottomCTASection() {
 
             <div className="mt-10 flex flex-wrap justify-center gap-4">
 
-              <Link href="/register">
+              <Link href="/signup">
                 <Button
                   size="lg"
                   variant="secondary"

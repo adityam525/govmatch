@@ -7,7 +7,7 @@ export async function POST(request: Request) {
   const body = await request.json().catch(() => ({}));
   const token = typeof body.token === 'string' ? body.token : '';
   const password = typeof body.password === 'string' ? body.password : '';
-  if (password.length < 8 || password.length > 128) return NextResponse.json({ message: 'Password must be 8 to 128 characters.' }, { status: 400 });
+  if (password.length < 8 || password.length > 72 || /\s/.test(password)) return NextResponse.json({ message: 'Password must be 8 to 72 characters with no spaces.' }, { status: 400 });
   if (!/^[a-f0-9]{64}$/.test(token)) return NextResponse.json({ message: 'This link is not valid or has expired.' }, { status: 400 });
   try {
     const row = await prisma.passwordResetToken.findUnique({ where: { tokenHash: createHash('sha256').update(token).digest('hex') } });
