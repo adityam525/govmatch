@@ -71,7 +71,7 @@ export default function SidebarTabs({ tabs }: { tabs: SidebarTab[] }) {
         aria-labelledby={
           tabs.length > 1 ? `${baseId}-${active.id}-tab` : undefined
         }
-        className="h-[25rem] overflow-y-auto overscroll-contain"
+        className="max-lg:[&_a:nth-child(n+6)]:hidden lg:h-[25rem] lg:overflow-y-auto lg:overscroll-contain"
       >
         <div className="flex min-h-full flex-col">{active.content}</div>
       </div>

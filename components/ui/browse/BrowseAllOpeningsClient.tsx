@@ -118,7 +118,7 @@ export default function BrowseAllOpeningsClient({
         </div>
 
         {/* Scrollable Rows */}
-        <div className="max-h-[432px] min-w-0 overflow-y-auto overscroll-contain">
+        <div className="min-w-0 lg:max-h-[432px] lg:overflow-y-auto lg:overscroll-contain">
           {filteredItems.length > 0 ? (
             <div className="divide-y divide-neutral-100">
               {filteredItems.map((item) => {

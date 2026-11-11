@@ -143,7 +143,7 @@ export default function Navbar() {
       </div>
 
       {mobileOpen && (
-        <div className="lg:hidden border-t border-neutral-200 bg-white max-h-[calc(100vh-4rem)] overflow-y-auto">
+        <div className="lg:hidden border-t border-neutral-200 bg-white max-h-[calc(100dvh-4rem)] overflow-y-auto">
           <nav className="px-4 py-3 space-y-1">
             {MOBILE_LINKS.map((link) => (
               <Link

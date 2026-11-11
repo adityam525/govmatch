@@ -10,7 +10,7 @@ export default function LastDateTodayPanel({ jobs }: { jobs: PublishedJob[] }) {
   const shown = jobs.slice(0, MAX_ROWS);
 
   return (
-    <section className="flex h-full max-h-192 min-h-96 flex-col rounded-2xl border border-red-100 bg-white p-4 shadow-sm">
+    <section className="flex flex-col lg:h-full lg:max-h-192 lg:min-h-96 rounded-2xl border border-red-100 bg-white p-4 shadow-sm">
       <div className="flex items-center justify-between gap-2">
         <h2 className="flex items-center gap-2 text-sm font-bold text-neutral-900">
           <span className="relative flex h-2.5 w-2.5">
@@ -27,7 +27,7 @@ export default function LastDateTodayPanel({ jobs }: { jobs: PublishedJob[] }) {
         Final day to apply for these jobs
       </p>
 
-      <div className="mt-3 min-h-0 flex-1 divide-y divide-neutral-100 overflow-y-auto pr-1">
+      <div className="mt-3 min-h-0 flex-1 divide-y divide-neutral-100 pr-1 max-lg:[&>a:nth-child(n+6)]:hidden lg:overflow-y-auto">
         {shown.map((job) => (
           <Link
             key={job.id}

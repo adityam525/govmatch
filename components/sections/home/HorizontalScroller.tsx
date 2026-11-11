@@ -73,7 +73,7 @@ export default function HorizontalScroller({
   }, []);
 
   useEffect(() => {
-    setReducedMotion(window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+    setReducedMotion(window.matchMedia('(prefers-reduced-motion: reduce)').matches || window.matchMedia('(pointer: coarse)').matches);
     return () => {
       if (releaseTimer.current) window.clearTimeout(releaseTimer.current);
     };

@@ -135,7 +135,7 @@ export default function BrowseTable({
         className={
           showAll
             ? "min-w-0"
-            : "max-h-[432px] min-w-0 overflow-y-auto overscroll-contain"
+            : "min-w-0 lg:max-h-[432px] lg:overflow-y-auto lg:overscroll-contain"
         }
       >
         {visibleItems.length > 0 ? (
