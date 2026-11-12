@@ -188,7 +188,7 @@ export default async function JobDetailPage({ params }: PageProps) {
             {orgName}
             {advtLabel}
           </p>
-          <p className="text-xs text-neutral-400 mt-1">
+          <p className="text-xs text-neutral-600 mt-1">
             Location: {stateNames}
           </p>
 
