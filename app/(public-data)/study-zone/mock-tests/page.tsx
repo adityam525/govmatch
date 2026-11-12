@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { pageMetadata } from '@/lib/seo';
 import Link from 'next/link';
 import PageHeader from '@/components/layout/PageHeader';
 import { Suspense } from 'react';
@@ -8,10 +9,7 @@ import MockFilters from '@/components/mock/MockFilters';
 import StartTestButton from '@/components/mock/StartTestButton';
 
 export const dynamic = 'force-dynamic';
-export const metadata: Metadata = {
-  title: 'Mock tests | GovMatch',
-  description: 'Practice mock tests for government exams, filtered by exam, organization, state, stage and difficulty.',
-};
+export const metadata: Metadata = pageMetadata({ title: 'Mock tests', description: 'Practice mock tests for government exams, filtered by exam, organization, state, stage and difficulty.', path: '/study-zone/mock-tests' });
 
 // Every word typed must appear somewhere in the test's text, in any order and any case.
 function matchesSearch(

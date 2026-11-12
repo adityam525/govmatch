@@ -142,12 +142,7 @@ export default function BrowseAllOpeningsClient({
                           size={36}
                         />
                       ) : (
-                        <div
-                          className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl"
-                          style={{
-                            backgroundColor: item.iconBg ?? "#64748b",
-                          }}
-                        >
+                        <div className={"flex h-9 w-9 shrink-0 items-center justify-center rounded-xl " + (item.iconBg ?? "bg-slate-500")}>
                           <Icon
                             size={18}
                             className="text-white"

@@ -173,10 +173,7 @@ export default function BrowseTable({
                         size={40}
                       />
                     ) : (
-                      <div
-                        className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl"
-                        style={{ backgroundColor: item.iconBg ?? "#64748b" }}
-                      >
+                      <div className={"flex h-10 w-10 shrink-0 items-center justify-center rounded-xl " + (item.iconBg ?? "bg-slate-500")}>
                         <Icon size={20} aria-hidden="true" className="text-white" />
                       </div>
                     )}
