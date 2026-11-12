@@ -24,7 +24,7 @@ export default function LatestJobsTabs({ items }: { items: LatestJobItem[] }) {
       <TabFilterBar activeTab={activeTab} onChange={(t) => { setActiveTab(t); setExpanded(false); }} />
       <div className="mt-4 lg:max-h-[34.75rem] lg:overflow-y-auto">
         {visible.length === 0 ? (
-          <p className="py-6 text-center text-sm text-neutral-400">No jobs are open for applications in this category right now.</p>
+          <p className="py-6 text-center text-sm text-neutral-500">No jobs are open for applications in this category right now.</p>
         ) : (
           <div className="grid grid-cols-1 gap-4 pb-1 @md:grid-cols-2 @3xl:grid-cols-3 @5xl:grid-cols-4">
             {visible.map(({ card }, i) => (

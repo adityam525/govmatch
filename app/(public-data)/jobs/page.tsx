@@ -536,7 +536,7 @@ export default async function JobsPage({ searchParams }: JobsPageProps) {
         </div>
       ) : (
         <>
-          <div className="mt-4 hidden grid-cols-[minmax(0,1fr)_8.5rem_6rem_6.5rem_1rem] gap-4 px-5 text-2xs font-semibold uppercase tracking-wide text-neutral-400 md:grid">
+          <div className="mt-4 hidden grid-cols-[minmax(0,1fr)_8.5rem_6rem_6.5rem_1rem] gap-4 px-5 text-2xs font-semibold uppercase tracking-wide text-neutral-500 md:grid">
             <span>Job</span>
             <span>Match</span>
             <span>Vacancies</span>

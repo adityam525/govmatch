@@ -75,8 +75,8 @@ export default function QuestionBankPage() {
             <th className="px-4 py-2.5 font-medium">Template</th><th className="px-4 py-2.5 font-medium">Level</th><th className="px-4 py-2.5 font-medium">Status</th><th className="px-4 py-2.5 text-right font-medium">Actions</th>
           </tr></thead>
           <tbody>
-            {loading ? <tr><td colSpan={4} className="py-8 text-center text-neutral-400">Loading...</td></tr>
-            : shown.length === 0 ? <tr><td colSpan={4} className="py-8 text-center text-neutral-400">No templates here.</td></tr>
+            {loading ? <tr><td colSpan={4} className="py-8 text-center text-neutral-500">Loading...</td></tr>
+            : shown.length === 0 ? <tr><td colSpan={4} className="py-8 text-center text-neutral-500">No templates here.</td></tr>
             : shown.map((r) => (
               <tr key={r.id} className="border-b border-neutral-50 hover:bg-neutral-50">
                 <td className="max-w-md px-4 py-3">
@@ -84,11 +84,11 @@ export default function QuestionBankPage() {
                   <p className="truncate text-xs text-neutral-500">{r.topic.chapter.subject.name} / {r.topic.chapter.name} / {r.topic.name}</p>
                 </td>
                 <td className="px-4 py-3 text-xs text-neutral-600">{r.difficulty.charAt(0) + r.difficulty.slice(1).toLowerCase()} &middot; {r.expectedSeconds}s</td>
-                <td className="px-4 py-3"><span className={'rounded-full px-2 py-0.5 text-xs font-medium ' + (r.published ? 'bg-green-50 text-success' : 'bg-amber-50 text-amber-700')}>{r.published ? 'Published' : 'Draft'}</span></td>
+                <td className="px-4 py-3"><span className={'rounded-full px-2 py-0.5 text-xs font-medium ' + (r.published ? 'bg-green-50 text-green-700' : 'bg-amber-50 text-amber-700')}>{r.published ? 'Published' : 'Draft'}</span></td>
                 <td className="px-4 py-3"><div className="flex items-center justify-end gap-1">
                   <button type="button" disabled={busy === r.id} onClick={() => act(r.id, () => fetch('/api/admin/qb-templates/' + r.id, { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ published: !r.published }) }))} className="rounded-md border border-neutral-200 px-2.5 py-1 text-xs text-neutral-700 hover:bg-neutral-50 disabled:opacity-50">{r.published ? 'Unpublish' : 'Publish'}</button>
-                  <Link href={'/admin/question-bank/' + r.id} aria-label={'Edit ' + r.title} className="rounded-md p-2 text-neutral-400 hover:bg-neutral-100"><Pencil size={14} /></Link>
-                  <button type="button" disabled={busy === r.id} aria-label={'Delete ' + r.title} onClick={() => { if (confirm('Delete "' + r.title + '"?')) act(r.id, () => fetch('/api/admin/qb-templates/' + r.id, { method: 'DELETE' })); }} className="rounded-md p-2 text-neutral-400 hover:bg-red-50 hover:text-danger disabled:opacity-50"><Trash2 size={14} /></button>
+                  <Link href={'/admin/question-bank/' + r.id} aria-label={'Edit ' + r.title} className="rounded-md p-2 text-neutral-500 hover:bg-neutral-100"><Pencil size={14} /></Link>
+                  <button type="button" disabled={busy === r.id} aria-label={'Delete ' + r.title} onClick={() => { if (confirm('Delete "' + r.title + '"?')) act(r.id, () => fetch('/api/admin/qb-templates/' + r.id, { method: 'DELETE' })); }} className="rounded-md p-2 text-neutral-500 hover:bg-red-50 hover:text-danger disabled:opacity-50"><Trash2 size={14} /></button>
                 </div></td>
               </tr>
             ))}

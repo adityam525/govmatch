@@ -74,9 +74,9 @@ export default function BranchManager({ qualificationId, qualificationSlug }: { 
       </div>
 
       {loading ? (
-        <p className="mt-4 text-xs text-neutral-400">Loading...</p>
+        <p className="mt-4 text-xs text-neutral-500">Loading...</p>
       ) : branches.length === 0 ? (
-        <p className="mt-4 text-xs text-neutral-400">No branches yet. Posts that ask for this qualification will accept any branch.</p>
+        <p className="mt-4 text-xs text-neutral-500">No branches yet. Posts that ask for this qualification will accept any branch.</p>
       ) : (
         <ul className="mt-4 divide-y divide-neutral-100">
           {branches.map((b) => (
@@ -84,19 +84,19 @@ export default function BranchManager({ qualificationId, qualificationSlug }: { 
               {editing?.id === b.id ? (
                 <>
                   <input value={editing.name} onChange={(e) => setEditing({ id: b.id, name: e.target.value })} maxLength={120} className={input} autoFocus />
-                  <button type="button" disabled={busy || !editing.name.trim()} aria-label="Save name" onClick={() => run(async () => { await call(`/api/branches/${b.id}`, 'PATCH', { name: editing.name }); setEditing(null); })} className="rounded-md p-2 text-success hover:bg-green-50 disabled:opacity-50"><Check size={15} /></button>
-                  <button type="button" aria-label="Cancel" onClick={() => setEditing(null)} className="rounded-md p-2 text-neutral-400 hover:bg-neutral-100"><X size={15} /></button>
+                  <button type="button" disabled={busy || !editing.name.trim()} aria-label="Save name" onClick={() => run(async () => { await call(`/api/branches/${b.id}`, 'PATCH', { name: editing.name }); setEditing(null); })} className="rounded-md p-2 text-green-700 hover:bg-green-50 disabled:opacity-50"><Check size={15} /></button>
+                  <button type="button" aria-label="Cancel" onClick={() => setEditing(null)} className="rounded-md p-2 text-neutral-500 hover:bg-neutral-100"><X size={15} /></button>
                 </>
               ) : (
                 <>
                   <span className="min-w-0 flex-1 truncate text-sm text-neutral-800">{b.name}</span>
-                  <button type="button" aria-label={`Rename ${b.name}`} onClick={() => setEditing({ id: b.id, name: b.name })} className="rounded-md p-2 text-neutral-400 hover:bg-neutral-100 hover:text-neutral-700"><Pencil size={14} /></button>
+                  <button type="button" aria-label={`Rename ${b.name}`} onClick={() => setEditing({ id: b.id, name: b.name })} className="rounded-md p-2 text-neutral-500 hover:bg-neutral-100 hover:text-neutral-700"><Pencil size={14} /></button>
                   <button
                     type="button"
                     disabled={busy}
                     aria-label={`Delete ${b.name}`}
                     onClick={() => { if (confirm(`Delete the branch "${b.name}"?`)) run(() => call(`/api/branches/${b.id}`, 'DELETE')); }}
-                    className="rounded-md p-2 text-neutral-400 hover:bg-red-50 hover:text-danger disabled:opacity-50"
+                    className="rounded-md p-2 text-neutral-500 hover:bg-red-50 hover:text-danger disabled:opacity-50"
                   ><Trash2 size={14} /></button>
                 </>
               )}

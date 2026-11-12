@@ -155,17 +155,17 @@ export default function PostsFieldArray({ posts, onChange }: PostsFieldArrayProp
         </Button>
       </div>
 
-      {posts.length === 0 && <p className="text-xs text-neutral-400 mb-3">No posts added yet. Click &quot;Add Post&quot; to add one.</p>}
+      {posts.length === 0 && <p className="text-xs text-neutral-500 mb-3">No posts added yet. Click &quot;Add Post&quot; to add one.</p>}
 
       <div className="space-y-4">
         {posts.map((post, index) => (
           <div key={index} className="border border-neutral-200 rounded-lg p-4 relative">
-            <button type="button" onClick={() => removePost(index)} className="absolute top-3 right-3 text-neutral-400 hover:text-danger">
+            <button type="button" onClick={() => removePost(index)} className="absolute top-3 right-3 text-neutral-500 hover:text-danger">
               <Trash2 size={14} />
             </button>
 
             <button type="button" onClick={() => toggleCollapsed(index)} aria-expanded={!collapsed.has(index)} className="mb-3 flex w-full items-center gap-2 pr-8 text-left text-sm font-semibold text-neutral-800">
-              <span aria-hidden className="text-neutral-400">{collapsed.has(index) ? "\u25B8" : "\u25BE"}</span>
+              <span aria-hidden className="text-neutral-500">{collapsed.has(index) ? "\u25B8" : "\u25BE"}</span>
               <span className="truncate">Post {index + 1}: {post.title || "Untitled post"}</span>
               {collapsed.has(index) && post.vacancies !== "" && <span className="shrink-0 text-xs font-normal text-neutral-500">{String(post.vacancies)} vacancies</span>}
             </button>
@@ -344,7 +344,7 @@ export default function PostsFieldArray({ posts, onChange }: PostsFieldArrayProp
                           <Select value={rule.status} onChange={(v) => updateRule(index, ri, { status: v })} options={RULE_STATUSES.map((s) => ({ value: s.code, label: s.label }))} />
                           <input type="number" step="0.1" min={0} max={40} placeholder="+ years" value={rule.years} onChange={(e) => updateRule(index, ri, { years: e.target.value })} className={inputCls} aria-label="Extra years" />
                           <input type="number" step="0.1" min={14} max={80} placeholder="or max age" value={rule.maxAge} onChange={(e) => updateRule(index, ri, { maxAge: e.target.value })} className={inputCls} aria-label="Maximum age" />
-                          <button type="button" onClick={() => removeRule(index, ri)} aria-label="Remove row" className="justify-self-end rounded-md p-2 text-neutral-400 hover:bg-red-50 hover:text-danger">
+                          <button type="button" onClick={() => removeRule(index, ri)} aria-label="Remove row" className="justify-self-end rounded-md p-2 text-neutral-500 hover:bg-red-50 hover:text-danger">
                             <X size={14} />
                           </button>
                           <input type="text" maxLength={200} placeholder="Note (optional)" value={rule.note} onChange={(e) => updateRule(index, ri, { note: e.target.value })} className={`${inputCls} sm:col-span-5`} />

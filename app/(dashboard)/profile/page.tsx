@@ -90,7 +90,7 @@ function SectionIndex({
              rounded-xl border border-gray-200
              bg-gray-50 p-3 shadow-sm"
       >
-        <p className="mb-2 px-2 text-2xs font-semibold uppercase tracking-wide text-neutral-400">
+        <p className="mb-2 px-2 text-2xs font-semibold uppercase tracking-wide text-neutral-500">
           Sections
         </p>
         <ul className="space-y-0.5">
@@ -566,7 +566,7 @@ export default function ProfilePage() {
                 }}
               />
             ) : (
-              <p className="mt-6 text-sm text-neutral-400">
+              <p className="mt-6 text-sm text-neutral-500">
                 Loading your education...
               </p>
             )}
@@ -621,7 +621,7 @@ export default function ProfilePage() {
           </Button>
           {message ? (
             <span
-              className={`text-xs ${message.kind === "ok" ? "text-success" : "text-danger"}`}
+              className={`text-xs ${message.kind === "ok" ? "text-green-700" : "text-danger"}`}
             >
               {message.text}
             </span>

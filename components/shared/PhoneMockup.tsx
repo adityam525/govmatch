@@ -46,7 +46,7 @@ export default function PhoneMockup({ score = 78 }: PhoneMockupProps) {
                 {score}%
               </span>
             </div>
-            <p className="text-3xs text-neutral-400 mt-2">
+            <p className="text-3xs text-neutral-500 mt-2">
               Your Match Score
             </p>
           </div>
@@ -69,7 +69,7 @@ export default function PhoneMockup({ score = 78 }: PhoneMockupProps) {
                     {job.title}
                   </span>
                 </div>
-                <span className="text-3xs font-bold text-success">
+                <span className="text-3xs font-bold text-green-700">
                   {job.tag}
                 </span>
               </div>

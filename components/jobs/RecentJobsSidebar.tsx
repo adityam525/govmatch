@@ -43,9 +43,9 @@ export default function RecentJobsSidebar({ excludeSlug }: RecentJobsSidebarProp
 
       <div className="min-h-0 flex-1 lg:overflow-y-auto lg:overscroll-contain">
         {loading ? (
-          <p className="py-6 text-center text-xs text-neutral-400">Loading...</p>
+          <p className="py-6 text-center text-xs text-neutral-500">Loading...</p>
         ) : rows.length === 0 ? (
-          <p className="px-4 py-6 text-center text-xs text-neutral-400">No other jobs available.</p>
+          <p className="px-4 py-6 text-center text-xs text-neutral-500">No other jobs available.</p>
         ) : (
           <div className="divide-y divide-neutral-100">
             {rows.map(({ key, job, heading, notice }, i) => (
@@ -53,7 +53,7 @@ export default function RecentJobsSidebar({ excludeSlug }: RecentJobsSidebarProp
                 <OrgLogo name={job.organization?.name ?? 'Organization'} shortName={job.organization?.shortName} logoUrl={job.organization?.logoUrl} size={32} />
                 <div className="min-w-0">
                   <p className="line-clamp-2 text-xs font-semibold leading-tight text-neutral-900">{heading}</p>
-                  <p className="mt-1 truncate text-3xs text-neutral-400">{[notice, job.organization?.name].filter(Boolean).join(' · ')}</p>
+                  <p className="mt-1 truncate text-3xs text-neutral-500">{[notice, job.organization?.name].filter(Boolean).join(' · ')}</p>
                 </div>
               </Link>
             ))}

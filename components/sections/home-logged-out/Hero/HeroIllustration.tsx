@@ -1,7 +1,6 @@
 import { Target, BookOpen, Bell, ClipboardList } from "lucide-react";
 import FloatingFeatureCard from "./FloatingFeatureCard";
 import MockupPreviewCard from "./MockupPreviewCard";
-import { colors } from "@/styles/tokens";
 
 const mockJobs = [
   { title: "Assistant Auditor", org: "SSC CGL 2025", matchPercent: 92 },
@@ -24,28 +23,28 @@ export default function HeroIllustration() {
       {/* Floating cards positioned around illustration */}
       <FloatingFeatureCard
         icon={<Target size={18} />}
-        iconBg={colors.accent.purple}
+        tone={"purple"}
         title="Personalized"
         description="Job Matches"
         className="absolute top-4 left-0"
       />
       <FloatingFeatureCard
         icon={<BookOpen size={18} />}
-        iconBg={colors.primary[600]}
+        tone={"blue"}
         title="Exam Preparation"
         description="Mock tests, PYQs, study material"
         className="absolute top-4 right-0"
       />
       <FloatingFeatureCard
         icon={<Bell size={18} />}
-        iconBg={colors.accent.orange}
+        tone={"orange"}
         title="Deadline Tracking"
         description="Every last date in one place"
         className="absolute bottom-16 left-0"
       />
       <FloatingFeatureCard
         icon={<ClipboardList size={18} />}
-        iconBg={colors.accent.green}
+        tone={"green"}
         title="Application Tracker"
         description="Track & manage all your applications"
         className="absolute bottom-16 right-0"

@@ -40,7 +40,7 @@ export default function LoginForm({ onSuccess, signedUp = false, completeProfile
     <div>
       <h1 className="mb-1 text-lg font-bold text-neutral-900">Welcome back</h1>
       <p className="mb-1 text-sm text-neutral-600">Log in to see your personalized job matches.</p>
-      {signedUp && <p className="mb-4 text-xs text-success">Account created! Log in to complete your profile.</p>}
+      {signedUp && <p className="mb-4 text-xs text-green-700">Account created! Log in to complete your profile.</p>}
 
       <Button variant="secondary" fullWidth className="mt-3" onClick={() => signIn('google', { callbackUrl: completeProfile ? '/profile' : googleCallback })}>
         Continue with Google

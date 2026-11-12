@@ -29,10 +29,10 @@ export default function InfoListItem({
           <p className="text-sm font-medium text-neutral-900 truncate">
             {title}
           </p>
-          <p className="text-xs text-neutral-400 truncate">{subtitle}</p>
+          <p className="text-xs text-neutral-500 truncate">{subtitle}</p>
         </div>
       </div>
-      <p className="text-xs text-neutral-400 shrink-0 pl-2">{date}</p>
+      <p className="text-xs text-neutral-500 shrink-0 pl-2">{date}</p>
     </Link>
   );
 }

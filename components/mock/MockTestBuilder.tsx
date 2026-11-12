@@ -186,7 +186,7 @@ export default function MockTestBuilder({ testId, endpoint, backHref = '/mock-te
               </div>
               <Button type="button" variant="secondary" size="sm" onClick={() => setSection(si, { questions: s.questions.map((q) => ({ ...q, marks: s.defMarks, negativeMarks: s.defNeg })) })}>Apply to all</Button>
               {form.sections.length > 1 && (
-                <button type="button" aria-label={`Remove section ${si + 1}`} onClick={() => { if (confirm(`Remove "${s.name || `Section ${si + 1}`}" and its questions?`)) change((f) => ({ ...f, sections: f.sections.filter((_, i) => i !== si) })); }} className="rounded-md p-2 text-neutral-400 hover:bg-red-50 hover:text-danger"><Trash2 size={16} /></button>
+                <button type="button" aria-label={`Remove section ${si + 1}`} onClick={() => { if (confirm(`Remove "${s.name || `Section ${si + 1}`}" and its questions?`)) change((f) => ({ ...f, sections: f.sections.filter((_, i) => i !== si) })); }} className="rounded-md p-2 text-neutral-500 hover:bg-red-50 hover:text-danger"><Trash2 size={16} /></button>
               )}
             </div>
             <p className="mt-2 text-2xs text-neutral-500">Marks and Negative are the defaults for new questions in this section. Each question can differ.</p>
@@ -197,7 +197,7 @@ export default function MockTestBuilder({ testId, endpoint, backHref = '/mock-te
                   <div className="mb-2 flex items-center justify-between">
                     <p className="text-xs font-semibold uppercase tracking-wide text-neutral-500">Question {qi + 1}</p>
                     {s.questions.length > 1 && (
-                      <button type="button" aria-label={`Remove question ${qi + 1}`} onClick={() => setSection(si, { questions: s.questions.filter((_, j) => j !== qi) })} className="rounded-md p-1.5 text-neutral-400 hover:bg-red-50 hover:text-danger"><Trash2 size={14} /></button>
+                      <button type="button" aria-label={`Remove question ${qi + 1}`} onClick={() => setSection(si, { questions: s.questions.filter((_, j) => j !== qi) })} className="rounded-md p-1.5 text-neutral-500 hover:bg-red-50 hover:text-danger"><Trash2 size={14} /></button>
                     )}
                   </div>
                   <textarea value={q.text} rows={2} maxLength={LIMITS.textMax} onChange={(e) => setQuestion(si, qi, { text: e.target.value })} className={input} placeholder="Type the question" />
@@ -209,7 +209,7 @@ export default function MockTestBuilder({ testId, endpoint, backHref = '/mock-te
                         <span className="w-5 shrink-0 text-sm font-medium text-neutral-500">{String.fromCharCode(65 + oi)}</span>
                         <input value={o} maxLength={LIMITS.optionMax} onChange={(e) => setQuestion(si, qi, { options: q.options.map((x, k) => (k === oi ? e.target.value : x)) })} className={input} placeholder={`Option ${String.fromCharCode(65 + oi)}`} />
                         {q.options.length > LIMITS.optionsMin && (
-                          <button type="button" aria-label={`Remove option ${String.fromCharCode(65 + oi)}`} onClick={() => setQuestion(si, qi, { options: q.options.filter((_, k) => k !== oi), correctIndex: q.correctIndex === oi ? -1 : q.correctIndex > oi ? q.correctIndex - 1 : q.correctIndex })} className="rounded-md p-1.5 text-neutral-400 hover:bg-neutral-100"><X size={14} /></button>
+                          <button type="button" aria-label={`Remove option ${String.fromCharCode(65 + oi)}`} onClick={() => setQuestion(si, qi, { options: q.options.filter((_, k) => k !== oi), correctIndex: q.correctIndex === oi ? -1 : q.correctIndex > oi ? q.correctIndex - 1 : q.correctIndex })} className="rounded-md p-1.5 text-neutral-500 hover:bg-neutral-100"><X size={14} /></button>
                         )}
                       </div>
                     ))}

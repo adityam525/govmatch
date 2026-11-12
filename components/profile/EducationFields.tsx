@@ -132,7 +132,7 @@ function EducationRow({
     <div className="rounded-xl border border-neutral-200 bg-neutral-50/50 p-4">
       <div className="mb-3 flex items-center justify-between">
         <p className="text-xs font-semibold uppercase tracking-wide text-neutral-500">Qualification {index + 1}</p>
-        <button type="button" onClick={onRemove} aria-label={`Remove qualification ${index + 1}`} className="rounded-md p-1.5 text-neutral-400 hover:bg-red-50 hover:text-danger">
+        <button type="button" onClick={onRemove} aria-label={`Remove qualification ${index + 1}`} className="rounded-md p-1.5 text-neutral-500 hover:bg-red-50 hover:text-danger">
           <Trash2 size={15} />
         </button>
       </div>

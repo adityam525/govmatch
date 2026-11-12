@@ -223,7 +223,7 @@ export default function ExamRunner({ attemptId }: { attemptId: string }) {
             ))}
           </ul>
           <button type="button" onClick={() => setSummary(true)} className="mt-5 w-full rounded-md bg-primary-600 py-2.5 text-sm font-semibold text-white hover:bg-primary-700">Submit test</button>
-          <p className="mt-2 text-center text-2xs text-neutral-400">{saveNote}</p>
+          <p className="mt-2 text-center text-2xs text-neutral-500">{saveNote}</p>
         </aside>
       </div>
 

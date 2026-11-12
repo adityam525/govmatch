@@ -75,7 +75,7 @@ export default function ApplicationsPage() {
                   .map((app) => (
                     <div key={app.id} className="bg-white border border-neutral-200 rounded-lg p-3">
                       <p className="text-xs font-semibold text-neutral-900">{app.notification?.title ?? 'Unknown'}</p>
-                      <p className="text-3xs text-neutral-400 mt-0.5">{app.notification?.organization?.name}</p>
+                      <p className="text-3xs text-neutral-500 mt-0.5">{app.notification?.organization?.name}</p>
                       <select
                         value={app.status}
                         onChange={(e) => updateStatus(app.id, e.target.value)}

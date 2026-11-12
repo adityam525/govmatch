@@ -46,7 +46,7 @@ interface JobListItemProps {
 function Cell({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <div className="min-w-0">
-      <p className="text-3xs font-medium uppercase tracking-wide text-neutral-400 md:hidden">{label}</p>
+      <p className="text-3xs font-medium uppercase tracking-wide text-neutral-500 md:hidden">{label}</p>
       <div className="mt-0.5 md:mt-0">{children}</div>
     </div>
   );
@@ -95,7 +95,7 @@ export default function JobListItem({ job, fit, matchPercentage, eligible, verdi
             {job.postTitle && <p className="line-clamp-1 text-xs text-neutral-500">{job.title}</p>}
             <p className="mt-0.5 flex min-w-0 items-center gap-2 text-sm text-neutral-600">
               <span className="truncate">{job.org}</span>
-              <span className="hidden shrink-0 items-center gap-1 text-xs text-neutral-400 sm:inline-flex">
+              <span className="hidden shrink-0 items-center gap-1 text-xs text-neutral-500 sm:inline-flex">
                 <Building2 size={12} /> {categoryLabels[job.category]}
               </span>
             </p>

@@ -70,7 +70,7 @@ export default function NotificationsAdminPage() {
         <div className="flex items-center gap-2">
           <span
             className={`rounded-full px-2 py-0.5 text-xs font-medium ${
-              row.published ? "bg-green-50 text-success" : "bg-amber-50 text-amber-700"
+              row.published ? "bg-green-50 text-green-700" : "bg-amber-50 text-amber-700"
             }`}
           >
             {row.published ? "Published" : "Draft"}
@@ -96,7 +96,7 @@ export default function NotificationsAdminPage() {
         <span
           className={`rounded-full px-2 py-0.5 text-xs font-medium ${
             row.status === "LIVE"
-              ? "bg-green-50 text-success"
+              ? "bg-green-50 text-green-700"
               : row.status === "UPCOMING"
                 ? "bg-primary-50 text-primary-600"
                 : "bg-neutral-100 text-neutral-600"
@@ -136,7 +136,7 @@ export default function NotificationsAdminPage() {
             }`}
           >
             {f.label}{" "}
-            <span className={filter === f.id ? "opacity-80" : "text-neutral-400"}>({counts[f.id]})</span>
+            <span className={filter === f.id ? "opacity-80" : "text-neutral-500"}>({counts[f.id]})</span>
           </button>
         ))}
       </div>

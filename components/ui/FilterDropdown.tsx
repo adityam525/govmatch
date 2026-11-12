@@ -169,7 +169,7 @@ export default function FilterDropdown({
         onClick={() => !disabled && setOpen((o) => !o)}
         className={`w-full flex items-center justify-between gap-2 px-3 py-2 text-xs rounded-lg border transition-colors ${
           disabled
-            ? "bg-neutral-50 border-neutral-200 text-neutral-400 cursor-not-allowed"
+            ? "bg-neutral-50 border-neutral-200 text-neutral-500 cursor-not-allowed"
             : isActive
               ? "bg-primary-50 border-primary-300 text-primary-700"
               : "bg-white border-neutral-300 text-neutral-700 hover:border-neutral-400"
@@ -180,7 +180,7 @@ export default function FilterDropdown({
           {resolvedAllowClear && isActive && (
             <span
               onClick={clearSelection}
-              className="text-neutral-400 hover:text-neutral-600 text-sm leading-none px-0.5"
+              className="text-neutral-500 hover:text-neutral-600 text-sm leading-none px-0.5"
               aria-label={`Clear ${label}`}
             >
               ×
@@ -249,15 +249,15 @@ export default function FilterDropdown({
           ) : (
             <div className="max-h-64 overflow-y-auto px-1">
               {loading ? (
-                <p className="text-xs text-neutral-400 px-3 py-2">Loading...</p>
+                <p className="text-xs text-neutral-500 px-3 py-2">Loading...</p>
               ) : filteredOptions.length === 0 ? (
-                <p className="text-xs text-neutral-400 px-3 py-2">
+                <p className="text-xs text-neutral-500 px-3 py-2">
                   {emptyMessage}
                 </p>
               ) : hasGroups ? (
                 Object.entries(groupedOptions).map(([group, opts]) => (
                   <div key={group} className="mb-1">
-                    <p className="px-3 py-1 text-3xs font-semibold uppercase tracking-wide text-neutral-400">
+                    <p className="px-3 py-1 text-3xs font-semibold uppercase tracking-wide text-neutral-500">
                       {group}
                     </p>
                     {opts.map(renderOption)}

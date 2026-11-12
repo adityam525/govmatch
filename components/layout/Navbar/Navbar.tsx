@@ -59,7 +59,7 @@ export default function Navbar() {
             <p className="text-base md:text-lg font-bold text-neutral-900 leading-none">
               GovMatch
             </p>
-            <p className="text-3xs text-neutral-400 leading-none mt-0.5 hidden sm:block">
+            <p className="text-3xs text-neutral-500 leading-none mt-0.5 hidden sm:block">
               Your Career. Our Mission
             </p>
           </div>

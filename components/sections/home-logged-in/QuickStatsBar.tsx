@@ -8,8 +8,8 @@ import { todayIST } from "@/lib/job-status";
 const TONES = {
   blue: "bg-primary-50 text-primary-600",
   violet: "bg-violet-50 text-accent-purple",
-  orange: "bg-orange-50 text-accent-orange",
-  green: "bg-green-50 text-accent-green",
+  orange: "bg-orange-50 text-orange-700",
+  green: "bg-green-50 text-green-700",
   pink: "bg-pink-50 text-pink-600",
 } as const;
 

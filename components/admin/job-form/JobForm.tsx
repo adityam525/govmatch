@@ -58,7 +58,7 @@ function SectionIndex({ items }: { items: { id: string; label: string; status: S
   return (
     <>
       <nav aria-label="Job sections" className="hidden lg:sticky lg:top-[calc(var(--shell-top,4rem)_+_1.5rem)] lg:block lg:self-start">
-        <p className="mb-2 px-2 text-[11px] font-semibold uppercase tracking-wide text-neutral-400">Sections</p>
+        <p className="mb-2 px-2 text-[11px] font-semibold uppercase tracking-wide text-neutral-500">Sections</p>
         <ul className="space-y-0.5">
           {items.map((item) => (
             <li key={item.id}>
@@ -201,7 +201,7 @@ export default function JobForm({ mode, jobId }: JobFormProps) {
         <div className="min-w-0">
           <h1 className="text-lg font-bold text-neutral-900">{mode === "create" ? "Add job" : "Edit job"}</h1>
           <p className="mt-0.5 flex min-w-0 items-center gap-2 text-xs text-neutral-500">
-            <span className={`shrink-0 rounded-full px-2 py-0.5 font-medium ${b.published ? "bg-green-50 text-success" : "bg-amber-50 text-amber-700"}`}>
+            <span className={`shrink-0 rounded-full px-2 py-0.5 font-medium ${b.published ? "bg-green-50 text-green-700" : "bg-amber-50 text-amber-700"}`}>
               {b.published ? "Published" : "Draft"}
             </span>
             {b.title && <span className="truncate">{b.title}</span>}

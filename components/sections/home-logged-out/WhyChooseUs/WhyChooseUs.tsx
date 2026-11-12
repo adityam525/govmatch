@@ -13,9 +13,9 @@ import {
 // Full class names so Tailwind can see them.
 const TONES = {
   blue: { box: "bg-primary-600/10 text-primary-600", text: "text-primary-600", glow: "bg-primary-600/10" },
-  orange: { box: "bg-accent-orange/10 text-accent-orange", text: "text-accent-orange", glow: "bg-accent-orange/10" },
+  orange: { box: "bg-accent-orange/10 text-orange-700", text: "text-orange-700", glow: "bg-accent-orange/10" },
   purple: { box: "bg-accent-purple/10 text-accent-purple", text: "text-accent-purple", glow: "bg-accent-purple/10" },
-  green: { box: "bg-accent-green/10 text-accent-green", text: "text-accent-green", glow: "bg-accent-green/10" },
+  green: { box: "bg-accent-green/10 text-green-700", text: "text-green-700", glow: "bg-accent-green/10" },
 } as const;
 
 const features = [
@@ -188,7 +188,7 @@ export default function WhyChooseUs() {
                     <Icon size={24} strokeWidth={1.9} aria-hidden="true" />
                   </div>
 
-                  <span className="text-xs font-bold tracking-wider text-neutral-400">
+                  <span className="text-xs font-bold tracking-wider text-neutral-500">
                     0{index + 1}
                   </span>
                 </div>

@@ -42,7 +42,7 @@ export default function ImportTestJsonPage() {
       <p className="mt-1 text-sm text-neutral-600">Saved as a draft. Open it to check it, then publish. <code>answer</code> is a letter (A to E); <code>marks</code> and <code>negativeMarks</code> can be set for the test, a section or a question.</p>
       <input type="file" accept=".json,application/json" className="mt-4 block text-sm" onChange={async (e) => { const f = e.target.files?.[0]; if (f) { setText(await f.text()); setMessage(null); } }} />
       <textarea value={text} onChange={(e) => { setText(e.target.value); setMessage(null); }} rows={16} placeholder="Paste JSON here" className="mt-3 w-full rounded-md border border-neutral-200 p-3 font-mono text-xs outline-none focus:border-primary-500" />
-      {message && <p className={`mt-2 text-sm ${message.ok ? 'text-success' : 'text-danger'}`}>{message.text}</p>}
+      {message && <p className={`mt-2 text-sm ${message.ok ? 'text-green-700' : 'text-danger'}`}>{message.text}</p>}
       <div className="mt-3 flex flex-wrap gap-3">
         <Button type="button" variant="secondary" onClick={prepare} disabled={!text.trim()}>Check</Button>
         <Button type="button" variant="primary" onClick={create} disabled={busy || !text.trim()}>{busy ? 'Saving...' : 'Create draft'}</Button>

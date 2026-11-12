@@ -91,7 +91,7 @@ export default function SearchBar() {
     <div className="relative" ref={containerRef}>
       <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-2">
         <div className="flex-1 flex items-center gap-2 bg-white border border-neutral-200 rounded-lg px-4 py-3">
-          <Search size={18} className="text-neutral-400 shrink-0" />
+          <Search size={18} className="text-neutral-500 shrink-0" />
           <input
             type="text"
             value={query}
@@ -103,7 +103,7 @@ export default function SearchBar() {
             onFocus={() => setShowDropdown(true)}
             onKeyDown={handleKeyDown}
             placeholder="Search for jobs, departments, exams..."
-            className="flex-1 text-sm text-neutral-900 placeholder:text-neutral-400 outline-none"
+            className="flex-1 text-sm text-neutral-900 placeholder:text-neutral-500 outline-none"
             autoComplete="off"
           />
           {loadingSuggestions && <Loader2 size={14} className="text-neutral-300 animate-spin shrink-0" />}
@@ -127,7 +127,7 @@ export default function SearchBar() {
             >
               <div className="min-w-0">
                 <p className="text-sm font-medium text-neutral-900 truncate">{s.title}</p>
-                <p className="text-xs text-neutral-400 truncate">{s.organization}</p>
+                <p className="text-xs text-neutral-500 truncate">{s.organization}</p>
               </div>
             </button>
           ))}

@@ -49,12 +49,12 @@ export default function ResultsFieldArray({ items, onChange, examLevels }: Resul
         </Button>
       </div>
 
-      {items.length === 0 && <p className="text-xs text-neutral-400 mb-3">No results added yet.</p>}
+      {items.length === 0 && <p className="text-xs text-neutral-500 mb-3">No results added yet.</p>}
 
       <div className="space-y-3">
         {items.map((item, i) => (
           <div key={i} className="border border-neutral-200 rounded-lg p-3 relative">
-            <button type="button" onClick={() => remove(i)} className="absolute top-3 right-3 text-neutral-400 hover:text-danger">
+            <button type="button" onClick={() => remove(i)} className="absolute top-3 right-3 text-neutral-500 hover:text-danger">
               <Trash2 size={14} />
             </button>
             <div className="grid md:grid-cols-2 gap-2 pr-6">

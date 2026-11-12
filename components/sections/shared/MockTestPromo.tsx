@@ -16,7 +16,7 @@
 //         <h2 className="text-xl md:text-2xl font-bold text-white leading-tight">
 //           Practice with mock tests built for the exam you're actually taking
 //         </h2>
-//         <p className="text-sm text-neutral-400 mt-3">
+//         <p className="text-sm text-neutral-500 mt-3">
 //           Full-length and sectional tests for SSC, IBPS, RRB and State PSC
 //           patterns — auto-scored with All-India percentile ranking.
 //         </p>
@@ -80,7 +80,7 @@ export default function MockTestPromo() {
             Practice with mock tests you build yourself
           </h2>
 
-          <p className="mt-4 max-w-lg text-sm leading-relaxed text-neutral-400 md:text-base">
+          <p className="mt-4 max-w-lg text-sm leading-relaxed text-neutral-500 md:text-base">
             Create timed tests with your own questions, marks and negative marking, and
             practise on an exam-style screen. Coming soon.
           </p>
@@ -124,7 +124,7 @@ export default function MockTestPromo() {
             {/* Floating Stats */}
             <div className="mb-5 flex justify-between">
               <div>
-                <p className="text-xs text-neutral-400">Average Accuracy</p>
+                <p className="text-xs text-neutral-500">Average Accuracy</p>
                 <p className="mt-1 text-2xl font-bold text-white">82%</p>
               </div>
 
@@ -137,7 +137,7 @@ export default function MockTestPromo() {
             <TopicAccuracyChart />
 
             <div className="mt-5 rounded-xl bg-black/20 p-3">
-              <p className="text-xs text-neutral-400">Performance insight</p>
+              <p className="text-xs text-neutral-500">Performance insight</p>
               <p className="mt-1 text-sm text-neutral-200">
                 Improve weak topics before your next attempt.
               </p>

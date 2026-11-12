@@ -76,7 +76,7 @@ export default function BrowseTable({
                 <Search
                   size={17}
                   aria-hidden="true"
-                  className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-neutral-400"
+                  className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-neutral-500"
                 />
 
                 <input
@@ -88,7 +88,7 @@ export default function BrowseTable({
                   }}
                   placeholder="Search categories..."
                   aria-label="Search categories"
-                  className="h-10 w-full rounded-lg border border-neutral-200 bg-white pl-9 pr-3 text-sm text-neutral-900 outline-none transition placeholder:text-neutral-400 focus:border-blue-400 focus:ring-2 focus:ring-blue-100"
+                  className="h-10 w-full rounded-lg border border-neutral-200 bg-white pl-9 pr-3 text-sm text-neutral-900 outline-none transition placeholder:text-neutral-500 focus:border-blue-400 focus:ring-2 focus:ring-blue-100"
                 />
               </div>
 
@@ -211,7 +211,7 @@ export default function BrowseTable({
                       <span aria-hidden="true">→</span>
                     </a>
 
-                    <span className="text-xs text-neutral-400 md:hidden">
+                    <span className="text-xs text-neutral-500 md:hidden">
                       Open category
                     </span>
                   </div>

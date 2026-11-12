@@ -109,7 +109,7 @@ export default function ContactForm() {
 
                 <User
                   size={18}
-                  className="absolute left-4 top-1/2 -translate-y-1/2 text-neutral-400"
+                  className="absolute left-4 top-1/2 -translate-y-1/2 text-neutral-500"
                 />
 
                 <input
@@ -134,7 +134,7 @@ export default function ContactForm() {
 
                 <Mail
                   size={18}
-                  className="absolute left-4 top-1/2 -translate-y-1/2 text-neutral-400"
+                  className="absolute left-4 top-1/2 -translate-y-1/2 text-neutral-500"
                 />
 
                 <input
@@ -164,7 +164,7 @@ export default function ContactForm() {
 
                 <Pencil
                   size={18}
-                  className="absolute left-4 top-1/2 -translate-y-1/2 text-neutral-400"
+                  className="absolute left-4 top-1/2 -translate-y-1/2 text-neutral-500"
                 />
 
                 <input
@@ -189,7 +189,7 @@ export default function ContactForm() {
 
                 <FolderOpen
                   size={18}
-                  className="absolute left-4 top-1/2 -translate-y-1/2 text-neutral-400"
+                  className="absolute left-4 top-1/2 -translate-y-1/2 text-neutral-500"
                 />
 
                 <select
@@ -216,7 +216,7 @@ export default function ContactForm() {
 
               <MessageSquare
                 size={18}
-                className="absolute left-4 top-5 text-neutral-400"
+                className="absolute left-4 top-5 text-neutral-500"
               />
 
               <textarea

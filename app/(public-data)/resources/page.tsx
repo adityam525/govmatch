@@ -43,7 +43,7 @@ export default function ResourcesPage() {
 
       <Link href="/resources/gate-calculator" className="block">
         <Card hoverable padding="md" className="flex items-center gap-3">
-          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-orange-50 text-accent-orange"><Calculator size={20} aria-hidden /></div>
+          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-orange-50 text-orange-700"><Calculator size={20} aria-hidden /></div>
           <div>
             <p className="text-sm font-semibold text-neutral-900">GATE Score Estimator</p>
             <p className="text-xs text-neutral-600">Estimate where your GATE score stands</p>
@@ -66,9 +66,9 @@ export default function ResourcesPage() {
                   <Card hoverable padding="md" className="flex h-full items-start gap-3">
                     <div className={'flex h-9 w-9 shrink-0 items-center justify-center rounded-lg ' + config.tone}><Icon size={18} aria-hidden /></div>
                     <div className="min-w-0">
-                      <p className="text-xs font-medium text-neutral-400">{config.label}</p>
+                      <p className="text-xs font-medium text-neutral-500">{config.label}</p>
                       <p className="truncate text-sm font-semibold text-neutral-900">{doc.title}</p>
-                      {doc.notification?.title && <p className="mt-0.5 truncate text-xs text-neutral-400">{doc.notification.title}</p>}
+                      {doc.notification?.title && <p className="mt-0.5 truncate text-xs text-neutral-500">{doc.notification.title}</p>}
                     </div>
                   </Card>
                 </a>

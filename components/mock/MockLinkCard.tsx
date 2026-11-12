@@ -71,7 +71,7 @@ export default function MockLinkCard({ testId }: { testId: string }) {
       </div>
       <div className="mt-4 flex items-center gap-3">
         <Button type="button" variant="primary" size="sm" disabled={busy} onClick={save}>{busy ? 'Saving...' : 'Save link'}</Button>
-        {msg && <span className={`text-xs ${msg.ok ? 'text-success' : 'text-danger'}`}>{msg.text}</span>}
+        {msg && <span className={`text-xs ${msg.ok ? 'text-green-700' : 'text-danger'}`}>{msg.text}</span>}
       </div>
     </section>
   );

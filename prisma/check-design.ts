@@ -26,6 +26,16 @@ const walk = (d: string) => { for (const f of fs.readdirSync(d, { withFileTypes:
     hex += (s.match(/#[0-9a-fA-F]{6}\b/g) ?? []).length; px += (s.match(/text-\[\d+px\]/g) ?? []).length;
   } } };
 walk('app'); walk('components');
+// low-contrast text colours must not return (they fail accessibility checks)
+let low = 0;
+const walk2 = (d: string) => { for (const f of fs.readdirSync(d, { withFileTypes: true })) {
+  const p = path.join(d, f.name);
+  if (f.isDirectory()) walk2(p);
+  else if (p.endsWith('.tsx')) low += (fs.readFileSync(p, 'utf8').match(/\btext-(neutral-400|success|accent-orange|accent-green)\b/g) ?? []).length;
+} };
+walk2('app'); walk2('components');
+console.log('low-contrast text classes: ' + low + ' (limit 0)');
+if (low > 0) fail('low-contrast text classes found');
 console.log('hard-coded hex colours: ' + hex + ' (limit ' + BASELINE.hex + '), pixel font sizes: ' + px + ' (limit ' + BASELINE.px + ')');
 if (hex > BASELINE.hex) fail('more hard-coded colours than the limit');
 if (px > BASELINE.px) fail('more pixel font sizes than the limit');

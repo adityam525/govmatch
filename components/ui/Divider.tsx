@@ -13,7 +13,7 @@ export default function Divider({ label, className }: DividerProps) {
   return (
     <div className={clsx("flex items-center gap-3", className)}>
       <hr className="flex-1 border-neutral-200" />
-      <span className="text-xs text-neutral-400">{label}</span>
+      <span className="text-xs text-neutral-500">{label}</span>
       <hr className="flex-1 border-neutral-200" />
     </div>
   );

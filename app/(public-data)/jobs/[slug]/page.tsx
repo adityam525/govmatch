@@ -251,11 +251,11 @@ export default async function JobDetailPage({ params }: PageProps) {
                         {ac.title}
                         {ac.examLevel ? ` (${ac.examLevel.name})` : ""}
                       </p>
-                      <p className="text-3xs text-neutral-400">
+                      <p className="text-3xs text-neutral-500">
                         Admit Card - Released {formatDate(ac.releaseDate)}
                       </p>
                     </div>
-                    <ExternalLink size={14} className="text-neutral-400" />
+                    <ExternalLink size={14} className="text-neutral-500" />
                   </a>
                 ))}
                 {notification.results.map((r: any) => (
@@ -271,11 +271,11 @@ export default async function JobDetailPage({ params }: PageProps) {
                         {r.title}
                         {r.examLevel ? ` (${r.examLevel.name})` : ""}
                       </p>
-                      <p className="text-3xs text-neutral-400">
+                      <p className="text-3xs text-neutral-500">
                         Result - Released {formatDate(r.releaseDate)}
                       </p>
                     </div>
-                    <ExternalLink size={14} className="text-neutral-400" />
+                    <ExternalLink size={14} className="text-neutral-500" />
                   </a>
                 ))}
                 {notification.answerKeys.map((k: any) => (
@@ -291,11 +291,11 @@ export default async function JobDetailPage({ params }: PageProps) {
                         {k.title}
                         {k.examLevel ? ` (${k.examLevel.name})` : ""}
                       </p>
-                      <p className="text-3xs text-neutral-400">
+                      <p className="text-3xs text-neutral-500">
                         Answer Key - Released {formatDate(k.releaseDate)}
                       </p>
                     </div>
-                    <ExternalLink size={14} className="text-neutral-400" />
+                    <ExternalLink size={14} className="text-neutral-500" />
                   </a>
                 ))}
               </div>
@@ -336,7 +336,7 @@ export default async function JobDetailPage({ params }: PageProps) {
           <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
             {dateEntries.map((entry) => (
               <div key={entry.label}>
-                <p className="text-xs text-neutral-400">{entry.label}</p>
+                <p className="text-xs text-neutral-500">{entry.label}</p>
                 <p
                   className={`text-sm font-medium ${entry.label.toLowerCase().includes("last date") ? "text-danger" : "text-neutral-900"}`}
                 >
@@ -358,7 +358,7 @@ export default async function JobDetailPage({ params }: PageProps) {
             <div className="grid grid-cols-2 gap-4">
               {applicationFees.map((fee) => (
                 <div key={fee.id}>
-                  <p className="text-xs text-neutral-400">
+                  <p className="text-xs text-neutral-500">
                     {fee.categoryLabel}
                   </p>
                   <p className="text-sm font-medium text-neutral-900">
@@ -390,7 +390,7 @@ export default async function JobDetailPage({ params }: PageProps) {
               </p>
               {notification.directEligibility ? (
                 <div className="border border-neutral-200 rounded-lg p-4">
-                  <p className="text-3xs text-neutral-400 mb-1.5">
+                  <p className="text-3xs text-neutral-500 mb-1.5">
                     Eligibility Criteria
                   </p>
                   <p className="text-sm text-neutral-900">
@@ -436,7 +436,7 @@ export default async function JobDetailPage({ params }: PageProps) {
 
                       <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mt-3">
                         <div>
-                          <p className="text-3xs text-neutral-400">
+                          <p className="text-3xs text-neutral-500">
                             Vacancies
                           </p>
                           <p className="text-xs font-medium text-neutral-900">
@@ -444,7 +444,7 @@ export default async function JobDetailPage({ params }: PageProps) {
                           </p>
                         </div>
                         <div>
-                          <p className="text-3xs text-neutral-400">
+                          <p className="text-3xs text-neutral-500">
                             Qualification
                           </p>
                           <p className="text-xs font-medium text-neutral-900">
@@ -452,7 +452,7 @@ export default async function JobDetailPage({ params }: PageProps) {
                           </p>
                         </div>
                         <div>
-                          <p className="text-3xs text-neutral-400">
+                          <p className="text-3xs text-neutral-500">
                             Age Limit
                           </p>
                           <p className="text-xs font-medium text-neutral-900">
@@ -462,7 +462,7 @@ export default async function JobDetailPage({ params }: PageProps) {
                           </p>
                         </div>
                         <div>
-                          <p className="text-3xs text-neutral-400">
+                          <p className="text-3xs text-neutral-500">
                             Pay Scale
                           </p>
                           <p className="text-xs font-medium text-neutral-900">
@@ -490,7 +490,7 @@ export default async function JobDetailPage({ params }: PageProps) {
                         {branches.map((branch: any) => (
                           <span
                             key={branch.id}
-                            className="text-3xs bg-green-50 text-success px-2 py-1 rounded-full"
+                            className="text-3xs bg-green-50 text-green-700 px-2 py-1 rounded-full"
                           >
                             {branch.name}
                           </span>
@@ -502,9 +502,9 @@ export default async function JobDetailPage({ params }: PageProps) {
                           <div className="flex items-center gap-1.5 mb-1">
                             <GraduationCap
                               size={12}
-                              className="text-neutral-400"
+                              className="text-neutral-500"
                             />
-                            <p className="text-3xs text-neutral-400">
+                            <p className="text-3xs text-neutral-500">
                               Education Criteria
                             </p>
                           </div>
@@ -517,7 +517,7 @@ export default async function JobDetailPage({ params }: PageProps) {
                       {ageRelaxation &&
                         Object.keys(ageRelaxation).length > 0 && (
                           <div className="mt-3 pt-3 border-t border-neutral-100">
-                            <p className="text-3xs text-neutral-400 mb-1.5">
+                            <p className="text-3xs text-neutral-500 mb-1.5">
                               Age Relaxation
                             </p>
                             <div className="flex flex-wrap gap-2">
@@ -539,8 +539,8 @@ export default async function JobDetailPage({ params }: PageProps) {
                         Object.keys(physicalCriteria).length > 0 && (
                           <div className="mt-3 pt-3 border-t border-neutral-100">
                             <div className="flex items-center gap-1.5 mb-1.5">
-                              <Ruler size={12} className="text-neutral-400" />
-                              <p className="text-3xs text-neutral-400">
+                              <Ruler size={12} className="text-neutral-500" />
+                              <p className="text-3xs text-neutral-500">
                                 Physical Criteria
                               </p>
                             </div>
@@ -549,7 +549,7 @@ export default async function JobDetailPage({ params }: PageProps) {
                                 ([label, value]) => (
                                   <span
                                     key={label}
-                                    className="text-3xs bg-orange-50 text-accent-orange px-2 py-1 rounded-full"
+                                    className="text-3xs bg-orange-50 text-orange-700 px-2 py-1 rounded-full"
                                   >
                                     {label}: {value}
                                   </span>
@@ -561,7 +561,7 @@ export default async function JobDetailPage({ params }: PageProps) {
 
                       {post.categoryWiseVacancies && (
                         <div className="mt-3 pt-3 border-t border-neutral-100">
-                          <p className="text-3xs text-neutral-400 mb-1.5">
+                          <p className="text-3xs text-neutral-500 mb-1.5">
                             Category-wise Vacancies
                           </p>
                           <div className="flex flex-wrap gap-2">
@@ -649,7 +649,7 @@ export default async function JobDetailPage({ params }: PageProps) {
                     {link.label || LINK_LABELS[link.linkType]}
                   </span>
 
-                  <ExternalLink size={14} className="text-neutral-400" />
+                  <ExternalLink size={14} className="text-neutral-500" />
                 </a>
               ))
             ) : notification?.officialLink ? (
@@ -663,7 +663,7 @@ export default async function JobDetailPage({ params }: PageProps) {
                   Official Notification / Apply Online
                 </span>
 
-                <ExternalLink size={14} className="text-neutral-400" />
+                <ExternalLink size={14} className="text-neutral-500" />
               </a>
             ) : (
               <p className="text-sm text-neutral-500">

@@ -42,7 +42,7 @@ export default function ImportTemplatesPage() {
     } finally { setBusy(false); }
   };
 
-  const tone: Record<string, string> = { created: 'bg-green-50 text-success', valid: 'bg-blue-50 text-primary-600', duplicate: 'bg-amber-50 text-amber-700', error: 'bg-red-50 text-danger' };
+  const tone: Record<string, string> = { created: 'bg-green-50 text-green-700', valid: 'bg-blue-50 text-primary-600', duplicate: 'bg-amber-50 text-amber-700', error: 'bg-red-50 text-danger' };
   return (
     <div className="mx-auto max-w-3xl p-4 sm:p-6">
       <h1 className="text-lg font-bold text-neutral-900">Import question templates</h1>

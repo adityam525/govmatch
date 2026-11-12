@@ -33,7 +33,7 @@ export default function FAQsFieldArray({ faqs, onChange }: FAQsFieldArrayProps) 
       </div>
 
       {faqs.length === 0 && (
-        <p className="text-xs text-neutral-400 mb-3">No FAQs added yet.</p>
+        <p className="text-xs text-neutral-500 mb-3">No FAQs added yet.</p>
       )}
 
       <div className="space-y-3">
@@ -42,7 +42,7 @@ export default function FAQsFieldArray({ faqs, onChange }: FAQsFieldArrayProps) 
             <button
               type="button"
               onClick={() => remove(i)}
-              className="absolute top-3 right-3 text-neutral-400 hover:text-danger"
+              className="absolute top-3 right-3 text-neutral-500 hover:text-danger"
             >
               <Trash2 size={14} />
             </button>

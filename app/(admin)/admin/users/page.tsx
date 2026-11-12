@@ -115,7 +115,7 @@ export default function AdminUsersPage() {
       <Card padding="lg">
         <div className="mb-4 flex items-center justify-between">
           <h2 className="text-lg font-bold text-neutral-900">Users</h2>
-          <p className="text-xs text-neutral-400">{users.length} total</p>
+          <p className="text-xs text-neutral-500">{users.length} total</p>
         </div>
 
         {error && <p className="mb-3 text-sm text-danger">{error}</p>}
@@ -136,9 +136,9 @@ export default function AdminUsersPage() {
             </thead>
             <tbody>
               {loading ? (
-                <tr><td colSpan={7} className="py-8 text-center text-neutral-400">Loading...</td></tr>
+                <tr><td colSpan={7} className="py-8 text-center text-neutral-500">Loading...</td></tr>
               ) : users.length === 0 ? (
-                <tr><td colSpan={7} className="py-8 text-center text-neutral-400">No users found.</td></tr>
+                <tr><td colSpan={7} className="py-8 text-center text-neutral-500">No users found.</td></tr>
               ) : (
                 users.map((u) => {
                   const plan = planState(u.subscription);
@@ -203,7 +203,7 @@ export default function AdminUsersPage() {
                       <td className="px-4 py-2.5">
                         <span
                           className={`rounded-full px-2 py-0.5 text-xs ${
-                            u.isActive ? 'bg-green-50 text-success' : 'bg-red-50 text-danger'
+                            u.isActive ? 'bg-green-50 text-green-700' : 'bg-red-50 text-danger'
                           }`}
                         >
                           {u.isActive ? 'Active' : 'Deactivated'}
@@ -216,7 +216,7 @@ export default function AdminUsersPage() {
                           className={`rounded-md border px-3 py-1.5 text-xs disabled:opacity-50 ${
                             u.isActive
                               ? 'border-red-200 text-danger hover:bg-red-50'
-                              : 'border-green-200 text-success hover:bg-green-50'
+                              : 'border-green-200 text-green-700 hover:bg-green-50'
                           }`}
                         >
                           {busyId === u.id ? '...' : u.isActive ? 'Deactivate' : 'Activate'}
