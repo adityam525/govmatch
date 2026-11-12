@@ -42,18 +42,18 @@ export default function ApplicationsPage() {
     setApplications((prev) => prev.map((a) => (a.id === id ? { ...a, status } : a)));
   };
 
-  if (authLoading) return <div className="max-w-6xl mx-auto px-6 py-8 text-sm text-neutral-600">Loading...</div>;
+  if (authLoading) return <div className="page-x mx-auto w-full max-w-6xl py-8 text-sm text-neutral-600">Loading...</div>;
   if (!isLoggedIn) {
     return (
-      <div className="max-w-6xl mx-auto px-6 py-8">
+      <div className="page-x mx-auto w-full max-w-6xl py-8">
         <Card padding="lg"><p className="text-sm text-neutral-600">Please log in to view your applications.</p></Card>
       </div>
     );
   }
 
   return (
-    <div className="max-w-6xl mx-auto px-6 py-8">
-      <h1 className="text-lg font-bold text-neutral-900 mb-1">My Applications</h1>
+    <div className="page-x mx-auto w-full max-w-6xl py-8">
+      <h1 className="page-title text-neutral-900 mb-1">My Applications</h1>
       <p className="text-sm text-neutral-600 mb-6">Track every application from apply to result.</p>
 
       {loading ? (

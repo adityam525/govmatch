@@ -38,9 +38,9 @@ const plans = [
 
 export default function PricingPage() {
   return (
-    <div className="max-w-3xl mx-auto px-6 py-12">
+    <div className="page-x mx-auto w-full max-w-3xl py-12">
       <div className="text-center">
-        <h1 className="text-2xl font-bold text-neutral-900">Plans</h1>
+        <h1 className="page-title text-neutral-900">Plans</h1>
         <p className="text-sm text-neutral-600 mt-2">Free is complete for finding and tracking jobs. Premium adds tools for serious preparation.</p>
       </div>
 
