@@ -171,7 +171,7 @@ export default async function JobDetailPage({ params }: PageProps) {
       : null;
 
   return (
-    <div className="max-w-7xl mx-auto px-6 py-8 grid lg:grid-cols-10 gap-6 items-start">
+    <div className="page-x mx-auto w-full max-w-7xl py-8 grid lg:grid-cols-10 gap-6 items-start">
       {jobLd && (
         // "<" is escaped so the data cannot close the script tag.
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jobLd).replace(/</g, "\\u003c") }} />
@@ -181,7 +181,7 @@ export default async function JobDetailPage({ params }: PageProps) {
       </div>
       <div className="lg:col-span-7 space-y-6">
         <Card padding="lg">
-          <h1 className="text-xl font-bold text-neutral-900">
+          <h1 className="page-title text-neutral-900">
             {notification.title}
           </h1>
           <p className="text-sm text-neutral-600 mt-1">
@@ -234,7 +234,7 @@ export default async function JobDetailPage({ params }: PageProps) {
           notification.answerKeys.length > 0) && (
           <Card padding="lg">
             <div id="exam-updates" className="scroll-mt-24">
-              <h2 className="text-sm font-bold text-neutral-900 mb-4">
+              <h2 className="text-base font-bold text-neutral-900 mb-4">
                 Exam Lifecycle Updates
               </h2>
               <div className="space-y-4">
@@ -307,7 +307,7 @@ export default async function JobDetailPage({ params }: PageProps) {
           <Card padding="lg">
             <div className="flex items-center gap-2 mb-4">
               <ListChecks size={18} className="text-primary-600" />
-              <h2 className="text-sm font-bold text-neutral-900">
+              <h2 className="text-base font-bold text-neutral-900">
                 Exam Stages
               </h2>
             </div>
@@ -329,7 +329,7 @@ export default async function JobDetailPage({ params }: PageProps) {
         <Card padding="lg">
           <div className="flex items-center gap-2 mb-4">
             <CalendarDays size={18} className="text-primary-600" />
-            <h2 className="text-sm font-bold text-neutral-900">
+            <h2 className="text-base font-bold text-neutral-900">
               Important Dates
             </h2>
           </div>
@@ -351,7 +351,7 @@ export default async function JobDetailPage({ params }: PageProps) {
           <Card padding="lg">
             <div className="flex items-center gap-2 mb-4">
               <IndianRupee size={18} className="text-primary-600" />
-              <h2 className="text-sm font-bold text-neutral-900">
+              <h2 className="text-base font-bold text-neutral-900">
                 Application Fee
               </h2>
             </div>
@@ -373,7 +373,7 @@ export default async function JobDetailPage({ params }: PageProps) {
         <Card padding="lg">
           <div className="flex items-center gap-2 mb-4">
             <Users size={18} className="text-primary-600" />
-            <h2 className="text-sm font-bold text-neutral-900">
+            <h2 className="text-base font-bold text-neutral-900">
               Vacancy and Eligibility Details
             </h2>
           </div>
@@ -593,7 +593,7 @@ export default async function JobDetailPage({ params }: PageProps) {
           <Card padding="lg">
             <div className="flex items-center gap-2 mb-4">
               <ListChecks size={18} className="text-primary-600" />
-              <h2 className="text-sm font-bold text-neutral-900">
+              <h2 className="text-base font-bold text-neutral-900">
                 Selection Process
               </h2>
             </div>
@@ -616,7 +616,7 @@ export default async function JobDetailPage({ params }: PageProps) {
           <Card padding="lg">
             <div className="flex items-center gap-2 mb-4">
               <ShieldCheck size={18} className="text-primary-600" />
-              <h2 className="text-sm font-bold text-neutral-900">
+              <h2 className="text-base font-bold text-neutral-900">
                 How to Apply
               </h2>
             </div>
@@ -631,7 +631,7 @@ export default async function JobDetailPage({ params }: PageProps) {
         <ScheduleSection schedule={schedule} />
 
         <Card padding="lg">
-          <h2 className="text-sm font-bold text-neutral-900 mb-4">
+          <h2 className="text-base font-bold text-neutral-900 mb-4">
             Important Links
           </h2>
 
@@ -674,7 +674,7 @@ export default async function JobDetailPage({ params }: PageProps) {
         </Card>
 
         <Card padding="lg">
-          <h2 className="text-sm font-bold text-neutral-900 mb-4">
+          <h2 className="text-base font-bold text-neutral-900 mb-4">
             Frequently Asked Questions
           </h2>
           <div className="space-y-4">

@@ -183,10 +183,10 @@ export default async function DashboardPage() {
   }
 
   return (
-    <div className="mx-auto w-full max-w-6xl px-4 py-6 sm:px-6 lg:py-8">
+    <div className="page-x mx-auto w-full max-w-6xl py-6 lg:py-8">
       <div className="flex flex-wrap items-start justify-between gap-3">
         <div className="min-w-0">
-          <h1 className="text-xl font-bold text-neutral-900">Welcome back, {firstName}</h1>
+          <h1 className="page-title text-neutral-900">Welcome back, {firstName}</h1>
           <p className="mt-1 text-sm text-neutral-600">Here is where your job search stands today.</p>
         </div>
         <div className="flex flex-wrap items-center gap-2">
