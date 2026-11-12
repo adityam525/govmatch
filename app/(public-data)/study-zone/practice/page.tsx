@@ -81,7 +81,7 @@ export default function PracticePage() {
   if (!isLoggedIn) {
     return (
       <div className="mx-auto max-w-xl px-6 py-16 text-center">
-        <h1 className="text-xl font-bold text-neutral-900">Practice by topic</h1>
+        <h1 className="page-title text-neutral-900">Practice by topic</h1>
         <p className="mt-2 text-sm text-neutral-600">Log in to build practice sets from the question bank.</p>
         <Link href="/login" className="mt-5 inline-block rounded-lg bg-primary-600 px-5 py-2.5 text-sm font-semibold text-white hover:bg-primary-700">Log in</Link>
       </div>
@@ -92,7 +92,7 @@ export default function PracticePage() {
   return (
     <div className="page-x mx-auto w-full max-w-4xl space-y-6 py-8">
       <div>
-        <h1 className="text-xl font-bold text-neutral-900">Practice by topic</h1>
+        <h1 className="page-title text-neutral-900">Practice by topic</h1>
         <p className="mt-1 text-sm text-neutral-600">Every question has fresh numbers each time, with a worked explanation after the test.</p>
         {left !== null && (
           <p role="status" className={'mt-3 rounded-lg border px-4 py-3 text-sm font-semibold ' + (left === 0 ? 'border-red-200 bg-red-50 text-red-700' : left === 1 ? 'border-amber-200 bg-amber-50 text-amber-800' : 'border-primary-200 bg-primary-50 text-primary-700')}>
