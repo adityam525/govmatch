@@ -38,9 +38,9 @@ const plans = [
 
 export default function PricingPage() {
   return (
-    <div className="max-w-3xl mx-auto px-6 py-12">
+    <div className="page-x mx-auto w-full max-w-3xl py-12">
       <div className="text-center">
-        <h1 className="text-2xl font-bold text-neutral-900">Plans</h1>
+        <h1 className="page-title text-neutral-900">Plans</h1>
         <p className="text-sm text-neutral-600 mt-2">Free is complete for finding and tracking jobs. Premium adds tools for serious preparation.</p>
       </div>
 
@@ -50,12 +50,12 @@ export default function PricingPage() {
             <p className="text-sm font-semibold text-neutral-900">{plan.name}</p>
             <p className="mt-2">
               <span className="text-2xl font-bold text-neutral-900">{plan.price}</span>
-              {plan.period && <span className="text-sm text-neutral-400"> {plan.period}</span>}
+              {plan.period && <span className="text-sm text-neutral-500"> {plan.period}</span>}
             </p>
             <ul className="space-y-2 mt-5">
               {plan.features.map((f) => (
                 <li key={f} className="flex items-start gap-2 text-xs text-neutral-600">
-                  <Check size={14} className="text-success mt-0.5 shrink-0" />
+                  <Check size={14} className="text-green-700 mt-0.5 shrink-0" />
                   {f}
                 </li>
               ))}

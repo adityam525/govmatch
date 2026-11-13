@@ -46,7 +46,7 @@ export default function AdminSidebar() {
         {navSections.map((section, i) => (
           <div key={i} className="flex shrink-0 gap-1 md:block md:space-y-0.5">
             {section.label && (
-              <p className="hidden px-3 pb-1 pt-2 text-[10px] font-semibold uppercase tracking-wide text-neutral-400 md:block">
+              <p className="hidden px-3 pb-1 pt-2 text-[10px] font-semibold uppercase tracking-wide text-neutral-500 md:block">
                 {section.label}
               </p>
             )}

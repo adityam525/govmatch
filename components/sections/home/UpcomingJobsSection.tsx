@@ -79,7 +79,7 @@ function UpcomingCard({ job, today }: { job: PublishedJob; today: Date }) {
           </div>
 
           {end && (
-            <p className="mt-2 text-2xs text-neutral-400">
+            <p className="mt-2 text-2xs text-neutral-500">
               Last date {formatShortDate(end)}
             </p>
           )}

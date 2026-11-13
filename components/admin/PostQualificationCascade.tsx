@@ -77,7 +77,7 @@ function SingleQualificationRow({
   return (
     <div className="border border-neutral-200 rounded-lg p-3 relative">
       {showRemove && (
-        <button type="button" onClick={onRemove} className="absolute top-2 right-2 text-neutral-400 hover:text-danger">
+        <button type="button" onClick={onRemove} className="absolute top-2 right-2 text-neutral-500 hover:text-danger">
           <X size={14} />
         </button>
       )}

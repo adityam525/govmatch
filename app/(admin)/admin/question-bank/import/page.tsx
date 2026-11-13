@@ -42,10 +42,10 @@ export default function ImportTemplatesPage() {
     } finally { setBusy(false); }
   };
 
-  const tone: Record<string, string> = { created: 'bg-green-50 text-success', valid: 'bg-blue-50 text-primary-600', duplicate: 'bg-amber-50 text-amber-700', error: 'bg-red-50 text-danger' };
+  const tone: Record<string, string> = { created: 'bg-green-50 text-green-700', valid: 'bg-blue-50 text-primary-600', duplicate: 'bg-amber-50 text-amber-700', error: 'bg-red-50 text-danger' };
   return (
     <div className="mx-auto max-w-3xl p-4 sm:p-6">
-      <h1 className="text-lg font-bold text-neutral-900">Import question templates</h1>
+      <h1 className="text-xl font-bold text-neutral-900">Import question templates</h1>
       <p className="mt-1 text-sm text-neutral-600">Give each template its chapter and topic by name. Every template is checked with 200 trial draws. Ones with errors are not saved.</p>
       <input type="file" accept=".json,application/json" className="mt-4 block text-sm" onChange={async (e) => { const f = e.target.files?.[0]; if (f) { setText(await f.text()); setResults(null); setMessage(''); } }} />
       <textarea value={text} onChange={(e) => setText(e.target.value)} rows={16} placeholder="Paste JSON here" className="mt-3 w-full rounded-md border border-neutral-200 p-3 font-mono text-xs outline-none focus:border-primary-500" />

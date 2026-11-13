@@ -48,7 +48,7 @@ export default function PreferencesFields({
 
       <div className="mt-4">
         <p className="mb-2 text-xs font-medium text-neutral-600">
-          Preferred roles <span className="text-neutral-400">(boosts matching jobs, never hides others)</span>
+          Preferred roles <span className="text-neutral-500">(boosts matching jobs, never hides others)</span>
         </p>
         <div className="flex flex-wrap gap-2">
           {roles.map((r) => (
@@ -61,7 +61,7 @@ export default function PreferencesFields({
 
       <div className="mt-5">
         <p className="mb-2 text-xs font-medium text-neutral-600">
-          Job type <span className="text-neutral-400">(if you pick any, other types will show as not matching)</span>
+          Job type <span className="text-neutral-500">(if you pick any, other types will show as not matching)</span>
         </p>
         <div className="flex flex-wrap gap-2">
           {EMPLOYMENT_TYPES.map((t) => (

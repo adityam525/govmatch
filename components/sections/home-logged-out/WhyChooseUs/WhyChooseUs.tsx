@@ -10,12 +10,18 @@ import {
   ArrowUpRight,
 } from "lucide-react";
 
-import { colors } from "@/styles/tokens";
+// Full class names so Tailwind can see them.
+const TONES = {
+  blue: { box: "bg-primary-600/10 text-primary-600", text: "text-primary-600", glow: "bg-primary-600/10" },
+  orange: { box: "bg-accent-orange/10 text-orange-700", text: "text-orange-700", glow: "bg-accent-orange/10" },
+  purple: { box: "bg-accent-purple/10 text-accent-purple", text: "text-accent-purple", glow: "bg-accent-purple/10" },
+  green: { box: "bg-accent-green/10 text-green-700", text: "text-green-700", glow: "bg-accent-green/10" },
+} as const;
 
 const features = [
   {
     icon: UserCheck,
-    iconBg: colors.primary[600],
+    tone: TONES.blue,
     title: "Personalized Matches",
     description:
       "Discover government jobs based on your profile, qualification and eligibility.",
@@ -24,7 +30,7 @@ const features = [
   },
   {
     icon: Bell,
-    iconBg: colors.accent.orange,
+    tone: TONES.orange,
     title: "Smart Job Alerts",
     description:
       "Never miss important notifications, application deadlines or exam updates.",
@@ -32,7 +38,7 @@ const features = [
   },
   {
     icon: BookOpen,
-    iconBg: colors.accent.purple,
+    tone: TONES.purple,
     title: "Complete Preparation",
     description:
       "Practice with mock tests, previous papers and useful study resources.",
@@ -40,7 +46,7 @@ const features = [
   },
   {
     icon: ClipboardList,
-    iconBg: colors.accent.green,
+    tone: TONES.green,
     title: "Application Tracker",
     description:
       "Manage your applications, important deadlines and progress in one place.",
@@ -48,7 +54,7 @@ const features = [
   },
   {
     icon: ShieldCheck,
-    iconBg: colors.primary[600],
+    tone: TONES.blue,
     title: "Trusted Information",
     description:
       "Get reliable updates collected from official government sources.",
@@ -159,13 +165,8 @@ export default function WhyChooseUs() {
                   "pointer-events-none absolute rounded-full blur-3xl transition-transform duration-500 group-hover:scale-125",
                   isFeatured
                     ? "-right-12 -top-20 h-64 w-64 bg-primary-200/30"
-                    : "-right-10 -top-10 h-32 w-32 opacity-40",
+                    : "-right-10 -top-10 h-32 w-32 opacity-40 " + feature.tone.glow,
                 ].join(" ")}
-                style={
-                  !isFeatured
-                    ? { backgroundColor: `${feature.iconBg}18` }
-                    : undefined
-                }
               />
 
               {/* Featured and Supporting Cards */}
@@ -181,16 +182,13 @@ export default function WhyChooseUs() {
                     className={[
                       "flex h-11 w-11 shrink-0 items-center justify-center rounded-xl transition-transform duration-300 group-hover:scale-110",
                       isFeatured ? "shadow-sm" : "",
+                      feature.tone.box,
                     ].join(" ")}
-                    style={{
-                      backgroundColor: `${feature.iconBg}18`,
-                      color: feature.iconBg,
-                    }}
                   >
                     <Icon size={24} strokeWidth={1.9} aria-hidden="true" />
                   </div>
 
-                  <span className="text-xs font-bold tracking-wider text-neutral-400">
+                  <span className="text-xs font-bold tracking-wider text-neutral-500">
                     0{index + 1}
                   </span>
                 </div>
@@ -198,8 +196,7 @@ export default function WhyChooseUs() {
                 {/* Feature Content */}
                 <div className="mt-4 sm:mt-5">
                   <p
-                    className="mb-1.5 text-xs font-bold tracking-wider"
-                    style={{ color: feature.iconBg }}
+                    className={"mb-1.5 text-xs font-bold tracking-wider " + feature.tone.text}
                   >
                     {feature.eyebrow}
                   </p>

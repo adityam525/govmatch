@@ -35,7 +35,7 @@ export default function DataTable<T extends { id: string }>({
         <div>
           <h2 className="text-lg font-bold text-neutral-900">{title}</h2>
           {!loading && (
-            <p className="text-xs text-neutral-400 mt-0.5">{rows.length} total</p>
+            <p className="text-xs text-neutral-500 mt-0.5">{rows.length} total</p>
           )}
         </div>
         <Link href={`${basePath}/new`}>
@@ -66,7 +66,7 @@ export default function DataTable<T extends { id: string }>({
               <tr>
                 <td
                   colSpan={columns.length + 1}
-                  className="text-center py-12 text-neutral-400 text-sm"
+                  className="text-center py-12 text-neutral-500 text-sm"
                 >
                   Loading...
                 </td>
@@ -75,7 +75,7 @@ export default function DataTable<T extends { id: string }>({
               <tr>
                 <td
                   colSpan={columns.length + 1}
-                  className="text-center py-12 text-neutral-400 text-sm"
+                  className="text-center py-12 text-neutral-500 text-sm"
                 >
                   No records found. Click "Add New" to create one.
                 </td>
@@ -102,7 +102,7 @@ export default function DataTable<T extends { id: string }>({
                       <Link href={`${basePath}/${row.id}`}>
                         <button
                           onClick={(e) => e.stopPropagation()}
-                          className="p-1.5 text-neutral-400 hover:text-primary-600 hover:bg-primary-50 rounded-md transition-colors"
+                          className="p-1.5 text-neutral-500 hover:text-primary-600 hover:bg-primary-50 rounded-md transition-colors"
                         >
                           <Pencil size={14} />
                         </button>
@@ -113,7 +113,7 @@ export default function DataTable<T extends { id: string }>({
                             e.stopPropagation();
                             onDelete(row.id);
                           }}
-                          className="p-1.5 text-neutral-400 hover:text-danger hover:bg-red-50 rounded-md transition-colors"
+                          className="p-1.5 text-neutral-500 hover:text-danger hover:bg-red-50 rounded-md transition-colors"
                         >
                           <Trash2 size={14} />
                         </button>

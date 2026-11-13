@@ -293,7 +293,7 @@ export default function TemplateEditor({ id }: { id?: string }) {
             type="button"
             aria-label="Remove"
             onClick={() => set(items.filter((_, k) => k !== i))}
-            className="rounded-md p-2 text-neutral-400 hover:bg-red-50 hover:text-danger"
+            className="rounded-md p-2 text-neutral-500 hover:bg-red-50 hover:text-danger"
           >
             <Trash2 size={14} />
           </button>
@@ -574,7 +574,7 @@ export default function TemplateEditor({ id }: { id?: string }) {
                 type="button"
                 aria-label="Remove variable"
                 onClick={() => setVars(vars.filter((_, k) => k !== i))}
-                className="justify-self-end rounded-md p-2 text-neutral-400 hover:bg-red-50 hover:text-danger"
+                className="justify-self-end rounded-md p-2 text-neutral-500 hover:bg-red-50 hover:text-danger"
               >
                 <Trash2 size={14} />
               </button>
@@ -634,7 +634,7 @@ export default function TemplateEditor({ id }: { id?: string }) {
                 type="button"
                 aria-label="Remove"
                 onClick={() => setDerived(derived.filter((_, k) => k !== i))}
-                className="rounded-md p-2 text-neutral-400 hover:bg-red-50 hover:text-danger"
+                className="rounded-md p-2 text-neutral-500 hover:bg-red-50 hover:text-danger"
               >
                 <Trash2 size={14} />
               </button>
@@ -733,7 +733,7 @@ export default function TemplateEditor({ id }: { id?: string }) {
           <p
             className={
               "mt-2 text-sm font-medium " +
-              (report.ok ? "text-success" : "text-danger")
+              (report.ok ? "text-green-700" : "text-danger")
             }
           >
             {report.ok ? "Passed." : "Not ready."}

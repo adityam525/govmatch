@@ -90,7 +90,7 @@ function SectionIndex({
              rounded-xl border border-gray-200
              bg-gray-50 p-3 shadow-sm"
       >
-        <p className="mb-2 px-2 text-2xs font-semibold uppercase tracking-wide text-neutral-400">
+        <p className="mb-2 px-2 text-2xs font-semibold uppercase tracking-wide text-neutral-500">
           Sections
         </p>
         <ul className="space-y-0.5">
@@ -454,7 +454,7 @@ export default function ProfilePage() {
   }
   if (!isLoggedIn) {
     return (
-      <div className="mx-auto max-w-5xl px-4 py-8 sm:px-6">
+      <div className="page-x mx-auto w-full max-w-5xl py-8">
         <Card padding="lg">
           <p className="text-sm text-neutral-600">
             Please log in to view your profile.
@@ -473,14 +473,14 @@ export default function ProfilePage() {
         e.preventDefault();
         save();
       }}
-      className="mx-auto max-w-5xl px-4 pt-6 sm:px-6 lg:pt-8"
+      className="page-x mx-auto w-full max-w-5xl pt-6 lg:pt-8"
     >
       <section
         className={`rounded-2xl border p-4 sm:p-5 ${blocked ? "border-amber-200 bg-amber-50" : "border-green-200 bg-green-50"}`}
       >
         <div className="flex items-start justify-between gap-4">
           <div className="min-w-0">
-            <h1 className="text-lg font-bold text-neutral-900">My Profile</h1>
+            <h1 className="page-title text-neutral-900">My Profile</h1>
             <p className="mt-1 text-sm text-neutral-700">
               {blocked
                 ? `Still needed for job matching: ${completeness.requiredMissing.join(", ")}.`
@@ -566,7 +566,7 @@ export default function ProfilePage() {
                 }}
               />
             ) : (
-              <p className="mt-6 text-sm text-neutral-400">
+              <p className="mt-6 text-sm text-neutral-500">
                 Loading your education...
               </p>
             )}
@@ -621,7 +621,7 @@ export default function ProfilePage() {
           </Button>
           {message ? (
             <span
-              className={`text-xs ${message.kind === "ok" ? "text-success" : "text-danger"}`}
+              className={`text-xs ${message.kind === "ok" ? "text-green-700" : "text-danger"}`}
             >
               {message.text}
             </span>

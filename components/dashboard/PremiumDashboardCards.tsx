@@ -66,7 +66,7 @@ export default function PremiumDashboardCards() {
       <div className="mb-3 flex items-center gap-2">
         <BellRing size={16} className="text-primary-600" />
         <h2 className="text-sm font-bold text-neutral-900">Deadline reminders</h2>
-        <span className="text-xs text-neutral-400">saved jobs closing within {WINDOW_DAYS} days</span>
+        <span className="text-xs text-neutral-500">saved jobs closing within {WINDOW_DAYS} days</span>
       </div>
 
       {due.length === 0 ? (

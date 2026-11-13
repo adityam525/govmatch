@@ -108,7 +108,7 @@ export default function ExtraProfileFields({ value, onChange }: { value: ExtraSt
 
         <div className="mt-4">
           <p className="mb-2 text-xs font-medium text-neutral-600">
-            States where you would work <span className="text-neutral-400">({value.preferredStateCodes.length} selected)</span>
+            States where you would work <span className="text-neutral-500">({value.preferredStateCodes.length} selected)</span>
           </p>
           <div className="flex flex-wrap gap-1.5">
             {states.map((s) => {

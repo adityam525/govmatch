@@ -64,7 +64,7 @@ export default function SyllabusPage() {
   return (
     <div className="mx-auto max-w-4xl space-y-6 p-4 sm:p-6">
       <div>
-        <h1 className="text-lg font-bold text-neutral-900">Exam syllabus</h1>
+        <h1 className="text-xl font-bold text-neutral-900">Exam syllabus</h1>
         <p className="mt-1 text-sm text-neutral-600">Choose the topics each exam and stage covers. Learners filter the question bank by these.</p>
         <p className="mt-1 text-xs text-amber-700">The starting mapping was drafted from the general shape of each exam. Check it against the latest official notice.</p>
       </div>
@@ -92,7 +92,7 @@ export default function SyllabusPage() {
                     <div key={c.id}>
                       <label className="flex items-center gap-2 text-sm font-medium text-neutral-800">
                         <input type="checkbox" checked={count === c.topics.length} ref={(el) => { if (el) el.indeterminate = count > 0 && count < c.topics.length; }} onChange={() => toggleChapter(c)} className="accent-primary-600" />
-                        {c.name} <span className="text-xs font-normal text-neutral-400">{count}/{c.topics.length}</span>
+                        {c.name} <span className="text-xs font-normal text-neutral-500">{count}/{c.topics.length}</span>
                       </label>
                       <ul className="ml-6 mt-1 space-y-0.5">
                         {c.topics.map((t) => (

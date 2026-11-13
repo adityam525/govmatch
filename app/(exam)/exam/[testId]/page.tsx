@@ -83,9 +83,9 @@ export default function ExamInstructionsPage() {
   ];
 
   return (
-    <div className="mx-auto max-w-3xl p-4 sm:p-8">
+    <div className="page-x mx-auto w-full max-w-3xl py-6 sm:py-8">
       <div className="rounded-2xl border border-neutral-200 bg-white p-6 shadow-sm">
-        <h1 className="text-xl font-bold text-neutral-900">{info.title}</h1>
+        <h1 className="page-title text-neutral-900">{info.title}</h1>
         {info.description && <p className="mt-1 text-sm text-neutral-600">{info.description}</p>}
 
         <dl className="mt-4 grid grid-cols-3 gap-3 text-center">

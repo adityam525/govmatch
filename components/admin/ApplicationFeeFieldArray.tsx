@@ -59,7 +59,7 @@ export default function ApplicationFeeFieldArray({ fees, onChange }: Application
               placeholder="Amount, e.g. Rs 500"
               className="flex-1 text-sm border border-neutral-200 rounded-md px-3 py-2 outline-none focus:border-primary-500"
             />
-            <button type="button" onClick={() => remove(i)} className="text-neutral-400 hover:text-danger p-2">
+            <button type="button" onClick={() => remove(i)} className="text-neutral-500 hover:text-danger p-2">
               <Trash2 size={16} />
             </button>
           </div>

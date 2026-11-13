@@ -25,7 +25,7 @@ const SITE = (process.env.NEXT_PUBLIC_SITE_URL ?? '').replace(/^https?:\/\//, ''
 // Shows how many characters are used, turning amber near the limit and red over it.
 function Counter({ value, max }: { value: string; max: number }) {
   const n = value.length;
-  return <span className={`text-2xs ${n > max ? 'text-danger' : n > max * 0.9 ? 'text-amber-600' : 'text-neutral-400'}`}>{n}/{max}</span>;
+  return <span className={`text-2xs ${n > max ? 'text-danger' : n > max * 0.9 ? 'text-amber-600' : 'text-neutral-500'}`}>{n}/{max}</span>;
 }
 
 const toLocalInput = (iso: string | null) => {
@@ -123,7 +123,7 @@ export default function BlogForm({ postId }: { postId?: string }) {
       <header className="mb-4 flex flex-wrap items-center justify-between gap-3">
         <div>
           <h1 className="text-lg font-bold text-neutral-900">{postId ? 'Edit post' : 'New post'}</h1>
-          <span className={`mt-1 inline-block rounded-full px-2 py-0.5 text-xs font-medium ${form.published ? 'bg-green-50 text-success' : 'bg-amber-50 text-amber-700'}`}>
+          <span className={`mt-1 inline-block rounded-full px-2 py-0.5 text-xs font-medium ${form.published ? 'bg-green-50 text-green-700' : 'bg-amber-50 text-amber-700'}`}>
             {form.published ? 'Published' : 'Draft'}
           </span>
         </div>

@@ -101,7 +101,7 @@ export default function BrowseAllOpeningsClient({
             <div className="relative w-full lg:w-64 lg:shrink-0">
               <Search
                 size={17}
-                className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-neutral-400"
+                className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-neutral-500"
                 aria-hidden="true"
               />
 
@@ -111,7 +111,7 @@ export default function BrowseAllOpeningsClient({
                 onChange={(e) => setSearch(e.target.value)}
                 placeholder="Search in this list"
                 aria-label="Search in this list"
-                className="h-10 w-full rounded-lg border border-neutral-200 bg-white pl-9 pr-3 text-sm text-neutral-900 outline-none transition placeholder:text-neutral-400 focus:border-blue-400 focus:ring-2 focus:ring-blue-100"
+                className="h-10 w-full rounded-lg border border-neutral-200 bg-white pl-9 pr-3 text-sm text-neutral-900 outline-none transition placeholder:text-neutral-500 focus:border-blue-400 focus:ring-2 focus:ring-blue-100"
               />
             </div>
           </div>
@@ -142,12 +142,7 @@ export default function BrowseAllOpeningsClient({
                           size={36}
                         />
                       ) : (
-                        <div
-                          className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl"
-                          style={{
-                            backgroundColor: item.iconBg ?? "#64748b",
-                          }}
-                        >
+                        <div className={"flex h-9 w-9 shrink-0 items-center justify-center rounded-xl " + (item.iconBg ?? "bg-slate-500")}>
                           <Icon
                             size={18}
                             className="text-white"

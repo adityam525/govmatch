@@ -48,7 +48,7 @@ export default function LinksFieldArray({ links, onChange }: LinksFieldArrayProp
       </div>
 
       {links.length === 0 && (
-        <p className="text-xs text-neutral-400 mb-3">No links added yet.</p>
+        <p className="text-xs text-neutral-500 mb-3">No links added yet.</p>
       )}
 
       <div className="space-y-3">
@@ -57,7 +57,7 @@ export default function LinksFieldArray({ links, onChange }: LinksFieldArrayProp
             <button
               type="button"
               onClick={() => removeLink(index)}
-              className="absolute top-3 right-3 text-neutral-400 hover:text-danger"
+              className="absolute top-3 right-3 text-neutral-500 hover:text-danger"
             >
               <Trash2 size={14} />
             </button>

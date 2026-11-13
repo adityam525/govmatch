@@ -61,25 +61,25 @@ export default function ExamLevelsFieldArray({ levels, onChange }: ExamLevelsFie
         ))}
       </div>
 
-      {levels.length === 0 && <p className="text-xs text-neutral-400 mb-2">No exam levels added yet.</p>}
+      {levels.length === 0 && <p className="text-xs text-neutral-500 mb-2">No exam levels added yet.</p>}
 
       <div className="space-y-2">
         {levels.map((level, i) => (
           <div key={i} className="flex items-center gap-2">
-            <span className="text-xs text-neutral-400 w-5">{i + 1}.</span>
+            <span className="text-xs text-neutral-500 w-5">{i + 1}.</span>
             <input
               value={level.name}
               onChange={(e) => update(i, e.target.value)}
               placeholder="Level name"
               className="flex-1 text-sm border border-neutral-200 rounded-md px-3 py-2 outline-none focus:border-primary-500"
             />
-            <button type="button" onClick={() => moveUp(i)} disabled={i === 0} className="text-neutral-400 hover:text-primary-600 disabled:opacity-30 p-1">
+            <button type="button" onClick={() => moveUp(i)} disabled={i === 0} className="text-neutral-500 hover:text-primary-600 disabled:opacity-30 p-1">
               <ChevronUp size={16} />
             </button>
-            <button type="button" onClick={() => moveDown(i)} disabled={i === levels.length - 1} className="text-neutral-400 hover:text-primary-600 disabled:opacity-30 p-1">
+            <button type="button" onClick={() => moveDown(i)} disabled={i === levels.length - 1} className="text-neutral-500 hover:text-primary-600 disabled:opacity-30 p-1">
               <ChevronDown size={16} />
             </button>
-            <button type="button" onClick={() => remove(i)} className="text-neutral-400 hover:text-danger p-1">
+            <button type="button" onClick={() => remove(i)} className="text-neutral-500 hover:text-danger p-1">
               <Trash2 size={16} />
             </button>
           </div>

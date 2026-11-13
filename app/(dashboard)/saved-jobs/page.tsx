@@ -21,10 +21,10 @@ export default function SavedJobsPage() {
       .finally(() => setLoading(false));
   }, [user?.id]);
 
-  if (authLoading) return <div className="max-w-4xl mx-auto px-6 py-8 text-sm text-neutral-600">Loading...</div>;
+  if (authLoading) return <div className="page-x mx-auto w-full max-w-4xl py-8 text-sm text-neutral-600">Loading...</div>;
   if (!isLoggedIn) {
     return (
-      <div className="max-w-4xl mx-auto px-6 py-8">
+      <div className="page-x mx-auto w-full max-w-4xl py-8">
         <Card padding="lg"><p className="text-sm text-neutral-600">Please log in to view saved jobs.</p></Card>
       </div>
     );
@@ -33,7 +33,7 @@ export default function SavedJobsPage() {
   const jobs = notifications.flatMap(notificationToPostJobs);
 
   return (
-    <div className="max-w-4xl mx-auto px-6 py-8">
+    <div className="page-x mx-auto w-full max-w-4xl py-8">
       <Card padding="lg">
         <SectionHeader title="Saved Jobs" />
         {loading ? (

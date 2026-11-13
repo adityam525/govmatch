@@ -66,7 +66,7 @@ function buildExample(): string {
 }
 
 const badge: Record<RowResult['status'], string> = {
-  created: 'bg-green-50 text-success',
+  created: 'bg-green-50 text-green-700',
   valid: 'bg-blue-50 text-primary-600',
   duplicate: 'bg-amber-50 text-accent-amber',
   error: 'bg-red-50 text-danger',
@@ -182,7 +182,7 @@ export default function AdminImportPage() {
             {busy === 'import' ? 'Importing...' : 'Import as drafts'}
           </Button>
           {response && response.dryRun && !canImport && !busy && validatedText !== text && (
-            <span className="text-xs text-neutral-400">Text changed - validate again to enable import.</span>
+            <span className="text-xs text-neutral-500">Text changed - validate again to enable import.</span>
           )}
         </div>
       </Card>

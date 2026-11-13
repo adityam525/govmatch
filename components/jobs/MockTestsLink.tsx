@@ -11,7 +11,7 @@ export default async function MockTestsLink({ notificationId, slug }: { notifica
   if (count === 0) return null;
   return (
     <Link href={`/study-zone/mock-tests?job=${encodeURIComponent(slug)}`} className="flex items-center gap-3 rounded-2xl border border-green-100 bg-green-50 p-4 shadow-sm hover:bg-green-100">
-      <ClipboardCheck size={20} className="shrink-0 text-success" />
+      <ClipboardCheck size={20} className="shrink-0 text-green-700" />
       <div className="min-w-0 flex-1">
         <p className="text-sm font-bold text-neutral-900">Practice with mock tests</p>
         <p className="text-xs text-neutral-600">{count} mock test{count === 1 ? '' : 's'} for this exam</p>

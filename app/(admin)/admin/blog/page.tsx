@@ -92,7 +92,7 @@ export default function AdminBlogPage() {
   return (
     <div className="p-4 sm:p-6">
       <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
-        <h1 className="text-lg font-bold text-neutral-900">Blog</h1>
+        <h1 className="text-xl font-bold text-neutral-900">Blog</h1>
 
         <Link href="/admin/blog/new">
           <Button variant="primary" size="sm" icon={<Plus size={14} />}>
@@ -114,7 +114,7 @@ export default function AdminBlogPage() {
             }`}
           >
             {f}{" "}
-            <span className={filter === f ? "opacity-80" : "text-neutral-400"}>
+            <span className={filter === f ? "opacity-80" : "text-neutral-500"}>
               ({counts[f]})
             </span>
           </button>
@@ -144,13 +144,13 @@ export default function AdminBlogPage() {
           <tbody>
             {loading ? (
               <tr>
-                <td colSpan={4} className="py-8 text-center text-neutral-400">
+                <td colSpan={4} className="py-8 text-center text-neutral-500">
                   Loading...
                 </td>
               </tr>
             ) : shown.length === 0 ? (
               <tr>
-                <td colSpan={4} className="py-8 text-center text-neutral-400">
+                <td colSpan={4} className="py-8 text-center text-neutral-500">
                   No posts here yet.
                 </td>
               </tr>
@@ -181,7 +181,7 @@ export default function AdminBlogPage() {
                         scheduled(r)
                           ? "bg-sky-50 text-sky-700"
                           : r.published
-                            ? "bg-green-50 text-success"
+                            ? "bg-green-50 text-green-700"
                             : "bg-amber-50 text-amber-700"
                       }`}
                     >
@@ -230,7 +230,7 @@ export default function AdminBlogPage() {
                           target="_blank"
                           rel="noreferrer"
                           aria-label="View live"
-                          className="rounded-md p-2 text-neutral-400 hover:bg-neutral-100 hover:text-neutral-700"
+                          className="rounded-md p-2 text-neutral-500 hover:bg-neutral-100 hover:text-neutral-700"
                         >
                           <ExternalLink size={14} />
                         </a>
@@ -239,7 +239,7 @@ export default function AdminBlogPage() {
                       <Link
                         href={`/admin/blog/${r.id}`}
                         aria-label={`Edit ${r.title}`}
-                        className="rounded-md p-2 text-neutral-400 hover:bg-neutral-100 hover:text-neutral-700"
+                        className="rounded-md p-2 text-neutral-500 hover:bg-neutral-100 hover:text-neutral-700"
                       >
                         <Pencil size={14} />
                       </Link>
@@ -257,7 +257,7 @@ export default function AdminBlogPage() {
                             );
                           }
                         }}
-                        className="rounded-md p-2 text-neutral-400 hover:bg-red-50 hover:text-danger disabled:opacity-50"
+                        className="rounded-md p-2 text-neutral-500 hover:bg-red-50 hover:text-danger disabled:opacity-50"
                       >
                         <Trash2 size={14} />
                       </button>

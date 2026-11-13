@@ -49,10 +49,10 @@ export default function MyMockTestsPage() {
   );
 
   return (
-    <div className="mx-auto max-w-4xl space-y-6 px-4 py-6 sm:px-6">
+    <div className="page-x mx-auto w-full max-w-4xl space-y-6 py-6">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div>
-          <h1 className="text-lg font-bold text-neutral-900">My mock tests</h1>
+          <h1 className="page-title text-neutral-900">My mock tests</h1>
           <p className="mt-1 text-sm text-neutral-600">Your scores and progress across every test you have taken.</p>
         </div>
         <div className="flex flex-wrap gap-2"><Link href="/mock-tests/import" className="rounded-lg border border-neutral-200 px-4 py-2 text-sm font-medium text-neutral-700 hover:bg-neutral-50">Import a paper</Link><Link href="/study-zone/mock-tests" className="rounded-lg bg-primary-600 px-4 py-2 text-sm font-semibold text-white hover:bg-primary-700">Take a test</Link></div>
@@ -117,7 +117,7 @@ export default function MyMockTestsPage() {
           )}
 
           <section className="rounded-2xl border border-neutral-200 bg-white shadow-sm">
-            <h2 className="border-b border-neutral-100 px-5 py-3 text-sm font-bold text-neutral-900">our attempts</h2>
+            <h2 className="border-b border-neutral-100 px-5 py-3 text-sm font-bold text-neutral-900">Your attempts</h2>
             <ul className="divide-y divide-neutral-100">
               {history.map((h) => (
                 <li key={h.id} className="flex flex-wrap items-center gap-3 px-5 py-3">

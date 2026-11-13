@@ -113,7 +113,7 @@ export default function ImportPaper() {
           {error} {/premium/i.test(error) && <Link href="/pricing" className="font-semibold underline">See plans</Link>}
         </p>
       )}
-      {notice && <p className="rounded-lg bg-green-50 px-3 py-2 text-sm text-success">{notice}</p>}
+      {notice && <p className="rounded-lg bg-green-50 px-3 py-2 text-sm text-green-700">{notice}</p>}
 
       {!draft && (
         <section className="rounded-2xl border border-neutral-200 bg-white p-5 shadow-sm">
@@ -154,7 +154,7 @@ export default function ImportPaper() {
           </section>
 
           <div className="flex flex-wrap items-center justify-between gap-2 text-sm">
-            <p className={issues ? 'text-amber-700' : 'text-success'}>{issues ? `${issues} question${issues === 1 ? '' : 's'} need attention` : 'No issues found. Still check the answers.'}{missingAnswer > 0 && ` (${missingAnswer} without an answer)`}</p>
+            <p className={issues ? 'text-amber-700' : 'text-green-700'}>{issues ? `${issues} question${issues === 1 ? '' : 's'} need attention` : 'No issues found. Still check the answers.'}{missingAnswer > 0 && ` (${missingAnswer} without an answer)`}</p>
             <label className="flex items-center gap-2 text-xs text-neutral-700"><input type="checkbox" checked={onlyIssues} onChange={(e) => setOnlyIssues(e.target.checked)} className="accent-primary-600" /> Show only questions needing attention</label>
           </div>
 
@@ -165,7 +165,7 @@ export default function ImportPaper() {
                 <div key={q.key} className={`rounded-xl border p-4 ${needsAttention(q) ? 'border-amber-300 bg-amber-50/30' : 'border-neutral-200 bg-white'}`}>
                   <div className="mb-2 flex items-center justify-between">
                     <p className="text-xs font-semibold uppercase tracking-wide text-neutral-500">Question {n}</p>
-                    <button type="button" aria-label={`Delete question ${n}`} onClick={() => remove(q.key)} className="rounded-md p-1.5 text-neutral-400 hover:bg-red-50 hover:text-danger"><Trash2 size={14} /></button>
+                    <button type="button" aria-label={`Delete question ${n}`} onClick={() => remove(q.key)} className="rounded-md p-1.5 text-neutral-500 hover:bg-red-50 hover:text-danger"><Trash2 size={14} /></button>
                   </div>
                   {q.warnings.map((w) => <p key={w} className="mb-2 text-xs text-amber-800">&bull; {w}</p>)}
                   <textarea value={q.text} rows={2} maxLength={LIMITS.textMax} onChange={(e) => patch(q.key, { text: e.target.value })} className={input} />
@@ -176,7 +176,7 @@ export default function ImportPaper() {
                         <span className="w-5 shrink-0 text-sm font-medium text-neutral-500">{String.fromCharCode(65 + oi)}</span>
                         <input value={o} maxLength={LIMITS.optionMax} onChange={(e) => patch(q.key, { options: q.options.map((x, k) => (k === oi ? e.target.value : x)) })} className={input} />
                         {q.options.length > LIMITS.optionsMin && (
-                          <button type="button" aria-label="Remove option" onClick={() => patch(q.key, { options: q.options.filter((_, k) => k !== oi), correctIndex: q.correctIndex === oi ? -1 : q.correctIndex > oi ? q.correctIndex - 1 : q.correctIndex })} className="rounded-md p-1.5 text-neutral-400 hover:bg-neutral-100"><X size={14} /></button>
+                          <button type="button" aria-label="Remove option" onClick={() => patch(q.key, { options: q.options.filter((_, k) => k !== oi), correctIndex: q.correctIndex === oi ? -1 : q.correctIndex > oi ? q.correctIndex - 1 : q.correctIndex })} className="rounded-md p-1.5 text-neutral-500 hover:bg-neutral-100"><X size={14} /></button>
                         )}
                       </div>
                     ))}
@@ -213,7 +213,7 @@ export default function ImportPaper() {
                   <p className="text-xs text-neutral-500">{t.questionCount} questions &middot; {t.durationMinutes} min &middot; {t.attempts} attempt{t.attempts === 1 ? '' : 's'}</p>
                 </div>
                 <div className="w-32"><StartTestButton testId={t.id} /></div>
-                <button type="button" aria-label={`Delete ${t.title}`} onClick={() => deleteMine(t)} className="rounded-md p-2 text-neutral-400 hover:bg-red-50 hover:text-danger"><Trash2 size={15} /></button>
+                <button type="button" aria-label={`Delete ${t.title}`} onClick={() => deleteMine(t)} className="rounded-md p-2 text-neutral-500 hover:bg-red-50 hover:text-danger"><Trash2 size={15} /></button>
               </li>
             ))}
           </ul>

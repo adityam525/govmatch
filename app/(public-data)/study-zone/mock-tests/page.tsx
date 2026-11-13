@@ -1,5 +1,7 @@
 import type { Metadata } from 'next';
+import { pageMetadata } from '@/lib/seo';
 import Link from 'next/link';
+import PageHeader from '@/components/layout/PageHeader';
 import { Suspense } from 'react';
 import { prisma } from '@/lib/prisma';
 import { DIFFICULTIES } from '@/lib/mock-difficulty';
@@ -7,10 +9,7 @@ import MockFilters from '@/components/mock/MockFilters';
 import StartTestButton from '@/components/mock/StartTestButton';
 
 export const dynamic = 'force-dynamic';
-export const metadata: Metadata = {
-  title: 'Mock tests | GovMatch',
-  description: 'Practice mock tests for government exams, filtered by exam, organization, state, stage and difficulty.',
-};
+export const metadata: Metadata = pageMetadata({ title: 'Mock tests', description: 'Practice mock tests for government exams, filtered by exam, organization, state, stage and difficulty.', path: '/study-zone/mock-tests' });
 
 // Every word typed must appear somewhere in the test's text, in any order and any case.
 function matchesSearch(
@@ -55,9 +54,8 @@ export default async function MockCataloguePage({ searchParams }: Props) {
     matchesSearch(t, q.search));
 
   return (
-    <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6">
-      <h1 className="text-2xl font-bold text-neutral-900 sm:text-3xl">Mock tests</h1>
-      <p className="mt-2 max-w-2xl text-sm text-neutral-600">Practice tests for government exams. Pick an exam to see the tests prepared for it.</p>
+    <div className="page-x mx-auto w-full max-w-7xl py-8">
+      <PageHeader title="Mock tests" subtitle="Practice tests for government exams. Pick an exam to see the tests prepared for it." />
 
       <Suspense fallback={null}>
         <MockFilters

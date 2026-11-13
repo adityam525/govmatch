@@ -53,7 +53,7 @@ export default function AdminMessagesPage() {
         <div className="flex items-center justify-between mb-4">
           <div>
             <h2 className="text-lg font-bold text-neutral-900">Messages</h2>
-            <p className="text-xs text-neutral-400 mt-0.5">{openCount} unresolved of {messages.length} total</p>
+            <p className="text-xs text-neutral-500 mt-0.5">{openCount} unresolved of {messages.length} total</p>
           </div>
           <div className="flex gap-2">
             {(['open', 'all'] as const).map((f) => (
@@ -71,9 +71,9 @@ export default function AdminMessagesPage() {
         </div>
 
         {loading ? (
-          <p className="text-sm text-neutral-400 py-8 text-center">Loading...</p>
+          <p className="text-sm text-neutral-500 py-8 text-center">Loading...</p>
         ) : visible.length === 0 ? (
-          <p className="text-sm text-neutral-400 py-8 text-center">No messages.</p>
+          <p className="text-sm text-neutral-500 py-8 text-center">No messages.</p>
         ) : (
           <div className="divide-y divide-neutral-100">
             {visible.map((m) => (
@@ -89,7 +89,7 @@ export default function AdminMessagesPage() {
                       </p>
                       <span className="text-[10px] bg-neutral-100 text-neutral-600 px-2 py-0.5 rounded-full">{m.category}</span>
                       {m.resolved && (
-                        <span className="text-[10px] bg-green-50 text-success px-2 py-0.5 rounded-full">Resolved</span>
+                        <span className="text-[10px] bg-green-50 text-green-700 px-2 py-0.5 rounded-full">Resolved</span>
                       )}
                     </div>
                     <p className="text-xs text-neutral-500 mt-0.5">
@@ -100,14 +100,14 @@ export default function AdminMessagesPage() {
                   <button
                       onClick={() => setResolved(m.id, !m.resolved)}
                       title={m.resolved ? 'Reopen' : 'Mark resolved'}
-                      className="p-1.5 text-neutral-400 hover:text-success hover:bg-green-50 rounded-md"
+                      className="p-1.5 text-neutral-500 hover:text-green-700 hover:bg-green-50 rounded-md"
                     >
                       {m.resolved ? <RotateCcw size={14} /> : <Check size={14} />}
                     </button>
                     <button
                       onClick={() => remove(m.id)}
                       title="Delete"
-                      className="p-1.5 text-neutral-400 hover:text-danger hover:bg-red-50 rounded-md"
+                      className="p-1.5 text-neutral-500 hover:text-danger hover:bg-red-50 rounded-md"
                     >
                       <Trash2 size={14} />
                     </button>

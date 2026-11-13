@@ -111,7 +111,7 @@ export default function ScheduleEditor({ rows, onChange }: { rows: ScheduleRow[]
         )}
       </div>
 
-      {rows.length === 0 && <p className="text-xs text-neutral-400">No dates yet.</p>}
+      {rows.length === 0 && <p className="text-xs text-neutral-500">No dates yet.</p>}
 
       <div className="space-y-3">
         {rows.map((row) => {
@@ -123,7 +123,7 @@ export default function ScheduleEditor({ rows, onChange }: { rows: ScheduleRow[]
                 <input type="text" value={row.label} maxLength={120} onChange={(e) => update(row.key, { label: e.target.value })} placeholder="Name, e.g. Prelims exam" className={input} aria-label="Event name" />
                 <input type="date" value={row.day} onChange={(e) => update(row.key, { day: e.target.value, ...(e.target.value ? {} : { time: '' }) })} className={input} aria-label="Date" />
                 <input type="time" value={row.time} disabled={!row.day} onChange={(e) => update(row.key, { time: e.target.value })} className={`${input} disabled:bg-neutral-100`} aria-label="Time (optional)" />
-                <button type="button" onClick={() => onChange(rows.filter((r) => r.key !== row.key))} aria-label="Remove event" className="justify-self-end rounded-md p-2 text-neutral-400 hover:bg-red-50 hover:text-danger">
+                <button type="button" onClick={() => onChange(rows.filter((r) => r.key !== row.key))} aria-label="Remove event" className="justify-self-end rounded-md p-2 text-neutral-500 hover:bg-red-50 hover:text-danger">
                   <Trash2 size={14} />
                 </button>
               </div>

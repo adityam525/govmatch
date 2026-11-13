@@ -23,7 +23,7 @@ export default function ScheduleSection({ schedule }: { schedule: JobScheduleVie
               <p className="text-sm font-medium text-neutral-900">{event.label}</p>
               <p className={`text-sm font-semibold ${event.at ? 'text-neutral-900' : 'text-amber-700'}`}>
                 {formatEventMoment(event.at, event.timeKnown)}
-                {event.at && !event.timeKnown && <span className="ml-1 text-2xs font-normal text-neutral-400">time not announced</span>}
+                {event.at && !event.timeKnown && <span className="ml-1 text-2xs font-normal text-neutral-500">time not announced</span>}
               </p>
             </div>
             {event.postponed && event.lastChange && (
@@ -46,7 +46,7 @@ export default function ScheduleSection({ schedule }: { schedule: JobScheduleVie
           </div>
         ))}
       </div>
-      <p className="mt-3 text-2xs text-neutral-400">Times are in IST. Always confirm dates on the official notification.</p>
+      <p className="mt-3 text-2xs text-neutral-500">Times are in IST. Always confirm dates on the official notification.</p>
     </Card>
   );
 }

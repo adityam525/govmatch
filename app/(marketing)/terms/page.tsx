@@ -10,9 +10,9 @@ export default function TermsPage() {
     ['8. Changes', 'We may update these terms. Continued use after a change means you accept it.'],
   ];
   return (
-    <div className="max-w-3xl mx-auto px-6 py-12">
-      <h1 className="text-2xl font-bold text-neutral-900">Terms &amp; Conditions</h1>
-      <p className="text-sm text-neutral-400 mt-1">Last updated: November 2026</p>
+    <div className="page-x mx-auto w-full max-w-3xl py-12">
+      <h1 className="page-title text-neutral-900">Terms &amp; Conditions</h1>
+      <p className="text-sm text-neutral-500 mt-1">Last updated: November 2026</p>
       <div className="mt-8 space-y-6 text-sm text-neutral-600 leading-relaxed">
         {sections.map(([h, body]) => (
           <section key={h}>

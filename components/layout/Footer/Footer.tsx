@@ -24,7 +24,7 @@ const footerLinks = {
 
 export default function Footer() {
   return (
-    <footer className="bg-neutral-900 text-neutral-400">
+    <footer className="bg-neutral-900 text-neutral-300">
       <div className="max-w-7xl mx-auto px-6 py-12 grid grid-cols-2 md:grid-cols-4 gap-8">
         <div className="col-span-2 md:col-span-1">
           <p className="text-white font-bold text-lg mb-2">GovMatch</p>

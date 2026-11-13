@@ -18,7 +18,7 @@ export default function TopicAccuracyChart() {
         <span className="text-sm font-semibold text-neutral-900">
           Topic-wise accuracy
         </span>
-        <span className="text-xs text-neutral-400">Example only</span>
+        <span className="text-xs text-neutral-500">Example only</span>
       </div>
 
       <div className="flex items-end justify-between gap-2 h-32">
@@ -33,7 +33,7 @@ export default function TopicAccuracyChart() {
                 style={{ height: `${topic.percent}%` }}
               />
             </div>
-            <span className="text-3xs text-neutral-400">{topic.label}</span>
+            <span className="text-3xs text-neutral-500">{topic.label}</span>
           </div>
         ))}
       </div>

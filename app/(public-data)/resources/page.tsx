@@ -4,6 +4,9 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { FileText, BookOpen, ListChecks, FileStack, CalendarDays, Calculator } from 'lucide-react';
 import Card from '@/components/ui/Card';
+import Container from '@/components/layout/Container';
+import PageHeader from '@/components/layout/PageHeader';
+import EmptyState from '@/components/ui/EmptyState';
 
 interface DocumentItem {
   id: string;
@@ -35,15 +38,12 @@ export default function ResourcesPage() {
   }, []);
 
   return (
-    <div className="max-w-5xl mx-auto px-6 py-8">
-      <h1 className="text-xl font-bold text-neutral-900">Resources</h1>
-      <p className="text-sm text-neutral-600 mt-1">Syllabus, exam patterns, previous papers and more.</p>
+    <Container width="default" className="py-8">
+      <PageHeader title="Resources" subtitle="Syllabus, exam patterns, previous papers and more." />
 
-      <Link href="/resources/gate-calculator">
-        <Card hoverable padding="md" className="mt-6 flex items-center gap-3">
-          <div className="w-10 h-10 rounded-lg bg-orange-50 text-accent-orange flex items-center justify-center shrink-0">
-            <Calculator size={20} />
-          </div>
+      <Link href="/resources/gate-calculator" className="block">
+        <Card hoverable padding="md" className="flex items-center gap-3">
+          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-orange-50 text-orange-700"><Calculator size={20} aria-hidden /></div>
           <div>
             <p className="text-sm font-semibold text-neutral-900">GATE Score Estimator</p>
             <p className="text-xs text-neutral-600">Estimate where your GATE score stands</p>
@@ -53,30 +53,22 @@ export default function ResourcesPage() {
 
       <div className="mt-6">
         {loading ? (
-          <p className="text-sm text-neutral-600 py-8 text-center">Loading...</p>
+          <p className="py-8 text-center text-sm text-neutral-600">Loading...</p>
         ) : documents.length === 0 ? (
-          <Card padding="lg">
-            <p className="text-sm text-neutral-600 text-center py-8">
-              No documents published yet. Check back soon for syllabus, exam patterns, and previous papers.
-            </p>
-          </Card>
+          <EmptyState title="No documents published yet" description="Check back soon for syllabus, exam patterns and previous papers." />
         ) : (
-          <div className="grid md:grid-cols-2 gap-3">
+          <div className="grid gap-3 md:grid-cols-2">
             {documents.map((doc) => {
               const config = docTypeConfig[doc.docType] ?? docTypeConfig.OTHER;
               const Icon = config.icon;
               return (
-                <a key={doc.id} href={doc.fileUrl} target="_blank" rel="noopener noreferrer">
-                  <Card hoverable padding="md" className="flex items-start gap-3 h-full">
-                    <div className={"w-9 h-9 rounded-lg flex items-center justify-center shrink-0 " + config.tone}>
-                      <Icon size={18} />
-                    </div>
+                <a key={doc.id} href={doc.fileUrl} target="_blank" rel="noopener noreferrer" className="block">
+                  <Card hoverable padding="md" className="flex h-full items-start gap-3">
+                    <div className={'flex h-9 w-9 shrink-0 items-center justify-center rounded-lg ' + config.tone}><Icon size={18} aria-hidden /></div>
                     <div className="min-w-0">
-                      <p className="text-xs font-medium text-neutral-400">{config.label}</p>
-                      <p className="text-sm font-semibold text-neutral-900 truncate">{doc.title}</p>
-                      {doc.notification?.title && (
-                        <p className="text-xs text-neutral-400 truncate mt-0.5">{doc.notification.title}</p>
-                      )}
+                      <p className="text-xs font-medium text-neutral-500">{config.label}</p>
+                      <p className="truncate text-sm font-semibold text-neutral-900">{doc.title}</p>
+                      {doc.notification?.title && <p className="mt-0.5 truncate text-xs text-neutral-500">{doc.notification.title}</p>}
                     </div>
                   </Card>
                 </a>
@@ -85,6 +77,6 @@ export default function ResourcesPage() {
           </div>
         )}
       </div>
-    </div>
+    </Container>
   );
 }

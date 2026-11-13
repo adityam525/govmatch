@@ -506,7 +506,7 @@ export default async function JobsPage({ searchParams }: JobsPageProps) {
   });
 
   return (
-    <div className="mx-auto max-w-7xl px-6 py-8">
+    <div className="page-x mx-auto w-full max-w-7xl py-8">
       <StickyTools>
         <JobFiltersBar isPremium={isPremium} />
         <div className="mb-2 lg:flex lg:items-end lg:justify-between lg:gap-4"><div className="min-w-0 flex-1"><JobsViewTabs view={view} counts={phaseCounts} params={params} /></div><div className="shrink-0 pb-2 pt-1 lg:pt-0"><WomenFilterTabs params={params} /></div></div>
@@ -536,7 +536,7 @@ export default async function JobsPage({ searchParams }: JobsPageProps) {
         </div>
       ) : (
         <>
-          <div className="mt-4 hidden grid-cols-[minmax(0,1fr)_8.5rem_6rem_6.5rem_1rem] gap-4 px-5 text-2xs font-semibold uppercase tracking-wide text-neutral-400 md:grid">
+          <div className="mt-4 hidden grid-cols-[minmax(0,1fr)_8.5rem_6rem_6.5rem_1rem] gap-4 px-5 text-2xs font-semibold uppercase tracking-wide text-neutral-500 md:grid">
             <span>Job</span>
             <span>Match</span>
             <span>Vacancies</span>

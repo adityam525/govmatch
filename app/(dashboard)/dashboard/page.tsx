@@ -183,10 +183,10 @@ export default async function DashboardPage() {
   }
 
   return (
-    <div className="mx-auto w-full max-w-6xl px-4 py-6 sm:px-6 lg:py-8">
+    <div className="page-x mx-auto w-full max-w-6xl py-6 lg:py-8">
       <div className="flex flex-wrap items-start justify-between gap-3">
         <div className="min-w-0">
-          <h1 className="text-xl font-bold text-neutral-900">Welcome back, {firstName}</h1>
+          <h1 className="page-title text-neutral-900">Welcome back, {firstName}</h1>
           <p className="mt-1 text-sm text-neutral-600">Here is where your job search stands today.</p>
         </div>
         <div className="flex flex-wrap items-center gap-2">
@@ -218,7 +218,7 @@ export default async function DashboardPage() {
       </div>
 
       <div className="mt-6 grid grid-cols-2 gap-3 lg:grid-cols-4 lg:gap-4">
-        <Kpi icon={<Briefcase size={18} />} tint="bg-green-50 text-success" value={picks && picks.status === 'ok' && !picks.incomplete ? String(fits.length) : '-'} label="Open jobs that fit you" href={matchesHref} />
+        <Kpi icon={<Briefcase size={18} />} tint="bg-green-50 text-green-700" value={picks && picks.status === 'ok' && !picks.incomplete ? String(fits.length) : '-'} label="Open jobs that fit you" href={matchesHref} />
         <Kpi icon={<Bookmark size={18} />} tint="bg-violet-50 text-violet-600" value={String(savedCount)} label="Saved jobs" href="/saved-jobs" />
         <Kpi icon={<ClipboardList size={18} />} tint="bg-amber-50 text-amber-600" value={String(applications.length)} label="Applications tracked" href="/applications" />
         <Kpi icon={<TrendingUp size={18} />} tint="bg-primary-50 text-primary-600" value={`${completeness}%`} label="Profile complete" href="/profile" />
@@ -305,11 +305,11 @@ export default async function DashboardPage() {
                 {checklist.map((item) => (
                   <li key={item.label} className="flex items-center gap-2 text-xs">
                     {item.done ? (
-                      <CheckCircle2 size={15} className="shrink-0 text-success" />
+                      <CheckCircle2 size={15} className="shrink-0 text-green-700" />
                     ) : (
                       <Circle size={15} className="shrink-0 text-neutral-300" />
                     )}
-                    <span className={item.done ? 'text-neutral-400 line-through' : 'text-neutral-800'}>{item.label}</span>
+                    <span className={item.done ? 'text-neutral-500 line-through' : 'text-neutral-800'}>{item.label}</span>
                   </li>
                 ))}
               </ul>

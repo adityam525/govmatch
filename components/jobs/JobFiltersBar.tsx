@@ -69,7 +69,7 @@ function Section({
             <span className="rounded-full bg-primary-600 px-1.5 text-3xs font-semibold text-white">{count}</span>
           )}
         </span>
-        <ChevronDown size={16} className={`text-neutral-400 transition-transform ${open ? "rotate-180" : ""}`} />
+        <ChevronDown size={16} className={`text-neutral-500 transition-transform ${open ? "rotate-180" : ""}`} />
       </button>
       {open && <div className="space-y-4 px-5 pb-4">{children}</div>}
     </div>
@@ -130,11 +130,11 @@ function OptionList({
       )}
       <div className="max-h-56 overflow-y-auto pr-1">
         {shown.length === 0 ? (
-          <p className="px-1.5 py-2 text-xs text-neutral-400">Nothing found</p>
+          <p className="px-1.5 py-2 text-xs text-neutral-500">Nothing found</p>
         ) : hasGroups ? (
           Object.entries(grouped).map(([group, opts]) => (
             <div key={group}>
-              <p className="px-1.5 pb-1 pt-2 text-3xs font-semibold uppercase tracking-wide text-neutral-400">
+              <p className="px-1.5 pb-1 pt-2 text-3xs font-semibold uppercase tracking-wide text-neutral-500">
                 {group}
               </p>
               {opts.map(row)}
@@ -185,7 +185,7 @@ function SelectBox({
         size={16}
         aria-hidden
         className={`pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 ${
-          active ? "text-primary-500" : "text-neutral-400"
+          active ? "text-primary-500" : "text-neutral-500"
         }`}
       />
     </div>
@@ -395,14 +395,14 @@ export default function JobFiltersBar({ isPremium = false }: { isPremium?: boole
     <div className="space-y-2">
       <div className="flex flex-col gap-2 md:flex-row md:items-center">
         <form onSubmit={submitSearch} className="relative min-w-0 md:flex-1">
-          <Search size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-neutral-400" />
+          <Search size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-neutral-500" />
           <input
             type="text"
             inputMode="search"
             value={searchText}
             onChange={(e) => setSearchText(e.target.value)}
             placeholder="Search jobs, departments, exams"
-            className="h-10 w-full rounded-xl border border-neutral-200 bg-white pl-10 pr-9 text-sm text-neutral-900 outline-none transition placeholder:text-neutral-400 focus:border-primary-400 focus:ring-2 focus:ring-primary-100"
+            className="h-10 w-full rounded-xl border border-neutral-200 bg-white pl-10 pr-9 text-sm text-neutral-900 outline-none transition placeholder:text-neutral-500 focus:border-primary-400 focus:ring-2 focus:ring-primary-100"
           />
           {searchText && (
             <button
@@ -412,7 +412,7 @@ export default function JobFiltersBar({ isPremium = false }: { isPremium?: boole
                 setSearchText("");
                 push({ search: "" });
               }}
-              className="absolute right-2.5 top-1/2 -translate-y-1/2 rounded-full p-1 text-neutral-400 hover:text-neutral-600"
+              className="absolute right-2.5 top-1/2 -translate-y-1/2 rounded-full p-1 text-neutral-500 hover:text-neutral-600"
             >
               <X size={14} />
             </button>

@@ -61,7 +61,7 @@ export default function MockPatternsPage() {
     <div className="mx-auto max-w-4xl p-4 sm:p-6">
       <div className="mb-4 flex items-center justify-between">
         <div>
-          <h1 className="text-lg font-bold text-neutral-900">Exam patterns</h1>
+          <h1 className="text-xl font-bold text-neutral-900">Exam patterns</h1>
           <p className="text-sm text-neutral-600">Reusable layouts (sections, questions, marks, times) that pre-fill a new mock test.</p>
         </div>
         {!draft && <Button variant="primary" size="sm" icon={<Plus size={14} />} onClick={() => { setDraft(blank()); setError(''); }}>New pattern</Button>}
@@ -91,7 +91,7 @@ export default function MockPatternsPage() {
                 <input type="number" min={0} step="0.25" value={s.marks} onChange={(e) => setSec(i, { marks: e.target.value })} className={input} placeholder="Marks" aria-label="Marks" />
                 <input type="number" min={0} step="0.25" value={s.negativeMarks} onChange={(e) => setSec(i, { negativeMarks: e.target.value })} className={input} placeholder="Neg." aria-label="Negative marks" />
                 <input type="number" min={1} value={s.durationMinutes} onChange={(e) => setSec(i, { durationMinutes: e.target.value })} className={input} placeholder="Min (opt.)" aria-label="Section time" />
-                {draft.sections.length > 1 && <button type="button" aria-label="Remove section" onClick={() => setDraft({ ...draft, sections: draft.sections.filter((_, k) => k !== i) })} className="rounded-md p-2 text-neutral-400 hover:bg-red-50 hover:text-danger"><X size={14} /></button>}
+                {draft.sections.length > 1 && <button type="button" aria-label="Remove section" onClick={() => setDraft({ ...draft, sections: draft.sections.filter((_, k) => k !== i) })} className="rounded-md p-2 text-neutral-500 hover:bg-red-50 hover:text-danger"><X size={14} /></button>}
               </div>
             ))}
           </div>
@@ -115,8 +115,8 @@ export default function MockPatternsPage() {
                 <p className="font-semibold text-neutral-900">{p.name}</p>
                 <p className="text-xs text-neutral-500">{p.organization.name} · {p.sections.length} sections · {p.sections.reduce((n, s) => n + s.questionCount, 0)} questions · {p.totalMinutes} min{p.sections.every((s) => s.durationMinutes) ? ' (timed sections)' : ''}</p>
               </div>
-              <button type="button" aria-label={`Edit ${p.name}`} onClick={() => { edit(p); setError(''); window.scrollTo({ top: 0, behavior: 'smooth' }); }} className="rounded-md p-2 text-neutral-400 hover:bg-neutral-100"><Pencil size={15} /></button>
-              <button type="button" aria-label={`Delete ${p.name}`} onClick={() => remove(p)} className="rounded-md p-2 text-neutral-400 hover:bg-red-50 hover:text-danger"><Trash2 size={15} /></button>
+              <button type="button" aria-label={`Edit ${p.name}`} onClick={() => { edit(p); setError(''); window.scrollTo({ top: 0, behavior: 'smooth' }); }} className="rounded-md p-2 text-neutral-500 hover:bg-neutral-100"><Pencil size={15} /></button>
+              <button type="button" aria-label={`Delete ${p.name}`} onClick={() => remove(p)} className="rounded-md p-2 text-neutral-500 hover:bg-red-50 hover:text-danger"><Trash2 size={15} /></button>
             </li>
           ))}
         </ul>

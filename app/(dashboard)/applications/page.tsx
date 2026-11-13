@@ -42,18 +42,18 @@ export default function ApplicationsPage() {
     setApplications((prev) => prev.map((a) => (a.id === id ? { ...a, status } : a)));
   };
 
-  if (authLoading) return <div className="max-w-6xl mx-auto px-6 py-8 text-sm text-neutral-600">Loading...</div>;
+  if (authLoading) return <div className="page-x mx-auto w-full max-w-6xl py-8 text-sm text-neutral-600">Loading...</div>;
   if (!isLoggedIn) {
     return (
-      <div className="max-w-6xl mx-auto px-6 py-8">
+      <div className="page-x mx-auto w-full max-w-6xl py-8">
         <Card padding="lg"><p className="text-sm text-neutral-600">Please log in to view your applications.</p></Card>
       </div>
     );
   }
 
   return (
-    <div className="max-w-6xl mx-auto px-6 py-8">
-      <h1 className="text-lg font-bold text-neutral-900 mb-1">My Applications</h1>
+    <div className="page-x mx-auto w-full max-w-6xl py-8">
+      <h1 className="page-title text-neutral-900 mb-1">My Applications</h1>
       <p className="text-sm text-neutral-600 mb-6">Track every application from apply to result.</p>
 
       {loading ? (
@@ -75,7 +75,7 @@ export default function ApplicationsPage() {
                   .map((app) => (
                     <div key={app.id} className="bg-white border border-neutral-200 rounded-lg p-3">
                       <p className="text-xs font-semibold text-neutral-900">{app.notification?.title ?? 'Unknown'}</p>
-                      <p className="text-3xs text-neutral-400 mt-0.5">{app.notification?.organization?.name}</p>
+                      <p className="text-3xs text-neutral-500 mt-0.5">{app.notification?.organization?.name}</p>
                       <select
                         value={app.status}
                         onChange={(e) => updateStatus(app.id, e.target.value)}

@@ -85,7 +85,7 @@ function KeyValueEditor({
             <button
               type="button"
               onClick={() => remove(i)}
-              className="text-neutral-400 hover:text-danger"
+              className="text-neutral-500 hover:text-danger"
             >
               <Trash2 size={16} />
             </button>
