@@ -92,7 +92,7 @@ export default function AdminBlogPage() {
   return (
     <div className="p-4 sm:p-6">
       <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
-        <h1 className="text-lg font-bold text-neutral-900">Blog</h1>
+        <h1 className="text-xl font-bold text-neutral-900">Blog</h1>
 
         <Link href="/admin/blog/new">
           <Button variant="primary" size="sm" icon={<Plus size={14} />}>

@@ -64,7 +64,7 @@ export default function SyllabusPage() {
   return (
     <div className="mx-auto max-w-4xl space-y-6 p-4 sm:p-6">
       <div>
-        <h1 className="text-lg font-bold text-neutral-900">Exam syllabus</h1>
+        <h1 className="text-xl font-bold text-neutral-900">Exam syllabus</h1>
         <p className="mt-1 text-sm text-neutral-600">Choose the topics each exam and stage covers. Learners filter the question bank by these.</p>
         <p className="mt-1 text-xs text-amber-700">The starting mapping was drafted from the general shape of each exam. Check it against the latest official notice.</p>
       </div>

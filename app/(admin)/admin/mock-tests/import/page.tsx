@@ -38,7 +38,7 @@ export default function ImportTestJsonPage() {
 
   return (
     <div className="mx-auto max-w-3xl p-4 sm:p-6">
-      <h1 className="text-lg font-bold text-neutral-900">Import a test from JSON</h1>
+      <h1 className="text-xl font-bold text-neutral-900">Import a test from JSON</h1>
       <p className="mt-1 text-sm text-neutral-600">Saved as a draft. Open it to check it, then publish. <code>answer</code> is a letter (A to E); <code>marks</code> and <code>negativeMarks</code> can be set for the test, a section or a question.</p>
       <input type="file" accept=".json,application/json" className="mt-4 block text-sm" onChange={async (e) => { const f = e.target.files?.[0]; if (f) { setText(await f.text()); setMessage(null); } }} />
       <textarea value={text} onChange={(e) => { setText(e.target.value); setMessage(null); }} rows={16} placeholder="Paste JSON here" className="mt-3 w-full rounded-md border border-neutral-200 p-3 font-mono text-xs outline-none focus:border-primary-500" />

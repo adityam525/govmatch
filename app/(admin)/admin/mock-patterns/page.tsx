@@ -61,7 +61,7 @@ export default function MockPatternsPage() {
     <div className="mx-auto max-w-4xl p-4 sm:p-6">
       <div className="mb-4 flex items-center justify-between">
         <div>
-          <h1 className="text-lg font-bold text-neutral-900">Exam patterns</h1>
+          <h1 className="text-xl font-bold text-neutral-900">Exam patterns</h1>
           <p className="text-sm text-neutral-600">Reusable layouts (sections, questions, marks, times) that pre-fill a new mock test.</p>
         </div>
         {!draft && <Button variant="primary" size="sm" icon={<Plus size={14} />} onClick={() => { setDraft(blank()); setError(''); }}>New pattern</Button>}

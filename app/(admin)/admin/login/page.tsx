@@ -34,7 +34,7 @@ export default function AdminLoginPage() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-neutral-50">
       <Card padding="lg" className="w-full max-w-sm">
-        <h1 className="text-lg font-bold text-neutral-900 mb-1">Admin Login</h1>
+        <h1 className="text-xl font-bold text-neutral-900 mb-1">Admin Login</h1>
         <p className="text-sm text-neutral-600 mb-5">Enter the admin password to continue.</p>
 
         <form onSubmit={handleSubmit} className="space-y-4">

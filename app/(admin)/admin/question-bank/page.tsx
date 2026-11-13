@@ -49,7 +49,7 @@ export default function QuestionBankPage() {
     <div className="p-4 sm:p-6">
       <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
         <div>
-          <h1 className="text-lg font-bold text-neutral-900">Question bank</h1>
+          <h1 className="text-xl font-bold text-neutral-900">Question bank</h1>
           <p className="text-sm text-neutral-600">Question templates. Each draws new numbers every time it is used.</p>
         </div>
         <div className="flex gap-2">

@@ -36,7 +36,7 @@ export default function AdminMockTestsPage() {
   return (
     <div className="p-4 sm:p-6">
       <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
-        <h1 className="text-lg font-bold text-neutral-900">Mock tests</h1>
+        <h1 className="text-xl font-bold text-neutral-900">Mock tests</h1>
         <div className="flex gap-2">
           <Link href="/admin/mock-tests/import"><Button variant="secondary" size="sm" icon={<FileJson size={14} />}>Import JSON</Button></Link>
           <Link href="/admin/mock-tests/new"><Button variant="primary" size="sm" icon={<Plus size={14} />}>New test</Button></Link>
