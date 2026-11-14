@@ -207,3 +207,26 @@ CONTENT FORMAT
 - 600 to 1000 words. Put dates and numbers in lists or a short table-like list, not long paragraphs.
 
 At the end, outside the JSON, list "FACTS USED" as bullets with the page of the notification each came from, so I can verify them.
+
+
+## Status as of 14 Nov 2026
+
+### Done
+- Eligibility engine: qualification ladder and branches, age (decimal limits, cut-off date, relaxation rules, OBC creamy/non-creamy), minimum marks by category, typing, shorthand, driving experience, highest education allowed, gender, domicile, height/chest, certificates.
+- Jobs listed per post (jobs page, homepage cards, saved jobs, recommendations). Job page with schedule, JobPosting structured data, 404 for missing jobs.
+- Exam calendar (all exams and my exams, .ics export), photo and signature resizer, compare jobs.
+- Mock tests: official and imported papers, exam window, results, analytics. Question bank: formula engine, 30 starter Quant templates, admin editor and import, syllabus mapping, practice by topic with admin-set limits.
+- Admin: job form with schedule, import (JSON, title-only duplicates, NEW branches), reference data, settings (practice limits, Premium switch).
+- Security: CSRF origin check, route protection, noindex on private pages, security headers, 12-hour admin session, password reset (email needs provider keys), show/hide password rules, route and negative-scenario scripts.
+- Design system: tokens, layout components, shared page scale, SEO helper, accessible contrast (Lighthouse 100 / 100 / 100), drift checks (`check-design.ts`).
+- Automation: `prisma/check-all.sh` (26 suites plus build) and CI on pull requests. Branches: `main` releases, `dev` integration, feature branches per feature.
+
+### Open, in order
+1. Admin hardening (per-person accounts, lockout, audit log, two-factor), then Redis rate limiting.
+2. Disability work (reserved vacancies, sub-types), database-backed dropdown options.
+3. Document checklist, previous-year paper bank, typing test, practice analytics and mistake notebook, quick links per post.
+4. Playwright end-to-end tests.
+5. `Icon`, `Input`, general `Modal` components; exam screen migration.
+
+### Needs the owner (cannot be done in code)
+Supabase row-level security SQL, Vercel environment variables and a separate test database, email provider keys, verifying every published job, reading the question templates, legal review, moving the database to Mumbai, GitHub secret scanning and Dependabot.

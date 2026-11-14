@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Building2, ChevronRight } from "lucide-react";
 
 import OrgLogo from "@/components/shared/OrgLogo";
+import CompareToggle from "@/components/jobs/CompareToggle";
 import EligibilityHint from "@/components/jobs/EligibilityHint";
 import FitHint from "@/components/jobs/FitHint";
 import type { JobFit } from "@/lib/job-fit";
@@ -116,6 +117,7 @@ export default function JobListItem({ job, fit, matchPercentage, eligible, verdi
         </div>
 
         <ChevronRight size={16} aria-hidden className="hidden text-neutral-300 group-hover:text-primary-600 md:block" />
+        {job.postId && <div className="md:col-span-5 md:pl-16"><CompareToggle id={job.notificationId + ":" + job.postId} label={heading} /></div>}
       </div>
     </article>
   );
