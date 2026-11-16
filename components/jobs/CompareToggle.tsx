@@ -20,7 +20,7 @@ export default function CompareToggle({ id, label }: { id: string; label: string
   }, [id]);
   const toggle = () => { const ids = readCompare(); write(ids.includes(id) ? ids.filter((x) => x !== id) : ids.length >= COMPARE_MAX ? ids : [...ids, id]); };
   return (
-    <label className={'relative z-10 inline-flex cursor-pointer items-center gap-1.5 text-2xs font-medium ' + (full ? 'cursor-not-allowed text-neutral-400' : 'text-neutral-600')} title={full ? 'You can compare up to ' + COMPARE_MAX + ' posts' : undefined}>
+    <label className={'relative z-10 inline-flex cursor-pointer items-center gap-1.5 text-2xs font-medium ' + (full ? 'cursor-not-allowed text-neutral-500' : 'text-neutral-600')} title={full ? 'You can compare up to ' + COMPARE_MAX + ' posts' : undefined}>
       <input type="checkbox" checked={on} disabled={full} onChange={toggle} aria-label={'Compare ' + label} className="accent-primary-600" />
       Compare
     </label>
