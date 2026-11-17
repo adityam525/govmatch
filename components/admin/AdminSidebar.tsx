@@ -20,6 +20,8 @@ const navSections = [
       { label: 'Mock tests', href: '/admin/mock-tests', icon: ClipboardCheck },
       { label: 'Exam patterns', href: '/admin/mock-patterns', icon: ClipboardCheck },
       { label: 'Question bank', href: '/admin/question-bank', icon: ClipboardCheck },
+      { label: 'Settings', href: '/admin/settings', icon: ClipboardCheck },
+      { label: 'Audit log', href: '/admin/audit', icon: ClipboardCheck },
     ],
   },
   {
