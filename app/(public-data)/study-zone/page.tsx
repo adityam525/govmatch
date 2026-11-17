@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { ClipboardList, FileText, BookOpen, Calculator, Image as ImageIcon } from 'lucide-react';
+import { ClipboardList, FileText, BookOpen, Calculator, Image as ImageIcon, Keyboard } from 'lucide-react';
 import Card from '@/components/ui/Card';
 
 // Full class names, so Tailwind can see them.
@@ -19,6 +19,7 @@ const cards = [
   { icon: BookOpen, title: 'Syllabus & Exam Pattern', description: 'Syllabus and marking scheme for exams, as they are added', href: '/resources', tone: 'green' },
   { icon: Calculator, title: 'GATE Score Estimator', description: 'Estimate where your GATE score stands for PSU recruitment and M.Tech admission', href: '/resources/gate-calculator', tone: 'orange' },
   { icon: ImageIcon, title: 'Photo and signature resizer', description: 'Fit your photo or signature to the exact size an application form asks for', href: '/tools/photo-resizer', tone: 'pink' },
+  { icon: Keyboard, title: 'Typing speed test', description: 'Check your English typing speed and accuracy, and save it to your profile', href: '/tools/typing-test', tone: 'blue' },
 ] as const;
 
 export default function StudyZonePage() {
