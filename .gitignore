@@ -7,3 +7,6 @@ node_modules/
 prisma/org-logos.csv
 exports/
 next-env.d.ts
+
+mobile/node_modules
+mobile/.expo

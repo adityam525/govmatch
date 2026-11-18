@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { auth } from '@/lib/auth';
+import { currentUserId } from '@/lib/session-user';
 import { prisma } from '@/lib/prisma';
 
 type GuardResult = { ok: true } | { ok: false; response: NextResponse };
@@ -10,8 +10,7 @@ export async function requireSelf(
   userId: string,
   options: { allowInactive?: boolean } = {},
 ): Promise<GuardResult> {
-  const session = await auth();
-  const sessionUserId = (session?.user as any)?.id as string | undefined;
+  const sessionUserId = (await currentUserId()) ?? undefined;
 
   if (!sessionUserId) {
     return { ok: false, response: NextResponse.json({ message: 'Unauthorized' }, { status: 401 }) };
