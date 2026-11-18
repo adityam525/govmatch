@@ -1,10 +1,12 @@
+import { Platform } from 'react-native';
 import * as SecureStore from 'expo-secure-store';
 import { API_URL } from './config';
 
 const KEY = 'govmatch-token';
-export const getToken = () => SecureStore.getItemAsync(KEY);
-export const setToken = (t: string) => SecureStore.setItemAsync(KEY, t);
-export const clearToken = () => SecureStore.deleteItemAsync(KEY);
+const web = Platform.OS === 'web';
+export const getToken = async () => (web ? localStorage.getItem(KEY) : SecureStore.getItemAsync(KEY));
+export const setToken = async (t: string) => { if (web) localStorage.setItem(KEY, t); else await SecureStore.setItemAsync(KEY, t); };
+export const clearToken = async () => { if (web) localStorage.removeItem(KEY); else await SecureStore.deleteItemAsync(KEY); };
 
 export async function api<T = any>(path: string, init: RequestInit = {}): Promise<{ ok: boolean; status: number; data: T }> {
   const token = await getToken();
