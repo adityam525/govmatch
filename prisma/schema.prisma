@@ -246,6 +246,7 @@ model Post {
   maxQualificationLevel Int?
   shorthandWpm Int?
   minDrivingYears Int?
+  pwdVacancies Json?
 }
 
 model AdmitCard {
