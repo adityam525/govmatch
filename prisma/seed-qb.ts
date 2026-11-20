@@ -2,13 +2,15 @@ import 'dotenv/config';
 import { prisma } from '../lib/prisma';
 import { QB_SUBJECTS } from './data/qb-taxonomy';
 import { QB_EXAMS } from './data/qb-exams';
+import { QB_EXAMS_2 } from './data/qb-exams-2';
+const ALL_EXAMS = [...QB_EXAMS, ...QB_EXAMS_2];
 
 const apply = process.argv.includes('--apply');
 const slugify = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
 
 async function main() {
   const known = new Set(QB_SUBJECTS.flatMap((s) => s.chapters.map((c) => c.name)));
-  const typos = [...new Set(QB_EXAMS.flatMap((e) => e.chapters.filter((c) => !known.has(c))))];
+  const typos = [...new Set(ALL_EXAMS.flatMap((e) => e.chapters.filter((c) => !known.has(c))))];
   if (typos.length) { console.log('Chapter names in qb-exams.ts that are not in the taxonomy:', typos.join(' | ')); process.exit(1); }
 
   let subjects = 0, chapters = 0, topics = 0, exams = 0, links = 0;
@@ -32,7 +34,7 @@ async function main() {
     }
   }
 
-  for (const def of QB_EXAMS) {
+  for (const def of ALL_EXAMS) {
     const org = await prisma.organization.findFirst({ where: { shortName: { equals: def.org, mode: 'insensitive' } }, select: { id: true } });
     if (!org) console.log('No organization with short name "' + def.org + '" for ' + def.name + ' ' + def.stage + '. It will be created without one.');
     let exam = await prisma.qbExam.findUnique({ where: { slug: def.slug } });
