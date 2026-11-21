@@ -36,10 +36,10 @@ export const QB_EXAMS_3: QbExamDef[] = [
   { slug: 'upsc-cds-written', name: 'UPSC CDS', stage: 'Written', org: 'UPSC', chapters: u(ENGLISH, GA_FULL, BASIC_QUANT) },
   { slug: 'upsc-nda-written', name: 'UPSC NDA', stage: 'Written', org: 'UPSC', chapters: u(ENGLISH, GA_FULL, MATHS_FULL) },
   { slug: 'afcat-written', name: 'AFCAT', stage: 'Written', org: 'IAF', chapters: u(ENGLISH, REASONING, BASIC_QUANT, ['History', 'Geography', 'Polity', 'General Science', 'Static GK', 'Current Affairs']) },
-  { slug: 'agniveer-army-gd', name: 'Agniveer Army General Duty', stage: 'CEE', org: 'Indian Army', chapters: u(['General Science', 'Static GK', 'Current Affairs', 'History', 'Geography', 'Polity'], BASIC_QUANT) },
+  { slug: 'agniveer-army-gd', name: 'Agniveer Army General Duty', stage: 'CEE', org: 'ARMY', chapters: u(['General Science', 'Static GK', 'Current Affairs', 'History', 'Geography', 'Polity'], BASIC_QUANT) },
   // State and other
   { slug: 'upsssc-pet', name: 'UPSSSC PET', stage: 'Preliminary', org: 'UPSSSC', chapters: u(GA_FULL, REASONING, BASIC_QUANT, ENGLISH) },
-  { slug: 'up-police-constable', name: 'UP Police Constable', stage: 'Written', org: 'UPPRPB', chapters: u(GA_FULL, REASONING, BASIC_QUANT) },
+  { slug: 'up-police-constable', name: 'UP Police Constable', stage: 'Written', org: 'UPPOLICE', chapters: u(GA_FULL, REASONING, BASIC_QUANT) },
   { slug: 'dsssb-tier-1', name: 'DSSSB', stage: 'Tier 1', org: 'DSSSB', chapters: u(GA_FULL, REASONING, BASIC_QUANT, ENGLISH) },
   { slug: 'state-psc-prelims-csat-style', name: 'State PSC', stage: 'Prelims aptitude', org: 'UPSC', chapters: u(ENGLISH, REASONING, ['Number System', 'Percentage', 'Ratio and Proportion', 'Average', 'Data Interpretation', 'Statistics']) },
 ];

@@ -3,7 +3,8 @@ import { prisma } from '../lib/prisma';
 import { QB_SUBJECTS } from './data/qb-taxonomy';
 import { QB_EXAMS } from './data/qb-exams';
 import { QB_EXAMS_2 } from './data/qb-exams-2';
-const ALL_EXAMS = [...QB_EXAMS, ...QB_EXAMS_2];
+import { QB_EXAMS_3 } from './data/qb-exams-3';
+const ALL_EXAMS = [...QB_EXAMS, ...QB_EXAMS_2, ...QB_EXAMS_3];
 
 const apply = process.argv.includes('--apply');
 const slugify = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
