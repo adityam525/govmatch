@@ -1,4 +1,5 @@
-import { generate, type TemplateDef } from './template';
+import { type TemplateDef } from './template';
+import { generateAny as generate } from './generate-any';
 import { rng, shuffle } from './random';
 
 export type Level = 'EASY' | 'MEDIUM' | 'HARD';
