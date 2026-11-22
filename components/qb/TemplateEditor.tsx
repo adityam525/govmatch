@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Plus, Trash2 } from "lucide-react";
 import Button from "@/components/ui/Button";
+import FixedEditor from "@/components/qb/FixedEditor";
 import Select from "@/components/ui/Select";
 import { DIFFICULTIES } from "@/lib/mock-difficulty";
 
@@ -104,6 +105,7 @@ export default function TemplateEditor({ id }: { id?: string }) {
   const [fresh, setFresh] = useState<Sample[]>([]);
   const [busy, setBusy] = useState<string | null>(null);
   const [error, setError] = useState("");
+  const [fixedRow, setFixedRow] = useState<any>(null);
 
   useEffect(() => {
     fetch("/api/admin/qb-taxonomy")
@@ -133,6 +135,7 @@ export default function TemplateEditor({ id }: { id?: string }) {
       })
       .then((t) => {
         const def = t.definition ?? {};
+        if (def.fixed) setFixedRow(t);
         setTitle(t.title);
         setSlug(t.slug);
         setDifficulty(t.difficulty);
@@ -172,6 +175,8 @@ export default function TemplateEditor({ id }: { id?: string }) {
       .catch((e) => setError(e.message || "Could not load this template."))
       .finally(() => setLoading(false));
   }, [id]);
+
+  if (fixedRow && id) return <FixedEditor row={fixedRow} id={id} />;
 
   const chapters = subjects.find((s) => s.id === subjectId)?.chapters ?? [];
   const topics = chapters.find((c) => c.id === chapterId)?.topics ?? [];

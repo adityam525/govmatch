@@ -1,3 +1,4 @@
+import { validateAny } from '@/lib/qb/validate-any';
 import { NextResponse } from 'next/server';
 import type { Prisma } from '@prisma/client';
 import { prisma } from '@/lib/prisma';
@@ -35,7 +36,7 @@ export async function POST(request: Request) {
       if ('error' in meta) { row.messages.push(meta.error); continue; }
       const parsed = coerceDefinition(item?.definition);
       if ('error' in parsed) { row.messages.push(parsed.error); continue; }
-      const report = validateTemplate(parsed.def);
+      const report = validateAny(parsed.def);
       if (!report.ok) { row.messages.push(...report.errors.slice(0, 3)); continue; }
       if (seen.has(meta.meta.slug) || (await prisma.qbTemplate.findUnique({ where: { slug: meta.meta.slug }, select: { id: true } }))) {
         row.status = 'duplicate'; row.messages.push('A template with the address "' + meta.meta.slug + '" already exists.'); continue;

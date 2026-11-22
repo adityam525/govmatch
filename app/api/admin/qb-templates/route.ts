@@ -1,3 +1,4 @@
+import { validateAny } from '@/lib/qb/validate-any';
 import { NextResponse } from 'next/server';
 import type { Prisma } from '@prisma/client';
 import { prisma } from '@/lib/prisma';
@@ -31,7 +32,7 @@ export async function POST(request: Request) {
     }
     const publish = body.published === true;
     if (publish) {
-      const report = validateTemplate(parsed.def);
+      const report = validateAny(parsed.def);
       if (!report.ok) return NextResponse.json({ message: 'Fix these before publishing: ' + report.errors[0], report }, { status: 400 });
     }
     const created = await prisma.qbTemplate.create({
