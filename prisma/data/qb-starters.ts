@@ -2,5 +2,6 @@ import type { Starter } from './qb-starter-types';
 import { STARTERS_A } from './qb-starter-a';
 import { STARTERS_B } from './qb-starter-b';
 import { STARTERS_C } from './qb-starter-c';
+import { STARTERS_D } from './qb-starter-d';
 
-export const STARTERS: Starter[] = [...STARTERS_A, ...STARTERS_B, ...STARTERS_C];
+export const STARTERS: Starter[] = [...STARTERS_A, ...STARTERS_B, ...STARTERS_C, ...STARTERS_D];
