@@ -1,7 +1,7 @@
 import { generate, type TemplateDef } from '../lib/qb/template';
-import { STARTERS_D } from './data/qb-starter-d';
+import { STARTERS_E } from './data/qb-starter-e';
 
-for (const st of STARTERS_D) {
+for (const st of STARTERS_E) {
   console.log('\n== ' + st.chapter + ' / ' + st.topic + '  [' + st.slug + ']');
   for (const seed of ['one', 'two']) {
     const r = generate(st.def as unknown as TemplateDef, seed);

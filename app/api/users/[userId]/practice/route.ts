@@ -11,7 +11,7 @@ interface Params { params: Promise<{ userId: string }> }
 
 export const FREE_SETS_PER_DAY = 3;
 export const FREE_MAX_QUESTIONS = 10;
-const DEFAULT_MIX = { EASY: 30, MEDIUM: 50, HARD: 20 };
+const DEFAULT_MIX = { EASY: 10, MEDIUM: 45, HARD: 45 };
 const IST_MS = 19_800_000;
 
 const startOfIstDay = () => new Date(Math.floor((Date.now() + IST_MS) / 86_400_000) * 86_400_000 - IST_MS);
