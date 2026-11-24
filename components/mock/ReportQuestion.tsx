@@ -13,7 +13,7 @@ const REASONS = [
 ];
 
 // A small "Report a problem" form for one question. Needs the question's id, text and options.
-export default function ReportQuestion({ questionId, text, options, correctIndex }: { questionId: string; text: string; options: string[]; correctIndex: number }) {
+export default function ReportQuestion({ questionId, text, options, correctIndex }: { questionId: string; text: string; options: string[]; correctIndex?: number }) {
   const { user, isLoggedIn } = useAuth();
   const [reason, setReason] = useState("");
   const [comment, setComment] = useState("");
@@ -24,7 +24,7 @@ export default function ReportQuestion({ questionId, text, options, correctIndex
   const send = async () => {
     setBusy(true); setMsg("");
     try {
-      const res = await fetch("/api/users/" + user.id + "/question-reports", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ questionId, reason, comment, text, options, correctIndex }) });
+      const res = await fetch("/api/users/" + user.id + "/question-reports", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ questionId, reason, comment, text, options, ...(typeof correctIndex === "number" ? { correctIndex } : {}) }) });
       const d = await res.json().catch(() => ({}));
       setMsg(d.message ?? (res.ok ? "Thank you." : "Could not send."));
       if (res.ok) { setReason(""); setComment(""); }
