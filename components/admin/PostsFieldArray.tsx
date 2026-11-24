@@ -1,4 +1,5 @@
 "use client";
+import { DISABILITY_TYPES as PWD_GROUPS } from '@/lib/special-categories';
 import MultiRuleAdder from '@/components/admin/MultiRuleAdder';
 
 import Select from '@/components/ui/Select';
@@ -34,6 +35,7 @@ export interface PostDraft {
   maxEducationLevel?: string;
   shorthandWpm?: string;
   minDrivingYears?: string;
+  pwdVac?: Record<string, string>;
   marksOBC?: string;
   marksSC?: string;
   marksST?: string;
@@ -271,6 +273,15 @@ export default function PostsFieldArray({ posts, onChange }: PostsFieldArrayProp
                       <div><span className="mb-1 block text-[11px] text-neutral-500">OBC non-creamy</span><input type="number" min={0} max={100} step="0.01" value={post.marksOBCNCL ?? ""} onChange={(e) => updatePost(index, "marksOBCNCL", e.target.value)} className={inputCls} /></div>
                     </div>
                     <p className="mt-1 text-[11px] text-neutral-500">Leave a category empty to use the base figure. Leave everything empty if the notice sets no minimum.</p>
+                  </div>
+
+                  <div>
+                    <p className={labelCls}>Vacancies reserved for persons with disabilities (optional)</p>
+                    <div className="grid gap-2 sm:grid-cols-5">
+                      {PWD_GROUPS.map((g) => (
+                        <div key={g.code}><span className="mb-1 block text-[11px] text-neutral-600" title={g.label}>{g.short}</span><input type="number" min={0} max={500} value={post.pwdVac?.[g.code] ?? ""} onChange={(e) => updatePost(index, "pwdVac", { ...(post.pwdVac ?? {}), [g.code]: e.target.value })} className={inputCls} /></div>
+                      ))}
+                    </div>
                   </div>
 
                   <div>

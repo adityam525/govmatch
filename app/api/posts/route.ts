@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { parsePwdVacancies } from '@/lib/pwd-vacancies';
 import { parseCategoryMarks, parseTypingOptions } from "@/lib/skill-rules";
 import { Prisma } from "@prisma/client";
 import { prisma } from "@/lib/prisma";
@@ -80,6 +81,9 @@ async function cleanRequirements(body: Record<string, unknown>) {
   const driving = whole(body.minDrivingYears, 0, 50);
   if (driving === undefined) return fail('Driving experience must be a whole number of years from 0 to 50.');
   data.minDrivingYears = driving;
+  const pv = parsePwdVacancies(body.pwdVacancies);
+  if (pv.error) return fail(pv.error);
+  data.pwdVacancies = pv.value ? (pv.value as unknown as Prisma.InputJsonValue) : undefined;
 
   const marksBase = blank(body.minMarksPercent)
     ? null
@@ -169,7 +173,7 @@ export async function POST(request: Request) {
       minMarksByCategory,
       typingOptions,
       maxQualificationLevel,
-      shorthandWpm, minDrivingYears,
+      shorthandWpm, minDrivingYears, pwdVacancies,
       ...postData
     } = body;
 
@@ -187,7 +191,7 @@ export async function POST(request: Request) {
       minMarksByCategory,
       typingOptions,
       maxQualificationLevel,
-      shorthandWpm, minDrivingYears,
+      shorthandWpm, minDrivingYears, pwdVacancies,
     });
     if (extras.error)
       return NextResponse.json({ message: extras.error }, { status: 400 });

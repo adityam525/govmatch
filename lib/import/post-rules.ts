@@ -1,5 +1,6 @@
 import { CERT_CODES } from '../eligibility-options';
 import { DISABILITY_CODES, legacyRelaxationMap, parseRules, type RelaxationRule } from '../special-categories';
+import { parsePwdVacancies } from '../pwd-vacancies';
 import { parseCategoryMarks, parseTypingOptions, type TypingOption } from '../skill-rules';
 
 export interface PostRules {
@@ -12,6 +13,7 @@ export interface PostRules {
   maxQualificationLevel: number | null;
   shorthandWpm: number | null;
   minDrivingYears: number | null;
+  pwdVacancies: Record<string, number> | null;
   pwdTypes: string[];
   relaxationRules: RelaxationRule[];
   ageRelaxation: Record<string, string>;
@@ -48,6 +50,8 @@ export function readPostRules(p: any): { rules: PostRules; errors: string[] } {
   const chest = whole(src.minChestCm, 50, 150);
   if (chest === undefined) errors.push('minChestCm must be between 50 and 150');
 
+  const pv = parsePwdVacancies(src.pwdVacancies);
+  if (pv.error) errors.push(pv.error);
   const driving = whole(src.minDrivingYears, 0, 50);
   if (driving === undefined) errors.push('minDrivingYears must be a whole number from 0 to 50');
   const shorthand = whole(src.shorthandWpm, 40, 200);
@@ -103,7 +107,7 @@ export function readPostRules(p: any): { rules: PostRules; errors: string[] } {
     errors,
     rules: {
       genderRestriction, minExperienceYears: exp ?? null, requiredCertifications: [...new Set(certs)], domicileStateCode: domicile,
-      minHeightCm: height ?? null, minChestCm: chest ?? null, maxQualificationLevel: maxLevel ?? null, shorthandWpm: shorthand ?? null, minDrivingYears: driving ?? null, pwdTypes: [...new Set(pwd)], relaxationRules,
+      minHeightCm: height ?? null, minChestCm: chest ?? null, maxQualificationLevel: maxLevel ?? null, shorthandWpm: shorthand ?? null, minDrivingYears: driving ?? null, pwdVacancies: pv.value, pwdTypes: [...new Set(pwd)], relaxationRules,
       ageRelaxation: relaxationRules.length ? legacyRelaxationMap(relaxationRules) : {}, ageCutoffDate: cutoff,
       minMarksPercent: marksBase, minMarksByCategory: byCategory, typingOptions: typing,
     },

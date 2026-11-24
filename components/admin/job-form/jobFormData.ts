@@ -131,6 +131,7 @@ export async function loadJob(jobId: string): Promise<JobData> {
         maxEducationLevel: str(p.maxQualificationLevel),
         shorthandWpm: str(p.shorthandWpm),
         minDrivingYears: str(p.minDrivingYears),
+        pwdVac: Object.fromEntries(Object.entries((p.pwdVacancies ?? {}) as Record<string, number>).map(([k, v]) => [k, String(v)])),
         minMarksPercent: str(p.minMarksPercent),
         marksOBC: str(p.minMarksByCategory?.OBC),
         marksSC: str(p.minMarksByCategory?.SC),
@@ -257,6 +258,7 @@ async function saveCollections(jobId: string, data: JobData) {
       maxQualificationLevel: p.maxEducationLevel || null,
       shorthandWpm: p.shorthandWpm || null,
       minDrivingYears: p.minDrivingYears || null,
+      pwdVacancies: p.pwdVac ?? {},
       minMarksPercent: p.minMarksPercent ?? "",
       minMarksByCategory: { OBC: p.marksOBC ?? "", SC: p.marksSC ?? "", ST: p.marksST ?? "", EWS: p.marksEWS ?? "", OBC_NCL: p.marksOBCNCL ?? "" },
       typingOptions: [

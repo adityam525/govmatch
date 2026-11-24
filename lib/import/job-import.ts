@@ -619,6 +619,7 @@ async function createJob(job: PreparedJob) {
               maxQualificationLevel: p.rules.maxQualificationLevel,
               shorthandWpm: p.rules.shorthandWpm,
               minDrivingYears: p.rules.minDrivingYears,
+              pwdVacancies: p.rules.pwdVacancies ? (p.rules.pwdVacancies as unknown as Prisma.InputJsonValue) : undefined,
               pwdTypes: p.rules.pwdTypes,
               ageCutoffDate: p.rules.ageCutoffDate,
               minMarksPercent: p.rules.minMarksPercent,
