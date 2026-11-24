@@ -174,10 +174,10 @@ export const STARTERS_D: Starter[] = [
   // Calendar
   { slug: 'calendar-last-weekday', title: 'Date of the last matching weekday', chapter: 'Calendar and Clock', topic: 'Calendar', difficulty: 'MEDIUM', seconds: 50,
     def: { text: 'In a month of 31 days, the {d}th is a Thursday. On what date does the last Thursday of the month fall?', variables: [int('d', 1, 7)], derived: [], constraints: [],
-      answer: { expr: '31-mod(31-d,7)', decimals: 0 }, distractors: ['d+28', 'd+21', '31'], explanation: 'Dates with the same weekday are 7 apart: {d}, {d} + 7, and so on. The last one that does not pass 31 is {answer}.' },
+      answer: { expr: '31-mod(31-d,7)', decimals: 0 }, distractors: ['30-mod(31-d,7)', 'd+14', '32-mod(31-d,7)'], explanation: 'Dates with the same weekday are 7 apart: {d}, {d} + 7, and so on. The last one that does not pass 31 is {answer}.' },
     verify: (v) => 31 - ((31 - v.d) % 7) },
   { slug: 'calendar-odd-days', title: 'Odd days in ordinary years', chapter: 'Calendar and Clock', topic: 'Calendar', difficulty: 'MEDIUM', seconds: 40,
     def: { text: 'How many odd days are there in {n} ordinary (non-leap) years?', variables: [int('n', 8, 99)], derived: [], constraints: ['mod(n,7) != 0'],
-      answer: { expr: 'mod(n,7)', decimals: 0 }, distractors: ['n', '7-mod(n,7)', 'mod(n,7)+1'], explanation: 'An ordinary year has 365 days = 52 weeks + 1 odd day. So {n} years have {n} odd days, and {n} divided by 7 leaves {answer}.' },
+      answer: { expr: 'mod(n,7)', decimals: 0 }, distractors: ['7-mod(n,7)', 'mod(n,7)+1', 'mod(n,7)-1'], explanation: 'An ordinary year has 365 days = 52 weeks + 1 odd day. So {n} years have {n} odd days, and {n} divided by 7 leaves {answer}.' },
     verify: (v) => v.n % 7 },
 ];

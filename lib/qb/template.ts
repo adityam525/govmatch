@@ -15,7 +15,7 @@ export interface TemplateDef {
   variables: VarDef[];
   derived: { name: string; expr: string }[];
   constraints: string[];
-  answer: { expr: string; decimals: number; unit?: string; allowNegative?: boolean };
+  answer: { expr: string; decimals: number; unit?: string; allowNegative?: boolean; min?: number; max?: number };
   distractors: string[];
   explanation: string;
 }
@@ -83,6 +83,7 @@ export function generateOnce(t: TemplateDef, rand: () => number): GenResult {
     const wrong: number[] = [];
     const accept = (x: number) => {
       if (!Number.isFinite(x) || (x < 0 && !t.answer.allowNegative)) return false;
+      if ((t.answer.min !== undefined && x < t.answer.min) || (t.answer.max !== undefined && x > t.answer.max)) return false;
       const key = fmt(x, d);
       if (seen.has(key)) return false;
       seen.add(key);

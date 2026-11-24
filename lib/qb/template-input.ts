@@ -59,7 +59,7 @@ export function coerceDefinition(raw: unknown): { error: string } | { def: Templ
   const decimals = num(a.decimals);
   const def: TemplateDef = {
     text, variables, derived, constraints,
-    answer: { expr: str(a.expr), decimals: decimals === undefined ? 0 : decimals, allowNegative: a.allowNegative === true, ...(str(a.unit) ? { unit: str(a.unit) } : {}) },
+    answer: { expr: str(a.expr), decimals: decimals === undefined ? 0 : decimals, allowNegative: a.allowNegative === true, ...(str(a.unit) ? { unit: str(a.unit) } : {}), ...(Number.isFinite(num(a.min)) ? { min: num(a.min) as number } : {}), ...(Number.isFinite(num(a.max)) ? { max: num(a.max) as number } : {}) },
     distractors, explanation,
   };
   return { def };

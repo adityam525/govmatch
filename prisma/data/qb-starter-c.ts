@@ -31,7 +31,7 @@ export const STARTERS_C: Starter[] = [
     verify: (v) => 180 - 360 / v.n },
   { slug: 'remainder-of-product', title: 'Remainder of a product', chapter: 'Number System', topic: 'Remainders', difficulty: 'MEDIUM', seconds: 50,
     def: { text: 'Find the remainder when {a} x {b} is divided by {d}.', variables: [int('a', 100, 999), int('b', 100, 999), int('d', 5, 13)], derived: [], constraints: ['mod(a*b,d) != 0'],
-      answer: { expr: 'mod(a*b,d)', decimals: 0 }, distractors: ['mod(a,d)', 'mod(b,d)', 'mod(a+b,d)'], explanation: 'The remainder of a product is the product of the remainders, taken again modulo {d}. The remainder is {answer}.' },
+      answer: { expr: 'mod(a*b,d)', decimals: 0 }, distractors: ['mod(a*b+1,d)', 'mod(a*b+2,d)', 'mod(a*b+3,d)'], explanation: 'The remainder of a product is the product of the remainders, taken again modulo {d}. The remainder is {answer}.' },
     verify: (v) => (((v.a % v.d) * (v.b % v.d)) % v.d) },
   { slug: 'unit-digit-power', title: 'Unit digit of a power', chapter: 'Number System', topic: 'Unit digit', difficulty: 'MEDIUM', seconds: 50,
     def: { text: 'Find the unit digit of {a}^{n}.', variables: [pick('a', [2, 3, 7, 8]), int('n', 10, 99)], derived: [{ name: 'e', expr: 'mod(n-1,4)+1' }], constraints: [],
