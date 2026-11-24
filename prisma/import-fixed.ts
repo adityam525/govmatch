@@ -23,8 +23,9 @@ async function main() {
     const topic = chapter ? await prisma.qbTopic.findFirst({ where: { name: it.topic, chapterId: chapter.id }, select: { id: true } }) : null;
     if (!topic) problems.push('No topic "' + it?.topic + '" in chapter "' + it?.chapter + '".');
     if (problems.length) { bad++; console.log('PROBLEM ' + label + '\n   ' + problems.join('\n   ')); continue; }
-    const slug = 'fx-' + createHash('sha1').update(it.text.trim().toLowerCase()).digest('hex').slice(0, 16);
-    if (await prisma.qbTemplate.findUnique({ where: { slug }, select: { id: true } })) { dup++; continue; }
+    const oldSlug = 'fx-' + createHash('sha1').update(it.text.trim().toLowerCase()).digest('hex').slice(0, 16);
+    const slug = 'fx-' + createHash('sha1').update(it.text.trim().toLowerCase() + '|' + [...it.options].map((o) => String(o).trim().toLowerCase()).sort().join('|')).digest('hex').slice(0, 16);
+    if (await prisma.qbTemplate.findFirst({ where: { slug: { in: [slug, oldSlug] } }, select: { id: true } })) { dup++; continue; }
     ok++;
     if (apply) {
       const q = shuffleFixed({ text: it.text.trim(), options: it.options.map((o) => o.trim()), correctIndex: it.correctIndex, explanation: it.explanation.trim(), source: it.source });

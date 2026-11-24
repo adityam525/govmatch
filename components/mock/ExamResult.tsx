@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import type { ExamData } from './exam-types';
+import ReportQuestion from './ReportQuestion';
 
 export default function ExamResult({ data }: { data: ExamData }) {
   const [practice, setPractice] = useState(false);
@@ -77,6 +78,7 @@ export default function ExamResult({ data }: { data: ExamData }) {
                     </ul>
                     {mine === null && <p className="mt-1 text-xs text-neutral-500">You did not answer this question.</p>}
                     {q.explanation && <p className="mt-2 text-xs text-neutral-600"><span className="font-semibold">Explanation: </span>{q.explanation}</p>}
+                    <ReportQuestion questionId={q.id} text={q.text} options={q.options} correctIndex={q.correctIndex} />
                   </div>
                 );
               })}

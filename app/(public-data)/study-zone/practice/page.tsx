@@ -7,6 +7,8 @@ import { Crown } from 'lucide-react';
 import { useAuth } from '@/features/auth/hooks';
 import Button from '@/components/ui/Button';
 import Select from '@/components/ui/Select';
+import MixInputs from '@/components/qb/MixInputs';
+import { DEFAULT_MIX, type Mix } from '@/lib/qb/mix';
 
 interface Topic { id: string; name: string; templates: number }
 interface Chapter { id: string; name: string; topics: Topic[] }
@@ -26,9 +28,7 @@ export default function PracticePage() {
   const [examId, setExamId] = useState('');
   const [picked, setPicked] = useState<Set<string>>(new Set());
   const [count, setCount] = useState('10');
-  const [easy, setEasy] = useState('30');
-  const [medium, setMedium] = useState('50');
-  const [hard, setHard] = useState('20');
+  const [mix, setMix] = useState<Mix>({ ...DEFAULT_MIX });
   const [minutes, setMinutes] = useState('');
   const [marks, setMarks] = useState('1');
   const [negative, setNegative] = useState('0.25');
@@ -69,7 +69,7 @@ export default function PracticePage() {
       try { await document.documentElement.requestFullscreen?.(); } catch { /* the exam still works without it */ }
             const res = await fetch('/api/users/' + user.id + '/practice', {
         method: 'POST', headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ examId, topicIds: [...picked].filter((id) => available.has(id)), count, mix: { EASY: easy, MEDIUM: medium, HARD: hard }, durationMinutes: minutes, marks, negativeMarks: negative }),
+        body: JSON.stringify({ examId, topicIds: [...picked].filter((id) => available.has(id)), count, mix, durationMinutes: minutes, marks, negativeMarks: negative }),
       });
       const d = await res.json().catch(() => ({}));
       if (!res.ok) { if (document.fullscreenElement) await document.exitFullscreen().catch(() => {}); setError(d.message ?? 'Could not create the set.'); return; }
@@ -140,9 +140,7 @@ export default function PracticePage() {
         <div className={'mt-4 ' + (premium ? '' : 'opacity-60')}>
           <p className="mb-2 flex items-center gap-1.5 text-xs font-semibold text-neutral-700">{!premium && <Crown size={13} className="text-amber-500" />}Customise {!premium && <Link href="/pricing" className="font-normal text-primary-600 underline">(Premium)</Link>}</p>
           <div className="grid gap-3 sm:grid-cols-3">
-            <div><label className={label}>Easy %</label><input type="number" min={0} max={100} disabled={!premium} value={easy} onChange={(e) => setEasy(e.target.value)} className={field} /></div>
-            <div><label className={label}>Medium %</label><input type="number" min={0} max={100} disabled={!premium} value={medium} onChange={(e) => setMedium(e.target.value)} className={field} /></div>
-            <div><label className={label}>Hard %</label><input type="number" min={0} max={100} disabled={!premium} value={hard} onChange={(e) => setHard(e.target.value)} className={field} /></div>
+            <div className="sm:col-span-3"><MixInputs value={mix} onChange={setMix} disabled={!premium} /></div>
             <div><label className={label}>Time (minutes, empty = suggested)</label><input type="number" min={1} max={300} disabled={!premium} value={minutes} onChange={(e) => setMinutes(e.target.value)} className={field} /></div>
             <div><label className={label}>Marks per question</label><input type="number" step="0.25" min={0.25} max={10} disabled={!premium} value={marks} onChange={(e) => setMarks(e.target.value)} className={field} /></div>
             <div><label className={label}>Negative marks</label><input type="number" step="0.25" min={0} max={5} disabled={!premium} value={negative} onChange={(e) => setNegative(e.target.value)} className={field} /></div>

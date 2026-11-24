@@ -11,7 +11,7 @@ interface Params { params: Promise<{ userId: string }> }
 
 export const FREE_SETS_PER_DAY = 3;
 export const FREE_MAX_QUESTIONS = 10;
-const DEFAULT_MIX = { EASY: 30, MEDIUM: 50, HARD: 20 };
+const DEFAULT_MIX = { EASY: 10, MEDIUM: 45, HARD: 45 };
 const IST_MS = 19_800_000;
 
 const startOfIstDay = () => new Date(Math.floor((Date.now() + IST_MS) / 86_400_000) * 86_400_000 - IST_MS);
@@ -75,7 +75,7 @@ export async function POST(request: Request, { params }: Params) {
     const test = await prisma.mockTest.create({
       data: {
         userId, title, source: 'PRACTICE', published: false, durationMinutes: result.durationMinutes,
-        sections: { create: [{ name: 'Practice', order: 0, questions: { create: result.questions.map((q, i) => ({ order: i, text: q.text, options: q.options, correctIndex: q.correctIndex, marks: q.marks, negativeMarks: q.negativeMarks, explanation: q.explanation })) } }] },
+        sections: { create: [{ name: 'Practice', order: 0, questions: { create: result.questions.map((q, i) => ({ order: i, text: q.text, options: q.options, correctIndex: q.correctIndex, marks: q.marks, negativeMarks: q.negativeMarks, explanation: q.explanation, templateId: q.templateId })) } }] },
       },
       include: { sections: { orderBy: { order: 'asc' }, include: { questions: { orderBy: { order: 'asc' } } } } },
     });

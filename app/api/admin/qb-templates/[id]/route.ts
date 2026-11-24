@@ -4,7 +4,8 @@ import { prisma } from '@/lib/prisma';
 import { isAdminRequest } from '@/lib/admin-session';
 import { describeDbError } from '@/lib/lookup-api';
 import { cleanMeta, coerceDefinition } from '@/lib/qb/template-input';
-import { validateTemplate, type TemplateDef } from '@/lib/qb/template';
+import { type TemplateDef } from '@/lib/qb/template';
+import { validateAny } from '@/lib/qb/validate-any';
 
 interface Params { params: Promise<{ id: string }> }
 const denied = () => NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
@@ -36,7 +37,7 @@ export async function PUT(request: Request, { params }: Params) {
     }
     const publish = typeof body.published === 'boolean' ? body.published : existing.published;
     if (publish) {
-      const report = validateTemplate(parsed.def);
+      const report = validateAny(parsed.def);
       if (!report.ok) return NextResponse.json({ message: 'Fix these before publishing: ' + report.errors[0], report }, { status: 400 });
     }
     const taken = await prisma.qbTemplate.findFirst({ where: { slug: meta.meta.slug, id: { not: id } }, select: { id: true } });
@@ -56,7 +57,7 @@ export async function PATCH(request: Request, { params }: Params) {
   const row = await prisma.qbTemplate.findUnique({ where: { id }, select: { definition: true } });
   if (!row) return gone();
   if (body.published) {
-    const report = validateTemplate(row.definition as unknown as TemplateDef);
+    const report = validateAny(row.definition as unknown as TemplateDef);
     if (!report.ok) return NextResponse.json({ message: 'Fix these before publishing: ' + report.errors[0], report }, { status: 400 });
   }
   await prisma.qbTemplate.update({ where: { id }, data: { published: body.published } });

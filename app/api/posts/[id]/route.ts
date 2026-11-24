@@ -8,7 +8,7 @@ interface Params { params: Promise<{ id: string }> }
 const RULE_KEYS = [
   'genderRestriction', 'minExperienceYears', 'requiredCertifications', 'domicileStateCode', 'minHeightCm', 'minChestCm',
   'pwdTypes', 'ageCutoffDate', 'minMarksPercent', 'minMarksByCategory', 'typingOptions', 'maxQualificationLevel',
-  'shorthandWpm', 'minDrivingYears', 'relaxationRules',
+  'shorthandWpm', 'minDrivingYears', 'pwdVacancies', 'relaxationRules',
 ] as const;
 
 const bad = (message: string) => NextResponse.json({ message }, { status: 400 });
@@ -47,6 +47,7 @@ export async function PATCH(request: Request, { params }: Params) {
       domicileStateCode: rules.domicileStateCode, minHeightCm: rules.minHeightCm, minChestCm: rules.minChestCm, pwdTypes: rules.pwdTypes,
       ageCutoffDate: rules.ageCutoffDate, minMarksPercent: rules.minMarksPercent, maxQualificationLevel: rules.maxQualificationLevel,
       shorthandWpm: rules.shorthandWpm, minDrivingYears: rules.minDrivingYears,
+      pwdVacancies: json(rules.pwdVacancies, !rules.pwdVacancies),
       minMarksByCategory: json(rules.minMarksByCategory, Object.keys(rules.minMarksByCategory).length === 0),
       typingOptions: json(rules.typingOptions, rules.typingOptions.length === 0),
       relaxationRules: json(rules.relaxationRules, rules.relaxationRules.length === 0),

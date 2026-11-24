@@ -37,6 +37,16 @@ const USER_PREFIXES = ['/dashboard', '/profile', '/applications', '/saved-jobs',
 const hasSession = (request: NextRequest) =>
   request.cookies.getAll().some((c) => /^(__Secure-)?(authjs|next-auth)\.session-token/.test(c.name));
 
+// Forwards the request, tagging API writes so isAdminRequest can audit them. Always overwritten, so it cannot be forged.
+function pass(request: NextRequest) {
+  const h = new Headers(request.headers);
+  h.delete('x-admin-write');
+  if (request.method !== 'GET' && request.method !== 'HEAD' && request.nextUrl.pathname.startsWith('/api/')) {
+    h.set('x-admin-write', request.method + ' ' + request.nextUrl.pathname);
+  }
+  return NextResponse.next({ request: { headers: h } });
+}
+
 async function guard(request: NextRequest): Promise<NextResponse> {
   const { pathname } = request.nextUrl;
   const isRead = request.method === 'GET' || request.method === 'HEAD';
@@ -47,7 +57,7 @@ async function guard(request: NextRequest): Promise<NextResponse> {
     if (!(await verifyAdminSessionToken(token))) {
       return NextResponse.redirect(new URL('/admin/login', request.url));
     }
-    return NextResponse.next();
+    return pass(request);
   }
 
   // Admin-only APIs
@@ -55,7 +65,7 @@ async function guard(request: NextRequest): Promise<NextResponse> {
     if (!(await verifyAdminSessionToken(token))) {
       return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
     }
-    return NextResponse.next();
+    return pass(request);
   }
 
   // Shared APIs: reads public, writes admin-only
@@ -65,7 +75,7 @@ async function guard(request: NextRequest): Promise<NextResponse> {
     }
   }
 
-  return NextResponse.next();
+  return pass(request);
 }
 
 export async function proxy(request: NextRequest) {

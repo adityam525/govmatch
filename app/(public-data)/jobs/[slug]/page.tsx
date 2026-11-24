@@ -25,6 +25,9 @@ import { prisma } from "@/lib/prisma";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { SITE_URL } from "@/lib/blog";
+import { DISABILITY_TYPES } from "@/lib/special-categories";
+import { buildChecklist } from "@/lib/doc-checklist";
+import DocumentChecklist from "@/components/jobs/DocumentChecklist";
 
 function formatDate(dateStr: Date | string | null) {
   if (!dateStr) return "To Be Announced";
@@ -227,6 +230,7 @@ export default async function JobDetailPage({ params }: PageProps) {
             notificationId={notification.id}
             applyUrl={primaryLink?.url ?? notification.officialLink}
           />
+          <DocumentChecklist jobId={notification.id} items={buildChecklist(posts as any[])} />
         </Card>
 
         {(notification.admitCards.length > 0 ||
@@ -433,6 +437,11 @@ export default async function JobDetailPage({ params }: PageProps) {
                       <p className="text-sm font-semibold text-neutral-900">
                         {post.title}
                       </p>
+                      {(post as any).pwdVacancies && Object.keys((post as any).pwdVacancies).length > 0 && (
+                        <p className="mt-1 text-xs text-neutral-600">
+                          Reserved for persons with disabilities: {Object.entries((post as any).pwdVacancies as Record<string, number>).map(([k, v]) => (DISABILITY_TYPES.find((d) => d.code === k)?.short ?? k) + " " + v).join(", ")}
+                        </p>
+                      )}
 
                       <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mt-3">
                         <div>

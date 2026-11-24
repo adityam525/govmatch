@@ -13,6 +13,13 @@ export function coerceDefinition(raw: unknown): { error: string } | { def: Templ
   if (!raw || typeof raw !== 'object' || Array.isArray(raw)) return { error: 'The template definition is missing.' };
   const r = raw as Record<string, unknown>;
 
+  // A fixed-text question: no variables or formulas.
+  if (r.fixed && typeof r.fixed === 'object' && !Array.isArray(r.fixed)) {
+    const f = r.fixed as Record<string, unknown>;
+    const fixed = { text: str(f.text), options: list(f.options).map(str), correctIndex: Number(f.correctIndex), explanation: str(f.explanation), ...(str(f.source) ? { source: str(f.source) } : {}) };
+    return { def: { fixed } as unknown as TemplateDef };
+  }
+
   const text = str(r.text);
   if (text.length > 2000) return { error: 'The question text can be up to 2000 characters.' };
   const explanation = str(r.explanation);
