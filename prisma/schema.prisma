@@ -360,6 +360,7 @@ model User {
   mockTests    MockTest[]
   mockAttempts MockAttempt[]
   passwordResetTokens PasswordResetToken[]
+  questionReports QuestionReport[]
 }
 
 enum AuthProvider {
@@ -757,6 +758,7 @@ model MockQuestion {
   explanation   String?
 
   @@index([sectionId])
+  templateId    String?
 }
 
 // One sitting. `snapshot` keeps the questions (with answers) as they were when it started.
@@ -886,4 +888,23 @@ model AppSetting {
   key       String   @id
   value     Json
   updatedAt DateTime @updatedAt
+}
+
+model QuestionReport {
+  id           String   @id @default(cuid())
+  userId       String
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  questionId   String?
+  templateId   String?
+  reason       String
+  comment      String?
+  text         String
+  options      Json
+  correctIndex Int
+  status       String   @default("OPEN")
+  adminNote    String?
+  createdAt    DateTime @default(now())
+
+  @@index([status, createdAt])
+  @@index([templateId])
 }

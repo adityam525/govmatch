@@ -75,7 +75,7 @@ export async function POST(request: Request, { params }: Params) {
     const test = await prisma.mockTest.create({
       data: {
         userId, title, source: 'PRACTICE', published: false, durationMinutes: result.durationMinutes,
-        sections: { create: [{ name: 'Practice', order: 0, questions: { create: result.questions.map((q, i) => ({ order: i, text: q.text, options: q.options, correctIndex: q.correctIndex, marks: q.marks, negativeMarks: q.negativeMarks, explanation: q.explanation })) } }] },
+        sections: { create: [{ name: 'Practice', order: 0, questions: { create: result.questions.map((q, i) => ({ order: i, text: q.text, options: q.options, correctIndex: q.correctIndex, marks: q.marks, negativeMarks: q.negativeMarks, explanation: q.explanation, templateId: q.templateId })) } }] },
       },
       include: { sections: { orderBy: { order: 'asc' }, include: { questions: { orderBy: { order: 'asc' } } } } },
     });
