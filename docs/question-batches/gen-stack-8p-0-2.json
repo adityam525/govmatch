@@ -1,0 +1,242 @@
+[
+ {
+  "chapter": "Arrangements and Puzzles",
+  "topic": "Floor and box puzzles",
+  "difficulty": "HARD",
+  "seconds": 75,
+  "text": "Eight boxes A, B, C, D, E, F, G and H are placed one above another in a stack but not in the same order as given. More than six boxes are placed above box F. Box B is placed three boxes below box G. Four boxes are placed between box F and box H. Box C is placed immediately below box B. Three boxes are placed between box E and box H. Box D is placed above box G. Which of the following boxes is placed just below box G?",
+  "options": [
+   "Box E",
+   "Box H",
+   "Box A",
+   "Box C"
+  ],
+  "correctIndex": 1,
+  "explanation": "From the top the order is D, G, H, A, B, C, E, F. The box just below G is H.",
+  "source": "generated puzzle, unique solution verified"
+ },
+ {
+  "chapter": "Arrangements and Puzzles",
+  "topic": "Floor and box puzzles",
+  "difficulty": "HARD",
+  "seconds": 75,
+  "text": "Eight boxes A, B, C, D, E, F, G and H are placed one above another in a stack but not in the same order as given. More than six boxes are placed above box F. Box B is placed three boxes below box G. Four boxes are placed between box F and box H. Box C is placed immediately below box B. Three boxes are placed between box E and box H. Box D is placed above box G. How many boxes are placed between box F and box A?",
+  "options": [
+   "Six",
+   "Five",
+   "Four",
+   "Three"
+  ],
+  "correctIndex": 3,
+  "explanation": "From the top the order is D, G, H, A, B, C, E, F. Box F and box A are 4 places apart, so 3 boxes are between them.",
+  "source": "generated puzzle, unique solution verified"
+ },
+ {
+  "chapter": "Arrangements and Puzzles",
+  "topic": "Floor and box puzzles",
+  "difficulty": "HARD",
+  "seconds": 75,
+  "text": "Eight boxes A, B, C, D, E, F, G and H are placed one above another in a stack but not in the same order as given. More than six boxes are placed above box F. Box B is placed three boxes below box G. Four boxes are placed between box F and box H. Box C is placed immediately below box B. Three boxes are placed between box E and box H. Box D is placed above box G. What is the position of box B with respect to box C?",
+  "options": [
+   "Four boxes above",
+   "Three boxes above",
+   "Immediately above",
+   "Two boxes above"
+  ],
+  "correctIndex": 2,
+  "explanation": "From the top the order is D, G, H, A, B, C, E, F. Box B is immediately above box C.",
+  "source": "generated puzzle, unique solution verified"
+ },
+ {
+  "chapter": "Arrangements and Puzzles",
+  "topic": "Floor and box puzzles",
+  "difficulty": "HARD",
+  "seconds": 75,
+  "text": "Eight boxes A, B, C, D, E, F, G and H are placed one above another in a stack but not in the same order as given. More than six boxes are placed above box F. Box B is placed three boxes below box G. Four boxes are placed between box F and box H. Box C is placed immediately below box B. Three boxes are placed between box E and box H. Box D is placed above box G. If all the boxes are arranged in alphabetical order from top to bottom, how many boxes will remain unchanged at their position?",
+  "options": [
+   "Two",
+   "Three",
+   "Five",
+   "None"
+  ],
+  "correctIndex": 3,
+  "explanation": "From the top the order is D, G, H, A, B, C, E, F. In alphabetical order box A is first, B second, and so on. Boxes already in their alphabetical place: none.",
+  "source": "generated puzzle, unique solution verified"
+ },
+ {
+  "chapter": "Arrangements and Puzzles",
+  "topic": "Floor and box puzzles",
+  "difficulty": "HARD",
+  "seconds": 75,
+  "text": "Eight boxes A, B, C, D, E, F, G and H are placed one above another in a stack but not in the same order as given. More than six boxes are placed above box F. Box B is placed three boxes below box G. Four boxes are placed between box F and box H. Box C is placed immediately below box B. Three boxes are placed between box E and box H. Box D is placed above box G. Which of the following boxes is placed fifth from the bottom?",
+  "options": [
+   "Box E",
+   "Box A",
+   "Box D",
+   "Box C"
+  ],
+  "correctIndex": 1,
+  "explanation": "From the top the order is D, G, H, A, B, C, E, F. Counting 5 places from the bottom gives box A.",
+  "source": "generated puzzle, unique solution verified"
+ },
+ {
+  "chapter": "Arrangements and Puzzles",
+  "topic": "Floor and box puzzles",
+  "difficulty": "HARD",
+  "seconds": 75,
+  "text": "Eight boxes A, B, C, D, E, F, G and H are placed one above another in a stack but not in the same order as given. Box H is placed two boxes above box F. Four boxes are placed between box B and box C. Box B is placed three boxes above box F. Box A is placed three boxes above box E. Box A and box D are placed adjacent to each other. Which of the following boxes is placed just below box A?",
+  "options": [
+   "Box D",
+   "Box H",
+   "Box B",
+   "Box F"
+  ],
+  "correctIndex": 2,
+  "explanation": "From the top the order is D, A, B, H, E, F, G, C. The box just below A is B.",
+  "source": "generated puzzle, unique solution verified"
+ },
+ {
+  "chapter": "Arrangements and Puzzles",
+  "topic": "Floor and box puzzles",
+  "difficulty": "HARD",
+  "seconds": 75,
+  "text": "Eight boxes A, B, C, D, E, F, G and H are placed one above another in a stack but not in the same order as given. Box H is placed two boxes above box F. Four boxes are placed between box B and box C. Box B is placed three boxes above box F. Box A is placed three boxes above box E. Box A and box D are placed adjacent to each other. How many boxes are placed between box F and box H?",
+  "options": [
+   "One",
+   "Three",
+   "Four",
+   "Two"
+  ],
+  "correctIndex": 0,
+  "explanation": "From the top the order is D, A, B, H, E, F, G, C. Box F and box H are 2 places apart, so 1 boxes are between them.",
+  "source": "generated puzzle, unique solution verified"
+ },
+ {
+  "chapter": "Arrangements and Puzzles",
+  "topic": "Floor and box puzzles",
+  "difficulty": "HARD",
+  "seconds": 75,
+  "text": "Eight boxes A, B, C, D, E, F, G and H are placed one above another in a stack but not in the same order as given. Box H is placed two boxes above box F. Four boxes are placed between box B and box C. Box B is placed three boxes above box F. Box A is placed three boxes above box E. Box A and box D are placed adjacent to each other. What is the position of box B with respect to box E?",
+  "options": [
+   "Five boxes below",
+   "Immediately above",
+   "Two boxes above",
+   "Two boxes below"
+  ],
+  "correctIndex": 2,
+  "explanation": "From the top the order is D, A, B, H, E, F, G, C. Box B is two boxes above box E.",
+  "source": "generated puzzle, unique solution verified"
+ },
+ {
+  "chapter": "Arrangements and Puzzles",
+  "topic": "Floor and box puzzles",
+  "difficulty": "HARD",
+  "seconds": 75,
+  "text": "Eight boxes A, B, C, D, E, F, G and H are placed one above another in a stack but not in the same order as given. Box H is placed two boxes above box F. Four boxes are placed between box B and box C. Box B is placed three boxes above box F. Box A is placed three boxes above box E. Box A and box D are placed adjacent to each other. If all the boxes are arranged in alphabetical order from top to bottom, how many boxes will remain unchanged at their position?",
+  "options": [
+   "Five",
+   "Three",
+   "Four",
+   "None"
+  ],
+  "correctIndex": 1,
+  "explanation": "From the top the order is D, A, B, H, E, F, G, C. In alphabetical order box A is first, B second, and so on. Boxes already in their alphabetical place: E, F, G.",
+  "source": "generated puzzle, unique solution verified"
+ },
+ {
+  "chapter": "Arrangements and Puzzles",
+  "topic": "Floor and box puzzles",
+  "difficulty": "HARD",
+  "seconds": 75,
+  "text": "Eight boxes A, B, C, D, E, F, G and H are placed one above another in a stack but not in the same order as given. Box H is placed two boxes above box F. Four boxes are placed between box B and box C. Box B is placed three boxes above box F. Box A is placed three boxes above box E. Box A and box D are placed adjacent to each other. Which of the following boxes is placed third from the top?",
+  "options": [
+   "Box G",
+   "Box B",
+   "Box E",
+   "Box D"
+  ],
+  "correctIndex": 1,
+  "explanation": "From the top the order is D, A, B, H, E, F, G, C. Counting 3 places from the top gives box B.",
+  "source": "generated puzzle, unique solution verified"
+ },
+ {
+  "chapter": "Arrangements and Puzzles",
+  "topic": "Floor and box puzzles",
+  "difficulty": "HARD",
+  "seconds": 75,
+  "text": "Eight boxes A, B, C, D, E, F, G and H are placed one above another in a stack but not in the same order as given. Box D is placed four boxes below box E. More than six boxes are placed above box D. Four boxes are placed between box G and box H. Box C is placed three boxes below box A. Box F is placed immediately below box G. Which of the following boxes is placed just below box G?",
+  "options": [
+   "Box F",
+   "Box B",
+   "Box H",
+   "Box A"
+  ],
+  "correctIndex": 0,
+  "explanation": "From the top the order is H, A, B, E, C, G, F, D. The box just below G is F.",
+  "source": "generated puzzle, unique solution verified"
+ },
+ {
+  "chapter": "Arrangements and Puzzles",
+  "topic": "Floor and box puzzles",
+  "difficulty": "HARD",
+  "seconds": 75,
+  "text": "Eight boxes A, B, C, D, E, F, G and H are placed one above another in a stack but not in the same order as given. Box D is placed four boxes below box E. More than six boxes are placed above box D. Four boxes are placed between box G and box H. Box C is placed three boxes below box A. Box F is placed immediately below box G. How many boxes are placed between box D and box H?",
+  "options": [
+   "Three",
+   "Four",
+   "Six",
+   "Five"
+  ],
+  "correctIndex": 2,
+  "explanation": "From the top the order is H, A, B, E, C, G, F, D. Box D and box H are 7 places apart, so 6 boxes are between them.",
+  "source": "generated puzzle, unique solution verified"
+ },
+ {
+  "chapter": "Arrangements and Puzzles",
+  "topic": "Floor and box puzzles",
+  "difficulty": "HARD",
+  "seconds": 75,
+  "text": "Eight boxes A, B, C, D, E, F, G and H are placed one above another in a stack but not in the same order as given. Box D is placed four boxes below box E. More than six boxes are placed above box D. Four boxes are placed between box G and box H. Box C is placed three boxes below box A. Box F is placed immediately below box G. What is the position of box F with respect to box G?",
+  "options": [
+   "Immediately below",
+   "Five boxes below",
+   "Five boxes above",
+   "Two boxes above"
+  ],
+  "correctIndex": 0,
+  "explanation": "From the top the order is H, A, B, E, C, G, F, D. Box F is immediately below box G.",
+  "source": "generated puzzle, unique solution verified"
+ },
+ {
+  "chapter": "Arrangements and Puzzles",
+  "topic": "Floor and box puzzles",
+  "difficulty": "HARD",
+  "seconds": 75,
+  "text": "Eight boxes A, B, C, D, E, F, G and H are placed one above another in a stack but not in the same order as given. Box D is placed four boxes below box E. More than six boxes are placed above box D. Four boxes are placed between box G and box H. Box C is placed three boxes below box A. Box F is placed immediately below box G. If all the boxes are arranged in alphabetical order from top to bottom, how many boxes will remain unchanged at their position?",
+  "options": [
+   "Four",
+   "One",
+   "None",
+   "Two"
+  ],
+  "correctIndex": 2,
+  "explanation": "From the top the order is H, A, B, E, C, G, F, D. In alphabetical order box A is first, B second, and so on. Boxes already in their alphabetical place: none.",
+  "source": "generated puzzle, unique solution verified"
+ },
+ {
+  "chapter": "Arrangements and Puzzles",
+  "topic": "Floor and box puzzles",
+  "difficulty": "HARD",
+  "seconds": 75,
+  "text": "Eight boxes A, B, C, D, E, F, G and H are placed one above another in a stack but not in the same order as given. Box D is placed four boxes below box E. More than six boxes are placed above box D. Four boxes are placed between box G and box H. Box C is placed three boxes below box A. Box F is placed immediately below box G. Which of the following boxes is placed fourth from the bottom?",
+  "options": [
+   "Box G",
+   "Box E",
+   "Box C",
+   "Box A"
+  ],
+  "correctIndex": 2,
+  "explanation": "From the top the order is H, A, B, E, C, G, F, D. Counting 4 places from the bottom gives box C.",
+  "source": "generated puzzle, unique solution verified"
+ }
+]

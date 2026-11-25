@@ -1,0 +1,242 @@
+[
+ {
+  "chapter": "Arrangements and Puzzles",
+  "topic": "Circular seating",
+  "difficulty": "HARD",
+  "seconds": 75,
+  "text": "Eight persons A, B, C, D, E, F, G and H sit around a circular table facing the centre, but not in the same order as given. E sits second to the left of F. C sits second to the right of F. F sits immediately to the left of H. E sits immediately to the right of G. D sits third to the right of F. B sits third to the left of C. What is the position of D with respect to G?",
+  "options": [
+   "Third to the left",
+   "Immediate right",
+   "Second to the left",
+   "Third to the right"
+  ],
+  "correctIndex": 2,
+  "explanation": "Going clockwise from A (everyone faces the centre, so clockwise is to the left) the order is A, D, C, H, F, B, E, G. D is at second to the left of G.",
+  "source": "generated puzzle, unique solution verified"
+ },
+ {
+  "chapter": "Arrangements and Puzzles",
+  "topic": "Circular seating",
+  "difficulty": "HARD",
+  "seconds": 75,
+  "text": "Eight persons A, B, C, D, E, F, G and H sit around a circular table facing the centre, but not in the same order as given. E sits second to the left of F. C sits second to the right of F. F sits immediately to the left of H. E sits immediately to the right of G. D sits third to the right of F. B sits third to the left of C. Who sits second to the left of F?",
+  "options": [
+   "H",
+   "C",
+   "E",
+   "G"
+  ],
+  "correctIndex": 2,
+  "explanation": "Going clockwise from A (everyone faces the centre, so clockwise is to the left) the order is A, D, C, H, F, B, E, G. Counting 2 seats to the left of F gives E.",
+  "source": "generated puzzle, unique solution verified"
+ },
+ {
+  "chapter": "Arrangements and Puzzles",
+  "topic": "Circular seating",
+  "difficulty": "HARD",
+  "seconds": 75,
+  "text": "Eight persons A, B, C, D, E, F, G and H sit around a circular table facing the centre, but not in the same order as given. E sits second to the left of F. C sits second to the right of F. F sits immediately to the left of H. E sits immediately to the right of G. D sits third to the right of F. B sits third to the left of C. Who sits opposite to D?",
+  "options": [
+   "F",
+   "B",
+   "C",
+   "G"
+  ],
+  "correctIndex": 1,
+  "explanation": "Going clockwise from A (everyone faces the centre, so clockwise is to the left) the order is A, D, C, H, F, B, E, G. B is exactly 4 seats away from D, which is opposite.",
+  "source": "generated puzzle, unique solution verified"
+ },
+ {
+  "chapter": "Arrangements and Puzzles",
+  "topic": "Circular seating",
+  "difficulty": "HARD",
+  "seconds": 75,
+  "text": "Eight persons A, B, C, D, E, F, G and H sit around a circular table facing the centre, but not in the same order as given. E sits second to the left of F. C sits second to the right of F. F sits immediately to the left of H. E sits immediately to the right of G. D sits third to the right of F. B sits third to the left of C. How many persons sit between C and G when counted from the left of C?",
+  "options": [
+   "Six",
+   "One",
+   "Five",
+   "Four"
+  ],
+  "correctIndex": 3,
+  "explanation": "Going clockwise from A (everyone faces the centre, so clockwise is to the left) the order is A, D, C, H, F, B, E, G. Counting from the left of C (clockwise), 4 persons come before G.",
+  "source": "generated puzzle, unique solution verified"
+ },
+ {
+  "chapter": "Arrangements and Puzzles",
+  "topic": "Circular seating",
+  "difficulty": "HARD",
+  "seconds": 75,
+  "text": "Eight persons A, B, C, D, E, F, G and H sit around a circular table facing the centre, but not in the same order as given. E sits second to the left of F. C sits second to the right of F. F sits immediately to the left of H. E sits immediately to the right of G. D sits third to the right of F. B sits third to the left of C. Who sits immediately to the right of E?",
+  "options": [
+   "F",
+   "G",
+   "B",
+   "C"
+  ],
+  "correctIndex": 2,
+  "explanation": "Going clockwise from A (everyone faces the centre, so clockwise is to the left) the order is A, D, C, H, F, B, E, G. The person on E's right is B.",
+  "source": "generated puzzle, unique solution verified"
+ },
+ {
+  "chapter": "Arrangements and Puzzles",
+  "topic": "Circular seating",
+  "difficulty": "HARD",
+  "seconds": 75,
+  "text": "Eight persons A, B, C, D, E, F, G and H sit around a circular table facing the centre, but not in the same order as given. Three persons sit between B and E. Four persons sit between B and C. G sits third to the left of E. Three persons sit between A and G. F sits second to the right of B. One person sits between A and H. What is the position of B with respect to D?",
+  "options": [
+   "Opposite",
+   "Second to the left",
+   "Second to the right",
+   "Immediate left"
+  ],
+  "correctIndex": 2,
+  "explanation": "Going clockwise from A (everyone faces the centre, so clockwise is to the left) the order is A, E, C, F, G, B, H, D. B is at second to the right of D.",
+  "source": "generated puzzle, unique solution verified"
+ },
+ {
+  "chapter": "Arrangements and Puzzles",
+  "topic": "Circular seating",
+  "difficulty": "HARD",
+  "seconds": 75,
+  "text": "Eight persons A, B, C, D, E, F, G and H sit around a circular table facing the centre, but not in the same order as given. Three persons sit between B and E. Four persons sit between B and C. G sits third to the left of E. Three persons sit between A and G. F sits second to the right of B. One person sits between A and H. Who sits third to the right of H?",
+  "options": [
+   "C",
+   "D",
+   "F",
+   "G"
+  ],
+  "correctIndex": 2,
+  "explanation": "Going clockwise from A (everyone faces the centre, so clockwise is to the left) the order is A, E, C, F, G, B, H, D. Counting 3 seats to the right of H gives F.",
+  "source": "generated puzzle, unique solution verified"
+ },
+ {
+  "chapter": "Arrangements and Puzzles",
+  "topic": "Circular seating",
+  "difficulty": "HARD",
+  "seconds": 75,
+  "text": "Eight persons A, B, C, D, E, F, G and H sit around a circular table facing the centre, but not in the same order as given. Three persons sit between B and E. Four persons sit between B and C. G sits third to the left of E. Three persons sit between A and G. F sits second to the right of B. One person sits between A and H. Who sits opposite to H?",
+  "options": [
+   "A",
+   "D",
+   "C",
+   "G"
+  ],
+  "correctIndex": 2,
+  "explanation": "Going clockwise from A (everyone faces the centre, so clockwise is to the left) the order is A, E, C, F, G, B, H, D. C is exactly 4 seats away from H, which is opposite.",
+  "source": "generated puzzle, unique solution verified"
+ },
+ {
+  "chapter": "Arrangements and Puzzles",
+  "topic": "Circular seating",
+  "difficulty": "HARD",
+  "seconds": 75,
+  "text": "Eight persons A, B, C, D, E, F, G and H sit around a circular table facing the centre, but not in the same order as given. Three persons sit between B and E. Four persons sit between B and C. G sits third to the left of E. Three persons sit between A and G. F sits second to the right of B. One person sits between A and H. How many persons sit between B and C when counted from the left of B?",
+  "options": [
+   "Six",
+   "Two",
+   "Five",
+   "Four"
+  ],
+  "correctIndex": 3,
+  "explanation": "Going clockwise from A (everyone faces the centre, so clockwise is to the left) the order is A, E, C, F, G, B, H, D. Counting from the left of B (clockwise), 4 persons come before C.",
+  "source": "generated puzzle, unique solution verified"
+ },
+ {
+  "chapter": "Arrangements and Puzzles",
+  "topic": "Circular seating",
+  "difficulty": "HARD",
+  "seconds": 75,
+  "text": "Eight persons A, B, C, D, E, F, G and H sit around a circular table facing the centre, but not in the same order as given. Three persons sit between B and E. Four persons sit between B and C. G sits third to the left of E. Three persons sit between A and G. F sits second to the right of B. One person sits between A and H. Who sits immediately to the right of E?",
+  "options": [
+   "H",
+   "F",
+   "A",
+   "B"
+  ],
+  "correctIndex": 2,
+  "explanation": "Going clockwise from A (everyone faces the centre, so clockwise is to the left) the order is A, E, C, F, G, B, H, D. The person on E's right is A.",
+  "source": "generated puzzle, unique solution verified"
+ },
+ {
+  "chapter": "Arrangements and Puzzles",
+  "topic": "Circular seating",
+  "difficulty": "HARD",
+  "seconds": 75,
+  "text": "Eight persons A, B, C, D, E, F, G and H sit around a circular table facing the centre, but not in the same order as given. F sits second to the left of B. A sits immediately to the left of B. B sits third to the left of H. Three persons sit between B and E. C sits third to the left of G. What is the position of D with respect to E?",
+  "options": [
+   "Immediate left",
+   "Third to the left",
+   "Second to the left",
+   "Opposite"
+  ],
+  "correctIndex": 1,
+  "explanation": "Going clockwise from A (everyone faces the centre, so clockwise is to the left) the order is A, F, G, E, H, C, D, B. D is at third to the left of E.",
+  "source": "generated puzzle, unique solution verified"
+ },
+ {
+  "chapter": "Arrangements and Puzzles",
+  "topic": "Circular seating",
+  "difficulty": "HARD",
+  "seconds": 75,
+  "text": "Eight persons A, B, C, D, E, F, G and H sit around a circular table facing the centre, but not in the same order as given. F sits second to the left of B. A sits immediately to the left of B. B sits third to the left of H. Three persons sit between B and E. C sits third to the left of G. Who sits third to the left of A?",
+  "options": [
+   "F",
+   "B",
+   "E",
+   "H"
+  ],
+  "correctIndex": 2,
+  "explanation": "Going clockwise from A (everyone faces the centre, so clockwise is to the left) the order is A, F, G, E, H, C, D, B. Counting 3 seats to the left of A gives E.",
+  "source": "generated puzzle, unique solution verified"
+ },
+ {
+  "chapter": "Arrangements and Puzzles",
+  "topic": "Circular seating",
+  "difficulty": "HARD",
+  "seconds": 75,
+  "text": "Eight persons A, B, C, D, E, F, G and H sit around a circular table facing the centre, but not in the same order as given. F sits second to the left of B. A sits immediately to the left of B. B sits third to the left of H. Three persons sit between B and E. C sits third to the left of G. Who sits opposite to H?",
+  "options": [
+   "D",
+   "A",
+   "C",
+   "B"
+  ],
+  "correctIndex": 1,
+  "explanation": "Going clockwise from A (everyone faces the centre, so clockwise is to the left) the order is A, F, G, E, H, C, D, B. A is exactly 4 seats away from H, which is opposite.",
+  "source": "generated puzzle, unique solution verified"
+ },
+ {
+  "chapter": "Arrangements and Puzzles",
+  "topic": "Circular seating",
+  "difficulty": "HARD",
+  "seconds": 75,
+  "text": "Eight persons A, B, C, D, E, F, G and H sit around a circular table facing the centre, but not in the same order as given. F sits second to the left of B. A sits immediately to the left of B. B sits third to the left of H. Three persons sit between B and E. C sits third to the left of G. How many persons sit between F and A when counted from the left of F?",
+  "options": [
+   "Four",
+   "Six",
+   "Five",
+   "Three"
+  ],
+  "correctIndex": 1,
+  "explanation": "Going clockwise from A (everyone faces the centre, so clockwise is to the left) the order is A, F, G, E, H, C, D, B. Counting from the left of F (clockwise), 6 persons come before A.",
+  "source": "generated puzzle, unique solution verified"
+ },
+ {
+  "chapter": "Arrangements and Puzzles",
+  "topic": "Circular seating",
+  "difficulty": "HARD",
+  "seconds": 75,
+  "text": "Eight persons A, B, C, D, E, F, G and H sit around a circular table facing the centre, but not in the same order as given. F sits second to the left of B. A sits immediately to the left of B. B sits third to the left of H. Three persons sit between B and E. C sits third to the left of G. Who sits immediately to the right of G?",
+  "options": [
+   "D",
+   "F",
+   "E",
+   "C"
+  ],
+  "correctIndex": 1,
+  "explanation": "Going clockwise from A (everyone faces the centre, so clockwise is to the left) the order is A, F, G, E, H, C, D, B. The person on G's right is F.",
+  "source": "generated puzzle, unique solution verified"
+ }
+]

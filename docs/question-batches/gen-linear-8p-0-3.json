@@ -1,0 +1,306 @@
+[
+ {
+  "chapter": "Arrangements and Puzzles",
+  "topic": "Linear seating",
+  "difficulty": "HARD",
+  "seconds": 75,
+  "text": "Eight persons A, B, C, D, E, F, G and H sit in a row facing north but not in the same order as given. E sits third to the right of B. Three persons sit between A and D. E sits second to the left of A. D and H sit adjacent to each other. Two persons sit between C and E. G sits fourth to the left of E. What is the position of D with respect to B?",
+  "options": [
+   "Immediate right",
+   "Second to the right",
+   "Third to the right",
+   "Second to the left"
+  ],
+  "correctIndex": 0,
+  "explanation": "Left to right the order is G, B, D, H, E, F, A, C. D is at immediate right of B.",
+  "source": "generated puzzle, unique solution verified"
+ },
+ {
+  "chapter": "Arrangements and Puzzles",
+  "topic": "Linear seating",
+  "difficulty": "HARD",
+  "seconds": 75,
+  "text": "Eight persons A, B, C, D, E, F, G and H sit in a row facing north but not in the same order as given. E sits third to the right of B. Three persons sit between A and D. E sits second to the left of A. D and H sit adjacent to each other. Two persons sit between C and E. G sits fourth to the left of E. How many persons sit to the left of D?",
+  "options": [
+   "Three",
+   "Two",
+   "Five",
+   "One"
+  ],
+  "correctIndex": 1,
+  "explanation": "Left to right the order is G, B, D, H, E, F, A, C. D is in seat 3 from the left, so 2 persons are to the left.",
+  "source": "generated puzzle, unique solution verified"
+ },
+ {
+  "chapter": "Arrangements and Puzzles",
+  "topic": "Linear seating",
+  "difficulty": "HARD",
+  "seconds": 75,
+  "text": "Eight persons A, B, C, D, E, F, G and H sit in a row facing north but not in the same order as given. E sits third to the right of B. Three persons sit between A and D. E sits second to the left of A. D and H sit adjacent to each other. Two persons sit between C and E. G sits fourth to the left of E. Who among the following sits third to the left of F?",
+  "options": [
+   "H",
+   "A",
+   "D",
+   "E"
+  ],
+  "correctIndex": 2,
+  "explanation": "Left to right the order is G, B, D, H, E, F, A, C. Counting 3 seats to the left of F gives D.",
+  "source": "generated puzzle, unique solution verified"
+ },
+ {
+  "chapter": "Arrangements and Puzzles",
+  "topic": "Linear seating",
+  "difficulty": "HARD",
+  "seconds": 75,
+  "text": "Eight persons A, B, C, D, E, F, G and H sit in a row facing north but not in the same order as given. E sits third to the right of B. Three persons sit between A and D. E sits second to the left of A. D and H sit adjacent to each other. Two persons sit between C and E. G sits fourth to the left of E. How many persons sit between F and B?",
+  "options": [
+   "Four",
+   "Three",
+   "None",
+   "Two"
+  ],
+  "correctIndex": 1,
+  "explanation": "Left to right the order is G, B, D, H, E, F, A, C. F and B are 4 seats apart, so 3 persons sit between them.",
+  "source": "generated puzzle, unique solution verified"
+ },
+ {
+  "chapter": "Arrangements and Puzzles",
+  "topic": "Linear seating",
+  "difficulty": "HARD",
+  "seconds": 75,
+  "text": "Eight persons A, B, C, D, E, F, G and H sit in a row facing north but not in the same order as given. E sits third to the right of B. Three persons sit between A and D. E sits second to the left of A. D and H sit adjacent to each other. Two persons sit between C and E. G sits fourth to the left of E. Which of the following statements is correct? I. B sits to the left of H. II. Three persons sit between H and D. III. G sits at one of the extreme ends.",
+  "options": [
+   "Only I and II",
+   "Only III",
+   "Only I and III",
+   "Only II and III"
+  ],
+  "correctIndex": 2,
+  "explanation": "Left to right the order is G, B, D, H, E, F, A, C. Check each statement against the order: I is true, II is false, III is true.",
+  "source": "generated puzzle, unique solution verified"
+ },
+ {
+  "chapter": "Arrangements and Puzzles",
+  "topic": "Linear seating",
+  "difficulty": "HARD",
+  "seconds": 75,
+  "text": "Eight persons A, B, C, D, E, F, G and H sit in a row facing north but not in the same order as given. Two persons sit between B and E. G sits immediately to the right of H. Two persons sit between A and B. G sits second to the right of A. F sits third to the right of D. What is the position of E with respect to C?",
+  "options": [
+   "Immediate left",
+   "Fifth to the left",
+   "Immediate right",
+   "Second to the left"
+  ],
+  "correctIndex": 2,
+  "explanation": "Left to right the order is A, H, G, B, D, C, E, F. E is at immediate right of C.",
+  "source": "generated puzzle, unique solution verified"
+ },
+ {
+  "chapter": "Arrangements and Puzzles",
+  "topic": "Linear seating",
+  "difficulty": "HARD",
+  "seconds": 75,
+  "text": "Eight persons A, B, C, D, E, F, G and H sit in a row facing north but not in the same order as given. Two persons sit between B and E. G sits immediately to the right of H. Two persons sit between A and B. G sits second to the right of A. F sits third to the right of D. How many persons sit to the left of F?",
+  "options": [
+   "Four",
+   "Five",
+   "Six",
+   "Seven"
+  ],
+  "correctIndex": 3,
+  "explanation": "Left to right the order is A, H, G, B, D, C, E, F. F is in seat 8 from the left, so 7 persons are to the left.",
+  "source": "generated puzzle, unique solution verified"
+ },
+ {
+  "chapter": "Arrangements and Puzzles",
+  "topic": "Linear seating",
+  "difficulty": "HARD",
+  "seconds": 75,
+  "text": "Eight persons A, B, C, D, E, F, G and H sit in a row facing north but not in the same order as given. Two persons sit between B and E. G sits immediately to the right of H. Two persons sit between A and B. G sits second to the right of A. F sits third to the right of D. How many persons sit between E and A?",
+  "options": [
+   "Two",
+   "Six",
+   "Three",
+   "Five"
+  ],
+  "correctIndex": 3,
+  "explanation": "Left to right the order is A, H, G, B, D, C, E, F. E and A are 6 seats apart, so 5 persons sit between them.",
+  "source": "generated puzzle, unique solution verified"
+ },
+ {
+  "chapter": "Arrangements and Puzzles",
+  "topic": "Linear seating",
+  "difficulty": "HARD",
+  "seconds": 75,
+  "text": "Eight persons A, B, C, D, E, F, G and H sit in a row facing north but not in the same order as given. Two persons sit between B and E. G sits immediately to the right of H. Two persons sit between A and B. G sits second to the right of A. F sits third to the right of D. Which of the following statements is correct? I. C sits at one of the extreme ends. II. G and B are not immediate neighbours. III. H sits to the left of G.",
+  "options": [
+   "Only I",
+   "Only III",
+   "Only I and II",
+   "All of I, II and III"
+  ],
+  "correctIndex": 1,
+  "explanation": "Left to right the order is A, H, G, B, D, C, E, F. Check each statement against the order: I is false, II is false, III is true.",
+  "source": "generated puzzle, unique solution verified"
+ },
+ {
+  "chapter": "Arrangements and Puzzles",
+  "topic": "Linear seating",
+  "difficulty": "HARD",
+  "seconds": 75,
+  "text": "Eight persons A, B, C, D, E, F, G and H sit in a row facing north but not in the same order as given. E sits immediately to the right of D. D sits fourth to the right of B. B sits second to the left of G. F sits second to the left of H. B sits third to the left of H. One person sits between A and B. What is the position of G with respect to C?",
+  "options": [
+   "Third to the right",
+   "Second to the right",
+   "Immediate left",
+   "Fourth to the left"
+  ],
+  "correctIndex": 0,
+  "explanation": "Left to right the order is A, C, B, F, G, H, D, E. G is at third to the right of C.",
+  "source": "generated puzzle, unique solution verified"
+ },
+ {
+  "chapter": "Arrangements and Puzzles",
+  "topic": "Linear seating",
+  "difficulty": "HARD",
+  "seconds": 75,
+  "text": "Eight persons A, B, C, D, E, F, G and H sit in a row facing north but not in the same order as given. E sits immediately to the right of D. D sits fourth to the right of B. B sits second to the left of G. F sits second to the left of H. B sits third to the left of H. One person sits between A and B. How many persons sit to the left of B?",
+  "options": [
+   "One",
+   "None",
+   "Two",
+   "Five"
+  ],
+  "correctIndex": 2,
+  "explanation": "Left to right the order is A, C, B, F, G, H, D, E. B is in seat 3 from the left, so 2 persons are to the left.",
+  "source": "generated puzzle, unique solution verified"
+ },
+ {
+  "chapter": "Arrangements and Puzzles",
+  "topic": "Linear seating",
+  "difficulty": "HARD",
+  "seconds": 75,
+  "text": "Eight persons A, B, C, D, E, F, G and H sit in a row facing north but not in the same order as given. E sits immediately to the right of D. D sits fourth to the right of B. B sits second to the left of G. F sits second to the left of H. B sits third to the left of H. One person sits between A and B. Who among the following sits third to the left of E?",
+  "options": [
+   "G",
+   "C",
+   "F",
+   "B"
+  ],
+  "correctIndex": 0,
+  "explanation": "Left to right the order is A, C, B, F, G, H, D, E. Counting 3 seats to the left of E gives G.",
+  "source": "generated puzzle, unique solution verified"
+ },
+ {
+  "chapter": "Arrangements and Puzzles",
+  "topic": "Linear seating",
+  "difficulty": "HARD",
+  "seconds": 75,
+  "text": "Eight persons A, B, C, D, E, F, G and H sit in a row facing north but not in the same order as given. E sits immediately to the right of D. D sits fourth to the right of B. B sits second to the left of G. F sits second to the left of H. B sits third to the left of H. One person sits between A and B. How many persons sit between E and B?",
+  "options": [
+   "One",
+   "Two",
+   "Three",
+   "Four"
+  ],
+  "correctIndex": 3,
+  "explanation": "Left to right the order is A, C, B, F, G, H, D, E. E and B are 5 seats apart, so 4 persons sit between them.",
+  "source": "generated puzzle, unique solution verified"
+ },
+ {
+  "chapter": "Arrangements and Puzzles",
+  "topic": "Linear seating",
+  "difficulty": "HARD",
+  "seconds": 75,
+  "text": "Eight persons A, B, C, D, E, F, G and H sit in a row facing north but not in the same order as given. E sits immediately to the right of D. D sits fourth to the right of B. B sits second to the left of G. F sits second to the left of H. B sits third to the left of H. One person sits between A and B. Which of the following statements is correct? I. Two persons sit between H and E. II. G and D are not immediate neighbours. III. C sits at one of the extreme ends.",
+  "options": [
+   "Only II and III",
+   "Only II",
+   "Only I and II",
+   "All of I, II and III"
+  ],
+  "correctIndex": 1,
+  "explanation": "Left to right the order is A, C, B, F, G, H, D, E. Check each statement against the order: I is false, II is true, III is false.",
+  "source": "generated puzzle, unique solution verified"
+ },
+ {
+  "chapter": "Arrangements and Puzzles",
+  "topic": "Linear seating",
+  "difficulty": "HARD",
+  "seconds": 75,
+  "text": "Eight persons A, B, C, D, E, F, G and H sit in a row facing north but not in the same order as given. B sits second to the left of E. Two persons sit between E and F. One person sits between C and D. Two persons sit between B and G. D sits fourth to the left of B. A sits third to the left of C. What is the position of G with respect to D?",
+  "options": [
+   "Fourth to the right",
+   "Immediate left",
+   "Immediate right",
+   "Fifth to the left"
+  ],
+  "correctIndex": 2,
+  "explanation": "Left to right the order is A, D, G, C, F, B, H, E. G is at immediate right of D.",
+  "source": "generated puzzle, unique solution verified"
+ },
+ {
+  "chapter": "Arrangements and Puzzles",
+  "topic": "Linear seating",
+  "difficulty": "HARD",
+  "seconds": 75,
+  "text": "Eight persons A, B, C, D, E, F, G and H sit in a row facing north but not in the same order as given. B sits second to the left of E. Two persons sit between E and F. One person sits between C and D. Two persons sit between B and G. D sits fourth to the left of B. A sits third to the left of C. How many persons sit to the left of D?",
+  "options": [
+   "Two",
+   "Four",
+   "One",
+   "Three"
+  ],
+  "correctIndex": 2,
+  "explanation": "Left to right the order is A, D, G, C, F, B, H, E. D is in seat 2 from the left, so 1 persons are to the left.",
+  "source": "generated puzzle, unique solution verified"
+ },
+ {
+  "chapter": "Arrangements and Puzzles",
+  "topic": "Linear seating",
+  "difficulty": "HARD",
+  "seconds": 75,
+  "text": "Eight persons A, B, C, D, E, F, G and H sit in a row facing north but not in the same order as given. B sits second to the left of E. Two persons sit between E and F. One person sits between C and D. Two persons sit between B and G. D sits fourth to the left of B. A sits third to the left of C. Who among the following sits fourth to the right of D?",
+  "options": [
+   "C",
+   "E",
+   "H",
+   "B"
+  ],
+  "correctIndex": 3,
+  "explanation": "Left to right the order is A, D, G, C, F, B, H, E. Counting 4 seats to the right of D gives B.",
+  "source": "generated puzzle, unique solution verified"
+ },
+ {
+  "chapter": "Arrangements and Puzzles",
+  "topic": "Linear seating",
+  "difficulty": "HARD",
+  "seconds": 75,
+  "text": "Eight persons A, B, C, D, E, F, G and H sit in a row facing north but not in the same order as given. B sits second to the left of E. Two persons sit between E and F. One person sits between C and D. Two persons sit between B and G. D sits fourth to the left of B. A sits third to the left of C. How many persons sit between D and B?",
+  "options": [
+   "Two",
+   "Four",
+   "Three",
+   "One"
+  ],
+  "correctIndex": 2,
+  "explanation": "Left to right the order is A, D, G, C, F, B, H, E. D and B are 4 seats apart, so 3 persons sit between them.",
+  "source": "generated puzzle, unique solution verified"
+ },
+ {
+  "chapter": "Arrangements and Puzzles",
+  "topic": "Linear seating",
+  "difficulty": "HARD",
+  "seconds": 75,
+  "text": "Eight persons A, B, C, D, E, F, G and H sit in a row facing north but not in the same order as given. B sits second to the left of E. Two persons sit between E and F. One person sits between C and D. Two persons sit between B and G. D sits fourth to the left of B. A sits third to the left of C. Which of the following statements is correct? I. H sits to the left of D. II. G sits at one of the extreme ends. III. B and G are not immediate neighbours.",
+  "options": [
+   "Only I and III",
+   "All of I, II and III",
+   "Only II",
+   "Only III"
+  ],
+  "correctIndex": 3,
+  "explanation": "Left to right the order is A, D, G, C, F, B, H, E. Check each statement against the order: I is false, II is false, III is true.",
+  "source": "generated puzzle, unique solution verified"
+ }
+]

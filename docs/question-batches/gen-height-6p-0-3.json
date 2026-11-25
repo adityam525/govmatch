@@ -1,0 +1,322 @@
+[
+ {
+  "chapter": "Relations and Direction",
+  "topic": "Ranking and order",
+  "difficulty": "MEDIUM",
+  "seconds": 75,
+  "text": "Six persons A, B, C, D, E and F of a group have different heights. One person is in between A and B. D is taller than F. A is taller than F. Two persons are in between A and E. One person is in between C and F. E is taller than D. Who among the following is the fifth tallest?",
+  "options": [
+   "F",
+   "B",
+   "D",
+   "E"
+  ],
+  "correctIndex": 0,
+  "explanation": "From the tallest to the shortest the order is E, D, C, A, F, B. F is number 5 counting from the tallest.",
+  "source": "generated puzzle, unique solution verified"
+ },
+ {
+  "chapter": "Relations and Direction",
+  "topic": "Ranking and order",
+  "difficulty": "MEDIUM",
+  "seconds": 75,
+  "text": "Six persons A, B, C, D, E and F of a group have different heights. One person is in between A and B. D is taller than F. A is taller than F. Two persons are in between A and E. One person is in between C and F. E is taller than D. Who among the following is immediately shorter than D?",
+  "options": [
+   "F",
+   "C",
+   "E",
+   "A"
+  ],
+  "correctIndex": 1,
+  "explanation": "From the tallest to the shortest the order is E, D, C, A, F, B. The person just after D in height order is C.",
+  "source": "generated puzzle, unique solution verified"
+ },
+ {
+  "chapter": "Relations and Direction",
+  "topic": "Ranking and order",
+  "difficulty": "MEDIUM",
+  "seconds": 75,
+  "text": "Six persons A, B, C, D, E and F of a group have different heights. One person is in between A and B. D is taller than F. A is taller than F. Two persons are in between A and E. One person is in between C and F. E is taller than D. Who among the following is immediately taller than B?",
+  "options": [
+   "E",
+   "C",
+   "A",
+   "F"
+  ],
+  "correctIndex": 3,
+  "explanation": "From the tallest to the shortest the order is E, D, C, A, F, B. The person just before B in height order is F.",
+  "source": "generated puzzle, unique solution verified"
+ },
+ {
+  "chapter": "Relations and Direction",
+  "topic": "Ranking and order",
+  "difficulty": "MEDIUM",
+  "seconds": 75,
+  "text": "Six persons A, B, C, D, E and F of a group have different heights. One person is in between A and B. D is taller than F. A is taller than F. Two persons are in between A and E. One person is in between C and F. E is taller than D. How many persons are in between F and C in height?",
+  "options": [
+   "Four",
+   "None",
+   "Two",
+   "One"
+  ],
+  "correctIndex": 3,
+  "explanation": "From the tallest to the shortest the order is E, D, C, A, F, B. F and C are 2 places apart, so 1 persons are in between.",
+  "source": "generated puzzle, unique solution verified"
+ },
+ {
+  "chapter": "Relations and Direction",
+  "topic": "Ranking and order",
+  "difficulty": "MEDIUM",
+  "seconds": 75,
+  "text": "Six persons A, B, C, D, E and F of a group have different heights. One person is in between A and B. D is taller than F. A is taller than F. Two persons are in between A and E. One person is in between C and F. E is taller than D. How many persons are shorter than D?",
+  "options": [
+   "One",
+   "Three",
+   "Four",
+   "Two"
+  ],
+  "correctIndex": 2,
+  "explanation": "From the tallest to the shortest the order is E, D, C, A, F, B. 4 persons come after D in height order, so 4 are shorter.",
+  "source": "generated puzzle, unique solution verified"
+ },
+ {
+  "chapter": "Relations and Direction",
+  "topic": "Ranking and order",
+  "difficulty": "MEDIUM",
+  "seconds": 75,
+  "text": "Six persons A, B, C, D, E and F of a group have different heights. Two persons are in between D and F. The number of persons shorter than A is the same as the number of persons taller than E. C is taller than D. No person is shorter than E. Two persons are in between A and B. Who among the following is the fourth tallest?",
+  "options": [
+   "D",
+   "B",
+   "E",
+   "C"
+  ],
+  "correctIndex": 1,
+  "explanation": "From the tallest to the shortest the order is A, F, C, B, D, E. B is number 4 counting from the tallest.",
+  "source": "generated puzzle, unique solution verified"
+ },
+ {
+  "chapter": "Relations and Direction",
+  "topic": "Ranking and order",
+  "difficulty": "MEDIUM",
+  "seconds": 75,
+  "text": "Six persons A, B, C, D, E and F of a group have different heights. Two persons are in between D and F. The number of persons shorter than A is the same as the number of persons taller than E. C is taller than D. No person is shorter than E. Two persons are in between A and B. Who among the following is immediately shorter than F?",
+  "options": [
+   "D",
+   "E",
+   "A",
+   "C"
+  ],
+  "correctIndex": 3,
+  "explanation": "From the tallest to the shortest the order is A, F, C, B, D, E. The person just after F in height order is C.",
+  "source": "generated puzzle, unique solution verified"
+ },
+ {
+  "chapter": "Relations and Direction",
+  "topic": "Ranking and order",
+  "difficulty": "MEDIUM",
+  "seconds": 75,
+  "text": "Six persons A, B, C, D, E and F of a group have different heights. Two persons are in between D and F. The number of persons shorter than A is the same as the number of persons taller than E. C is taller than D. No person is shorter than E. Two persons are in between A and B. Who among the following is immediately taller than D?",
+  "options": [
+   "E",
+   "B",
+   "A",
+   "F"
+  ],
+  "correctIndex": 1,
+  "explanation": "From the tallest to the shortest the order is A, F, C, B, D, E. The person just before D in height order is B.",
+  "source": "generated puzzle, unique solution verified"
+ },
+ {
+  "chapter": "Relations and Direction",
+  "topic": "Ranking and order",
+  "difficulty": "MEDIUM",
+  "seconds": 75,
+  "text": "Six persons A, B, C, D, E and F of a group have different heights. Two persons are in between D and F. The number of persons shorter than A is the same as the number of persons taller than E. C is taller than D. No person is shorter than E. Two persons are in between A and B. How many persons are in between F and A in height?",
+  "options": [
+   "Two",
+   "None",
+   "Three",
+   "One"
+  ],
+  "correctIndex": 1,
+  "explanation": "From the tallest to the shortest the order is A, F, C, B, D, E. F and A are 1 places apart, so 0 persons are in between.",
+  "source": "generated puzzle, unique solution verified"
+ },
+ {
+  "chapter": "Relations and Direction",
+  "topic": "Ranking and order",
+  "difficulty": "MEDIUM",
+  "seconds": 75,
+  "text": "Six persons A, B, C, D, E and F of a group have different heights. Two persons are in between D and F. The number of persons shorter than A is the same as the number of persons taller than E. C is taller than D. No person is shorter than E. Two persons are in between A and B. How many persons are shorter than E?",
+  "options": [
+   "Three",
+   "One",
+   "Two",
+   "None"
+  ],
+  "correctIndex": 3,
+  "explanation": "From the tallest to the shortest the order is A, F, C, B, D, E. 0 persons come after E in height order, so 0 are shorter.",
+  "source": "generated puzzle, unique solution verified"
+ },
+ {
+  "chapter": "Relations and Direction",
+  "topic": "Ranking and order",
+  "difficulty": "MEDIUM",
+  "seconds": 75,
+  "text": "Six persons A, B, C, D, E and F of a group have different heights. Four persons are in between C and F. One person is in between D and E. B is taller than E. Three persons are in between B and C. The number of persons shorter than A is the same as the number of persons taller than D. Who among the following is the second tallest?",
+  "options": [
+   "E",
+   "D",
+   "A",
+   "B"
+  ],
+  "correctIndex": 3,
+  "explanation": "From the tallest to the shortest the order is F, B, D, A, E, C. B is number 2 counting from the tallest.",
+  "source": "generated puzzle, unique solution verified"
+ },
+ {
+  "chapter": "Relations and Direction",
+  "topic": "Ranking and order",
+  "difficulty": "MEDIUM",
+  "seconds": 75,
+  "text": "Six persons A, B, C, D, E and F of a group have different heights. Four persons are in between C and F. One person is in between D and E. B is taller than E. Three persons are in between B and C. The number of persons shorter than A is the same as the number of persons taller than D. Who among the following is immediately shorter than B?",
+  "options": [
+   "D",
+   "F",
+   "A",
+   "E"
+  ],
+  "correctIndex": 0,
+  "explanation": "From the tallest to the shortest the order is F, B, D, A, E, C. The person just after B in height order is D.",
+  "source": "generated puzzle, unique solution verified"
+ },
+ {
+  "chapter": "Relations and Direction",
+  "topic": "Ranking and order",
+  "difficulty": "MEDIUM",
+  "seconds": 75,
+  "text": "Six persons A, B, C, D, E and F of a group have different heights. Four persons are in between C and F. One person is in between D and E. B is taller than E. Three persons are in between B and C. The number of persons shorter than A is the same as the number of persons taller than D. Who among the following is immediately taller than B?",
+  "options": [
+   "C",
+   "E",
+   "F",
+   "D"
+  ],
+  "correctIndex": 2,
+  "explanation": "From the tallest to the shortest the order is F, B, D, A, E, C. The person just before B in height order is F.",
+  "source": "generated puzzle, unique solution verified"
+ },
+ {
+  "chapter": "Relations and Direction",
+  "topic": "Ranking and order",
+  "difficulty": "MEDIUM",
+  "seconds": 75,
+  "text": "Six persons A, B, C, D, E and F of a group have different heights. Four persons are in between C and F. One person is in between D and E. B is taller than E. Three persons are in between B and C. The number of persons shorter than A is the same as the number of persons taller than D. How many persons are in between D and C in height?",
+  "options": [
+   "Four",
+   "None",
+   "Three",
+   "Two"
+  ],
+  "correctIndex": 3,
+  "explanation": "From the tallest to the shortest the order is F, B, D, A, E, C. D and C are 3 places apart, so 2 persons are in between.",
+  "source": "generated puzzle, unique solution verified"
+ },
+ {
+  "chapter": "Relations and Direction",
+  "topic": "Ranking and order",
+  "difficulty": "MEDIUM",
+  "seconds": 75,
+  "text": "Six persons A, B, C, D, E and F of a group have different heights. Four persons are in between C and F. One person is in between D and E. B is taller than E. Three persons are in between B and C. The number of persons shorter than A is the same as the number of persons taller than D. How many persons are shorter than B?",
+  "options": [
+   "Two",
+   "Four",
+   "Three",
+   "One"
+  ],
+  "correctIndex": 1,
+  "explanation": "From the tallest to the shortest the order is F, B, D, A, E, C. 4 persons come after B in height order, so 4 are shorter.",
+  "source": "generated puzzle, unique solution verified"
+ },
+ {
+  "chapter": "Relations and Direction",
+  "topic": "Ranking and order",
+  "difficulty": "MEDIUM",
+  "seconds": 75,
+  "text": "Six persons A, B, C, D, E and F of a group have different heights. One person is in between C and E. Two persons are in between C and D. Three persons are in between A and C. B is taller than C. F is taller than B. Who among the following is the third tallest?",
+  "options": [
+   "A",
+   "D",
+   "E",
+   "B"
+  ],
+  "correctIndex": 1,
+  "explanation": "From the tallest to the shortest the order is F, A, D, E, B, C. D is number 3 counting from the tallest.",
+  "source": "generated puzzle, unique solution verified"
+ },
+ {
+  "chapter": "Relations and Direction",
+  "topic": "Ranking and order",
+  "difficulty": "MEDIUM",
+  "seconds": 75,
+  "text": "Six persons A, B, C, D, E and F of a group have different heights. One person is in between C and E. Two persons are in between C and D. Three persons are in between A and C. B is taller than C. F is taller than B. Who among the following is immediately shorter than B?",
+  "options": [
+   "E",
+   "F",
+   "A",
+   "C"
+  ],
+  "correctIndex": 3,
+  "explanation": "From the tallest to the shortest the order is F, A, D, E, B, C. The person just after B in height order is C.",
+  "source": "generated puzzle, unique solution verified"
+ },
+ {
+  "chapter": "Relations and Direction",
+  "topic": "Ranking and order",
+  "difficulty": "MEDIUM",
+  "seconds": 75,
+  "text": "Six persons A, B, C, D, E and F of a group have different heights. One person is in between C and E. Two persons are in between C and D. Three persons are in between A and C. B is taller than C. F is taller than B. Who among the following is immediately taller than D?",
+  "options": [
+   "E",
+   "A",
+   "C",
+   "B"
+  ],
+  "correctIndex": 1,
+  "explanation": "From the tallest to the shortest the order is F, A, D, E, B, C. The person just before D in height order is A.",
+  "source": "generated puzzle, unique solution verified"
+ },
+ {
+  "chapter": "Relations and Direction",
+  "topic": "Ranking and order",
+  "difficulty": "MEDIUM",
+  "seconds": 75,
+  "text": "Six persons A, B, C, D, E and F of a group have different heights. One person is in between C and E. Two persons are in between C and D. Three persons are in between A and C. B is taller than C. F is taller than B. How many persons are in between E and D in height?",
+  "options": [
+   "Three",
+   "None",
+   "One",
+   "Two"
+  ],
+  "correctIndex": 1,
+  "explanation": "From the tallest to the shortest the order is F, A, D, E, B, C. E and D are 1 places apart, so 0 persons are in between.",
+  "source": "generated puzzle, unique solution verified"
+ },
+ {
+  "chapter": "Relations and Direction",
+  "topic": "Ranking and order",
+  "difficulty": "MEDIUM",
+  "seconds": 75,
+  "text": "Six persons A, B, C, D, E and F of a group have different heights. One person is in between C and E. Two persons are in between C and D. Three persons are in between A and C. B is taller than C. F is taller than B. How many persons are shorter than C?",
+  "options": [
+   "None",
+   "Two",
+   "Three",
+   "One"
+  ],
+  "correctIndex": 0,
+  "explanation": "From the tallest to the shortest the order is F, A, D, E, B, C. 0 persons come after C in height order, so 0 are shorter.",
+  "source": "generated puzzle, unique solution verified"
+ }
+]
