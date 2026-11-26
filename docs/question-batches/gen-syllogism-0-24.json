@@ -1,0 +1,452 @@
+[
+ {
+  "chapter": "Logical Reasoning",
+  "topic": "Syllogism",
+  "difficulty": "HARD",
+  "seconds": 80,
+  "text": "Statements: Only a few ropes are mangoes. Some clouds are ropes. All clouds are fields.  Conclusions: I. Some fields being ropes is a possibility.  II. Some ropes are not clouds.  Take the statements to be true even if they disagree with commonly known facts, and decide which conclusions follow.",
+  "options": [
+   "If only conclusion I follows",
+   "If only conclusion II follows",
+   "If either conclusion I or II follows",
+   "If neither conclusion I nor II follows",
+   "If both conclusions I and II follow"
+  ],
+  "correctIndex": 0,
+  "explanation": "Conclusion I (Some fields being ropes is a possibility) follows: it is possible, for example if there are some things that are mangoes, ropes, not clouds, not fields; some things that are not mangoes, ropes, clouds, fields. Conclusion II (Some ropes are not clouds) does not follow: it can be false, for example if there are some things that are not mangoes, ropes, clouds, fields; some things that are mangoes, ropes, clouds, fields.",
+  "ordered": true,
+  "source": "generated, verdict checked by exhaustive model search"
+ },
+ {
+  "chapter": "Logical Reasoning",
+  "topic": "Syllogism",
+  "difficulty": "HARD",
+  "seconds": 80,
+  "text": "Statements: All books are walls. Some books are mangoes. All drums are mangoes.  Conclusions: I. No mangoes are walls.  II. All drums being books is a possibility.  Take the statements to be true even if they disagree with commonly known facts, and decide which conclusions follow.",
+  "options": [
+   "If only conclusion I follows",
+   "If only conclusion II follows",
+   "If either conclusion I or II follows",
+   "If neither conclusion I nor II follows",
+   "If both conclusions I and II follow"
+  ],
+  "correctIndex": 1,
+  "explanation": "Conclusion I (No mangoes are walls) does not follow: it can be false, for example if there are some things that are walls, books, mangoes, not drums. Conclusion II (All drums being books is a possibility) follows: it is possible, for example if there are some things that are walls, books, mangoes, not drums.",
+  "ordered": true,
+  "source": "generated, verdict checked by exhaustive model search"
+ },
+ {
+  "chapter": "Logical Reasoning",
+  "topic": "Syllogism",
+  "difficulty": "HARD",
+  "seconds": 80,
+  "text": "Statements: Only a few lamps are boxes. Some rivers are lamps. Some shirts are rivers.  Conclusions: I. Some boxes are not shirts.  II. All boxes are shirts.  Take the statements to be true even if they disagree with commonly known facts, and decide which conclusions follow.",
+  "options": [
+   "If only conclusion I follows",
+   "If only conclusion II follows",
+   "If either conclusion I or II follows",
+   "If neither conclusion I nor II follows",
+   "If both conclusions I and II follow"
+  ],
+  "correctIndex": 2,
+  "explanation": "Conclusion I (Some boxes are not shirts) does not follow: it can be false, for example if there are some things that are boxes, lamps, not rivers, shirts; some things that are not boxes, lamps, rivers, shirts. Conclusion II (All boxes are shirts) does not follow: it can be false, for example if there are some things that are boxes, lamps, not rivers, not shirts; some things that are not boxes, lamps, rivers, shirts. Neither is certain, but exactly one of them is true in every arrangement, so either I or II follows.",
+  "ordered": true,
+  "source": "generated, verdict checked by exhaustive model search"
+ },
+ {
+  "chapter": "Logical Reasoning",
+  "topic": "Syllogism",
+  "difficulty": "MEDIUM",
+  "seconds": 80,
+  "text": "Statements: All drums are clouds. Some drums are not ropes.  Conclusions: I. Some drums are ropes.  II. Some ropes are drums.  Take the statements to be true even if they disagree with commonly known facts, and decide which conclusions follow.",
+  "options": [
+   "If only conclusion I follows",
+   "If only conclusion II follows",
+   "If either conclusion I or II follows",
+   "If neither conclusion I nor II follows",
+   "If both conclusions I and II follow"
+  ],
+  "correctIndex": 3,
+  "explanation": "Conclusion I (Some drums are ropes) does not follow: it can be false, for example if there are some things that are clouds, drums, not ropes. Conclusion II (Some ropes are drums) does not follow: it can be false, for example if there are some things that are clouds, drums, not ropes.",
+  "ordered": true,
+  "source": "generated, verdict checked by exhaustive model search"
+ },
+ {
+  "chapter": "Logical Reasoning",
+  "topic": "Syllogism",
+  "difficulty": "HARD",
+  "seconds": 80,
+  "text": "Statements: Some plates are pens. Some boats are plates. Only a few boats are rivers.  Conclusions: I. Some rivers being plates is a possibility.  II. Some rivers being pens is a possibility.  Take the statements to be true even if they disagree with commonly known facts, and decide which conclusions follow.",
+  "options": [
+   "If only conclusion I follows",
+   "If only conclusion II follows",
+   "If either conclusion I or II follows",
+   "If neither conclusion I nor II follows",
+   "If both conclusions I and II follow"
+  ],
+  "correctIndex": 4,
+  "explanation": "Conclusion I (Some rivers being plates is a possibility) follows: it is possible, for example if there are some things that are pens, plates, boats, not rivers; some things that are not pens, plates, boats, rivers. Conclusion II (Some rivers being pens is a possibility) follows: it is possible, for example if there are some things that are pens, plates, boats, not rivers; some things that are pens, not plates, boats, rivers.",
+  "ordered": true,
+  "source": "generated, verdict checked by exhaustive model search"
+ },
+ {
+  "chapter": "Logical Reasoning",
+  "topic": "Syllogism",
+  "difficulty": "HARD",
+  "seconds": 80,
+  "text": "Statements: All mangoes are bells. Only a few drums are bells. Some tables are drums.  Conclusions: I. Some tables being mangoes is a possibility.  II. Some drums are mangoes.  Take the statements to be true even if they disagree with commonly known facts, and decide which conclusions follow.",
+  "options": [
+   "If only conclusion I follows",
+   "If only conclusion II follows",
+   "If either conclusion I or II follows",
+   "If neither conclusion I nor II follows",
+   "If both conclusions I and II follow"
+  ],
+  "correctIndex": 0,
+  "explanation": "Conclusion I (Some tables being mangoes is a possibility) follows: it is possible, for example if there are some things that are not mangoes, not bells, drums, not tables; some things that are mangoes, bells, drums, tables. Conclusion II (Some drums are mangoes) does not follow: it can be false, for example if there are some things that are not mangoes, bells, drums, not tables; some things that are not mangoes, not bells, drums, tables.",
+  "ordered": true,
+  "source": "generated, verdict checked by exhaustive model search"
+ },
+ {
+  "chapter": "Logical Reasoning",
+  "topic": "Syllogism",
+  "difficulty": "HARD",
+  "seconds": 80,
+  "text": "Statements: All plates are rivers. No pens are rivers. Some pens are stones.  Conclusions: I. Some rivers being pens is a possibility.  II. Some stones are not rivers.  Take the statements to be true even if they disagree with commonly known facts, and decide which conclusions follow.",
+  "options": [
+   "If only conclusion I follows",
+   "If only conclusion II follows",
+   "If either conclusion I or II follows",
+   "If neither conclusion I nor II follows",
+   "If both conclusions I and II follow"
+  ],
+  "correctIndex": 1,
+  "explanation": "Conclusion I (Some rivers being pens is a possibility) does not follow: it is false in every arrangement that fits the statements. Conclusion II (Some stones are not rivers) follows: it is true in every arrangement that fits the statements (it rests on statements 2 and 3).",
+  "ordered": true,
+  "source": "generated, verdict checked by exhaustive model search"
+ },
+ {
+  "chapter": "Logical Reasoning",
+  "topic": "Syllogism",
+  "difficulty": "HARD",
+  "seconds": 80,
+  "text": "Statements: Only a few fields are mangoes. Only a few fields are tables. Some boxes are tables.  Conclusions: I. All tables are boxes.  II. Some tables are not boxes.  Take the statements to be true even if they disagree with commonly known facts, and decide which conclusions follow.",
+  "options": [
+   "If only conclusion I follows",
+   "If only conclusion II follows",
+   "If either conclusion I or II follows",
+   "If neither conclusion I nor II follows",
+   "If both conclusions I and II follow"
+  ],
+  "correctIndex": 2,
+  "explanation": "Conclusion I (All tables are boxes) does not follow: it can be false, for example if there are some things that are mangoes, fields, not tables, not boxes; some things that are not mangoes, fields, tables, not boxes; some things that are not mangoes, not fields, tables, boxes. Conclusion II (Some tables are not boxes) does not follow: it can be false, for example if there are some things that are mangoes, fields, not tables, not boxes; some things that are not mangoes, fields, tables, boxes. Neither is certain, but exactly one of them is true in every arrangement, so either I or II follows.",
+  "ordered": true,
+  "source": "generated, verdict checked by exhaustive model search"
+ },
+ {
+  "chapter": "Logical Reasoning",
+  "topic": "Syllogism",
+  "difficulty": "HARD",
+  "seconds": 80,
+  "text": "Statements: All bells are chairs. No chairs are boats. Only a few boats are trees.  Conclusions: I. All boats are trees.  II. All trees are boats.  Take the statements to be true even if they disagree with commonly known facts, and decide which conclusions follow.",
+  "options": [
+   "If only conclusion I follows",
+   "If only conclusion II follows",
+   "If either conclusion I or II follows",
+   "If neither conclusion I nor II follows",
+   "If both conclusions I and II follow"
+  ],
+  "correctIndex": 3,
+  "explanation": "Conclusion I (All boats are trees) does not follow: it can be false, for example if there are some things that are not bells, not chairs, boats, not trees; some things that are not bells, not chairs, boats, trees. Conclusion II (All trees are boats) does not follow: it can be false, for example if there are some things that are not bells, not chairs, boats, not trees; some things that are not bells, not chairs, not boats, trees; some things that are not bells, not chairs, boats, trees.",
+  "ordered": true,
+  "source": "generated, verdict checked by exhaustive model search"
+ },
+ {
+  "chapter": "Logical Reasoning",
+  "topic": "Syllogism",
+  "difficulty": "HARD",
+  "seconds": 80,
+  "text": "Statements: Some stones are ropes. Some walls are stones. Some books are not walls.  Conclusions: I. All books being stones is a possibility.  II. All walls being ropes is a possibility.  Take the statements to be true even if they disagree with commonly known facts, and decide which conclusions follow.",
+  "options": [
+   "If only conclusion I follows",
+   "If only conclusion II follows",
+   "If either conclusion I or II follows",
+   "If neither conclusion I nor II follows",
+   "If both conclusions I and II follow"
+  ],
+  "correctIndex": 4,
+  "explanation": "Conclusion I (All books being stones is a possibility) follows: it is possible, for example if there are some things that are ropes, stones, walls, not books; some things that are not ropes, stones, not walls, books. Conclusion II (All walls being ropes is a possibility) follows: it is possible, for example if there are some things that are ropes, stones, walls, not books; some things that are not ropes, not stones, not walls, books.",
+  "ordered": true,
+  "source": "generated, verdict checked by exhaustive model search"
+ },
+ {
+  "chapter": "Logical Reasoning",
+  "topic": "Syllogism",
+  "difficulty": "HARD",
+  "seconds": 80,
+  "text": "Statements: All plates are clouds. Some clouds are not stones. Some drums are stones.  Conclusions: I. Some drums being clouds is a possibility.  II. No plates are clouds.  Take the statements to be true even if they disagree with commonly known facts, and decide which conclusions follow.",
+  "options": [
+   "If only conclusion I follows",
+   "If only conclusion II follows",
+   "If either conclusion I or II follows",
+   "If neither conclusion I nor II follows",
+   "If both conclusions I and II follow"
+  ],
+  "correctIndex": 0,
+  "explanation": "Conclusion I (Some drums being clouds is a possibility) follows: it is possible, for example if there are some things that are not plates, clouds, not stones, drums; some things that are not plates, not clouds, stones, drums. Conclusion II (No plates are clouds) does not follow: it can be false, for example if there are some things that are plates, clouds, not stones, not drums; some things that are not plates, not clouds, stones, drums.",
+  "ordered": true,
+  "source": "generated, verdict checked by exhaustive model search"
+ },
+ {
+  "chapter": "Logical Reasoning",
+  "topic": "Syllogism",
+  "difficulty": "MEDIUM",
+  "seconds": 80,
+  "text": "Statements: All tables are coins. No tables are clocks. Some coins are clocks.  Conclusions: I. Some tables are coins.  II. Some clocks being coins is a possibility.  Take the statements to be true even if they disagree with commonly known facts, and decide which conclusions follow.",
+  "options": [
+   "If only conclusion I follows",
+   "If only conclusion II follows",
+   "If either conclusion I or II follows",
+   "If neither conclusion I nor II follows",
+   "If both conclusions I and II follow"
+  ],
+  "correctIndex": 1,
+  "explanation": "Conclusion I (Some tables are coins) does not follow: it can be false, for example if there are some things that are coins, not tables, clocks. Conclusion II (Some clocks being coins is a possibility) follows: it is possible, for example if there are some things that are coins, not tables, clocks.",
+  "ordered": true,
+  "source": "generated, verdict checked by exhaustive model search"
+ },
+ {
+  "chapter": "Logical Reasoning",
+  "topic": "Syllogism",
+  "difficulty": "HARD",
+  "seconds": 80,
+  "text": "Statements: All bells are stones. All gates are bells. Some gates are clocks.  Conclusions: I. All stones are clocks.  II. Some stones are not clocks.  Take the statements to be true even if they disagree with commonly known facts, and decide which conclusions follow.",
+  "options": [
+   "If only conclusion I follows",
+   "If only conclusion II follows",
+   "If either conclusion I or II follows",
+   "If neither conclusion I nor II follows",
+   "If both conclusions I and II follow"
+  ],
+  "correctIndex": 2,
+  "explanation": "Conclusion I (All stones are clocks) does not follow: it can be false, for example if there are some things that are stones, not bells, not gates, not clocks; some things that are stones, bells, gates, clocks. Conclusion II (Some stones are not clocks) does not follow: it can be false, for example if there are some things that are stones, bells, gates, clocks. Neither is certain, but exactly one of them is true in every arrangement, so either I or II follows.",
+  "ordered": true,
+  "source": "generated, verdict checked by exhaustive model search"
+ },
+ {
+  "chapter": "Logical Reasoning",
+  "topic": "Syllogism",
+  "difficulty": "MEDIUM",
+  "seconds": 80,
+  "text": "Statements: All clouds are rivers. All boats are clouds.  Conclusions: I. Some rivers are clouds.  II. Some clouds are rivers.  Take the statements to be true even if they disagree with commonly known facts, and decide which conclusions follow.",
+  "options": [
+   "If only conclusion I follows",
+   "If only conclusion II follows",
+   "If either conclusion I or II follows",
+   "If neither conclusion I nor II follows",
+   "If both conclusions I and II follow"
+  ],
+  "correctIndex": 3,
+  "explanation": "Conclusion I (Some rivers are clouds) does not follow: it can be false, for example if there are nothing at all. Conclusion II (Some clouds are rivers) does not follow: it can be false, for example if there are nothing at all.",
+  "ordered": true,
+  "source": "generated, verdict checked by exhaustive model search"
+ },
+ {
+  "chapter": "Logical Reasoning",
+  "topic": "Syllogism",
+  "difficulty": "MEDIUM",
+  "seconds": 80,
+  "text": "Statements: No clouds are drums. Some drums are not lamps.  Conclusions: I. Some clouds being lamps is a possibility.  II. All clouds being lamps is a possibility.  Take the statements to be true even if they disagree with commonly known facts, and decide which conclusions follow.",
+  "options": [
+   "If only conclusion I follows",
+   "If only conclusion II follows",
+   "If either conclusion I or II follows",
+   "If neither conclusion I nor II follows",
+   "If both conclusions I and II follow"
+  ],
+  "correctIndex": 4,
+  "explanation": "Conclusion I (Some clouds being lamps is a possibility) follows: it is possible, for example if there are some things that are not clouds, drums, not lamps; some things that are clouds, not drums, lamps. Conclusion II (All clouds being lamps is a possibility) follows: it is possible, for example if there are some things that are not clouds, drums, not lamps.",
+  "ordered": true,
+  "source": "generated, verdict checked by exhaustive model search"
+ },
+ {
+  "chapter": "Logical Reasoning",
+  "topic": "Syllogism",
+  "difficulty": "HARD",
+  "seconds": 80,
+  "text": "Statements: Only a few walls are lamps. No pens are lamps. Some glasses are not pens.  Conclusions: I. All pens being walls is a possibility.  II. Some pens are lamps.  Take the statements to be true even if they disagree with commonly known facts, and decide which conclusions follow.",
+  "options": [
+   "If only conclusion I follows",
+   "If only conclusion II follows",
+   "If either conclusion I or II follows",
+   "If neither conclusion I nor II follows",
+   "If both conclusions I and II follow"
+  ],
+  "correctIndex": 0,
+  "explanation": "Conclusion I (All pens being walls is a possibility) follows: it is possible, for example if there are some things that are walls, lamps, not pens, not glasses; some things that are walls, not lamps, not pens, glasses. Conclusion II (Some pens are lamps) does not follow: it can be false, for example if there are some things that are walls, lamps, not pens, not glasses; some things that are walls, not lamps, not pens, glasses.",
+  "ordered": true,
+  "source": "generated, verdict checked by exhaustive model search"
+ },
+ {
+  "chapter": "Logical Reasoning",
+  "topic": "Syllogism",
+  "difficulty": "MEDIUM",
+  "seconds": 80,
+  "text": "Statements: Some boats are shirts. Some plates are boats. All shirts are plates.  Conclusions: I. Some shirts are not boats.  II. Some shirts are plates.  Take the statements to be true even if they disagree with commonly known facts, and decide which conclusions follow.",
+  "options": [
+   "If only conclusion I follows",
+   "If only conclusion II follows",
+   "If either conclusion I or II follows",
+   "If neither conclusion I nor II follows",
+   "If both conclusions I and II follow"
+  ],
+  "correctIndex": 1,
+  "explanation": "Conclusion I (Some shirts are not boats) does not follow: it can be false, for example if there are some things that are shirts, boats, plates. Conclusion II (Some shirts are plates) follows: it is true in every arrangement that fits the statements (it rests on statements 1 and 3).",
+  "ordered": true,
+  "source": "generated, verdict checked by exhaustive model search"
+ },
+ {
+  "chapter": "Logical Reasoning",
+  "topic": "Syllogism",
+  "difficulty": "MEDIUM",
+  "seconds": 80,
+  "text": "Statements: All coins are rivers. All clouds are rivers. Only a few coins are clouds.  Conclusions: I. Some clouds are not coins.  II. All clouds are coins.  Take the statements to be true even if they disagree with commonly known facts, and decide which conclusions follow.",
+  "options": [
+   "If only conclusion I follows",
+   "If only conclusion II follows",
+   "If either conclusion I or II follows",
+   "If neither conclusion I nor II follows",
+   "If both conclusions I and II follow"
+  ],
+  "correctIndex": 2,
+  "explanation": "Conclusion I (Some clouds are not coins) does not follow: it can be false, for example if there are some things that are coins, rivers, not clouds; some things that are coins, rivers, clouds. Conclusion II (All clouds are coins) does not follow: it can be false, for example if there are some things that are coins, rivers, not clouds; some things that are not coins, rivers, clouds; some things that are coins, rivers, clouds. Neither is certain, but exactly one of them is true in every arrangement, so either I or II follows.",
+  "ordered": true,
+  "source": "generated, verdict checked by exhaustive model search"
+ },
+ {
+  "chapter": "Logical Reasoning",
+  "topic": "Syllogism",
+  "difficulty": "MEDIUM",
+  "seconds": 80,
+  "text": "Statements: Some lamps are trees. Some trees are bells. Some lamps are bells.  Conclusions: I. All lamps are bells.  II. No lamps are trees.  Take the statements to be true even if they disagree with commonly known facts, and decide which conclusions follow.",
+  "options": [
+   "If only conclusion I follows",
+   "If only conclusion II follows",
+   "If either conclusion I or II follows",
+   "If neither conclusion I nor II follows",
+   "If both conclusions I and II follow"
+  ],
+  "correctIndex": 3,
+  "explanation": "Conclusion I (All lamps are bells) does not follow: it can be false, for example if there are some things that are lamps, not trees, not bells; some things that are lamps, trees, bells. Conclusion II (No lamps are trees) does not follow: it can be false, for example if there are some things that are lamps, trees, bells.",
+  "ordered": true,
+  "source": "generated, verdict checked by exhaustive model search"
+ },
+ {
+  "chapter": "Logical Reasoning",
+  "topic": "Syllogism",
+  "difficulty": "MEDIUM",
+  "seconds": 80,
+  "text": "Statements: Some fields are boxes. Only a few fields are walls.  Conclusions: I. Some walls being boxes is a possibility.  II. All walls being boxes is a possibility.  Take the statements to be true even if they disagree with commonly known facts, and decide which conclusions follow.",
+  "options": [
+   "If only conclusion I follows",
+   "If only conclusion II follows",
+   "If either conclusion I or II follows",
+   "If neither conclusion I nor II follows",
+   "If both conclusions I and II follow"
+  ],
+  "correctIndex": 4,
+  "explanation": "Conclusion I (Some walls being boxes is a possibility) follows: it is possible, for example if there are some things that are not boxes, fields, not walls; some things that are boxes, fields, walls. Conclusion II (All walls being boxes is a possibility) follows: it is possible, for example if there are some things that are not boxes, fields, not walls; some things that are boxes, fields, walls.",
+  "ordered": true,
+  "source": "generated, verdict checked by exhaustive model search"
+ },
+ {
+  "chapter": "Logical Reasoning",
+  "topic": "Syllogism",
+  "difficulty": "HARD",
+  "seconds": 80,
+  "text": "Statements: All walls are coins. All nests are coins. Some nests are not pens.  Conclusions: I. Some coins being pens is a possibility.  II. All coins are nests.  Take the statements to be true even if they disagree with commonly known facts, and decide which conclusions follow.",
+  "options": [
+   "If only conclusion I follows",
+   "If only conclusion II follows",
+   "If either conclusion I or II follows",
+   "If neither conclusion I nor II follows",
+   "If both conclusions I and II follow"
+  ],
+  "correctIndex": 0,
+  "explanation": "Conclusion I (Some coins being pens is a possibility) follows: it is possible, for example if there are some things that are not walls, coins, nests, not pens; some things that are not walls, coins, not nests, pens. Conclusion II (All coins are nests) does not follow: it can be false, for example if there are some things that are not walls, coins, not nests, not pens; some things that are not walls, coins, nests, not pens.",
+  "ordered": true,
+  "source": "generated, verdict checked by exhaustive model search"
+ },
+ {
+  "chapter": "Logical Reasoning",
+  "topic": "Syllogism",
+  "difficulty": "MEDIUM",
+  "seconds": 80,
+  "text": "Statements: All coins are books. All bells are books. Some coins are bells.  Conclusions: I. All books are bells.  II. Some books are bells.  Take the statements to be true even if they disagree with commonly known facts, and decide which conclusions follow.",
+  "options": [
+   "If only conclusion I follows",
+   "If only conclusion II follows",
+   "If either conclusion I or II follows",
+   "If neither conclusion I nor II follows",
+   "If both conclusions I and II follow"
+  ],
+  "correctIndex": 1,
+  "explanation": "Conclusion I (All books are bells) does not follow: it can be false, for example if there are some things that are not coins, books, not bells; some things that are coins, books, bells. Conclusion II (Some books are bells) follows: it is true in every arrangement that fits the statements (it rests on statement 3).",
+  "ordered": true,
+  "source": "generated, verdict checked by exhaustive model search"
+ },
+ {
+  "chapter": "Logical Reasoning",
+  "topic": "Syllogism",
+  "difficulty": "HARD",
+  "seconds": 80,
+  "text": "Statements: Some stones are not mangoes. Some doors are mangoes. All doors are rivers.  Conclusions: I. Some stones are not rivers.  II. All stones are rivers.  Take the statements to be true even if they disagree with commonly known facts, and decide which conclusions follow.",
+  "options": [
+   "If only conclusion I follows",
+   "If only conclusion II follows",
+   "If either conclusion I or II follows",
+   "If neither conclusion I nor II follows",
+   "If both conclusions I and II follow"
+  ],
+  "correctIndex": 2,
+  "explanation": "Conclusion I (Some stones are not rivers) does not follow: it can be false, for example if there are some things that are stones, not mangoes, not doors, rivers; some things that are not stones, mangoes, doors, rivers. Conclusion II (All stones are rivers) does not follow: it can be false, for example if there are some things that are stones, not mangoes, not doors, not rivers; some things that are not stones, mangoes, doors, rivers. Neither is certain, but exactly one of them is true in every arrangement, so either I or II follows.",
+  "ordered": true,
+  "source": "generated, verdict checked by exhaustive model search"
+ },
+ {
+  "chapter": "Logical Reasoning",
+  "topic": "Syllogism",
+  "difficulty": "HARD",
+  "seconds": 80,
+  "text": "Statements: All boxes are nests. Only a few stones are boxes. All stones are lamps.  Conclusions: I. All lamps are nests.  II. All stones are nests.  Take the statements to be true even if they disagree with commonly known facts, and decide which conclusions follow.",
+  "options": [
+   "If only conclusion I follows",
+   "If only conclusion II follows",
+   "If either conclusion I or II follows",
+   "If neither conclusion I nor II follows",
+   "If both conclusions I and II follow"
+  ],
+  "correctIndex": 3,
+  "explanation": "Conclusion I (All lamps are nests) does not follow: it can be false, for example if there are some things that are not nests, not boxes, stones, lamps; some things that are nests, boxes, stones, lamps. Conclusion II (All stones are nests) does not follow: it can be false, for example if there are some things that are not nests, not boxes, stones, lamps; some things that are nests, boxes, stones, lamps.",
+  "ordered": true,
+  "source": "generated, verdict checked by exhaustive model search"
+ },
+ {
+  "chapter": "Logical Reasoning",
+  "topic": "Syllogism",
+  "difficulty": "MEDIUM",
+  "seconds": 80,
+  "text": "Statements: All mangoes are gates. All books are gates.  Conclusions: I. Some mangoes being books is a possibility.  II. All mangoes being books is a possibility.  Take the statements to be true even if they disagree with commonly known facts, and decide which conclusions follow.",
+  "options": [
+   "If only conclusion I follows",
+   "If only conclusion II follows",
+   "If either conclusion I or II follows",
+   "If neither conclusion I nor II follows",
+   "If both conclusions I and II follow"
+  ],
+  "correctIndex": 4,
+  "explanation": "Conclusion I (Some mangoes being books is a possibility) follows: it is possible, for example if there are some things that are mangoes, gates, books. Conclusion II (All mangoes being books is a possibility) follows: it is possible, for example if there are nothing at all.",
+  "ordered": true,
+  "source": "generated, verdict checked by exhaustive model search"
+ }
+]
