@@ -44,6 +44,8 @@ export function models(T: number, stmts: Stmt[], skip = -1): number[] {
   const cs = stmts.filter((_, i) => i !== skip).map((s) => consOf(T, s));
   const forbid = cs.reduce((x, c) => x | c.forbid, 0);
   const needs = cs.flatMap((c) => c.needs);
+  // every term has at least one member (the usual exam convention)
+  for (let t = 0; t < T; t++) needs.push(regs(T, (r) => inT(r, t)));
   const out: number[] = [];
   const lim = 1 << (1 << T);
   for (let m = 0; m < lim; m++) {

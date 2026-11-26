@@ -1,0 +1,784 @@
+[
+ {
+  "chapter": "Data Interpretation",
+  "topic": "Tables",
+  "difficulty": "MEDIUM",
+  "seconds": 90,
+  "text": "The table shows the total number of pens sold and the percentage sold to females by four shops. Shop A: total 820, 70% to females; Shop B: total 840, 25% to females; Shop C: total 740, 80% to females; Shop D: total 640, 30% to females. Find the difference between the total number of pens sold to males by shops D and A together and the total number sold to females by shops C and B together.",
+  "options": [
+   "694",
+   "802",
+   "108",
+   "12",
+   "1496"
+  ],
+  "correctIndex": 2,
+  "explanation": "Males: D 448, A 246, total 694. Females: C 592, B 210, total 802. The difference is 108.",
+  "source": "generated table, answer recomputed from the numbers"
+ },
+ {
+  "chapter": "Data Interpretation",
+  "topic": "Tables",
+  "difficulty": "HARD",
+  "seconds": 90,
+  "text": "The table shows the total number of pens sold and the percentage sold to females by four shops. Shop A: total 820, 70% to females; Shop B: total 840, 25% to females; Shop C: total 740, 80% to females; Shop D: total 640, 30% to females. The total number of pens sold to females by shop C is what percentage more than the total number sold to males by shop C?",
+  "options": [
+   "400%",
+   "25%",
+   "300%",
+   "75%",
+   "312%"
+  ],
+  "correctIndex": 2,
+  "explanation": "Females in shop C = 592. Males in shop C = 148. Percentage more = (592 - 148) / 148 x 100 = 300%.",
+  "source": "generated table, answer recomputed from the numbers"
+ },
+ {
+  "chapter": "Data Interpretation",
+  "topic": "Tables",
+  "difficulty": "HARD",
+  "seconds": 90,
+  "text": "The table shows the total number of pens sold and the percentage sold to females by four shops. Shop A: total 820, 70% to females; Shop B: total 840, 25% to females; Shop C: total 740, 80% to females; Shop D: total 640, 30% to females. Shop D sold its pens to males at 10% profit and to females at 20% profit. If the cost price of each pen is Rs 40, find the overall profit earned by the shop (in Rs).",
+  "options": [
+   "4352",
+   "1792",
+   "3328",
+   "3840",
+   "1536"
+  ],
+  "correctIndex": 2,
+  "explanation": "Males = 448, females = 192. Profit on males = 448 x 40 x 10% = 1792. Profit on females = 192 x 40 x 20% = 1536. Overall profit = 3328.",
+  "source": "generated table, answer recomputed from the numbers"
+ },
+ {
+  "chapter": "Data Interpretation",
+  "topic": "Tables",
+  "difficulty": "HARD",
+  "seconds": 90,
+  "text": "The table shows the total number of pens sold and the percentage sold to females by four shops. Shop A: total 820, 70% to females; Shop B: total 840, 25% to females; Shop C: total 740, 80% to females; Shop D: total 640, 30% to females. The total number of pens sold by shop E is 25% more than that of shop C. If shop E sold 40% of its pens to females, find the number sold to females by shop E.",
+  "options": [
+   "296",
+   "370",
+   "555",
+   "222",
+   "925"
+  ],
+  "correctIndex": 1,
+  "explanation": "Shop C sold 740. Shop E sold 25% more, which is 925. Females = 40% of 925 = 370.",
+  "source": "generated table, answer recomputed from the numbers"
+ },
+ {
+  "chapter": "Data Interpretation",
+  "topic": "Tables",
+  "difficulty": "MEDIUM",
+  "seconds": 90,
+  "text": "The table shows the total number of tickets sold and the percentage sold to females by four shops. Shop A: total 460, 80% to females; Shop B: total 280, 50% to females; Shop C: total 900, 85% to females; Shop D: total 580, 75% to females. Find the difference between the total number of tickets sold to males by shops D and B together and the total number sold to females by shops A and C together.",
+  "options": [
+   "1418",
+   "848",
+   "1133",
+   "348",
+   "285"
+  ],
+  "correctIndex": 1,
+  "explanation": "Males: D 145, B 140, total 285. Females: A 368, C 765, total 1133. The difference is 848.",
+  "source": "generated table, answer recomputed from the numbers"
+ },
+ {
+  "chapter": "Data Interpretation",
+  "topic": "Tables",
+  "difficulty": "HARD",
+  "seconds": 90,
+  "text": "The table shows the total number of tickets sold and the percentage sold to females by four shops. Shop A: total 460, 80% to females; Shop B: total 280, 50% to females; Shop C: total 900, 85% to females; Shop D: total 580, 75% to females. The total number of tickets sold to females by shop A is what percentage more than the total number sold to males by shop A?",
+  "options": [
+   "25%",
+   "400%",
+   "312%",
+   "300%",
+   "75%"
+  ],
+  "correctIndex": 3,
+  "explanation": "Females in shop A = 368. Males in shop A = 92. Percentage more = (368 - 92) / 92 x 100 = 300%.",
+  "source": "generated table, answer recomputed from the numbers"
+ },
+ {
+  "chapter": "Data Interpretation",
+  "topic": "Tables",
+  "difficulty": "MEDIUM",
+  "seconds": 90,
+  "text": "The table shows the total number of tickets sold and the percentage sold to females by four shops. Shop A: total 460, 80% to females; Shop B: total 280, 50% to females; Shop C: total 900, 85% to females; Shop D: total 580, 75% to females. Find the average number of tickets sold to males by shops A, C and D.",
+  "options": [
+   "372",
+   "129",
+   "523",
+   "124",
+   "647"
+  ],
+  "correctIndex": 3,
+  "explanation": "Males: A 92, C 135, D 145. Their sum is 372, so the average is 372 / 3 = 124.",
+  "source": "generated table, answer recomputed from the numbers"
+ },
+ {
+  "chapter": "Data Interpretation",
+  "topic": "Tables",
+  "difficulty": "HARD",
+  "seconds": 90,
+  "text": "The table shows the total number of tickets sold and the percentage sold to females by four shops. Shop A: total 460, 80% to females; Shop B: total 280, 50% to females; Shop C: total 900, 85% to females; Shop D: total 580, 75% to females. Shop B sold its tickets to males at 50% profit and to females at 10% profit. If the cost price of each ticket is Rs 20, find the overall profit earned by the shop (in Rs).",
+  "options": [
+   "1680",
+   "280",
+   "1747",
+   "1400",
+   "1613"
+  ],
+  "correctIndex": 0,
+  "explanation": "Males = 140, females = 140. Profit on males = 140 x 20 x 50% = 1400. Profit on females = 140 x 20 x 10% = 280. Overall profit = 1680.",
+  "source": "generated table, answer recomputed from the numbers"
+ },
+ {
+  "chapter": "Data Interpretation",
+  "topic": "Tables",
+  "difficulty": "HARD",
+  "seconds": 90,
+  "text": "The table shows the total number of tickets sold and the percentage sold to females by four shops. Shop A: total 460, 80% to females; Shop B: total 280, 50% to females; Shop C: total 900, 85% to females; Shop D: total 580, 75% to females. The total number of tickets sold by shop E is 25% more than that of shop A. If shop E sold 60% of its tickets to females, find the number sold to females by shop E.",
+  "options": [
+   "345",
+   "575",
+   "276",
+   "230",
+   "207"
+  ],
+  "correctIndex": 0,
+  "explanation": "Shop A sold 460. Shop E sold 25% more, which is 575. Females = 60% of 575 = 345.",
+  "source": "generated table, answer recomputed from the numbers"
+ },
+ {
+  "chapter": "Data Interpretation",
+  "topic": "Tables",
+  "difficulty": "MEDIUM",
+  "seconds": 90,
+  "text": "The table shows the total number of books sold and the percentage sold to females by four shops. Shop A: total 440, 90% to females; Shop B: total 640, 40% to females; Shop C: total 560, 45% to females; Shop D: total 400, 85% to females. Find the difference between the total number of books sold to males by shops A and B together and the total number sold to females by shops D and C together.",
+  "options": [
+   "164",
+   "592",
+   "428",
+   "284",
+   "1020"
+  ],
+  "correctIndex": 0,
+  "explanation": "Males: A 44, B 384, total 428. Females: D 340, C 252, total 592. The difference is 164.",
+  "source": "generated table, answer recomputed from the numbers"
+ },
+ {
+  "chapter": "Data Interpretation",
+  "topic": "Tables",
+  "difficulty": "HARD",
+  "seconds": 90,
+  "text": "The table shows the total number of books sold and the percentage sold to females by four shops. Shop A: total 440, 90% to females; Shop B: total 640, 40% to females; Shop C: total 560, 45% to females; Shop D: total 400, 85% to females. The total number of books sold to females by shop A is what percentage more than the total number sold to males by shop D?",
+  "options": [
+   "560%",
+   "15%",
+   "85%",
+   "660%",
+   "582%"
+  ],
+  "correctIndex": 0,
+  "explanation": "Females in shop A = 396. Males in shop D = 60. Percentage more = (396 - 60) / 60 x 100 = 560%.",
+  "source": "generated table, answer recomputed from the numbers"
+ },
+ {
+  "chapter": "Data Interpretation",
+  "topic": "Tables",
+  "difficulty": "HARD",
+  "seconds": 90,
+  "text": "The table shows the total number of books sold and the percentage sold to females by four shops. Shop A: total 440, 90% to females; Shop B: total 640, 40% to females; Shop C: total 560, 45% to females; Shop D: total 400, 85% to females. Shop B sold its books to males at 50% profit and to females at 10% profit. If the cost price of each book is Rs 60, find the overall profit earned by the shop (in Rs).",
+  "options": [
+   "13578",
+   "1536",
+   "13056",
+   "11520",
+   "9984"
+  ],
+  "correctIndex": 2,
+  "explanation": "Males = 384, females = 256. Profit on males = 384 x 60 x 50% = 11520. Profit on females = 256 x 60 x 10% = 1536. Overall profit = 13056.",
+  "source": "generated table, answer recomputed from the numbers"
+ },
+ {
+  "chapter": "Data Interpretation",
+  "topic": "Tables",
+  "difficulty": "HARD",
+  "seconds": 90,
+  "text": "The table shows the total number of books sold and the percentage sold to females by four shops. Shop A: total 440, 90% to females; Shop B: total 640, 40% to females; Shop C: total 560, 45% to females; Shop D: total 400, 85% to females. The total number of books sold by shop E is 20% more than that of shop D. If shop E sold 60% of its books to females, find the number sold to females by shop E.",
+  "options": [
+   "300",
+   "240",
+   "288",
+   "480",
+   "192"
+  ],
+  "correctIndex": 2,
+  "explanation": "Shop D sold 400. Shop E sold 20% more, which is 480. Females = 60% of 480 = 288.",
+  "source": "generated table, answer recomputed from the numbers"
+ },
+ {
+  "chapter": "Data Interpretation",
+  "topic": "Tables",
+  "difficulty": "MEDIUM",
+  "seconds": 90,
+  "text": "The table shows the total number of tickets sold and the percentage sold to females by four shops. Shop A: total 380, 45% to females; Shop B: total 780, 20% to females; Shop C: total 420, 60% to females; Shop D: total 880, 85% to females. Find the difference between the total number of tickets sold to males by shops D and B together and the total number sold to females by shops C and A together.",
+  "options": [
+   "423",
+   "756",
+   "333",
+   "527",
+   "1179"
+  ],
+  "correctIndex": 2,
+  "explanation": "Males: D 132, B 624, total 756. Females: C 252, A 171, total 423. The difference is 333.",
+  "source": "generated table, answer recomputed from the numbers"
+ },
+ {
+  "chapter": "Data Interpretation",
+  "topic": "Tables",
+  "difficulty": "HARD",
+  "seconds": 90,
+  "text": "The table shows the total number of tickets sold and the percentage sold to females by four shops. Shop A: total 380, 45% to females; Shop B: total 780, 20% to females; Shop C: total 420, 60% to females; Shop D: total 880, 85% to females. The total number of tickets sold to females by shop C is what percentage more than the total number sold to males by shop C?",
+  "options": [
+   "33%",
+   "55%",
+   "67%",
+   "50%",
+   "150%"
+  ],
+  "correctIndex": 3,
+  "explanation": "Females in shop C = 252. Males in shop C = 168. Percentage more = (252 - 168) / 168 x 100 = 50%.",
+  "source": "generated table, answer recomputed from the numbers"
+ },
+ {
+  "chapter": "Data Interpretation",
+  "topic": "Tables",
+  "difficulty": "MEDIUM",
+  "seconds": 90,
+  "text": "The table shows the total number of tickets sold and the percentage sold to females by four shops. Shop A: total 380, 45% to females; Shop B: total 780, 20% to females; Shop C: total 420, 60% to females; Shop D: total 880, 85% to females. Find the average number of tickets sold to males by shops B, C and D.",
+  "options": [
+   "320",
+   "385",
+   "693",
+   "924",
+   "308"
+  ],
+  "correctIndex": 4,
+  "explanation": "Males: B 624, C 168, D 132. Their sum is 924, so the average is 924 / 3 = 308.",
+  "source": "generated table, answer recomputed from the numbers"
+ },
+ {
+  "chapter": "Data Interpretation",
+  "topic": "Tables",
+  "difficulty": "HARD",
+  "seconds": 90,
+  "text": "The table shows the total number of tickets sold and the percentage sold to females by four shops. Shop A: total 380, 45% to females; Shop B: total 780, 20% to females; Shop C: total 420, 60% to females; Shop D: total 880, 85% to females. Shop D sold its tickets to males at 25% profit and to females at 50% profit. If the cost price of each ticket is Rs 40, find the overall profit earned by the shop (in Rs).",
+  "options": [
+   "13200",
+   "1320",
+   "10120",
+   "16280",
+   "14960"
+  ],
+  "correctIndex": 3,
+  "explanation": "Males = 132, females = 748. Profit on males = 132 x 40 x 25% = 1320. Profit on females = 748 x 40 x 50% = 14960. Overall profit = 16280.",
+  "source": "generated table, answer recomputed from the numbers"
+ },
+ {
+  "chapter": "Data Interpretation",
+  "topic": "Tables",
+  "difficulty": "HARD",
+  "seconds": 90,
+  "text": "The table shows the total number of tickets sold and the percentage sold to females by four shops. Shop A: total 380, 45% to females; Shop B: total 780, 20% to females; Shop C: total 420, 60% to females; Shop D: total 880, 85% to females. The total number of tickets sold by shop E is 20% more than that of shop A. If shop E sold 75% of its tickets to females, find the number sold to females by shop E.",
+  "options": [
+   "114",
+   "342",
+   "456",
+   "285",
+   "228"
+  ],
+  "correctIndex": 1,
+  "explanation": "Shop A sold 380. Shop E sold 20% more, which is 456. Females = 75% of 456 = 342.",
+  "source": "generated table, answer recomputed from the numbers"
+ },
+ {
+  "chapter": "Data Interpretation",
+  "topic": "Tables",
+  "difficulty": "MEDIUM",
+  "seconds": 90,
+  "text": "The table shows the total number of mangoes sold and the percentage sold to females by four shops. Shop A: total 660, 90% to females; Shop B: total 600, 35% to females; Shop C: total 420, 25% to females; Shop D: total 380, 20% to females. Find the difference between the total number of mangoes sold to males by shops B and A together and the total number sold to females by shops D and C together.",
+  "options": [
+   "637",
+   "456",
+   "185",
+   "181",
+   "275"
+  ],
+  "correctIndex": 4,
+  "explanation": "Males: B 390, A 66, total 456. Females: D 76, C 105, total 181. The difference is 275.",
+  "source": "generated table, answer recomputed from the numbers"
+ },
+ {
+  "chapter": "Data Interpretation",
+  "topic": "Tables",
+  "difficulty": "HARD",
+  "seconds": 90,
+  "text": "The table shows the total number of mangoes sold and the percentage sold to females by four shops. Shop A: total 660, 90% to females; Shop B: total 600, 35% to females; Shop C: total 420, 25% to females; Shop D: total 380, 20% to females. The total number of mangoes sold to females by shop A is what percentage more than the total number sold to males by shop A?",
+  "options": [
+   "832%",
+   "800%",
+   "11%",
+   "900%",
+   "89%"
+  ],
+  "correctIndex": 1,
+  "explanation": "Females in shop A = 594. Males in shop A = 66. Percentage more = (594 - 66) / 66 x 100 = 800%.",
+  "source": "generated table, answer recomputed from the numbers"
+ },
+ {
+  "chapter": "Data Interpretation",
+  "topic": "Tables",
+  "difficulty": "MEDIUM",
+  "seconds": 90,
+  "text": "The table shows the total number of mangoes sold and the percentage sold to females by four shops. Shop A: total 660, 90% to females; Shop B: total 600, 35% to females; Shop C: total 420, 25% to females; Shop D: total 380, 20% to females. Find the average number of mangoes sold to males by shops A, B and C.",
+  "options": [
+   "257",
+   "303",
+   "267",
+   "771",
+   "560"
+  ],
+  "correctIndex": 0,
+  "explanation": "Males: A 66, B 390, C 315. Their sum is 771, so the average is 771 / 3 = 257.",
+  "source": "generated table, answer recomputed from the numbers"
+ },
+ {
+  "chapter": "Data Interpretation",
+  "topic": "Tables",
+  "difficulty": "HARD",
+  "seconds": 90,
+  "text": "The table shows the total number of mangoes sold and the percentage sold to females by four shops. Shop A: total 660, 90% to females; Shop B: total 600, 35% to females; Shop C: total 420, 25% to females; Shop D: total 380, 20% to females. Shop B sold its mangoes to males at 25% profit and to females at 50% profit. If the cost price of each mango is Rs 80, find the overall profit earned by the shop (in Rs).",
+  "options": [
+   "8400",
+   "19800",
+   "18000",
+   "16200",
+   "7800"
+  ],
+  "correctIndex": 3,
+  "explanation": "Males = 390, females = 210. Profit on males = 390 x 80 x 25% = 7800. Profit on females = 210 x 80 x 50% = 8400. Overall profit = 16200.",
+  "source": "generated table, answer recomputed from the numbers"
+ },
+ {
+  "chapter": "Data Interpretation",
+  "topic": "Tables",
+  "difficulty": "HARD",
+  "seconds": 90,
+  "text": "The table shows the total number of mangoes sold and the percentage sold to females by four shops. Shop A: total 660, 90% to females; Shop B: total 600, 35% to females; Shop C: total 420, 25% to females; Shop D: total 380, 20% to females. The total number of mangoes sold by shop E is 10% more than that of shop B. If shop E sold 20% of its mangoes to females, find the number sold to females by shop E.",
+  "options": [
+   "108",
+   "528",
+   "660",
+   "120",
+   "132"
+  ],
+  "correctIndex": 4,
+  "explanation": "Shop B sold 600. Shop E sold 10% more, which is 660. Females = 20% of 660 = 132.",
+  "source": "generated table, answer recomputed from the numbers"
+ },
+ {
+  "chapter": "Data Interpretation",
+  "topic": "Tables",
+  "difficulty": "MEDIUM",
+  "seconds": 90,
+  "text": "The table shows the total number of mangoes sold and the percentage sold to females by four shops. Shop A: total 840, 30% to females; Shop B: total 340, 85% to females; Shop C: total 800, 80% to females; Shop D: total 600, 55% to females. Find the difference between the total number of mangoes sold to males by shops D and A together and the total number sold to females by shops C and B together.",
+  "options": [
+   "929",
+   "1787",
+   "858",
+   "371",
+   "71"
+  ],
+  "correctIndex": 4,
+  "explanation": "Males: D 270, A 588, total 858. Females: C 640, B 289, total 929. The difference is 71.",
+  "source": "generated table, answer recomputed from the numbers"
+ },
+ {
+  "chapter": "Data Interpretation",
+  "topic": "Tables",
+  "difficulty": "HARD",
+  "seconds": 90,
+  "text": "The table shows the total number of mangoes sold and the percentage sold to females by four shops. Shop A: total 840, 30% to females; Shop B: total 340, 85% to females; Shop C: total 800, 80% to females; Shop D: total 600, 55% to females. The total number of mangoes sold to females by shop C is what percentage more than the total number sold to males by shop C?",
+  "options": [
+   "300%",
+   "75%",
+   "25%",
+   "400%",
+   "312%"
+  ],
+  "correctIndex": 0,
+  "explanation": "Females in shop C = 640. Males in shop C = 160. Percentage more = (640 - 160) / 160 x 100 = 300%.",
+  "source": "generated table, answer recomputed from the numbers"
+ },
+ {
+  "chapter": "Data Interpretation",
+  "topic": "Tables",
+  "difficulty": "MEDIUM",
+  "seconds": 90,
+  "text": "The table shows the total number of mangoes sold and the percentage sold to females by four shops. Shop A: total 840, 30% to females; Shop B: total 340, 85% to females; Shop C: total 800, 80% to females; Shop D: total 600, 55% to females. Find the average number of mangoes sold to males by shops A, B and D.",
+  "options": [
+   "909",
+   "593",
+   "315",
+   "290",
+   "303"
+  ],
+  "correctIndex": 4,
+  "explanation": "Males: A 588, B 51, D 270. Their sum is 909, so the average is 909 / 3 = 303.",
+  "source": "generated table, answer recomputed from the numbers"
+ },
+ {
+  "chapter": "Data Interpretation",
+  "topic": "Tables",
+  "difficulty": "HARD",
+  "seconds": 90,
+  "text": "The table shows the total number of mangoes sold and the percentage sold to females by four shops. Shop A: total 840, 30% to females; Shop B: total 340, 85% to females; Shop C: total 800, 80% to females; Shop D: total 600, 55% to females. Shop C sold its mangoes to males at 50% profit and to females at 25% profit. If the cost price of each mango is Rs 40, find the overall profit earned by the shop (in Rs).",
+  "options": [
+   "14400",
+   "6400",
+   "3200",
+   "12000",
+   "9600"
+  ],
+  "correctIndex": 4,
+  "explanation": "Males = 160, females = 640. Profit on males = 160 x 40 x 50% = 3200. Profit on females = 640 x 40 x 25% = 6400. Overall profit = 9600.",
+  "source": "generated table, answer recomputed from the numbers"
+ },
+ {
+  "chapter": "Data Interpretation",
+  "topic": "Tables",
+  "difficulty": "HARD",
+  "seconds": 90,
+  "text": "The table shows the total number of mangoes sold and the percentage sold to females by four shops. Shop A: total 840, 30% to females; Shop B: total 340, 85% to females; Shop C: total 800, 80% to females; Shop D: total 600, 55% to females. The total number of mangoes sold by shop E is 40% more than that of shop D. If shop E sold 25% of its mangoes to females, find the number sold to females by shop E.",
+  "options": [
+   "210",
+   "630",
+   "150",
+   "90",
+   "840"
+  ],
+  "correctIndex": 0,
+  "explanation": "Shop D sold 600. Shop E sold 40% more, which is 840. Females = 25% of 840 = 210.",
+  "source": "generated table, answer recomputed from the numbers"
+ },
+ {
+  "chapter": "Data Interpretation",
+  "topic": "Tables",
+  "difficulty": "MEDIUM",
+  "seconds": 90,
+  "text": "The table shows the total number of pens sold and the percentage sold to females by four shops. Shop A: total 460, 45% to females; Shop B: total 600, 65% to females; Shop C: total 720, 55% to females; Shop D: total 480, 30% to females. Find the difference between the total number of pens sold to males by shops A and C together and the total number sold to females by shops D and B together.",
+  "options": [
+   "534",
+   "43",
+   "577",
+   "57",
+   "1111"
+  ],
+  "correctIndex": 1,
+  "explanation": "Males: A 253, C 324, total 577. Females: D 144, B 390, total 534. The difference is 43.",
+  "source": "generated table, answer recomputed from the numbers"
+ },
+ {
+  "chapter": "Data Interpretation",
+  "topic": "Tables",
+  "difficulty": "MEDIUM",
+  "seconds": 90,
+  "text": "The table shows the total number of pens sold and the percentage sold to females by four shops. Shop A: total 460, 45% to females; Shop B: total 600, 65% to females; Shop C: total 720, 55% to females; Shop D: total 480, 30% to females. Find the average number of pens sold to males by shops B, C and D.",
+  "options": [
+   "310",
+   "290",
+   "302",
+   "600",
+   "870"
+  ],
+  "correctIndex": 1,
+  "explanation": "Males: B 210, C 324, D 336. Their sum is 870, so the average is 870 / 3 = 290.",
+  "source": "generated table, answer recomputed from the numbers"
+ },
+ {
+  "chapter": "Data Interpretation",
+  "topic": "Tables",
+  "difficulty": "HARD",
+  "seconds": 90,
+  "text": "The table shows the total number of pens sold and the percentage sold to females by four shops. Shop A: total 460, 45% to females; Shop B: total 600, 65% to females; Shop C: total 720, 55% to females; Shop D: total 480, 30% to females. Shop B sold its pens to males at 20% profit and to females at 50% profit. If the cost price of each pen is Rs 60, find the overall profit earned by the shop (in Rs).",
+  "options": [
+   "11700",
+   "2520",
+   "12600",
+   "10980",
+   "14220"
+  ],
+  "correctIndex": 4,
+  "explanation": "Males = 210, females = 390. Profit on males = 210 x 60 x 20% = 2520. Profit on females = 390 x 60 x 50% = 11700. Overall profit = 14220.",
+  "source": "generated table, answer recomputed from the numbers"
+ },
+ {
+  "chapter": "Data Interpretation",
+  "topic": "Tables",
+  "difficulty": "HARD",
+  "seconds": 90,
+  "text": "The table shows the total number of pens sold and the percentage sold to females by four shops. Shop A: total 460, 45% to females; Shop B: total 600, 65% to females; Shop C: total 720, 55% to females; Shop D: total 480, 30% to females. The total number of pens sold by shop E is 25% more than that of shop D. If shop E sold 80% of its pens to females, find the number sold to females by shop E.",
+  "options": [
+   "480",
+   "600",
+   "288",
+   "384",
+   "120"
+  ],
+  "correctIndex": 0,
+  "explanation": "Shop D sold 480. Shop E sold 25% more, which is 600. Females = 80% of 600 = 480.",
+  "source": "generated table, answer recomputed from the numbers"
+ },
+ {
+  "chapter": "Data Interpretation",
+  "topic": "Tables",
+  "difficulty": "MEDIUM",
+  "seconds": 90,
+  "text": "The table shows the total number of pens sold and the percentage sold to females by four shops. Shop A: total 900, 90% to females; Shop B: total 280, 35% to females; Shop C: total 860, 25% to females; Shop D: total 300, 45% to females. Find the difference between the total number of pens sold to males by shops B and D together and the total number sold to females by shops C and A together.",
+  "options": [
+   "1372",
+   "678",
+   "502",
+   "347",
+   "1025"
+  ],
+  "correctIndex": 1,
+  "explanation": "Males: B 182, D 165, total 347. Females: C 215, A 810, total 1025. The difference is 678.",
+  "source": "generated table, answer recomputed from the numbers"
+ },
+ {
+  "chapter": "Data Interpretation",
+  "topic": "Tables",
+  "difficulty": "HARD",
+  "seconds": 90,
+  "text": "The table shows the total number of pens sold and the percentage sold to females by four shops. Shop A: total 900, 90% to females; Shop B: total 280, 35% to females; Shop C: total 860, 25% to females; Shop D: total 300, 45% to females. The total number of pens sold to females by shop A is what percentage more than the total number sold to males by shop A?",
+  "options": [
+   "89%",
+   "900%",
+   "800%",
+   "832%",
+   "11%"
+  ],
+  "correctIndex": 2,
+  "explanation": "Females in shop A = 810. Males in shop A = 90. Percentage more = (810 - 90) / 90 x 100 = 800%.",
+  "source": "generated table, answer recomputed from the numbers"
+ },
+ {
+  "chapter": "Data Interpretation",
+  "topic": "Tables",
+  "difficulty": "MEDIUM",
+  "seconds": 90,
+  "text": "The table shows the total number of pens sold and the percentage sold to females by four shops. Shop A: total 900, 90% to females; Shop B: total 280, 35% to females; Shop C: total 860, 25% to females; Shop D: total 300, 45% to females. Find the average number of pens sold to males by shops A, C and D.",
+  "options": [
+   "387",
+   "687",
+   "300",
+   "900",
+   "312"
+  ],
+  "correctIndex": 2,
+  "explanation": "Males: A 90, C 645, D 165. Their sum is 900, so the average is 900 / 3 = 300.",
+  "source": "generated table, answer recomputed from the numbers"
+ },
+ {
+  "chapter": "Data Interpretation",
+  "topic": "Tables",
+  "difficulty": "HARD",
+  "seconds": 90,
+  "text": "The table shows the total number of pens sold and the percentage sold to females by four shops. Shop A: total 900, 90% to females; Shop B: total 280, 35% to females; Shop C: total 860, 25% to females; Shop D: total 300, 45% to females. Shop A sold its pens to males at 10% profit and to females at 20% profit. If the cost price of each pen is Rs 80, find the overall profit earned by the shop (in Rs).",
+  "options": [
+   "12960",
+   "720",
+   "10800",
+   "7920",
+   "13680"
+  ],
+  "correctIndex": 4,
+  "explanation": "Males = 90, females = 810. Profit on males = 90 x 80 x 10% = 720. Profit on females = 810 x 80 x 20% = 12960. Overall profit = 13680.",
+  "source": "generated table, answer recomputed from the numbers"
+ },
+ {
+  "chapter": "Data Interpretation",
+  "topic": "Tables",
+  "difficulty": "HARD",
+  "seconds": 90,
+  "text": "The table shows the total number of pens sold and the percentage sold to females by four shops. Shop A: total 900, 90% to females; Shop B: total 280, 35% to females; Shop C: total 860, 25% to females; Shop D: total 300, 45% to females. The total number of pens sold by shop E is 40% more than that of shop C. If shop E sold 75% of its pens to females, find the number sold to females by shop E.",
+  "options": [
+   "903",
+   "645",
+   "387",
+   "1204",
+   "301"
+  ],
+  "correctIndex": 0,
+  "explanation": "Shop C sold 860. Shop E sold 40% more, which is 1204. Females = 75% of 1204 = 903.",
+  "source": "generated table, answer recomputed from the numbers"
+ },
+ {
+  "chapter": "Data Interpretation",
+  "topic": "Tables",
+  "difficulty": "MEDIUM",
+  "seconds": 90,
+  "text": "The table shows the total number of mangoes sold and the percentage sold to females by four shops. Shop A: total 740, 75% to females; Shop B: total 340, 55% to females; Shop C: total 380, 50% to females; Shop D: total 280, 70% to females. Find the difference between the total number of mangoes sold to males by shops B and D together and the total number sold to females by shops C and A together.",
+  "options": [
+   "8",
+   "237",
+   "508",
+   "982",
+   "745"
+  ],
+  "correctIndex": 2,
+  "explanation": "Males: B 153, D 84, total 237. Females: C 190, A 555, total 745. The difference is 508.",
+  "source": "generated table, answer recomputed from the numbers"
+ },
+ {
+  "chapter": "Data Interpretation",
+  "topic": "Tables",
+  "difficulty": "HARD",
+  "seconds": 90,
+  "text": "The table shows the total number of mangoes sold and the percentage sold to females by four shops. Shop A: total 740, 75% to females; Shop B: total 340, 55% to females; Shop C: total 380, 50% to females; Shop D: total 280, 70% to females. The total number of mangoes sold to females by shop A is what percentage more than the total number sold to males by shop A?",
+  "options": [
+   "208%",
+   "33%",
+   "300%",
+   "200%",
+   "67%"
+  ],
+  "correctIndex": 3,
+  "explanation": "Females in shop A = 555. Males in shop A = 185. Percentage more = (555 - 185) / 185 x 100 = 200%.",
+  "source": "generated table, answer recomputed from the numbers"
+ },
+ {
+  "chapter": "Data Interpretation",
+  "topic": "Tables",
+  "difficulty": "MEDIUM",
+  "seconds": 90,
+  "text": "The table shows the total number of mangoes sold and the percentage sold to females by four shops. Shop A: total 740, 75% to females; Shop B: total 340, 55% to females; Shop C: total 380, 50% to females; Shop D: total 280, 70% to females. Find the average number of mangoes sold to males by shops A, C and D.",
+  "options": [
+   "159",
+   "153",
+   "467",
+   "314",
+   "459"
+  ],
+  "correctIndex": 1,
+  "explanation": "Males: A 185, C 190, D 84. Their sum is 459, so the average is 459 / 3 = 153.",
+  "source": "generated table, answer recomputed from the numbers"
+ },
+ {
+  "chapter": "Data Interpretation",
+  "topic": "Tables",
+  "difficulty": "HARD",
+  "seconds": 90,
+  "text": "The table shows the total number of mangoes sold and the percentage sold to females by four shops. Shop A: total 740, 75% to females; Shop B: total 340, 55% to females; Shop C: total 380, 50% to females; Shop D: total 280, 70% to females. Shop C sold its mangoes to males at 50% profit and to females at 25% profit. If the cost price of each mango is Rs 80, find the overall profit earned by the shop (in Rs).",
+  "options": [
+   "7600",
+   "3800",
+   "11856",
+   "11400",
+   "10944"
+  ],
+  "correctIndex": 3,
+  "explanation": "Males = 190, females = 190. Profit on males = 190 x 80 x 50% = 7600. Profit on females = 190 x 80 x 25% = 3800. Overall profit = 11400.",
+  "source": "generated table, answer recomputed from the numbers"
+ },
+ {
+  "chapter": "Data Interpretation",
+  "topic": "Tables",
+  "difficulty": "HARD",
+  "seconds": 90,
+  "text": "The table shows the total number of mangoes sold and the percentage sold to females by four shops. Shop A: total 740, 75% to females; Shop B: total 340, 55% to females; Shop C: total 380, 50% to females; Shop D: total 280, 70% to females. The total number of mangoes sold by shop E is 50% more than that of shop D. If shop E sold 50% of its mangoes to females, find the number sold to females by shop E.",
+  "options": [
+   "420",
+   "218",
+   "70",
+   "210",
+   "140"
+  ],
+  "correctIndex": 3,
+  "explanation": "Shop D sold 280. Shop E sold 50% more, which is 420. Females = 50% of 420 = 210.",
+  "source": "generated table, answer recomputed from the numbers"
+ },
+ {
+  "chapter": "Data Interpretation",
+  "topic": "Tables",
+  "difficulty": "MEDIUM",
+  "seconds": 90,
+  "text": "The table shows the total number of tickets sold and the percentage sold to females by four shops. Shop A: total 280, 25% to females; Shop B: total 340, 55% to females; Shop C: total 420, 35% to females; Shop D: total 660, 40% to females. Find the difference between the total number of tickets sold to males by shops B and D together and the total number sold to females by shops C and A together.",
+  "options": [
+   "549",
+   "32",
+   "332",
+   "217",
+   "766"
+  ],
+  "correctIndex": 2,
+  "explanation": "Males: B 153, D 396, total 549. Females: C 147, A 70, total 217. The difference is 332.",
+  "source": "generated table, answer recomputed from the numbers"
+ },
+ {
+  "chapter": "Data Interpretation",
+  "topic": "Tables",
+  "difficulty": "MEDIUM",
+  "seconds": 90,
+  "text": "The table shows the total number of tickets sold and the percentage sold to females by four shops. Shop A: total 280, 25% to females; Shop B: total 340, 55% to females; Shop C: total 420, 35% to females; Shop D: total 660, 40% to females. Find the average number of tickets sold to males by shops A, B and D.",
+  "options": [
+   "253",
+   "263",
+   "174",
+   "427",
+   "759"
+  ],
+  "correctIndex": 0,
+  "explanation": "Males: A 210, B 153, D 396. Their sum is 759, so the average is 759 / 3 = 253.",
+  "source": "generated table, answer recomputed from the numbers"
+ },
+ {
+  "chapter": "Data Interpretation",
+  "topic": "Tables",
+  "difficulty": "HARD",
+  "seconds": 90,
+  "text": "The table shows the total number of tickets sold and the percentage sold to females by four shops. Shop A: total 280, 25% to females; Shop B: total 340, 55% to females; Shop C: total 420, 35% to females; Shop D: total 660, 40% to females. Shop D sold its tickets to males at 25% profit and to females at 10% profit. If the cost price of each ticket is Rs 60, find the overall profit earned by the shop (in Rs).",
+  "options": [
+   "7524",
+   "6336",
+   "5940",
+   "1584",
+   "6930"
+  ],
+  "correctIndex": 0,
+  "explanation": "Males = 396, females = 264. Profit on males = 396 x 60 x 25% = 5940. Profit on females = 264 x 60 x 10% = 1584. Overall profit = 7524.",
+  "source": "generated table, answer recomputed from the numbers"
+ },
+ {
+  "chapter": "Data Interpretation",
+  "topic": "Tables",
+  "difficulty": "HARD",
+  "seconds": 90,
+  "text": "The table shows the total number of tickets sold and the percentage sold to females by four shops. Shop A: total 280, 25% to females; Shop B: total 340, 55% to females; Shop C: total 420, 35% to females; Shop D: total 660, 40% to females. The total number of tickets sold by shop E is 50% more than that of shop A. If shop E sold 75% of its tickets to females, find the number sold to females by shop E.",
+  "options": [
+   "328",
+   "420",
+   "105",
+   "210",
+   "315"
+  ],
+  "correctIndex": 4,
+  "explanation": "Shop A sold 280. Shop E sold 50% more, which is 420. Females = 75% of 420 = 315.",
+  "source": "generated table, answer recomputed from the numbers"
+ }
+]

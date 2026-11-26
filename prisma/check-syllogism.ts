@@ -17,6 +17,9 @@ const q26 = [S('all', 0, 1), S('some', 1, 2), S('all', 2, 3)];
 check('exam set 26: "some completed are not difficult" is not certain, so the printed key (both) cannot be derived',
   verdictS(4, q26, { kind: 'somenot', a: 0, b: 2 }, { kind: 'poss-all', a: 3, b: 1 }) === 1);
 
+check('terms are never empty: all A are B, no B are C, so all A being C is not a possibility',
+  verdictS(3, [S('all', 0, 1), S('no', 1, 2)], { kind: 'poss-all', a: 0, b: 2 }, { kind: 'no', a: 0, b: 2 }) === 1);
+// (terms are never empty)
 // Contradictories, and pairs that are not
 const base = [S('all', 0, 1)];
 check('some and no on one pair are contradictories', verdictS(3, [S('some', 1, 2)], { kind: 'some', a: 0, b: 2 }, { kind: 'no', a: 0, b: 2 }) === 2);
@@ -39,7 +42,7 @@ for (let i = 0; i < 8 && agree; i++) {
   const lim = 1 << (1 << T);
   for (let m = 0; m < lim && agree; m++) {
     const w: number[] = []; for (let r = 0; r < (1 << T); r++) if ((m >> r) & 1) w.push(r);
-    const slow = stmts.every((s) => semantic(s.kind, s.a, s.b, w));
+    const slow = stmts.every((s) => semantic(s.kind, s.a, s.b, w)) && Array.from({ length: T }, (_, x) => x).every((x) => w.some((r) => inT(r, x)));
     if (slow !== fast.has(m)) agree = false;
   }
 }
