@@ -16,7 +16,7 @@ export function coerceDefinition(raw: unknown): { error: string } | { def: Templ
   // A fixed-text question: no variables or formulas.
   if (r.fixed && typeof r.fixed === 'object' && !Array.isArray(r.fixed)) {
     const f = r.fixed as Record<string, unknown>;
-    const fixed = { text: str(f.text), options: list(f.options).map(str), correctIndex: Number(f.correctIndex), explanation: str(f.explanation), ...(str(f.source) ? { source: str(f.source) } : {}) };
+    const fixed = { text: str(f.text), options: list(f.options).map(str), correctIndex: Number(f.correctIndex), explanation: str(f.explanation), ...(str(f.source) ? { source: str(f.source) } : {}), ...(f.ordered === true ? { ordered: true } : {}) };
     return { def: { fixed } as unknown as TemplateDef };
   }
 

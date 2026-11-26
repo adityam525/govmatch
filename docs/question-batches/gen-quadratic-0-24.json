@@ -1,0 +1,452 @@
+[
+ {
+  "chapter": "Algebra",
+  "topic": "Quadratic equations",
+  "difficulty": "MEDIUM",
+  "seconds": 75,
+  "text": "I. x² - 5x - 6 = 0  II. y² + 20y + 100 = 0. Solve both equations and select the correct relation between x and y.",
+  "options": [
+   "x > y",
+   "x ≥ y",
+   "x < y",
+   "x ≤ y",
+   "x = y or no relation can be established"
+  ],
+  "correctIndex": 0,
+  "explanation": "I. x² - 5x - 6 = 0 gives (x + 1)(x - 6) = 0, so x = -1 or 6. II. y² + 20y + 100 = 0 gives (y + 10)(y + 10) = 0, so y = -10 (both roots). Every x is bigger than every y (smallest x is -1, largest y is -10), so x > y. This is stronger than x ≥ y, so x > y is the answer.",
+  "ordered": true,
+  "source": "generated, answer checked by solver"
+ },
+ {
+  "chapter": "Algebra",
+  "topic": "Quadratic equations",
+  "difficulty": "HARD",
+  "seconds": 75,
+  "text": "I. x² - 6x + 9 = 0  II. 3y² - 2y - 21 = 0. Solve both equations and select the correct relation between x and y.",
+  "options": [
+   "x > y",
+   "x ≥ y",
+   "x < y",
+   "x ≤ y",
+   "x = y or no relation can be established"
+  ],
+  "correctIndex": 1,
+  "explanation": "I. x² - 6x + 9 = 0 gives (x - 3)(x - 3) = 0, so x = 3 (both roots). II. 3y² - 2y - 21 = 0 gives (y - 3)(3y + 7) = 0, so y = 3 or -7/3. The smallest x (3) equals the largest y (3) and no x is smaller, so x ≥ y but not x > y.",
+  "ordered": true,
+  "source": "generated, answer checked by solver"
+ },
+ {
+  "chapter": "Algebra",
+  "topic": "Quadratic equations",
+  "difficulty": "HARD",
+  "seconds": 75,
+  "text": "I. x² + 15x + 44 = 0  II. 4y² - 8y - 45 = 0. Solve both equations and select the correct relation between x and y.",
+  "options": [
+   "x > y",
+   "x ≥ y",
+   "x < y",
+   "x ≤ y",
+   "x = y or no relation can be established"
+  ],
+  "correctIndex": 2,
+  "explanation": "I. x² + 15x + 44 = 0 gives (x + 11)(x + 4) = 0, so x = -11 or -4. II. 4y² - 8y - 45 = 0 gives (2y - 9)(2y + 5) = 0, so y = 9/2 or -5/2. Every x is smaller than every y (largest x is -4, smallest y is -5/2), so x < y.",
+  "ordered": true,
+  "source": "generated, answer checked by solver"
+ },
+ {
+  "chapter": "Algebra",
+  "topic": "Quadratic equations",
+  "difficulty": "MEDIUM",
+  "seconds": 75,
+  "text": "I. x² - 2x + 1 = 0  II. y² - 5y + 4 = 0. Solve both equations and select the correct relation between x and y.",
+  "options": [
+   "x > y",
+   "x ≥ y",
+   "x < y",
+   "x ≤ y",
+   "x = y or no relation can be established"
+  ],
+  "correctIndex": 3,
+  "explanation": "I. x² - 2x + 1 = 0 gives (x - 1)(x - 1) = 0, so x = 1 (both roots). II. y² - 5y + 4 = 0 gives (y - 1)(y - 4) = 0, so y = 1 or 4. The largest x (1) equals the smallest y (1) and no x is bigger, so x ≤ y but not x < y.",
+  "ordered": true,
+  "source": "generated, answer checked by solver"
+ },
+ {
+  "chapter": "Algebra",
+  "topic": "Quadratic equations",
+  "difficulty": "HARD",
+  "seconds": 75,
+  "text": "I. 2x² + 17x - 9 = 0  II. y² - 8y - 33 = 0. Solve both equations and select the correct relation between x and y.",
+  "options": [
+   "x > y",
+   "x ≥ y",
+   "x < y",
+   "x ≤ y",
+   "x = y or no relation can be established"
+  ],
+  "correctIndex": 4,
+  "explanation": "I. 2x² + 17x - 9 = 0 gives (2x - 1)(x + 9) = 0, so x = 1/2 or -9. II. y² - 8y - 33 = 0 gives (y + 3)(y - 11) = 0, so y = -3 or 11. The values overlap (x runs from -9 to 1/2, y from -3 to 11), so no single relation always holds: x = y or no relation can be established.",
+  "ordered": true,
+  "source": "generated, answer checked by solver"
+ },
+ {
+  "chapter": "Algebra",
+  "topic": "Quadratic equations",
+  "difficulty": "HARD",
+  "seconds": 75,
+  "text": "I. x² - 14x + 48 = 0  II. 3y² - 2y - 40 = 0. Solve both equations and select the correct relation between x and y.",
+  "options": [
+   "x > y",
+   "x ≥ y",
+   "x < y",
+   "x ≤ y",
+   "x = y or no relation can be established"
+  ],
+  "correctIndex": 0,
+  "explanation": "I. x² - 14x + 48 = 0 gives (x - 8)(x - 6) = 0, so x = 8 or 6. II. 3y² - 2y - 40 = 0 gives (y - 4)(3y + 10) = 0, so y = 4 or -10/3. Every x is bigger than every y (smallest x is 6, largest y is 4), so x > y. This is stronger than x ≥ y, so x > y is the answer.",
+  "ordered": true,
+  "source": "generated, answer checked by solver"
+ },
+ {
+  "chapter": "Algebra",
+  "topic": "Quadratic equations",
+  "difficulty": "MEDIUM",
+  "seconds": 75,
+  "text": "I. x² - 16x + 64 = 0  II. y² - 4y - 32 = 0. Solve both equations and select the correct relation between x and y.",
+  "options": [
+   "x > y",
+   "x ≥ y",
+   "x < y",
+   "x ≤ y",
+   "x = y or no relation can be established"
+  ],
+  "correctIndex": 1,
+  "explanation": "I. x² - 16x + 64 = 0 gives (x - 8)(x - 8) = 0, so x = 8 (both roots). II. y² - 4y - 32 = 0 gives (y - 8)(y + 4) = 0, so y = 8 or -4. The smallest x (8) equals the largest y (8) and no x is smaller, so x ≥ y but not x > y.",
+  "ordered": true,
+  "source": "generated, answer checked by solver"
+ },
+ {
+  "chapter": "Algebra",
+  "topic": "Quadratic equations",
+  "difficulty": "HARD",
+  "seconds": 75,
+  "text": "I. 3x² - 2x - 5 = 0  II. y² - 10y + 25 = 0. Solve both equations and select the correct relation between x and y.",
+  "options": [
+   "x > y",
+   "x ≥ y",
+   "x < y",
+   "x ≤ y",
+   "x = y or no relation can be established"
+  ],
+  "correctIndex": 2,
+  "explanation": "I. 3x² - 2x - 5 = 0 gives (x + 1)(3x - 5) = 0, so x = -1 or 5/3. II. y² - 10y + 25 = 0 gives (y - 5)(y - 5) = 0, so y = 5 (both roots). Every x is smaller than every y (largest x is 5/3, smallest y is 5), so x < y.",
+  "ordered": true,
+  "source": "generated, answer checked by solver"
+ },
+ {
+  "chapter": "Algebra",
+  "topic": "Quadratic equations",
+  "difficulty": "MEDIUM",
+  "seconds": 75,
+  "text": "I. x² - 22x + 121 = 0  II. y² - 23y + 132 = 0. Solve both equations and select the correct relation between x and y.",
+  "options": [
+   "x > y",
+   "x ≥ y",
+   "x < y",
+   "x ≤ y",
+   "x = y or no relation can be established"
+  ],
+  "correctIndex": 3,
+  "explanation": "I. x² - 22x + 121 = 0 gives (x - 11)(x - 11) = 0, so x = 11 (both roots). II. y² - 23y + 132 = 0 gives (y - 11)(y - 12) = 0, so y = 11 or 12. The largest x (11) equals the smallest y (11) and no x is bigger, so x ≤ y but not x < y.",
+  "ordered": true,
+  "source": "generated, answer checked by solver"
+ },
+ {
+  "chapter": "Algebra",
+  "topic": "Quadratic equations",
+  "difficulty": "HARD",
+  "seconds": 75,
+  "text": "I. 2x² + 9x + 7 = 0  II. 2y² + 9y + 10 = 0. Solve both equations and select the correct relation between x and y.",
+  "options": [
+   "x > y",
+   "x ≥ y",
+   "x < y",
+   "x ≤ y",
+   "x = y or no relation can be established"
+  ],
+  "correctIndex": 4,
+  "explanation": "I. 2x² + 9x + 7 = 0 gives (2x + 7)(x + 1) = 0, so x = -7/2 or -1. II. 2y² + 9y + 10 = 0 gives (2y + 5)(y + 2) = 0, so y = -5/2 or -2. The values overlap (x runs from -7/2 to -1, y from -5/2 to -2), so no single relation always holds: x = y or no relation can be established.",
+  "ordered": true,
+  "source": "generated, answer checked by solver"
+ },
+ {
+  "chapter": "Algebra",
+  "topic": "Quadratic equations",
+  "difficulty": "HARD",
+  "seconds": 75,
+  "text": "I. x² - 22x + 121 = 0  II. 3y² + 23y + 30 = 0. Solve both equations and select the correct relation between x and y.",
+  "options": [
+   "x > y",
+   "x ≥ y",
+   "x < y",
+   "x ≤ y",
+   "x = y or no relation can be established"
+  ],
+  "correctIndex": 0,
+  "explanation": "I. x² - 22x + 121 = 0 gives (x - 11)(x - 11) = 0, so x = 11 (both roots). II. 3y² + 23y + 30 = 0 gives (y + 6)(3y + 5) = 0, so y = -6 or -5/3. Every x is bigger than every y (smallest x is 11, largest y is -5/3), so x > y. This is stronger than x ≥ y, so x > y is the answer.",
+  "ordered": true,
+  "source": "generated, answer checked by solver"
+ },
+ {
+  "chapter": "Algebra",
+  "topic": "Quadratic equations",
+  "difficulty": "MEDIUM",
+  "seconds": 75,
+  "text": "I. x² - 17x + 66 = 0  II. y² - 4y - 12 = 0. Solve both equations and select the correct relation between x and y.",
+  "options": [
+   "x > y",
+   "x ≥ y",
+   "x < y",
+   "x ≤ y",
+   "x = y or no relation can be established"
+  ],
+  "correctIndex": 1,
+  "explanation": "I. x² - 17x + 66 = 0 gives (x - 6)(x - 11) = 0, so x = 6 or 11. II. y² - 4y - 12 = 0 gives (y - 6)(y + 2) = 0, so y = 6 or -2. The smallest x (6) equals the largest y (6) and no x is smaller, so x ≥ y but not x > y.",
+  "ordered": true,
+  "source": "generated, answer checked by solver"
+ },
+ {
+  "chapter": "Algebra",
+  "topic": "Quadratic equations",
+  "difficulty": "MEDIUM",
+  "seconds": 75,
+  "text": "I. x² + 14x + 40 = 0  II. y² - 13y + 12 = 0. Solve both equations and select the correct relation between x and y.",
+  "options": [
+   "x > y",
+   "x ≥ y",
+   "x < y",
+   "x ≤ y",
+   "x = y or no relation can be established"
+  ],
+  "correctIndex": 2,
+  "explanation": "I. x² + 14x + 40 = 0 gives (x + 10)(x + 4) = 0, so x = -10 or -4. II. y² - 13y + 12 = 0 gives (y - 12)(y - 1) = 0, so y = 12 or 1. Every x is smaller than every y (largest x is -4, smallest y is 1), so x < y.",
+  "ordered": true,
+  "source": "generated, answer checked by solver"
+ },
+ {
+  "chapter": "Algebra",
+  "topic": "Quadratic equations",
+  "difficulty": "HARD",
+  "seconds": 75,
+  "text": "I. 3x² + 19x + 30 = 0  II. y² - 9y - 36 = 0. Solve both equations and select the correct relation between x and y.",
+  "options": [
+   "x > y",
+   "x ≥ y",
+   "x < y",
+   "x ≤ y",
+   "x = y or no relation can be established"
+  ],
+  "correctIndex": 3,
+  "explanation": "I. 3x² + 19x + 30 = 0 gives (x + 3)(3x + 10) = 0, so x = -3 or -10/3. II. y² - 9y - 36 = 0 gives (y + 3)(y - 12) = 0, so y = -3 or 12. The largest x (-3) equals the smallest y (-3) and no x is bigger, so x ≤ y but not x < y.",
+  "ordered": true,
+  "source": "generated, answer checked by solver"
+ },
+ {
+  "chapter": "Algebra",
+  "topic": "Quadratic equations",
+  "difficulty": "HARD",
+  "seconds": 75,
+  "text": "I. x² - 4x + 4 = 0  II. 2y² - 23y + 11 = 0. Solve both equations and select the correct relation between x and y.",
+  "options": [
+   "x > y",
+   "x ≥ y",
+   "x < y",
+   "x ≤ y",
+   "x = y or no relation can be established"
+  ],
+  "correctIndex": 4,
+  "explanation": "I. x² - 4x + 4 = 0 gives (x - 2)(x - 2) = 0, so x = 2 (both roots). II. 2y² - 23y + 11 = 0 gives (y - 11)(2y - 1) = 0, so y = 11 or 1/2. The values overlap (x runs from 2 to 2, y from 1/2 to 11), so no single relation always holds: x = y or no relation can be established.",
+  "ordered": true,
+  "source": "generated, answer checked by solver"
+ },
+ {
+  "chapter": "Algebra",
+  "topic": "Quadratic equations",
+  "difficulty": "MEDIUM",
+  "seconds": 75,
+  "text": "I. x² - 16x + 63 = 0  II. y² + 14y + 48 = 0. Solve both equations and select the correct relation between x and y.",
+  "options": [
+   "x > y",
+   "x ≥ y",
+   "x < y",
+   "x ≤ y",
+   "x = y or no relation can be established"
+  ],
+  "correctIndex": 0,
+  "explanation": "I. x² - 16x + 63 = 0 gives (x - 9)(x - 7) = 0, so x = 9 or 7. II. y² + 14y + 48 = 0 gives (y + 8)(y + 6) = 0, so y = -8 or -6. Every x is bigger than every y (smallest x is 7, largest y is -6), so x > y. This is stronger than x ≥ y, so x > y is the answer.",
+  "ordered": true,
+  "source": "generated, answer checked by solver"
+ },
+ {
+  "chapter": "Algebra",
+  "topic": "Quadratic equations",
+  "difficulty": "MEDIUM",
+  "seconds": 75,
+  "text": "I. x² - 14x + 48 = 0  II. y² + 6y - 72 = 0. Solve both equations and select the correct relation between x and y.",
+  "options": [
+   "x > y",
+   "x ≥ y",
+   "x < y",
+   "x ≤ y",
+   "x = y or no relation can be established"
+  ],
+  "correctIndex": 1,
+  "explanation": "I. x² - 14x + 48 = 0 gives (x - 8)(x - 6) = 0, so x = 8 or 6. II. y² + 6y - 72 = 0 gives (y - 6)(y + 12) = 0, so y = 6 or -12. The smallest x (6) equals the largest y (6) and no x is smaller, so x ≥ y but not x > y.",
+  "ordered": true,
+  "source": "generated, answer checked by solver"
+ },
+ {
+  "chapter": "Algebra",
+  "topic": "Quadratic equations",
+  "difficulty": "HARD",
+  "seconds": 75,
+  "text": "I. 4x² + 8x - 5 = 0  II. 3y² - 41y + 60 = 0. Solve both equations and select the correct relation between x and y.",
+  "options": [
+   "x > y",
+   "x ≥ y",
+   "x < y",
+   "x ≤ y",
+   "x = y or no relation can be established"
+  ],
+  "correctIndex": 2,
+  "explanation": "I. 4x² + 8x - 5 = 0 gives (2x + 5)(2x - 1) = 0, so x = -5/2 or 1/2. II. 3y² - 41y + 60 = 0 gives (3y - 5)(y - 12) = 0, so y = 5/3 or 12. Every x is smaller than every y (largest x is 1/2, smallest y is 5/3), so x < y.",
+  "ordered": true,
+  "source": "generated, answer checked by solver"
+ },
+ {
+  "chapter": "Algebra",
+  "topic": "Quadratic equations",
+  "difficulty": "HARD",
+  "seconds": 75,
+  "text": "I. 3x² - 2x - 21 = 0  II. y² - 15y + 36 = 0. Solve both equations and select the correct relation between x and y.",
+  "options": [
+   "x > y",
+   "x ≥ y",
+   "x < y",
+   "x ≤ y",
+   "x = y or no relation can be established"
+  ],
+  "correctIndex": 3,
+  "explanation": "I. 3x² - 2x - 21 = 0 gives (3x + 7)(x - 3) = 0, so x = -7/3 or 3. II. y² - 15y + 36 = 0 gives (y - 3)(y - 12) = 0, so y = 3 or 12. The largest x (3) equals the smallest y (3) and no x is bigger, so x ≤ y but not x < y.",
+  "ordered": true,
+  "source": "generated, answer checked by solver"
+ },
+ {
+  "chapter": "Algebra",
+  "topic": "Quadratic equations",
+  "difficulty": "HARD",
+  "seconds": 75,
+  "text": "I. 3x² - 17x - 28 = 0  II. 4y² - 81 = 0. Solve both equations and select the correct relation between x and y.",
+  "options": [
+   "x > y",
+   "x ≥ y",
+   "x < y",
+   "x ≤ y",
+   "x = y or no relation can be established"
+  ],
+  "correctIndex": 4,
+  "explanation": "I. 3x² - 17x - 28 = 0 gives (x - 7)(3x + 4) = 0, so x = 7 or -4/3. II. 4y² - 81 = 0 gives (2y + 9)(2y - 9) = 0, so y = -9/2 or 9/2. The values overlap (x runs from -4/3 to 7, y from -9/2 to 9/2), so no single relation always holds: x = y or no relation can be established.",
+  "ordered": true,
+  "source": "generated, answer checked by solver"
+ },
+ {
+  "chapter": "Algebra",
+  "topic": "Quadratic equations",
+  "difficulty": "HARD",
+  "seconds": 75,
+  "text": "I. 3x² - 23x + 14 = 0  II. y² + 16y + 63 = 0. Solve both equations and select the correct relation between x and y.",
+  "options": [
+   "x > y",
+   "x ≥ y",
+   "x < y",
+   "x ≤ y",
+   "x = y or no relation can be established"
+  ],
+  "correctIndex": 0,
+  "explanation": "I. 3x² - 23x + 14 = 0 gives (x - 7)(3x - 2) = 0, so x = 7 or 2/3. II. y² + 16y + 63 = 0 gives (y + 7)(y + 9) = 0, so y = -7 or -9. Every x is bigger than every y (smallest x is 2/3, largest y is -7), so x > y. This is stronger than x ≥ y, so x > y is the answer.",
+  "ordered": true,
+  "source": "generated, answer checked by solver"
+ },
+ {
+  "chapter": "Algebra",
+  "topic": "Quadratic equations",
+  "difficulty": "MEDIUM",
+  "seconds": 75,
+  "text": "I. x² + 17x + 72 = 0  II. y² + 21y + 108 = 0. Solve both equations and select the correct relation between x and y.",
+  "options": [
+   "x > y",
+   "x ≥ y",
+   "x < y",
+   "x ≤ y",
+   "x = y or no relation can be established"
+  ],
+  "correctIndex": 1,
+  "explanation": "I. x² + 17x + 72 = 0 gives (x + 9)(x + 8) = 0, so x = -9 or -8. II. y² + 21y + 108 = 0 gives (y + 9)(y + 12) = 0, so y = -9 or -12. The smallest x (-9) equals the largest y (-9) and no x is smaller, so x ≥ y but not x > y.",
+  "ordered": true,
+  "source": "generated, answer checked by solver"
+ },
+ {
+  "chapter": "Algebra",
+  "topic": "Quadratic equations",
+  "difficulty": "HARD",
+  "seconds": 75,
+  "text": "I. x² + 6x + 9 = 0  II. 9y² - 18y - 16 = 0. Solve both equations and select the correct relation between x and y.",
+  "options": [
+   "x > y",
+   "x ≥ y",
+   "x < y",
+   "x ≤ y",
+   "x = y or no relation can be established"
+  ],
+  "correctIndex": 2,
+  "explanation": "I. x² + 6x + 9 = 0 gives (x + 3)(x + 3) = 0, so x = -3 (both roots). II. 9y² - 18y - 16 = 0 gives (3y + 2)(3y - 8) = 0, so y = -2/3 or 8/3. Every x is smaller than every y (largest x is -3, smallest y is -2/3), so x < y.",
+  "ordered": true,
+  "source": "generated, answer checked by solver"
+ },
+ {
+  "chapter": "Algebra",
+  "topic": "Quadratic equations",
+  "difficulty": "MEDIUM",
+  "seconds": 75,
+  "text": "I. x² + 19x + 84 = 0  II. y² - 3y - 70 = 0. Solve both equations and select the correct relation between x and y.",
+  "options": [
+   "x > y",
+   "x ≥ y",
+   "x < y",
+   "x ≤ y",
+   "x = y or no relation can be established"
+  ],
+  "correctIndex": 3,
+  "explanation": "I. x² + 19x + 84 = 0 gives (x + 7)(x + 12) = 0, so x = -7 or -12. II. y² - 3y - 70 = 0 gives (y + 7)(y - 10) = 0, so y = -7 or 10. The largest x (-7) equals the smallest y (-7) and no x is bigger, so x ≤ y but not x < y.",
+  "ordered": true,
+  "source": "generated, answer checked by solver"
+ },
+ {
+  "chapter": "Algebra",
+  "topic": "Quadratic equations",
+  "difficulty": "HARD",
+  "seconds": 75,
+  "text": "I. x² + 2x - 48 = 0  II. 2y² + 27y + 55 = 0. Solve both equations and select the correct relation between x and y.",
+  "options": [
+   "x > y",
+   "x ≥ y",
+   "x < y",
+   "x ≤ y",
+   "x = y or no relation can be established"
+  ],
+  "correctIndex": 4,
+  "explanation": "I. x² + 2x - 48 = 0 gives (x - 6)(x + 8) = 0, so x = 6 or -8. II. 2y² + 27y + 55 = 0 gives (2y + 5)(y + 11) = 0, so y = -5/2 or -11. The values overlap (x runs from -8 to 6, y from -11 to -5/2), so no single relation always holds: x = y or no relation can be established.",
+  "ordered": true,
+  "source": "generated, answer checked by solver"
+ }
+]

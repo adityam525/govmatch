@@ -28,7 +28,7 @@ async function main() {
     if (await prisma.qbTemplate.findFirst({ where: { slug: { in: [slug, oldSlug] } }, select: { id: true } })) { dup++; continue; }
     ok++;
     if (apply) {
-      const q = shuffleFixed({ text: it.text.trim(), options: it.options.map((o) => o.trim()), correctIndex: it.correctIndex, explanation: it.explanation.trim(), source: it.source });
+      const q = shuffleFixed({ text: it.text.trim(), options: it.options.map((o) => o.trim()), correctIndex: it.correctIndex, explanation: it.explanation.trim(), source: it.source, ...(it.ordered === true ? { ordered: true } : {}) });
       await prisma.qbTemplate.create({ data: { slug, title: it.text.trim().slice(0, 80), topicId: topic!.id, difficulty: it.difficulty ?? 'MEDIUM', expectedSeconds: it.seconds ?? 40, definition: { fixed: q } as unknown as Prisma.InputJsonValue, published: false } });
     }
   }

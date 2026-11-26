@@ -1,0 +1,452 @@
+[
+ {
+  "chapter": "Mathematical Reasoning",
+  "topic": "Inequalities",
+  "difficulty": "MEDIUM",
+  "seconds": 75,
+  "text": "Statements: Y ≥ I > P = S < Q; Z > J ≥ S > V. Conclusions: I. V ≤ Q  II. Y < Z. Study the conclusions based on the statements and select the appropriate answer.",
+  "options": [
+   "If only conclusion I is true",
+   "If only conclusion II is true",
+   "If either conclusion I or II is true",
+   "If neither conclusion I nor II is true",
+   "If both conclusions I and II are true"
+  ],
+  "correctIndex": 0,
+  "explanation": "Conclusion I (V ≤ Q): Q > S > V, so Q > V. It is true. Conclusion II (Y < Z): the statements do not link these two letters, so nothing can be said. It is not certain.",
+  "ordered": true,
+  "source": "generated, answer checked by solver"
+ },
+ {
+  "chapter": "Mathematical Reasoning",
+  "topic": "Inequalities",
+  "difficulty": "MEDIUM",
+  "seconds": 75,
+  "text": "Statements: C ≥ U > L > M; H > V ≥ U = T > I. Conclusions: I. H ≤ U  II. M < C. Study the conclusions based on the statements and select the appropriate answer.",
+  "options": [
+   "If only conclusion I is true",
+   "If only conclusion II is true",
+   "If either conclusion I or II is true",
+   "If neither conclusion I nor II is true",
+   "If both conclusions I and II are true"
+  ],
+  "correctIndex": 1,
+  "explanation": "Conclusion I (H ≤ U): H > V ≥ U, so H > U. It is false. Conclusion II (M < C): C ≥ U > L > M, so C > M. It is true.",
+  "ordered": true,
+  "source": "generated, answer checked by solver"
+ },
+ {
+  "chapter": "Mathematical Reasoning",
+  "topic": "Inequalities",
+  "difficulty": "MEDIUM",
+  "seconds": 75,
+  "text": "Statements: Z ≥ S > R ≥ L; Z > N < B ≤ D < I. Conclusions: I. D > S  II. D ≤ S. Study the conclusions based on the statements and select the appropriate answer.",
+  "options": [
+   "If only conclusion I is true",
+   "If only conclusion II is true",
+   "If either conclusion I or II is true",
+   "If neither conclusion I nor II is true",
+   "If both conclusions I and II are true"
+  ],
+  "correctIndex": 2,
+  "explanation": "Conclusion I (D > S): the statements do not link these two letters, so nothing can be said. It is not certain. Conclusion II (D ≤ S): the statements do not link these two letters, so nothing can be said. It is not certain. Neither is certain, but they are exact opposites, so one of them must be true: either I or II is true.",
+  "ordered": true,
+  "source": "generated, answer checked by solver"
+ },
+ {
+  "chapter": "Mathematical Reasoning",
+  "topic": "Inequalities",
+  "difficulty": "MEDIUM",
+  "seconds": 75,
+  "text": "Statements: X > W < R < T; A > C ≤ I < T. Conclusions: I. C ≥ T  II. X ≤ C. Study the conclusions based on the statements and select the appropriate answer.",
+  "options": [
+   "If only conclusion I is true",
+   "If only conclusion II is true",
+   "If either conclusion I or II is true",
+   "If neither conclusion I nor II is true",
+   "If both conclusions I and II are true"
+  ],
+  "correctIndex": 3,
+  "explanation": "Conclusion I (C ≥ T): T > I ≥ C, so T > C. It is false. Conclusion II (X ≤ C): the statements do not link these two letters, so nothing can be said. It is not certain.",
+  "ordered": true,
+  "source": "generated, answer checked by solver"
+ },
+ {
+  "chapter": "Mathematical Reasoning",
+  "topic": "Inequalities",
+  "difficulty": "MEDIUM",
+  "seconds": 75,
+  "text": "Statements: Q = D = X > F; X > F > E = K. Conclusions: I. E ≤ Q  II. Q ≥ K. Study the conclusions based on the statements and select the appropriate answer.",
+  "options": [
+   "If only conclusion I is true",
+   "If only conclusion II is true",
+   "If either conclusion I or II is true",
+   "If neither conclusion I nor II is true",
+   "If both conclusions I and II are true"
+  ],
+  "correctIndex": 4,
+  "explanation": "Conclusion I (E ≤ Q): Q = D = X > F > E, so Q > E. It is true. Conclusion II (Q ≥ K): Q = D = X > F > E = K, so Q > K. It is true.",
+  "ordered": true,
+  "source": "generated, answer checked by solver"
+ },
+ {
+  "chapter": "Mathematical Reasoning",
+  "topic": "Inequalities",
+  "difficulty": "MEDIUM",
+  "seconds": 75,
+  "text": "Statements: W > J > E < N; T > N = O ≥ S. Conclusions: I. W ≥ E  II. T < O. Study the conclusions based on the statements and select the appropriate answer.",
+  "options": [
+   "If only conclusion I is true",
+   "If only conclusion II is true",
+   "If either conclusion I or II is true",
+   "If neither conclusion I nor II is true",
+   "If both conclusions I and II are true"
+  ],
+  "correctIndex": 0,
+  "explanation": "Conclusion I (W ≥ E): W > J > E, so W > E. It is true. Conclusion II (T < O): T > N = O, so T > O. It is false.",
+  "ordered": true,
+  "source": "generated, answer checked by solver"
+ },
+ {
+  "chapter": "Mathematical Reasoning",
+  "topic": "Inequalities",
+  "difficulty": "MEDIUM",
+  "seconds": 75,
+  "text": "Statements: G > C = V < E ≤ W; W > P ≤ D ≤ E < U. Conclusions: I. D ≤ C  II. C < W. Study the conclusions based on the statements and select the appropriate answer.",
+  "options": [
+   "If only conclusion I is true",
+   "If only conclusion II is true",
+   "If either conclusion I or II is true",
+   "If neither conclusion I nor II is true",
+   "If both conclusions I and II are true"
+  ],
+  "correctIndex": 1,
+  "explanation": "Conclusion I (D ≤ C): the statements do not link these two letters, so nothing can be said. It is not certain. Conclusion II (C < W): W ≥ E > V = C, so W > C. It is true.",
+  "ordered": true,
+  "source": "generated, answer checked by solver"
+ },
+ {
+  "chapter": "Mathematical Reasoning",
+  "topic": "Inequalities",
+  "difficulty": "MEDIUM",
+  "seconds": 75,
+  "text": "Statements: K ≥ F ≥ H < G < U; W ≥ G ≥ Z > O. Conclusions: I. Z ≤ F  II. Z > F. Study the conclusions based on the statements and select the appropriate answer.",
+  "options": [
+   "If only conclusion I is true",
+   "If only conclusion II is true",
+   "If either conclusion I or II is true",
+   "If neither conclusion I nor II is true",
+   "If both conclusions I and II are true"
+  ],
+  "correctIndex": 2,
+  "explanation": "Conclusion I (Z ≤ F): the statements do not link these two letters, so nothing can be said. It is not certain. Conclusion II (Z > F): the statements do not link these two letters, so nothing can be said. It is not certain. Neither is certain, but they are exact opposites, so one of them must be true: either I or II is true.",
+  "ordered": true,
+  "source": "generated, answer checked by solver"
+ },
+ {
+  "chapter": "Mathematical Reasoning",
+  "topic": "Inequalities",
+  "difficulty": "MEDIUM",
+  "seconds": 75,
+  "text": "Statements: R > D > V ≥ I ≥ W; R = X > P > I > E. Conclusions: I. D ≤ I  II. E ≥ V. Study the conclusions based on the statements and select the appropriate answer.",
+  "options": [
+   "If only conclusion I is true",
+   "If only conclusion II is true",
+   "If either conclusion I or II is true",
+   "If neither conclusion I nor II is true",
+   "If both conclusions I and II are true"
+  ],
+  "correctIndex": 3,
+  "explanation": "Conclusion I (D ≤ I): D > V ≥ I, so D > I. It is false. Conclusion II (E ≥ V): V ≥ I > E, so V > E. It is false.",
+  "ordered": true,
+  "source": "generated, answer checked by solver"
+ },
+ {
+  "chapter": "Mathematical Reasoning",
+  "topic": "Inequalities",
+  "difficulty": "MEDIUM",
+  "seconds": 75,
+  "text": "Statements: Y > B ≥ J < D ≤ K; O = A ≥ D ≥ Z. Conclusions: I. J < K  II. J < A. Study the conclusions based on the statements and select the appropriate answer.",
+  "options": [
+   "If only conclusion I is true",
+   "If only conclusion II is true",
+   "If either conclusion I or II is true",
+   "If neither conclusion I nor II is true",
+   "If both conclusions I and II are true"
+  ],
+  "correctIndex": 4,
+  "explanation": "Conclusion I (J < K): K ≥ D > J, so K > J. It is true. Conclusion II (J < A): A ≥ D > J, so A > J. It is true.",
+  "ordered": true,
+  "source": "generated, answer checked by solver"
+ },
+ {
+  "chapter": "Mathematical Reasoning",
+  "topic": "Inequalities",
+  "difficulty": "MEDIUM",
+  "seconds": 75,
+  "text": "Statements: P = J > B > L; X = Q > J > M ≥ L. Conclusions: I. M ≤ Q  II. B < M. Study the conclusions based on the statements and select the appropriate answer.",
+  "options": [
+   "If only conclusion I is true",
+   "If only conclusion II is true",
+   "If either conclusion I or II is true",
+   "If neither conclusion I nor II is true",
+   "If both conclusions I and II are true"
+  ],
+  "correctIndex": 0,
+  "explanation": "Conclusion I (M ≤ Q): Q > J > M, so Q > M. It is true. Conclusion II (B < M): the statements do not link these two letters, so nothing can be said. It is not certain.",
+  "ordered": true,
+  "source": "generated, answer checked by solver"
+ },
+ {
+  "chapter": "Mathematical Reasoning",
+  "topic": "Inequalities",
+  "difficulty": "MEDIUM",
+  "seconds": 75,
+  "text": "Statements: R > Y ≥ W ≥ V; Q ≥ D > T < Y < M. Conclusions: I. W ≥ D  II. M > W. Study the conclusions based on the statements and select the appropriate answer.",
+  "options": [
+   "If only conclusion I is true",
+   "If only conclusion II is true",
+   "If either conclusion I or II is true",
+   "If neither conclusion I nor II is true",
+   "If both conclusions I and II are true"
+  ],
+  "correctIndex": 1,
+  "explanation": "Conclusion I (W ≥ D): the statements do not link these two letters, so nothing can be said. It is not certain. Conclusion II (M > W): M > Y ≥ W, so M > W. It is true.",
+  "ordered": true,
+  "source": "generated, answer checked by solver"
+ },
+ {
+  "chapter": "Mathematical Reasoning",
+  "topic": "Inequalities",
+  "difficulty": "MEDIUM",
+  "seconds": 75,
+  "text": "Statements: D ≥ O ≥ M ≥ G; B ≥ G = J ≤ Z < D. Conclusions: I. J < M  II. J ≥ M. Study the conclusions based on the statements and select the appropriate answer.",
+  "options": [
+   "If only conclusion I is true",
+   "If only conclusion II is true",
+   "If either conclusion I or II is true",
+   "If neither conclusion I nor II is true",
+   "If both conclusions I and II are true"
+  ],
+  "correctIndex": 2,
+  "explanation": "Conclusion I (J < M): M ≥ G = J, so M ≥ J. It is not certain. Conclusion II (J ≥ M): M ≥ G = J, so M ≥ J. It is not certain. Neither is certain, but they are exact opposites, so one of them must be true: either I or II is true.",
+  "ordered": true,
+  "source": "generated, answer checked by solver"
+ },
+ {
+  "chapter": "Mathematical Reasoning",
+  "topic": "Inequalities",
+  "difficulty": "MEDIUM",
+  "seconds": 75,
+  "text": "Statements: V ≥ I ≥ F = L; Y > L ≤ X = I < G. Conclusions: I. V > F  II. I < L. Study the conclusions based on the statements and select the appropriate answer.",
+  "options": [
+   "If only conclusion I is true",
+   "If only conclusion II is true",
+   "If either conclusion I or II is true",
+   "If neither conclusion I nor II is true",
+   "If both conclusions I and II are true"
+  ],
+  "correctIndex": 3,
+  "explanation": "Conclusion I (V > F): V ≥ I ≥ F, so V ≥ F. It is not certain. Conclusion II (I < L): I ≥ F = L, so I ≥ L. It is false.",
+  "ordered": true,
+  "source": "generated, answer checked by solver"
+ },
+ {
+  "chapter": "Mathematical Reasoning",
+  "topic": "Inequalities",
+  "difficulty": "HARD",
+  "seconds": 75,
+  "text": "Statements: V ≥ O > P < Y < W; W ≥ J > I ≥ N ≥ S. Conclusions: I. S ≤ J  II. P < V. Study the conclusions based on the statements and select the appropriate answer.",
+  "options": [
+   "If only conclusion I is true",
+   "If only conclusion II is true",
+   "If either conclusion I or II is true",
+   "If neither conclusion I nor II is true",
+   "If both conclusions I and II are true"
+  ],
+  "correctIndex": 4,
+  "explanation": "Conclusion I (S ≤ J): J > I ≥ N ≥ S, so J > S. It is true. Conclusion II (P < V): V ≥ O > P, so V > P. It is true.",
+  "ordered": true,
+  "source": "generated, answer checked by solver"
+ },
+ {
+  "chapter": "Mathematical Reasoning",
+  "topic": "Inequalities",
+  "difficulty": "MEDIUM",
+  "seconds": 75,
+  "text": "Statements: I > M > K > H; L ≥ B > H = S. Conclusions: I. S < B  II. I < S. Study the conclusions based on the statements and select the appropriate answer.",
+  "options": [
+   "If only conclusion I is true",
+   "If only conclusion II is true",
+   "If either conclusion I or II is true",
+   "If neither conclusion I nor II is true",
+   "If both conclusions I and II are true"
+  ],
+  "correctIndex": 0,
+  "explanation": "Conclusion I (S < B): B > H = S, so B > S. It is true. Conclusion II (I < S): I > M > K > H = S, so I > S. It is false.",
+  "ordered": true,
+  "source": "generated, answer checked by solver"
+ },
+ {
+  "chapter": "Mathematical Reasoning",
+  "topic": "Inequalities",
+  "difficulty": "MEDIUM",
+  "seconds": 75,
+  "text": "Statements: O > P = M < C; D = T ≥ P ≤ G. Conclusions: I. T > O  II. M ≤ G. Study the conclusions based on the statements and select the appropriate answer.",
+  "options": [
+   "If only conclusion I is true",
+   "If only conclusion II is true",
+   "If either conclusion I or II is true",
+   "If neither conclusion I nor II is true",
+   "If both conclusions I and II are true"
+  ],
+  "correctIndex": 1,
+  "explanation": "Conclusion I (T > O): the statements do not link these two letters, so nothing can be said. It is not certain. Conclusion II (M ≤ G): G ≥ P = M, so G ≥ M. It is true.",
+  "ordered": true,
+  "source": "generated, answer checked by solver"
+ },
+ {
+  "chapter": "Mathematical Reasoning",
+  "topic": "Inequalities",
+  "difficulty": "MEDIUM",
+  "seconds": 75,
+  "text": "Statements: J > Z = X > R = U; M > H ≥ Z > Y. Conclusions: I. U ≤ Y  II. Y < U. Study the conclusions based on the statements and select the appropriate answer.",
+  "options": [
+   "If only conclusion I is true",
+   "If only conclusion II is true",
+   "If either conclusion I or II is true",
+   "If neither conclusion I nor II is true",
+   "If both conclusions I and II are true"
+  ],
+  "correctIndex": 2,
+  "explanation": "Conclusion I (U ≤ Y): the statements do not link these two letters, so nothing can be said. It is not certain. Conclusion II (Y < U): the statements do not link these two letters, so nothing can be said. It is not certain. Neither is certain, but they are exact opposites, so one of them must be true: either I or II is true.",
+  "ordered": true,
+  "source": "generated, answer checked by solver"
+ },
+ {
+  "chapter": "Mathematical Reasoning",
+  "topic": "Inequalities",
+  "difficulty": "MEDIUM",
+  "seconds": 75,
+  "text": "Statements: G > S ≥ P ≥ O ≤ C; P > Q < R ≤ G. Conclusions: I. P ≥ R  II. G ≤ O. Study the conclusions based on the statements and select the appropriate answer.",
+  "options": [
+   "If only conclusion I is true",
+   "If only conclusion II is true",
+   "If either conclusion I or II is true",
+   "If neither conclusion I nor II is true",
+   "If both conclusions I and II are true"
+  ],
+  "correctIndex": 3,
+  "explanation": "Conclusion I (P ≥ R): the statements do not link these two letters, so nothing can be said. It is not certain. Conclusion II (G ≤ O): G > S ≥ P ≥ O, so G > O. It is false.",
+  "ordered": true,
+  "source": "generated, answer checked by solver"
+ },
+ {
+  "chapter": "Mathematical Reasoning",
+  "topic": "Inequalities",
+  "difficulty": "MEDIUM",
+  "seconds": 75,
+  "text": "Statements: I > Z > B < O; M > Z ≥ Y > G. Conclusions: I. Y ≤ I  II. I > G. Study the conclusions based on the statements and select the appropriate answer.",
+  "options": [
+   "If only conclusion I is true",
+   "If only conclusion II is true",
+   "If either conclusion I or II is true",
+   "If neither conclusion I nor II is true",
+   "If both conclusions I and II are true"
+  ],
+  "correctIndex": 4,
+  "explanation": "Conclusion I (Y ≤ I): I > Z ≥ Y, so I > Y. It is true. Conclusion II (I > G): I > Z ≥ Y > G, so I > G. It is true.",
+  "ordered": true,
+  "source": "generated, answer checked by solver"
+ },
+ {
+  "chapter": "Mathematical Reasoning",
+  "topic": "Inequalities",
+  "difficulty": "MEDIUM",
+  "seconds": 75,
+  "text": "Statements: I > E = A ≥ R < L; Z > R > P ≤ N. Conclusions: I. P ≤ I  II. I ≤ A. Study the conclusions based on the statements and select the appropriate answer.",
+  "options": [
+   "If only conclusion I is true",
+   "If only conclusion II is true",
+   "If either conclusion I or II is true",
+   "If neither conclusion I nor II is true",
+   "If both conclusions I and II are true"
+  ],
+  "correctIndex": 0,
+  "explanation": "Conclusion I (P ≤ I): I > E = A ≥ R > P, so I > P. It is true. Conclusion II (I ≤ A): I > E = A, so I > A. It is false.",
+  "ordered": true,
+  "source": "generated, answer checked by solver"
+ },
+ {
+  "chapter": "Mathematical Reasoning",
+  "topic": "Inequalities",
+  "difficulty": "MEDIUM",
+  "seconds": 75,
+  "text": "Statements: U ≥ N > Q > M > H; J ≥ T > Q ≥ V. Conclusions: I. U ≥ J  II. H ≤ N. Study the conclusions based on the statements and select the appropriate answer.",
+  "options": [
+   "If only conclusion I is true",
+   "If only conclusion II is true",
+   "If either conclusion I or II is true",
+   "If neither conclusion I nor II is true",
+   "If both conclusions I and II are true"
+  ],
+  "correctIndex": 1,
+  "explanation": "Conclusion I (U ≥ J): the statements do not link these two letters, so nothing can be said. It is not certain. Conclusion II (H ≤ N): N > Q > M > H, so N > H. It is true.",
+  "ordered": true,
+  "source": "generated, answer checked by solver"
+ },
+ {
+  "chapter": "Mathematical Reasoning",
+  "topic": "Inequalities",
+  "difficulty": "MEDIUM",
+  "seconds": 75,
+  "text": "Statements: C ≥ G ≥ T > P; C > N > X > H. Conclusions: I. X < G  II. X ≥ G. Study the conclusions based on the statements and select the appropriate answer.",
+  "options": [
+   "If only conclusion I is true",
+   "If only conclusion II is true",
+   "If either conclusion I or II is true",
+   "If neither conclusion I nor II is true",
+   "If both conclusions I and II are true"
+  ],
+  "correctIndex": 2,
+  "explanation": "Conclusion I (X < G): the statements do not link these two letters, so nothing can be said. It is not certain. Conclusion II (X ≥ G): the statements do not link these two letters, so nothing can be said. It is not certain. Neither is certain, but they are exact opposites, so one of them must be true: either I or II is true.",
+  "ordered": true,
+  "source": "generated, answer checked by solver"
+ },
+ {
+  "chapter": "Mathematical Reasoning",
+  "topic": "Inequalities",
+  "difficulty": "MEDIUM",
+  "seconds": 75,
+  "text": "Statements: S > G ≤ I ≤ V; Z ≥ V ≥ P ≥ O > Q. Conclusions: I. O ≤ I  II. I ≥ S. Study the conclusions based on the statements and select the appropriate answer.",
+  "options": [
+   "If only conclusion I is true",
+   "If only conclusion II is true",
+   "If either conclusion I or II is true",
+   "If neither conclusion I nor II is true",
+   "If both conclusions I and II are true"
+  ],
+  "correctIndex": 3,
+  "explanation": "Conclusion I (O ≤ I): the statements do not link these two letters, so nothing can be said. It is not certain. Conclusion II (I ≥ S): the statements do not link these two letters, so nothing can be said. It is not certain.",
+  "ordered": true,
+  "source": "generated, answer checked by solver"
+ },
+ {
+  "chapter": "Mathematical Reasoning",
+  "topic": "Inequalities",
+  "difficulty": "MEDIUM",
+  "seconds": 75,
+  "text": "Statements: D > R < F = P ≤ H; N > U ≤ F ≤ E. Conclusions: I. U ≤ H  II. R < H. Study the conclusions based on the statements and select the appropriate answer.",
+  "options": [
+   "If only conclusion I is true",
+   "If only conclusion II is true",
+   "If either conclusion I or II is true",
+   "If neither conclusion I nor II is true",
+   "If both conclusions I and II are true"
+  ],
+  "correctIndex": 4,
+  "explanation": "Conclusion I (U ≤ H): H ≥ P = F ≥ U, so H ≥ U. It is true. Conclusion II (R < H): H ≥ P = F > R, so H > R. It is true.",
+  "ordered": true,
+  "source": "generated, answer checked by solver"
+ }
+]

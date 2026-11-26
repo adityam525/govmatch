@@ -2,8 +2,8 @@
 
 import { useEffect, useRef, useState } from 'react';
 
-// Wraps the inline banner. Once the inline copy scrolls above the header, a
-// pinned copy slides in under the header, so the news stays in view on the homepage.
+// Wraps the inline banner. Once the inline copy scrolls above the header, a pinned copy
+// sits directly under the header. The header's real bottom edge is measured, not assumed.
 export default function StickyHotNewsOnScroll({
   inline,
   pinned,
@@ -13,28 +13,37 @@ export default function StickyHotNewsOnScroll({
 }) {
   const anchorRef = useRef<HTMLDivElement>(null);
   const [showPinned, setShowPinned] = useState(false);
+  const [top, setTop] = useState(64);
 
   useEffect(() => {
     const anchor = anchorRef.current;
     if (!anchor) return;
-    const HEADER_HEIGHT = 64;
-    const check = () => {
-      const rect = anchor.getBoundingClientRect();
-      setShowPinned(rect.bottom < HEADER_HEIGHT);
+    const header = document.querySelector('header');
+    const measure = () => {
+      const bottom = header ? Math.max(0, Math.round(header.getBoundingClientRect().bottom)) : 64;
+      setTop(bottom);
+      setShowPinned(anchor.getBoundingClientRect().bottom < bottom);
     };
-    check();
-    window.addEventListener('scroll', check, { passive: true });
-    window.addEventListener('resize', check);
+    measure();
+    window.addEventListener('scroll', measure, { passive: true });
+    window.addEventListener('resize', measure);
+    const observer = typeof ResizeObserver !== 'undefined' && header ? new ResizeObserver(measure) : null;
+    if (observer && header) observer.observe(header);
     return () => {
-      window.removeEventListener('scroll', check);
-      window.removeEventListener('resize', check);
+      window.removeEventListener('scroll', measure);
+      window.removeEventListener('resize', measure);
+      observer?.disconnect();
     };
   }, []);
 
   return (
     <>
       <div ref={anchorRef}>{inline}</div>
-      {showPinned && <div className="fixed inset-x-0 top-16 z-30">{pinned}</div>}
+      {showPinned && (
+        <div className="fixed inset-x-0 z-30" style={{ top }}>
+          {pinned}
+        </div>
+      )}
     </>
   );
 }
