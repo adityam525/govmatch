@@ -1,0 +1,512 @@
+[
+ {
+  "chapter": "Data Interpretation",
+  "topic": "Pie charts",
+  "difficulty": "HARD",
+  "seconds": 90,
+  "text": "The first pie chart shows the share of the 3000 students of four colleges: college A 38%, college B 22%, college C 12.5%, college D 27.5%. The second pie chart shows the number of females in these colleges (1320 in all): college A 440, college B 400, college C 130, college D X, where X is the number of females in college D. Find the ratio of the males in colleges B and D together to the females in colleges C and D together.",
+  "options": [
+   "25:24",
+   "49:32",
+   "49:80",
+   "32:49",
+   "99:32"
+  ],
+  "correctIndex": 1,
+  "explanation": "Total students: A 1140, B 660, C 375, D 825. X = 1320 - 440 - 400 - 130 = 350. Males: A 700, B 260, C 245, D 475. Males in B and D = 735. Females in C and D = 480. The ratio is 735:480 = 49:32.",
+  "source": "generated pie data, answer recomputed from the numbers"
+ },
+ {
+  "chapter": "Data Interpretation",
+  "topic": "Pie charts",
+  "difficulty": "HARD",
+  "seconds": 90,
+  "text": "The first pie chart shows the share of the 3000 students of four colleges: college A 38%, college B 22%, college C 12.5%, college D 27.5%. The second pie chart shows the number of females in these colleges (1320 in all): college A 440, college B 400, college C 130, college D X, where X is the number of females in college D. The total number of females in colleges D and B together is what percentage of the total number of students in college C?",
+  "options": [
+   "49.5%",
+   "50%",
+   "65.79%",
+   "200%",
+   "196%"
+  ],
+  "correctIndex": 3,
+  "explanation": "Total students: A 1140, B 660, C 375, D 825. X = 1320 - 440 - 400 - 130 = 350. Males: A 700, B 260, C 245, D 475. Females in D and B = 750. Students in C = 375. 750 / 375 x 100 = 200%.",
+  "source": "generated pie data, answer recomputed from the numbers"
+ },
+ {
+  "chapter": "Data Interpretation",
+  "topic": "Pie charts",
+  "difficulty": "HARD",
+  "seconds": 90,
+  "text": "The first pie chart shows the share of the 3000 students of four colleges: college A 38%, college B 22%, college C 12.5%, college D 27.5%. The second pie chart shows the number of females in these colleges (1320 in all): college A 440, college B 400, college C 130, college D X, where X is the number of females in college D. In college E the total number of students is 3X, and 40% of them are females. The number of males in college E is what percentage more or less than the total number of students in college C?",
+  "options": [
+   "40%",
+   "68%",
+   "168%",
+   "32%",
+   "71%"
+  ],
+  "correctIndex": 1,
+  "explanation": "Total students: A 1140, B 660, C 375, D 825. X = 1320 - 440 - 400 - 130 = 350. Males: A 700, B 260, C 245, D 475. College E has 3 x 350 = 1050 students, of whom 60% are males: 630. College C has 375. The males in E are more by (255 / 375) x 100 = 68%.",
+  "source": "generated pie data, answer recomputed from the numbers"
+ },
+ {
+  "chapter": "Data Interpretation",
+  "topic": "Pie charts",
+  "difficulty": "MEDIUM",
+  "seconds": 90,
+  "text": "The first pie chart shows the share of the 3000 students of four colleges: college A 38%, college B 22%, college C 12.5%, college D 27.5%. The second pie chart shows the number of females in these colleges (1320 in all): college A 440, college B 400, college C 130, college D X, where X is the number of females in college D. Find the difference between the total number of students in colleges D and A together and twice the number of males in college A.",
+  "options": [
+   "1265",
+   "3365",
+   "565",
+   "1965",
+   "1400"
+  ],
+  "correctIndex": 2,
+  "explanation": "Total students: A 1140, B 660, C 375, D 825. X = 1320 - 440 - 400 - 130 = 350. Males: A 700, B 260, C 245, D 475. Students in D and A = 1965. Twice the males in A = 1400. The difference is 565.",
+  "source": "generated pie data, answer recomputed from the numbers"
+ },
+ {
+  "chapter": "Data Interpretation",
+  "topic": "Pie charts",
+  "difficulty": "MEDIUM",
+  "seconds": 90,
+  "text": "The first pie chart shows the share of the 1800 students of four colleges: college A 11%, college B 23.5%, college C 27%, college D 38.5%. The second pie chart shows the number of females in these colleges (660 in all): college A 80, college B 160, college C X, college D 270, where X is the number of females in college C. Find the average number of males in colleges A, B and D.",
+  "options": [
+   "804",
+   "170",
+   "402",
+   "268",
+   "438"
+  ],
+  "correctIndex": 3,
+  "explanation": "Total students: A 198, B 423, C 486, D 693. X = 660 - 80 - 160 - 270 = 150. Males: A 118, B 263, C 336, D 423. Males in A, B and D: 118 + 263 + 423 = 804, so the average is 804 / 3 = 268.",
+  "source": "generated pie data, answer recomputed from the numbers"
+ },
+ {
+  "chapter": "Data Interpretation",
+  "topic": "Pie charts",
+  "difficulty": "HARD",
+  "seconds": 90,
+  "text": "The first pie chart shows the share of the 1800 students of four colleges: college A 11%, college B 23.5%, college C 27%, college D 38.5%. The second pie chart shows the number of females in these colleges (660 in all): college A 80, college B 160, college C X, college D 270, where X is the number of females in college C. Find the ratio of the males in colleges A and D together to the females in colleges A and C together.",
+  "options": [
+   "541:230",
+   "230:541",
+   "891:230",
+   "175:227",
+   "541:684"
+  ],
+  "correctIndex": 0,
+  "explanation": "Total students: A 198, B 423, C 486, D 693. X = 660 - 80 - 160 - 270 = 150. Males: A 118, B 263, C 336, D 423. Males in A and D = 541. Females in A and C = 230. The ratio is 541:230 = 541:230.",
+  "source": "generated pie data, answer recomputed from the numbers"
+ },
+ {
+  "chapter": "Data Interpretation",
+  "topic": "Pie charts",
+  "difficulty": "MEDIUM",
+  "seconds": 90,
+  "text": "The first pie chart shows the share of the 1800 students of four colleges: college A 11%, college B 23.5%, college C 27%, college D 38.5%. The second pie chart shows the number of females in these colleges (660 in all): college A 80, college B 160, college C X, college D 270, where X is the number of females in college C. Find the difference between the total number of students in colleges A and C together and twice the number of males in college C.",
+  "options": [
+   "1356",
+   "348",
+   "672",
+   "12",
+   "684"
+  ],
+  "correctIndex": 3,
+  "explanation": "Total students: A 198, B 423, C 486, D 693. X = 660 - 80 - 160 - 270 = 150. Males: A 118, B 263, C 336, D 423. Students in A and C = 684. Twice the males in C = 672. The difference is 12.",
+  "source": "generated pie data, answer recomputed from the numbers"
+ },
+ {
+  "chapter": "Data Interpretation",
+  "topic": "Pie charts",
+  "difficulty": "MEDIUM",
+  "seconds": 90,
+  "text": "The first pie chart shows the share of the 1800 students of four colleges: college A 25%, college B 24%, college C 22.5%, college D 28.5%. The second pie chart shows the number of females in these colleges (890 in all): college A 270, college B 210, college C X, college D 170, where X is the number of females in college C. Find the average number of males in colleges A, B and C.",
+  "options": [
+   "429",
+   "284",
+   "240",
+   "189",
+   "567"
+  ],
+  "correctIndex": 3,
+  "explanation": "Total students: A 450, B 432, C 405, D 513. X = 890 - 270 - 210 - 170 = 240. Males: A 180, B 222, C 165, D 343. Males in A, B and C: 180 + 222 + 165 = 567, so the average is 567 / 3 = 189.",
+  "source": "generated pie data, answer recomputed from the numbers"
+ },
+ {
+  "chapter": "Data Interpretation",
+  "topic": "Pie charts",
+  "difficulty": "HARD",
+  "seconds": 90,
+  "text": "The first pie chart shows the share of the 1800 students of four colleges: college A 25%, college B 24%, college C 22.5%, college D 28.5%. The second pie chart shows the number of females in these colleges (890 in all): college A 270, college B 210, college C X, college D 170, where X is the number of females in college C. Find the ratio of the males in colleges B and C together to the females in colleges B and D together.",
+  "options": [
+   "380:387",
+   "837:380",
+   "387:380",
+   "43:105",
+   "90:113"
+  ],
+  "correctIndex": 2,
+  "explanation": "Total students: A 450, B 432, C 405, D 513. X = 890 - 270 - 210 - 170 = 240. Males: A 180, B 222, C 165, D 343. Males in B and C = 387. Females in B and D = 380. The ratio is 387:380 = 387:380.",
+  "source": "generated pie data, answer recomputed from the numbers"
+ },
+ {
+  "chapter": "Data Interpretation",
+  "topic": "Pie charts",
+  "difficulty": "HARD",
+  "seconds": 90,
+  "text": "The first pie chart shows the share of the 1800 students of four colleges: college A 25%, college B 24%, college C 22.5%, college D 28.5%. The second pie chart shows the number of females in these colleges (890 in all): college A 270, college B 210, college C X, college D 170, where X is the number of females in college C. The total number of females in colleges B and C together is what percentage of the total number of students in college A?",
+  "options": [
+   "104%",
+   "100%",
+   "46.73%",
+   "86%",
+   "87.72%"
+  ],
+  "correctIndex": 1,
+  "explanation": "Total students: A 450, B 432, C 405, D 513. X = 890 - 270 - 210 - 170 = 240. Males: A 180, B 222, C 165, D 343. Females in B and C = 450. Students in A = 450. 450 / 450 x 100 = 100%.",
+  "source": "generated pie data, answer recomputed from the numbers"
+ },
+ {
+  "chapter": "Data Interpretation",
+  "topic": "Pie charts",
+  "difficulty": "HARD",
+  "seconds": 90,
+  "text": "The first pie chart shows the share of the 1800 students of four colleges: college A 25%, college B 24%, college C 22.5%, college D 28.5%. The second pie chart shows the number of females in these colleges (890 in all): college A 270, college B 210, college C X, college D 170, where X is the number of females in college C. In college E the total number of students is 3X, and 35% of them are females. The number of males in college E is what percentage more or less than the total number of students in college A?",
+  "options": [
+   "6%",
+   "2%",
+   "96%",
+   "104%",
+   "4%"
+  ],
+  "correctIndex": 4,
+  "explanation": "Total students: A 450, B 432, C 405, D 513. X = 890 - 270 - 210 - 170 = 240. Males: A 180, B 222, C 165, D 343. College E has 3 x 240 = 720 students, of whom 65% are males: 468. College A has 450. The males in E are more by (18 / 450) x 100 = 4%.",
+  "source": "generated pie data, answer recomputed from the numbers"
+ },
+ {
+  "chapter": "Data Interpretation",
+  "topic": "Pie charts",
+  "difficulty": "MEDIUM",
+  "seconds": 90,
+  "text": "The first pie chart shows the share of the 1800 students of four colleges: college A 25%, college B 24%, college C 22.5%, college D 28.5%. The second pie chart shows the number of females in these colleges (890 in all): college A 270, college B 210, college C X, college D 170, where X is the number of females in college C. Find the difference between the total number of students in colleges B and C together and twice the number of males in college B.",
+  "options": [
+   "444",
+   "837",
+   "1281",
+   "393",
+   "615"
+  ],
+  "correctIndex": 3,
+  "explanation": "Total students: A 450, B 432, C 405, D 513. X = 890 - 270 - 210 - 170 = 240. Males: A 180, B 222, C 165, D 343. Students in B and C = 837. Twice the males in B = 444. The difference is 393.",
+  "source": "generated pie data, answer recomputed from the numbers"
+ },
+ {
+  "chapter": "Data Interpretation",
+  "topic": "Pie charts",
+  "difficulty": "HARD",
+  "seconds": 90,
+  "text": "The first pie chart shows the share of the 1400 students of four colleges: college A 27%, college B 39%, college C 20.5%, college D 13.5%. The second pie chart shows the number of females in these colleges (790 in all): college A X, college B 360, college C 80, college D 100, where X is the number of females in college A. Find the ratio of the males in colleges A and D together to the females in colleges C and D together.",
+  "options": [
+   "63:20",
+   "180:217",
+   "217:180",
+   "31:68",
+   "175:148"
+  ],
+  "correctIndex": 2,
+  "explanation": "Total students: A 378, B 546, C 287, D 189. X = 790 - 360 - 80 - 100 = 250. Males: A 128, B 186, C 207, D 89. Males in A and D = 217. Females in C and D = 180. The ratio is 217:180 = 217:180.",
+  "source": "generated pie data, answer recomputed from the numbers"
+ },
+ {
+  "chapter": "Data Interpretation",
+  "topic": "Pie charts",
+  "difficulty": "MEDIUM",
+  "seconds": 90,
+  "text": "The first pie chart shows the share of the 1400 students of four colleges: college A 27%, college B 39%, college C 20.5%, college D 13.5%. The second pie chart shows the number of females in these colleges (790 in all): college A X, college B 360, college C 80, college D 100, where X is the number of females in college A. Find the difference between the total number of students in colleges D and A together and twice the number of males in college B.",
+  "options": [
+   "372",
+   "939",
+   "567",
+   "381",
+   "195"
+  ],
+  "correctIndex": 4,
+  "explanation": "Total students: A 378, B 546, C 287, D 189. X = 790 - 360 - 80 - 100 = 250. Males: A 128, B 186, C 207, D 89. Students in D and A = 567. Twice the males in B = 372. The difference is 195.",
+  "source": "generated pie data, answer recomputed from the numbers"
+ },
+ {
+  "chapter": "Data Interpretation",
+  "topic": "Pie charts",
+  "difficulty": "MEDIUM",
+  "seconds": 90,
+  "text": "The first pie chart shows the share of the 2800 students of four colleges: college A 15%, college B 27%, college C 21%, college D 37%. The second pie chart shows the number of females in these colleges (970 in all): college A 180, college B X, college C 190, college D 300, where X is the number of females in college B. Find the average number of males in colleges B, C and D.",
+  "options": [
+   "530",
+   "263",
+   "793",
+   "1590",
+   "795"
+  ],
+  "correctIndex": 0,
+  "explanation": "Total students: A 420, B 756, C 588, D 1036. X = 970 - 180 - 190 - 300 = 300. Males: A 240, B 456, C 398, D 736. Males in B, C and D: 456 + 398 + 736 = 1590, so the average is 1590 / 3 = 530.",
+  "source": "generated pie data, answer recomputed from the numbers"
+ },
+ {
+  "chapter": "Data Interpretation",
+  "topic": "Pie charts",
+  "difficulty": "HARD",
+  "seconds": 90,
+  "text": "The first pie chart shows the share of the 2800 students of four colleges: college A 15%, college B 27%, college C 21%, college D 37%. The second pie chart shows the number of females in these colleges (970 in all): college A 180, college B X, college C 190, college D 300, where X is the number of females in college B. Find the ratio of the males in colleges A and D together to the females in colleges C and D together.",
+  "options": [
+   "245:488",
+   "122:203",
+   "488:245",
+   "80:189",
+   "104:35"
+  ],
+  "correctIndex": 2,
+  "explanation": "Total students: A 420, B 756, C 588, D 1036. X = 970 - 180 - 190 - 300 = 300. Males: A 240, B 456, C 398, D 736. Males in A and D = 976. Females in C and D = 490. The ratio is 976:490 = 488:245.",
+  "source": "generated pie data, answer recomputed from the numbers"
+ },
+ {
+  "chapter": "Data Interpretation",
+  "topic": "Pie charts",
+  "difficulty": "HARD",
+  "seconds": 90,
+  "text": "The first pie chart shows the share of the 2800 students of four colleges: college A 15%, college B 27%, college C 21%, college D 37%. The second pie chart shows the number of females in these colleges (970 in all): college A 180, college B X, college C 190, college D 300, where X is the number of females in college B. In college E the total number of students is 3X, and 30% of them are females. The number of males in college E is what percentage more or less than the total number of students in college A?",
+  "options": [
+   "50%",
+   "150%",
+   "33%",
+   "52%",
+   "48%"
+  ],
+  "correctIndex": 0,
+  "explanation": "Total students: A 420, B 756, C 588, D 1036. X = 970 - 180 - 190 - 300 = 300. Males: A 240, B 456, C 398, D 736. College E has 3 x 300 = 900 students, of whom 70% are males: 630. College A has 420. The males in E are more by (210 / 420) x 100 = 50%.",
+  "source": "generated pie data, answer recomputed from the numbers"
+ },
+ {
+  "chapter": "Data Interpretation",
+  "topic": "Pie charts",
+  "difficulty": "MEDIUM",
+  "seconds": 90,
+  "text": "The first pie chart shows the share of the 2800 students of four colleges: college A 15%, college B 27%, college C 21%, college D 37%. The second pie chart shows the number of females in these colleges (970 in all): college A 180, college B X, college C 190, college D 300, where X is the number of females in college B. Find the difference between the total number of students in colleges C and B together and twice the number of males in college A.",
+  "options": [
+   "1824",
+   "864",
+   "1104",
+   "480",
+   "1344"
+  ],
+  "correctIndex": 1,
+  "explanation": "Total students: A 420, B 756, C 588, D 1036. X = 970 - 180 - 190 - 300 = 300. Males: A 240, B 456, C 398, D 736. Students in C and B = 1344. Twice the males in A = 480. The difference is 864.",
+  "source": "generated pie data, answer recomputed from the numbers"
+ },
+ {
+  "chapter": "Data Interpretation",
+  "topic": "Pie charts",
+  "difficulty": "MEDIUM",
+  "seconds": 90,
+  "text": "The first pie chart shows the share of the 2800 students of four colleges: college A 11.5%, college B 30%, college C 19.5%, college D 39%. The second pie chart shows the number of females in these colleges (1650 in all): college A 180, college B 570, college C X, college D 750, where X is the number of females in college C. Find the average number of males in colleges B, C and D.",
+  "options": [
+   "1008",
+   "336",
+   "826",
+   "504",
+   "490"
+  ],
+  "correctIndex": 1,
+  "explanation": "Total students: A 322, B 840, C 546, D 1092. X = 1650 - 180 - 570 - 750 = 150. Males: A 142, B 270, C 396, D 342. Males in B, C and D: 270 + 396 + 342 = 1008, so the average is 1008 / 3 = 336.",
+  "source": "generated pie data, answer recomputed from the numbers"
+ },
+ {
+  "chapter": "Data Interpretation",
+  "topic": "Pie charts",
+  "difficulty": "HARD",
+  "seconds": 90,
+  "text": "The first pie chart shows the share of the 2800 students of four colleges: college A 11.5%, college B 30%, college C 19.5%, college D 39%. The second pie chart shows the number of females in these colleges (1650 in all): college A 180, college B 570, college C X, college D 750, where X is the number of females in college C. Find the ratio of the males in colleges C and D together to the females in colleges A and D together.",
+  "options": [
+   "273:155",
+   "155:123",
+   "225:121",
+   "369:707",
+   "123:155"
+  ],
+  "correctIndex": 4,
+  "explanation": "Total students: A 322, B 840, C 546, D 1092. X = 1650 - 180 - 570 - 750 = 150. Males: A 142, B 270, C 396, D 342. Males in C and D = 738. Females in A and D = 930. The ratio is 738:930 = 123:155.",
+  "source": "generated pie data, answer recomputed from the numbers"
+ },
+ {
+  "chapter": "Data Interpretation",
+  "topic": "Pie charts",
+  "difficulty": "HARD",
+  "seconds": 90,
+  "text": "The first pie chart shows the share of the 2800 students of four colleges: college A 11.5%, college B 30%, college C 19.5%, college D 39%. The second pie chart shows the number of females in these colleges (1650 in all): college A 180, college B 570, college C X, college D 750, where X is the number of females in college C. In college E the total number of students is 4X, and 30% of them are females. The number of males in college E is what percentage more or less than the total number of students in college B?",
+  "options": [
+   "50%",
+   "48%",
+   "54%",
+   "100%",
+   "52%"
+  ],
+  "correctIndex": 0,
+  "explanation": "Total students: A 322, B 840, C 546, D 1092. X = 1650 - 180 - 570 - 750 = 150. Males: A 142, B 270, C 396, D 342. College E has 4 x 150 = 600 students, of whom 70% are males: 420. College B has 840. The males in E are less by (420 / 840) x 100 = 50%.",
+  "source": "generated pie data, answer recomputed from the numbers"
+ },
+ {
+  "chapter": "Data Interpretation",
+  "topic": "Pie charts",
+  "difficulty": "MEDIUM",
+  "seconds": 90,
+  "text": "The first pie chart shows the share of the 2800 students of four colleges: college A 11.5%, college B 30%, college C 19.5%, college D 39%. The second pie chart shows the number of females in these colleges (1650 in all): college A 180, college B 570, college C X, college D 750, where X is the number of females in college C. Find the difference between the total number of students in colleges C and D together and twice the number of males in college D.",
+  "options": [
+   "1638",
+   "2322",
+   "1296",
+   "684",
+   "954"
+  ],
+  "correctIndex": 4,
+  "explanation": "Total students: A 322, B 840, C 546, D 1092. X = 1650 - 180 - 570 - 750 = 150. Males: A 142, B 270, C 396, D 342. Students in C and D = 1638. Twice the males in D = 684. The difference is 954.",
+  "source": "generated pie data, answer recomputed from the numbers"
+ },
+ {
+  "chapter": "Data Interpretation",
+  "topic": "Pie charts",
+  "difficulty": "HARD",
+  "seconds": 90,
+  "text": "The first pie chart shows the share of the 1800 students of four colleges: college A 22.5%, college B 26%, college C 12.5%, college D 39%. The second pie chart shows the number of females in these colleges (740 in all): college A 210, college B X, college C 130, college D 280, where X is the number of females in college B. Find the ratio of the males in colleges A and B together to the females in colleges C and D together.",
+  "options": [
+   "410:543",
+   "30:47",
+   "873:410",
+   "181:309",
+   "543:410"
+  ],
+  "correctIndex": 4,
+  "explanation": "Total students: A 405, B 468, C 225, D 702. X = 740 - 210 - 130 - 280 = 120. Males: A 195, B 348, C 95, D 422. Males in A and B = 543. Females in C and D = 410. The ratio is 543:410 = 543:410.",
+  "source": "generated pie data, answer recomputed from the numbers"
+ },
+ {
+  "chapter": "Data Interpretation",
+  "topic": "Pie charts",
+  "difficulty": "HARD",
+  "seconds": 90,
+  "text": "The first pie chart shows the share of the 1800 students of four colleges: college A 22.5%, college B 26%, college C 12.5%, college D 39%. The second pie chart shows the number of females in these colleges (740 in all): college A 210, college B X, college C 130, college D 280, where X is the number of females in college B. In college E the total number of students is 3X, and 50% of them are females. The number of males in college E is what percentage more or less than the total number of students in college C?",
+  "options": [
+   "18%",
+   "25%",
+   "20%",
+   "22%",
+   "80%"
+  ],
+  "correctIndex": 2,
+  "explanation": "Total students: A 405, B 468, C 225, D 702. X = 740 - 210 - 130 - 280 = 120. Males: A 195, B 348, C 95, D 422. College E has 3 x 120 = 360 students, of whom 50% are males: 180. College C has 225. The males in E are less by (45 / 225) x 100 = 20%.",
+  "source": "generated pie data, answer recomputed from the numbers"
+ },
+ {
+  "chapter": "Data Interpretation",
+  "topic": "Pie charts",
+  "difficulty": "MEDIUM",
+  "seconds": 90,
+  "text": "The first pie chart shows the share of the 1800 students of four colleges: college A 22.5%, college B 26%, college C 12.5%, college D 39%. The second pie chart shows the number of females in these colleges (740 in all): college A 210, college B X, college C 130, college D 280, where X is the number of females in college B. Find the difference between the total number of students in colleges D and B together and twice the number of males in college B.",
+  "options": [
+   "1170",
+   "822",
+   "474",
+   "1866",
+   "696"
+  ],
+  "correctIndex": 2,
+  "explanation": "Total students: A 405, B 468, C 225, D 702. X = 740 - 210 - 130 - 280 = 120. Males: A 195, B 348, C 95, D 422. Students in D and B = 1170. Twice the males in B = 696. The difference is 474.",
+  "source": "generated pie data, answer recomputed from the numbers"
+ },
+ {
+  "chapter": "Data Interpretation",
+  "topic": "Pie charts",
+  "difficulty": "MEDIUM",
+  "seconds": 90,
+  "text": "The first pie chart shows the share of the 3000 students of four colleges: college A 12%, college B 18.5%, college C 34%, college D 35.5%. The second pie chart shows the number of females in these colleges (1430 in all): college A 210, college B 360, college C 270, college D X, where X is the number of females in college D. Find the average number of males in colleges A, B and C.",
+  "options": [
+   "1095",
+   "365",
+   "548",
+   "280",
+   "645"
+  ],
+  "correctIndex": 1,
+  "explanation": "Total students: A 360, B 555, C 1020, D 1065. X = 1430 - 210 - 360 - 270 = 590. Males: A 150, B 195, C 750, D 475. Males in A, B and C: 150 + 195 + 750 = 1095, so the average is 1095 / 3 = 365.",
+  "source": "generated pie data, answer recomputed from the numbers"
+ },
+ {
+  "chapter": "Data Interpretation",
+  "topic": "Pie charts",
+  "difficulty": "HARD",
+  "seconds": 90,
+  "text": "The first pie chart shows the share of the 3000 students of four colleges: college A 12%, college B 18.5%, college C 34%, college D 35.5%. The second pie chart shows the number of females in these colleges (1430 in all): college A 210, college B 360, college C 270, college D X, where X is the number of females in college D. Find the ratio of the males in colleges B and C together to the females in colleges B and C together.",
+  "options": [
+   "3:2",
+   "5:2",
+   "2:3",
+   "3:5",
+   "2:1"
+  ],
+  "correctIndex": 0,
+  "explanation": "Total students: A 360, B 555, C 1020, D 1065. X = 1430 - 210 - 360 - 270 = 590. Males: A 150, B 195, C 750, D 475. Males in B and C = 945. Females in B and C = 630. The ratio is 945:630 = 3:2.",
+  "source": "generated pie data, answer recomputed from the numbers"
+ },
+ {
+  "chapter": "Data Interpretation",
+  "topic": "Pie charts",
+  "difficulty": "HARD",
+  "seconds": 90,
+  "text": "The first pie chart shows the share of the 3000 students of four colleges: college A 12%, college B 18.5%, college C 34%, college D 35.5%. The second pie chart shows the number of females in these colleges (1430 in all): college A 210, college B 360, college C 270, college D X, where X is the number of females in college D. The total number of females in colleges B and C together is what percentage of the total number of students in college A?",
+  "options": [
+   "44.21%",
+   "59.15%",
+   "262.5%",
+   "57.14%",
+   "175%"
+  ],
+  "correctIndex": 4,
+  "explanation": "Total students: A 360, B 555, C 1020, D 1065. X = 1430 - 210 - 360 - 270 = 590. Males: A 150, B 195, C 750, D 475. Females in B and C = 630. Students in A = 360. 630 / 360 x 100 = 175%.",
+  "source": "generated pie data, answer recomputed from the numbers"
+ },
+ {
+  "chapter": "Data Interpretation",
+  "topic": "Pie charts",
+  "difficulty": "HARD",
+  "seconds": 90,
+  "text": "The first pie chart shows the share of the 3000 students of four colleges: college A 12%, college B 18.5%, college C 34%, college D 35.5%. The second pie chart shows the number of females in these colleges (1430 in all): college A 210, college B 360, college C 270, college D X, where X is the number of females in college D. In college E the total number of students is 3X, and 40% of them are females. The number of males in college E is what percentage more or less than the total number of students in college A?",
+  "options": [
+   "203%",
+   "195%",
+   "66%",
+   "295%",
+   "187%"
+  ],
+  "correctIndex": 1,
+  "explanation": "Total students: A 360, B 555, C 1020, D 1065. X = 1430 - 210 - 360 - 270 = 590. Males: A 150, B 195, C 750, D 475. College E has 3 x 590 = 1770 students, of whom 60% are males: 1062. College A has 360. The males in E are more by (702 / 360) x 100 = 195%.",
+  "source": "generated pie data, answer recomputed from the numbers"
+ },
+ {
+  "chapter": "Data Interpretation",
+  "topic": "Pie charts",
+  "difficulty": "MEDIUM",
+  "seconds": 90,
+  "text": "The first pie chart shows the share of the 3000 students of four colleges: college A 12%, college B 18.5%, college C 34%, college D 35.5%. The second pie chart shows the number of females in these colleges (1430 in all): college A 210, college B 360, college C 270, college D X, where X is the number of females in college D. Find the difference between the total number of students in colleges C and B together and twice the number of males in college D.",
+  "options": [
+   "1100",
+   "2525",
+   "950",
+   "1575",
+   "625"
+  ],
+  "correctIndex": 4,
+  "explanation": "Total students: A 360, B 555, C 1020, D 1065. X = 1430 - 210 - 360 - 270 = 590. Males: A 150, B 195, C 750, D 475. Students in C and B = 1575. Twice the males in D = 950. The difference is 625.",
+  "source": "generated pie data, answer recomputed from the numbers"
+ }
+]

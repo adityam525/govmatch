@@ -1,0 +1,461 @@
+[
+ {
+  "chapter": "Data Interpretation",
+  "topic": "Caselets",
+  "difficulty": "MEDIUM",
+  "seconds": 90,
+  "text": "There are two trains, A and B. The total number of berths in A is 54 and 10 of them are vacant. The number of males who occupy berths in A is 4 more than the number of females who occupy them. The vacant berths in B are 60% less than those in A. The ratio of males to females among the occupied berths in B is 7:4. The total number of occupied berths in B is 100% more than in A. Find the sum of the total number of berths in A and B.",
+  "options": [
+   "156",
+   "132",
+   "146",
+   "142",
+   "58"
+  ],
+  "correctIndex": 2,
+  "explanation": "Occupied in A = 54 - 10 = 44, so females = (44 - 4) / 2 = 20 and males = 24. In B: vacant = 4, occupied = 88, total = 92, males = 56, females = 32. The sum is 54 + 92 = 146.",
+  "source": "generated caselet, answer recomputed from the numbers"
+ },
+ {
+  "chapter": "Data Interpretation",
+  "topic": "Caselets",
+  "difficulty": "HARD",
+  "seconds": 90,
+  "text": "There are two trains, A and B. The total number of berths in A is 54 and 10 of them are vacant. The number of males who occupy berths in A is 4 more than the number of females who occupy them. The vacant berths in B are 60% less than those in A. The ratio of males to females among the occupied berths in B is 7:4. The total number of occupied berths in B is 100% more than in A. Find the ratio of the occupied berths in B to the vacant berths in both trains together.",
+  "options": [
+   "44:7",
+   "45:7",
+   "22:7",
+   "7:44",
+   "22:1"
+  ],
+  "correctIndex": 0,
+  "explanation": "Occupied in A = 54 - 10 = 44, so females = (44 - 4) / 2 = 20 and males = 24. In B: vacant = 4, occupied = 88, total = 92, males = 56, females = 32. Occupied in B = 88. Vacant in both = 10 + 4 = 14. The ratio is 88:14 = 44:7.",
+  "source": "generated caselet, answer recomputed from the numbers"
+ },
+ {
+  "chapter": "Data Interpretation",
+  "topic": "Caselets",
+  "difficulty": "MEDIUM",
+  "seconds": 90,
+  "text": "There are two trains, A and B. The total number of berths in A is 54 and 10 of them are vacant. The number of males who occupy berths in A is 4 more than the number of females who occupy them. The vacant berths in B are 60% less than those in A. The ratio of males to females among the occupied berths in B is 7:4. The total number of occupied berths in B is 100% more than in A. Find the difference between the number of berths occupied by males in B and by females in A.",
+  "options": [
+   "36",
+   "52",
+   "8",
+   "32",
+   "76"
+  ],
+  "correctIndex": 0,
+  "explanation": "Occupied in A = 54 - 10 = 44, so females = (44 - 4) / 2 = 20 and males = 24. In B: vacant = 4, occupied = 88, total = 92, males = 56, females = 32. Males in B = 56, females in A = 20. The difference is 36.",
+  "source": "generated caselet, answer recomputed from the numbers"
+ },
+ {
+  "chapter": "Data Interpretation",
+  "topic": "Caselets",
+  "difficulty": "MEDIUM",
+  "seconds": 90,
+  "text": "There are two buses, A and B. The total number of seats in A is 48 and 6 of them are vacant. The number of males who occupy seats in A is 10 more than the number of females who occupy them. The vacant seats in B are 50% less than those in A. The ratio of males to females among the occupied seats in B is 5:4. The total number of occupied seats in B is 50% more than in A. Find the sum of the total number of seats in A and B.",
+  "options": [
+   "120",
+   "114",
+   "111",
+   "105",
+   "51"
+  ],
+  "correctIndex": 1,
+  "explanation": "Occupied in A = 48 - 6 = 42, so females = (42 - 10) / 2 = 16 and males = 26. In B: vacant = 3, occupied = 63, total = 66, males = 35, females = 28. The sum is 48 + 66 = 114.",
+  "source": "generated caselet, answer recomputed from the numbers"
+ },
+ {
+  "chapter": "Data Interpretation",
+  "topic": "Caselets",
+  "difficulty": "HARD",
+  "seconds": 90,
+  "text": "There are two buses, A and B. The total number of seats in A is 48 and 6 of them are vacant. The number of males who occupy seats in A is 10 more than the number of females who occupy them. The vacant seats in B are 50% less than those in A. The ratio of males to females among the occupied seats in B is 5:4. The total number of occupied seats in B is 50% more than in A. Find the ratio of the occupied seats in B to the vacant seats in both buses together.",
+  "options": [
+   "21:1",
+   "14:3",
+   "1:7",
+   "7:1",
+   "8:1"
+  ],
+  "correctIndex": 3,
+  "explanation": "Occupied in A = 48 - 6 = 42, so females = (42 - 10) / 2 = 16 and males = 26. In B: vacant = 3, occupied = 63, total = 66, males = 35, females = 28. Occupied in B = 63. Vacant in both = 6 + 3 = 9. The ratio is 63:9 = 7:1.",
+  "source": "generated caselet, answer recomputed from the numbers"
+ },
+ {
+  "chapter": "Data Interpretation",
+  "topic": "Caselets",
+  "difficulty": "MEDIUM",
+  "seconds": 90,
+  "text": "There are two buses, A and B. The total number of seats in A is 48 and 6 of them are vacant. The number of males who occupy seats in A is 10 more than the number of females who occupy them. The vacant seats in B are 50% less than those in A. The ratio of males to females among the occupied seats in B is 5:4. The total number of occupied seats in B is 50% more than in A. Find the difference between the number of seats occupied by males in B and by females in A.",
+  "options": [
+   "19",
+   "51",
+   "44",
+   "9",
+   "2"
+  ],
+  "correctIndex": 0,
+  "explanation": "Occupied in A = 48 - 6 = 42, so females = (42 - 10) / 2 = 16 and males = 26. In B: vacant = 3, occupied = 63, total = 66, males = 35, females = 28. Males in B = 35, females in A = 16. The difference is 19.",
+  "source": "generated caselet, answer recomputed from the numbers"
+ },
+ {
+  "chapter": "Data Interpretation",
+  "topic": "Caselets",
+  "difficulty": "MEDIUM",
+  "seconds": 90,
+  "text": "There are two buses, A and B. The total number of seats in A is 44 and 4 of them are vacant. The number of males who occupy seats in A is 8 more than the number of females who occupy them. The vacant seats in B are 75% less than those in A. The ratio of males to females among the occupied seats in B is 4:3. The total number of occupied seats in B is 75% more than in A. Find the sum of the total number of seats in A and B.",
+  "options": [
+   "110",
+   "119",
+   "45",
+   "115",
+   "114"
+  ],
+  "correctIndex": 3,
+  "explanation": "Occupied in A = 44 - 4 = 40, so females = (40 - 8) / 2 = 16 and males = 24. In B: vacant = 1, occupied = 70, total = 71, males = 40, females = 30. The sum is 44 + 71 = 115.",
+  "source": "generated caselet, answer recomputed from the numbers"
+ },
+ {
+  "chapter": "Data Interpretation",
+  "topic": "Caselets",
+  "difficulty": "HARD",
+  "seconds": 90,
+  "text": "There are two buses, A and B. The total number of seats in A is 44 and 4 of them are vacant. The number of males who occupy seats in A is 8 more than the number of females who occupy them. The vacant seats in B are 75% less than those in A. The ratio of males to females among the occupied seats in B is 4:3. The total number of occupied seats in B is 75% more than in A. Find the ratio of the occupied seats in B to the vacant seats in both buses together.",
+  "options": [
+   "70:1",
+   "1:14",
+   "15:1",
+   "14:1",
+   "8:1"
+  ],
+  "correctIndex": 3,
+  "explanation": "Occupied in A = 44 - 4 = 40, so females = (40 - 8) / 2 = 16 and males = 24. In B: vacant = 1, occupied = 70, total = 71, males = 40, females = 30. Occupied in B = 70. Vacant in both = 4 + 1 = 5. The ratio is 70:5 = 14:1.",
+  "source": "generated caselet, answer recomputed from the numbers"
+ },
+ {
+  "chapter": "Data Interpretation",
+  "topic": "Caselets",
+  "difficulty": "MEDIUM",
+  "seconds": 90,
+  "text": "There are two buses, A and B. The total number of seats in A is 44 and 4 of them are vacant. The number of males who occupy seats in A is 8 more than the number of females who occupy them. The vacant seats in B are 75% less than those in A. The ratio of males to females among the occupied seats in B is 4:3. The total number of occupied seats in B is 75% more than in A. Find the difference between the number of seats occupied by males in B and by females in A.",
+  "options": [
+   "56",
+   "24",
+   "6",
+   "46",
+   "16"
+  ],
+  "correctIndex": 1,
+  "explanation": "Occupied in A = 44 - 4 = 40, so females = (40 - 8) / 2 = 16 and males = 24. In B: vacant = 1, occupied = 70, total = 71, males = 40, females = 30. Males in B = 40, females in A = 16. The difference is 24.",
+  "source": "generated caselet, answer recomputed from the numbers"
+ },
+ {
+  "chapter": "Data Interpretation",
+  "topic": "Caselets",
+  "difficulty": "MEDIUM",
+  "seconds": 90,
+  "text": "There are two buses, A and B. The total number of seats in A is 40 and 8 of them are vacant. The number of males who occupy seats in A is 8 more than the number of females who occupy them. The vacant seats in B are 25% less than those in A. The ratio of males to females among the occupied seats in B is 3:1. The total number of occupied seats in B is 50% more than in A. Find the sum of the total number of seats in A and B.",
+  "options": [
+   "80",
+   "46",
+   "102",
+   "88",
+   "94"
+  ],
+  "correctIndex": 4,
+  "explanation": "Occupied in A = 40 - 8 = 32, so females = (32 - 8) / 2 = 12 and males = 20. In B: vacant = 6, occupied = 48, total = 54, males = 36, females = 12. The sum is 40 + 54 = 94.",
+  "source": "generated caselet, answer recomputed from the numbers"
+ },
+ {
+  "chapter": "Data Interpretation",
+  "topic": "Caselets",
+  "difficulty": "HARD",
+  "seconds": 90,
+  "text": "There are two buses, A and B. The total number of seats in A is 40 and 8 of them are vacant. The number of males who occupy seats in A is 8 more than the number of females who occupy them. The vacant seats in B are 25% less than those in A. The ratio of males to females among the occupied seats in B is 3:1. The total number of occupied seats in B is 50% more than in A. The total number of seats occupied by females in both buses is what percentage of the total number of seats in A?",
+  "options": [
+   "60%",
+   "44.44%",
+   "75%",
+   "62.4%",
+   "140%"
+  ],
+  "correctIndex": 0,
+  "explanation": "Occupied in A = 40 - 8 = 32, so females = (32 - 8) / 2 = 12 and males = 20. In B: vacant = 6, occupied = 48, total = 54, males = 36, females = 12. Females in both = 12 + 12 = 24. That is 24 / 40 x 100 = 60%.",
+  "source": "generated caselet, answer recomputed from the numbers"
+ },
+ {
+  "chapter": "Data Interpretation",
+  "topic": "Caselets",
+  "difficulty": "HARD",
+  "seconds": 90,
+  "text": "There are two buses, A and B. The total number of seats in A is 40 and 8 of them are vacant. The number of males who occupy seats in A is 8 more than the number of females who occupy them. The vacant seats in B are 25% less than those in A. The ratio of males to females among the occupied seats in B is 3:1. The total number of occupied seats in B is 50% more than in A. Find the ratio of the occupied seats in B to the vacant seats in both buses together.",
+  "options": [
+   "24:7",
+   "16:7",
+   "8:1",
+   "7:24",
+   "25:7"
+  ],
+  "correctIndex": 0,
+  "explanation": "Occupied in A = 40 - 8 = 32, so females = (32 - 8) / 2 = 12 and males = 20. In B: vacant = 6, occupied = 48, total = 54, males = 36, females = 12. Occupied in B = 48. Vacant in both = 8 + 6 = 14. The ratio is 48:14 = 24:7.",
+  "source": "generated caselet, answer recomputed from the numbers"
+ },
+ {
+  "chapter": "Data Interpretation",
+  "topic": "Caselets",
+  "difficulty": "HARD",
+  "seconds": 90,
+  "text": "There are two buses, A and B. The total number of seats in A is 40 and 8 of them are vacant. The number of males who occupy seats in A is 8 more than the number of females who occupy them. The vacant seats in B are 25% less than those in A. The ratio of males to females among the occupied seats in B is 3:1. The total number of occupied seats in B is 50% more than in A. The total number of seats occupied by males in both buses is what percentage of the total number of occupied seats in both?",
+  "options": [
+   "59.57%",
+   "72.8%",
+   "30%",
+   "70%",
+   "175%"
+  ],
+  "correctIndex": 3,
+  "explanation": "Occupied in A = 40 - 8 = 32, so females = (32 - 8) / 2 = 12 and males = 20. In B: vacant = 6, occupied = 48, total = 54, males = 36, females = 12. Males in both = 56. Occupied in both = 80. 56 / 80 x 100 = 70%.",
+  "source": "generated caselet, answer recomputed from the numbers"
+ },
+ {
+  "chapter": "Data Interpretation",
+  "topic": "Caselets",
+  "difficulty": "MEDIUM",
+  "seconds": 90,
+  "text": "There are two buses, A and B. The total number of seats in A is 40 and 8 of them are vacant. The number of males who occupy seats in A is 8 more than the number of females who occupy them. The vacant seats in B are 25% less than those in A. The ratio of males to females among the occupied seats in B is 3:1. The total number of occupied seats in B is 50% more than in A. Find the difference between the number of seats occupied by males in B and by females in A.",
+  "options": [
+   "26",
+   "24",
+   "16",
+   "8",
+   "48"
+  ],
+  "correctIndex": 1,
+  "explanation": "Occupied in A = 40 - 8 = 32, so females = (32 - 8) / 2 = 12 and males = 20. In B: vacant = 6, occupied = 48, total = 54, males = 36, females = 12. Males in B = 36, females in A = 12. The difference is 24.",
+  "source": "generated caselet, answer recomputed from the numbers"
+ },
+ {
+  "chapter": "Data Interpretation",
+  "topic": "Caselets",
+  "difficulty": "MEDIUM",
+  "seconds": 90,
+  "text": "There are two buses, A and B. The total number of seats in A is 46 and 10 of them are vacant. The number of males who occupy seats in A is 10 more than the number of females who occupy them. The vacant seats in B are 40% less than those in A. The ratio of males to females among the occupied seats in B is 5:4. The total number of occupied seats in B is 50% more than in A. Find the sum of the total number of seats in A and B.",
+  "options": [
+   "90",
+   "52",
+   "106",
+   "100",
+   "116"
+  ],
+  "correctIndex": 2,
+  "explanation": "Occupied in A = 46 - 10 = 36, so females = (36 - 10) / 2 = 13 and males = 23. In B: vacant = 6, occupied = 54, total = 60, males = 30, females = 24. The sum is 46 + 60 = 106.",
+  "source": "generated caselet, answer recomputed from the numbers"
+ },
+ {
+  "chapter": "Data Interpretation",
+  "topic": "Caselets",
+  "difficulty": "HARD",
+  "seconds": 90,
+  "text": "There are two buses, A and B. The total number of seats in A is 46 and 10 of them are vacant. The number of males who occupy seats in A is 10 more than the number of females who occupy them. The vacant seats in B are 40% less than those in A. The ratio of males to females among the occupied seats in B is 5:4. The total number of occupied seats in B is 50% more than in A. Find the ratio of the occupied seats in B to the vacant seats in both buses together.",
+  "options": [
+   "9:4",
+   "9:1",
+   "8:27",
+   "7:2",
+   "27:8"
+  ],
+  "correctIndex": 4,
+  "explanation": "Occupied in A = 46 - 10 = 36, so females = (36 - 10) / 2 = 13 and males = 23. In B: vacant = 6, occupied = 54, total = 60, males = 30, females = 24. Occupied in B = 54. Vacant in both = 10 + 6 = 16. The ratio is 54:16 = 27:8.",
+  "source": "generated caselet, answer recomputed from the numbers"
+ },
+ {
+  "chapter": "Data Interpretation",
+  "topic": "Caselets",
+  "difficulty": "MEDIUM",
+  "seconds": 90,
+  "text": "There are two buses, A and B. The total number of seats in A is 46 and 10 of them are vacant. The number of males who occupy seats in A is 10 more than the number of females who occupy them. The vacant seats in B are 40% less than those in A. The ratio of males to females among the occupied seats in B is 5:4. The total number of occupied seats in B is 50% more than in A. Find the difference between the number of seats occupied by males in B and by females in A.",
+  "options": [
+   "17",
+   "37",
+   "1",
+   "43",
+   "7"
+  ],
+  "correctIndex": 0,
+  "explanation": "Occupied in A = 46 - 10 = 36, so females = (36 - 10) / 2 = 13 and males = 23. In B: vacant = 6, occupied = 54, total = 60, males = 30, females = 24. Males in B = 30, females in A = 13. The difference is 17.",
+  "source": "generated caselet, answer recomputed from the numbers"
+ },
+ {
+  "chapter": "Data Interpretation",
+  "topic": "Caselets",
+  "difficulty": "MEDIUM",
+  "seconds": 90,
+  "text": "There are two buses, A and B. The total number of seats in A is 38 and 10 of them are vacant. The number of males who occupy seats in A is 2 more than the number of females who occupy them. The vacant seats in B are 40% less than those in A. The ratio of males to females among the occupied seats in B is 3:1. The total number of occupied seats in B is 100% more than in A. Find the sum of the total number of seats in A and B.",
+  "options": [
+   "44",
+   "84",
+   "110",
+   "100",
+   "94"
+  ],
+  "correctIndex": 3,
+  "explanation": "Occupied in A = 38 - 10 = 28, so females = (28 - 2) / 2 = 13 and males = 15. In B: vacant = 6, occupied = 56, total = 62, males = 42, females = 14. The sum is 38 + 62 = 100.",
+  "source": "generated caselet, answer recomputed from the numbers"
+ },
+ {
+  "chapter": "Data Interpretation",
+  "topic": "Caselets",
+  "difficulty": "HARD",
+  "seconds": 90,
+  "text": "There are two buses, A and B. The total number of seats in A is 38 and 10 of them are vacant. The number of males who occupy seats in A is 2 more than the number of females who occupy them. The vacant seats in B are 40% less than those in A. The ratio of males to females among the occupied seats in B is 3:1. The total number of occupied seats in B is 100% more than in A. Find the ratio of the occupied seats in B to the vacant seats in both buses together.",
+  "options": [
+   "7:4",
+   "4:1",
+   "7:2",
+   "28:3",
+   "2:7"
+  ],
+  "correctIndex": 2,
+  "explanation": "Occupied in A = 38 - 10 = 28, so females = (28 - 2) / 2 = 13 and males = 15. In B: vacant = 6, occupied = 56, total = 62, males = 42, females = 14. Occupied in B = 56. Vacant in both = 10 + 6 = 16. The ratio is 56:16 = 7:2.",
+  "source": "generated caselet, answer recomputed from the numbers"
+ },
+ {
+  "chapter": "Data Interpretation",
+  "topic": "Caselets",
+  "difficulty": "MEDIUM",
+  "seconds": 90,
+  "text": "There are two buses, A and B. The total number of seats in A is 38 and 10 of them are vacant. The number of males who occupy seats in A is 2 more than the number of females who occupy them. The vacant seats in B are 40% less than those in A. The ratio of males to females among the occupied seats in B is 3:1. The total number of occupied seats in B is 100% more than in A. Find the difference between the number of seats occupied by males in B and by females in A.",
+  "options": [
+   "27",
+   "31",
+   "29",
+   "55",
+   "1"
+  ],
+  "correctIndex": 2,
+  "explanation": "Occupied in A = 38 - 10 = 28, so females = (28 - 2) / 2 = 13 and males = 15. In B: vacant = 6, occupied = 56, total = 62, males = 42, females = 14. Males in B = 42, females in A = 13. The difference is 29.",
+  "source": "generated caselet, answer recomputed from the numbers"
+ },
+ {
+  "chapter": "Data Interpretation",
+  "topic": "Caselets",
+  "difficulty": "MEDIUM",
+  "seconds": 90,
+  "text": "There are two buses, A and B. The total number of seats in A is 28 and 12 of them are vacant. The number of males who occupy seats in A is 2 more than the number of females who occupy them. The vacant seats in B are 25% less than those in A. The ratio of males to females among the occupied seats in B is 5:3. The total number of occupied seats in B is 50% more than in A. Find the sum of the total number of seats in A and B.",
+  "options": [
+   "73",
+   "61",
+   "52",
+   "37",
+   "40"
+  ],
+  "correctIndex": 1,
+  "explanation": "Occupied in A = 28 - 12 = 16, so females = (16 - 2) / 2 = 7 and males = 9. In B: vacant = 9, occupied = 24, total = 33, males = 15, females = 9. The sum is 28 + 33 = 61.",
+  "source": "generated caselet, answer recomputed from the numbers"
+ },
+ {
+  "chapter": "Data Interpretation",
+  "topic": "Caselets",
+  "difficulty": "HARD",
+  "seconds": 90,
+  "text": "There are two buses, A and B. The total number of seats in A is 28 and 12 of them are vacant. The number of males who occupy seats in A is 2 more than the number of females who occupy them. The vacant seats in B are 25% less than those in A. The ratio of males to females among the occupied seats in B is 5:3. The total number of occupied seats in B is 50% more than in A. Find the ratio of the occupied seats in B to the vacant seats in both buses together.",
+  "options": [
+   "16:21",
+   "9:7",
+   "7:8",
+   "8:3",
+   "8:7"
+  ],
+  "correctIndex": 4,
+  "explanation": "Occupied in A = 28 - 12 = 16, so females = (16 - 2) / 2 = 7 and males = 9. In B: vacant = 9, occupied = 24, total = 33, males = 15, females = 9. Occupied in B = 24. Vacant in both = 12 + 9 = 21. The ratio is 24:21 = 8:7.",
+  "source": "generated caselet, answer recomputed from the numbers"
+ },
+ {
+  "chapter": "Data Interpretation",
+  "topic": "Caselets",
+  "difficulty": "HARD",
+  "seconds": 90,
+  "text": "There are two buses, A and B. The total number of seats in A is 28 and 12 of them are vacant. The number of males who occupy seats in A is 2 more than the number of females who occupy them. The vacant seats in B are 25% less than those in A. The ratio of males to females among the occupied seats in B is 5:3. The total number of occupied seats in B is 50% more than in A. The total number of seats occupied by males in both buses is what percentage of the total number of occupied seats in both?",
+  "options": [
+   "62.4%",
+   "39.34%",
+   "60%",
+   "150%",
+   "40%"
+  ],
+  "correctIndex": 2,
+  "explanation": "Occupied in A = 28 - 12 = 16, so females = (16 - 2) / 2 = 7 and males = 9. In B: vacant = 9, occupied = 24, total = 33, males = 15, females = 9. Males in both = 24. Occupied in both = 40. 24 / 40 x 100 = 60%.",
+  "source": "generated caselet, answer recomputed from the numbers"
+ },
+ {
+  "chapter": "Data Interpretation",
+  "topic": "Caselets",
+  "difficulty": "MEDIUM",
+  "seconds": 90,
+  "text": "There are two buses, A and B. The total number of seats in A is 28 and 12 of them are vacant. The number of males who occupy seats in A is 2 more than the number of females who occupy them. The vacant seats in B are 25% less than those in A. The ratio of males to females among the occupied seats in B is 5:3. The total number of occupied seats in B is 50% more than in A. Find the difference between the number of seats occupied by males in B and by females in A.",
+  "options": [
+   "6",
+   "22",
+   "16",
+   "10",
+   "8"
+  ],
+  "correctIndex": 4,
+  "explanation": "Occupied in A = 28 - 12 = 16, so females = (16 - 2) / 2 = 7 and males = 9. In B: vacant = 9, occupied = 24, total = 33, males = 15, females = 9. Males in B = 15, females in A = 7. The difference is 8.",
+  "source": "generated caselet, answer recomputed from the numbers"
+ },
+ {
+  "chapter": "Data Interpretation",
+  "topic": "Caselets",
+  "difficulty": "MEDIUM",
+  "seconds": 90,
+  "text": "There are two trains, A and B. The total number of berths in A is 34 and 10 of them are vacant. The number of males who occupy berths in A is 10 more than the number of females who occupy them. The vacant berths in B are 40% less than those in A. The ratio of males to females among the occupied berths in B is 2:1. The total number of occupied berths in B is 75% more than in A. Find the sum of the total number of berths in A and B.",
+  "options": [
+   "92",
+   "76",
+   "82",
+   "66",
+   "40"
+  ],
+  "correctIndex": 2,
+  "explanation": "Occupied in A = 34 - 10 = 24, so females = (24 - 10) / 2 = 7 and males = 17. In B: vacant = 6, occupied = 42, total = 48, males = 28, females = 14. The sum is 34 + 48 = 82.",
+  "source": "generated caselet, answer recomputed from the numbers"
+ },
+ {
+  "chapter": "Data Interpretation",
+  "topic": "Caselets",
+  "difficulty": "HARD",
+  "seconds": 90,
+  "text": "There are two trains, A and B. The total number of berths in A is 34 and 10 of them are vacant. The number of males who occupy berths in A is 10 more than the number of females who occupy them. The vacant berths in B are 40% less than those in A. The ratio of males to females among the occupied berths in B is 2:1. The total number of occupied berths in B is 75% more than in A. Find the ratio of the occupied berths in B to the vacant berths in both trains together.",
+  "options": [
+   "11:4",
+   "3:2",
+   "8:21",
+   "21:8",
+   "7:1"
+  ],
+  "correctIndex": 3,
+  "explanation": "Occupied in A = 34 - 10 = 24, so females = (24 - 10) / 2 = 7 and males = 17. In B: vacant = 6, occupied = 42, total = 48, males = 28, females = 14. Occupied in B = 42. Vacant in both = 10 + 6 = 16. The ratio is 42:16 = 21:8.",
+  "source": "generated caselet, answer recomputed from the numbers"
+ },
+ {
+  "chapter": "Data Interpretation",
+  "topic": "Caselets",
+  "difficulty": "MEDIUM",
+  "seconds": 90,
+  "text": "There are two trains, A and B. The total number of berths in A is 34 and 10 of them are vacant. The number of males who occupy berths in A is 10 more than the number of females who occupy them. The vacant berths in B are 40% less than those in A. The ratio of males to females among the occupied berths in B is 2:1. The total number of occupied berths in B is 75% more than in A. Find the difference between the number of berths occupied by males in B and by females in A.",
+  "options": [
+   "23",
+   "3",
+   "11",
+   "35",
+   "21"
+  ],
+  "correctIndex": 4,
+  "explanation": "Occupied in A = 34 - 10 = 24, so females = (24 - 10) / 2 = 7 and males = 17. In B: vacant = 6, occupied = 42, total = 48, males = 28, females = 14. Males in B = 28, females in A = 7. The difference is 21.",
+  "source": "generated caselet, answer recomputed from the numbers"
+ }
+]
