@@ -1,0 +1,1362 @@
+[
+ {
+  "chapter": "Time, Speed and Distance",
+  "topic": "Boats and streams",
+  "difficulty": "MEDIUM",
+  "seconds": 90,
+  "text": "The speed of a boat in still water is 12 km/hr and the ratio of downstream to upstream speed of the boat is 4:1, respectively. Find the time taken by the boat to cover 192 km downstream (in hours).",
+  "options": [
+   "10",
+   "16",
+   "20",
+   "12",
+   "40"
+  ],
+  "correctIndex": 0,
+  "explanation": "Let the stream speed be s km/hr. Then (12 + s) : (12 - s) = 4:1, so s = 12 x (4 - 1) / (4 + 1) = 7.2. Downstream speed = 19.2 km/hr and upstream speed = 4.8 km/hr. Time = 192 / 19.2 = 10 hours.",
+  "source": "generated, answer solved from the printed numbers"
+ },
+ {
+  "chapter": "Time and Work",
+  "topic": "Work and wages",
+  "difficulty": "HARD",
+  "seconds": 90,
+  "text": "A and B together can complete a work in 12 days, and B alone can complete the same work in 30 days. If 75% of the work is completed by A in (X + 11) days, then find X.",
+  "options": [
+   "15",
+   "6",
+   "4",
+   "20",
+   "11"
+  ],
+  "correctIndex": 2,
+  "explanation": "A's one-day work = 1/12 - 1/30 = 1/20, so A alone needs 20 days. 75% of the work takes A 20 x 75/100 = 15 days. So X + 11 = 15 and X = 4.",
+  "source": "generated, answer solved from the printed numbers"
+ },
+ {
+  "chapter": "Profit and Loss",
+  "topic": "Discount",
+  "difficulty": "MEDIUM",
+  "seconds": 90,
+  "text": "The ratio of the cost price to the selling price of an article is 4:5. The marked price of the article is Rs 5400, and it is sold after allowing a discount of 40%. Find the profit (in Rs).",
+  "options": [
+   "648",
+   "2160",
+   "3240",
+   "713",
+   "2592"
+  ],
+  "correctIndex": 0,
+  "explanation": "Selling price = 5400 x (100 - 40)/100 = 3240. Cost price : selling price = 4:5, so the cost price = 3240 x 4/5 = 2592. Profit = 3240 - 2592 = 648.",
+  "source": "generated, answer solved from the printed numbers"
+ },
+ {
+  "chapter": "Ages",
+  "topic": "Past and future age",
+  "difficulty": "HARD",
+  "seconds": 90,
+  "text": "The age of Akash 5 years hence will be half of the present age of Ayush, and the present age of Akash is 20% less than the present age of Adarsh. If Adarsh is 16 years younger than Ayush, find the age of Akash 2 years ago.",
+  "options": [
+   "26",
+   "8",
+   "6",
+   "4",
+   "10"
+  ],
+  "correctIndex": 2,
+  "explanation": "Let Ayush be y years. Akash = y/2 - 5 and Adarsh = y - 16. Akash is 80% of Adarsh, so y/2 - 5 = 80/100 x (y - 16). Solving gives y = 26, so Akash is 26/2 - 5 = 8 years now, and 6 years 2 years ago.",
+  "source": "generated, answer solved from the printed numbers"
+ },
+ {
+  "chapter": "Time, Speed and Distance",
+  "topic": "Trains",
+  "difficulty": "HARD",
+  "seconds": 90,
+  "text": "The length of train A is 50% more than the length of train B, and the speed of train A is 36 km/hr. Train A crosses a pole in 18 seconds, and train B, running in the same direction, overtakes train A in 15 seconds. Find the time taken by train B to cross a 600 metre long platform (in seconds).",
+  "options": [
+   "28",
+   "26",
+   "24",
+   "20",
+   "36"
+  ],
+  "correctIndex": 2,
+  "explanation": "Speed of A = 36 x 5/18 = 10 m/s, so its length is 10 x 18 = 180 m. Length of B = 180 x 100/150 = 120 m. B overtakes A, so the relative speed = (180 + 120)/15 = 20 m/s and B's speed = 10 + 20 = 30 m/s. To cross the platform B covers 120 + 600 = 720 m, which takes 720/30 = 24 seconds.",
+  "source": "generated, answer solved from the printed numbers"
+ },
+ {
+  "chapter": "Ratio and Proportion",
+  "topic": "Mixtures and alligation",
+  "difficulty": "HARD",
+  "seconds": 90,
+  "text": "A vessel contains milk and water in the ratio of 3:1, respectively. If 8 litres of the mixture are taken out and 3 litres of milk are added to the rest, then the ratio of milk to water becomes 9:2, respectively. Find the initial quantity of water (in litres).",
+  "options": [
+   "16",
+   "4",
+   "5",
+   "3",
+   "12"
+  ],
+  "correctIndex": 1,
+  "explanation": "Let the initial water be w litres, so the milk is 3w/1. Taking out 8 litres removes milk and water in the ratio 3:1: 6 litres of milk and 2 litres of water. After adding 3 litres of milk, milk : water = 9:2. Solving gives w = 4. Check: milk = 12, after taking out = 6, after adding = 9; water left = 2; 9:2 = 9:2.",
+  "source": "generated, answer solved from the printed numbers"
+ },
+ {
+  "chapter": "Simple and Compound Interest",
+  "topic": "Compound interest",
+  "difficulty": "HARD",
+  "seconds": 90,
+  "text": "A man invested a sum of money in simple interest at 12% per annum for two years and received interest of Rs 1500. If he invests Rs 300 more than the first sum in compound interest at the same rate for the same period, find the compound interest he receives (in Rs).",
+  "options": [
+   "1590",
+   "1696.32",
+   "1666.32",
+   "1576.32",
+   "1572"
+  ],
+  "correctIndex": 2,
+  "explanation": "Simple interest for two years at 12% is 2 x 12 = 24% of the sum, so the first sum = 1500 x 100/24 = 6250. The new sum = 6250 + 300 = 6550. Compound interest for two years = 6550 x ((1 + 12/100)^2 - 1) = 6550 x 0.2544 = 1666.32.",
+  "source": "generated, answer solved from the printed numbers"
+ },
+ {
+  "chapter": "Ratio and Proportion",
+  "topic": "Partnership",
+  "difficulty": "HARD",
+  "seconds": 90,
+  "text": "A started a business with an investment of Rs 6000. After a few months, B joined the partnership with an investment of Rs 5500. At the end of the year, the total profit was Rs 2800, out of which B's share was Rs 880. Find the number of months for which B invested his money in the business.",
+  "options": [
+   "8",
+   "4",
+   "5",
+   "12",
+   "6"
+  ],
+  "correctIndex": 4,
+  "explanation": "A's share = 2800 - 880 = 1920. Profit is shared in the ratio of investment x time: 6000 x 12 : 5500 x t = 1920 : 880. So t = 6000 x 12 x 880 / (5500 x 1920) = 6 months.",
+  "source": "generated, answer solved from the printed numbers"
+ },
+ {
+  "chapter": "Time, Speed and Distance",
+  "topic": "Boats and streams",
+  "difficulty": "MEDIUM",
+  "seconds": 90,
+  "text": "The speed of a boat in still water is 11.2 km/hr and the ratio of downstream to upstream speed of the boat is 5:2, respectively. Find the time taken by the boat to cover 32 km downstream (in hours).",
+  "options": [
+   "3",
+   "4",
+   "6",
+   "2",
+   "5"
+  ],
+  "correctIndex": 3,
+  "explanation": "Let the stream speed be s km/hr. Then (11.2 + s) : (11.2 - s) = 5:2, so s = 11.2 x (5 - 2) / (5 + 2) = 4.8. Downstream speed = 16 km/hr and upstream speed = 6.4 km/hr. Time = 32 / 16 = 2 hours.",
+  "source": "generated, answer solved from the printed numbers"
+ },
+ {
+  "chapter": "Time and Work",
+  "topic": "Work and wages",
+  "difficulty": "HARD",
+  "seconds": 90,
+  "text": "A and B together can complete a work in 9 days, and B alone can complete the same work in 12 days. If 75% of the work is completed by A in (X + 20) days, then find X.",
+  "options": [
+   "20",
+   "7",
+   "27",
+   "36",
+   "9"
+  ],
+  "correctIndex": 1,
+  "explanation": "A's one-day work = 1/9 - 1/12 = 1/36, so A alone needs 36 days. 75% of the work takes A 36 x 75/100 = 27 days. So X + 20 = 27 and X = 7.",
+  "source": "generated, answer solved from the printed numbers"
+ },
+ {
+  "chapter": "Profit and Loss",
+  "topic": "Discount",
+  "difficulty": "MEDIUM",
+  "seconds": 90,
+  "text": "The ratio of the cost price to the selling price of an article is 7:8. The marked price of the article is Rs 5400, and it is sold after allowing a discount of 20%. Find the profit (in Rs).",
+  "options": [
+   "594",
+   "540",
+   "3780",
+   "1080",
+   "4320"
+  ],
+  "correctIndex": 1,
+  "explanation": "Selling price = 5400 x (100 - 20)/100 = 4320. Cost price : selling price = 7:8, so the cost price = 4320 x 7/8 = 3780. Profit = 4320 - 3780 = 540.",
+  "source": "generated, answer solved from the printed numbers"
+ },
+ {
+  "chapter": "Ages",
+  "topic": "Past and future age",
+  "difficulty": "HARD",
+  "seconds": 90,
+  "text": "The age of Akash 2 years hence will be one-third of the present age of Ayush, and the present age of Akash is 10% less than the present age of Adarsh. If Adarsh is 23 years younger than Ayush, find the age of Akash 5 years ago.",
+  "options": [
+   "33",
+   "4",
+   "9",
+   "14",
+   "5"
+  ],
+  "correctIndex": 1,
+  "explanation": "Let Ayush be y years. Akash = y/3 - 2 and Adarsh = y - 23. Akash is 90% of Adarsh, so y/3 - 2 = 90/100 x (y - 23). Solving gives y = 33, so Akash is 33/3 - 2 = 9 years now, and 4 years 5 years ago.",
+  "source": "generated, answer solved from the printed numbers"
+ },
+ {
+  "chapter": "Time, Speed and Distance",
+  "topic": "Trains",
+  "difficulty": "HARD",
+  "seconds": 90,
+  "text": "The length of train A is 50% more than the length of train B, and the speed of train A is 108 km/hr. Train A crosses a pole in 19 seconds, and train B, running in the same direction, overtakes train A in 50 seconds. Find the time taken by train B to cross a 600 metre long platform (in seconds).",
+  "options": [
+   "22",
+   "20",
+   "24",
+   "52",
+   "12"
+  ],
+  "correctIndex": 1,
+  "explanation": "Speed of A = 108 x 5/18 = 30 m/s, so its length is 30 x 19 = 570 m. Length of B = 570 x 100/150 = 380 m. B overtakes A, so the relative speed = (570 + 380)/50 = 19 m/s and B's speed = 30 + 19 = 49 m/s. To cross the platform B covers 380 + 600 = 980 m, which takes 980/49 = 20 seconds.",
+  "source": "generated, answer solved from the printed numbers"
+ },
+ {
+  "chapter": "Ratio and Proportion",
+  "topic": "Mixtures and alligation",
+  "difficulty": "HARD",
+  "seconds": 90,
+  "text": "A vessel contains milk and water in the ratio of 3:1, respectively. If 16 litres of the mixture are taken out and 5 litres of milk are added to the rest, then the ratio of milk to water becomes 17:4, respectively. Find the initial quantity of water (in litres).",
+  "options": [
+   "32",
+   "9",
+   "8",
+   "7",
+   "24"
+  ],
+  "correctIndex": 2,
+  "explanation": "Let the initial water be w litres, so the milk is 3w/1. Taking out 16 litres removes milk and water in the ratio 3:1: 12 litres of milk and 4 litres of water. After adding 5 litres of milk, milk : water = 17:4. Solving gives w = 8. Check: milk = 24, after taking out = 12, after adding = 17; water left = 4; 17:4 = 17:4.",
+  "source": "generated, answer solved from the printed numbers"
+ },
+ {
+  "chapter": "Simple and Compound Interest",
+  "topic": "Compound interest",
+  "difficulty": "HARD",
+  "seconds": 90,
+  "text": "A man invested a sum of money in simple interest at 12% per annum for two years and received interest of Rs 240. If he invests Rs 700 more than the first sum in compound interest at the same rate for the same period, find the compound interest he receives (in Rs).",
+  "options": [
+   "432.48",
+   "254.4",
+   "502.48",
+   "408",
+   "418.08"
+  ],
+  "correctIndex": 0,
+  "explanation": "Simple interest for two years at 12% is 2 x 12 = 24% of the sum, so the first sum = 240 x 100/24 = 1000. The new sum = 1000 + 700 = 1700. Compound interest for two years = 1700 x ((1 + 12/100)^2 - 1) = 1700 x 0.2544 = 432.48.",
+  "source": "generated, answer solved from the printed numbers"
+ },
+ {
+  "chapter": "Ratio and Proportion",
+  "topic": "Partnership",
+  "difficulty": "HARD",
+  "seconds": 90,
+  "text": "A started a business with an investment of Rs 5000. After a few months, B joined the partnership with an investment of Rs 3000. At the end of the year, the total profit was Rs 6900, out of which B's share was Rs 1380. Find the number of months for which B invested his money in the business.",
+  "options": [
+   "7",
+   "3",
+   "12",
+   "4",
+   "5"
+  ],
+  "correctIndex": 4,
+  "explanation": "A's share = 6900 - 1380 = 5520. Profit is shared in the ratio of investment x time: 5000 x 12 : 3000 x t = 5520 : 1380. So t = 5000 x 12 x 1380 / (3000 x 5520) = 5 months.",
+  "source": "generated, answer solved from the printed numbers"
+ },
+ {
+  "chapter": "Time, Speed and Distance",
+  "topic": "Boats and streams",
+  "difficulty": "MEDIUM",
+  "seconds": 90,
+  "text": "The speed of a boat in still water is 2 km/hr and the ratio of downstream to upstream speed of the boat is 4:1, respectively. Find the time taken by the boat to cover 16 km downstream (in hours).",
+  "options": [
+   "8",
+   "7",
+   "10",
+   "5",
+   "20"
+  ],
+  "correctIndex": 3,
+  "explanation": "Let the stream speed be s km/hr. Then (2 + s) : (2 - s) = 4:1, so s = 2 x (4 - 1) / (4 + 1) = 1.2. Downstream speed = 3.2 km/hr and upstream speed = 0.8 km/hr. Time = 16 / 3.2 = 5 hours.",
+  "source": "generated, answer solved from the printed numbers"
+ },
+ {
+  "chapter": "Time and Work",
+  "topic": "Work and wages",
+  "difficulty": "HARD",
+  "seconds": 90,
+  "text": "A and B together can complete a work in 24 days, and B alone can complete the same work in 42 days. If 75% of the work is completed by A in (X + 31) days, then find X.",
+  "options": [
+   "56",
+   "11",
+   "42",
+   "13",
+   "31"
+  ],
+  "correctIndex": 1,
+  "explanation": "A's one-day work = 1/24 - 1/42 = 1/56, so A alone needs 56 days. 75% of the work takes A 56 x 75/100 = 42 days. So X + 31 = 42 and X = 11.",
+  "source": "generated, answer solved from the printed numbers"
+ },
+ {
+  "chapter": "Profit and Loss",
+  "topic": "Discount",
+  "difficulty": "MEDIUM",
+  "seconds": 90,
+  "text": "The ratio of the cost price to the selling price of an article is 8:9. The marked price of the article is Rs 6600, and it is sold after allowing a discount of 40%. Find the profit (in Rs).",
+  "options": [
+   "3960",
+   "2640",
+   "3520",
+   "440",
+   "484"
+  ],
+  "correctIndex": 3,
+  "explanation": "Selling price = 6600 x (100 - 40)/100 = 3960. Cost price : selling price = 8:9, so the cost price = 3960 x 8/9 = 3520. Profit = 3960 - 3520 = 440.",
+  "source": "generated, answer solved from the printed numbers"
+ },
+ {
+  "chapter": "Ages",
+  "topic": "Past and future age",
+  "difficulty": "HARD",
+  "seconds": 90,
+  "text": "The age of Akash 1 year hence will be half of the present age of Ayush, and the present age of Akash is 10% less than the present age of Adarsh. If Adarsh is 34 years younger than Ayush, find the age of Akash 6 years ago.",
+  "options": [
+   "34",
+   "42",
+   "74",
+   "30",
+   "36"
+  ],
+  "correctIndex": 3,
+  "explanation": "Let Ayush be y years. Akash = y/2 - 1 and Adarsh = y - 34. Akash is 90% of Adarsh, so y/2 - 1 = 90/100 x (y - 34). Solving gives y = 74, so Akash is 74/2 - 1 = 36 years now, and 30 years 6 years ago.",
+  "source": "generated, answer solved from the printed numbers"
+ },
+ {
+  "chapter": "Time, Speed and Distance",
+  "topic": "Trains",
+  "difficulty": "HARD",
+  "seconds": 90,
+  "text": "The length of train A is 50% more than the length of train B, and the speed of train A is 54 km/hr. Train A crosses a pole in 13 seconds, and train B, running in the same direction, overtakes train A in 65 seconds. Find the time taken by train B to cross a 150 metre long platform (in seconds).",
+  "options": [
+   "17",
+   "14",
+   "18",
+   "8",
+   "56"
+  ],
+  "correctIndex": 1,
+  "explanation": "Speed of A = 54 x 5/18 = 15 m/s, so its length is 15 x 13 = 195 m. Length of B = 195 x 100/150 = 130 m. B overtakes A, so the relative speed = (195 + 130)/65 = 5 m/s and B's speed = 15 + 5 = 20 m/s. To cross the platform B covers 130 + 150 = 280 m, which takes 280/20 = 14 seconds.",
+  "source": "generated, answer solved from the printed numbers"
+ },
+ {
+  "chapter": "Ratio and Proportion",
+  "topic": "Mixtures and alligation",
+  "difficulty": "HARD",
+  "seconds": 90,
+  "text": "A vessel contains milk and water in the ratio of 3:1, respectively. If 12 litres of the mixture are taken out and 3 litres of milk are added to the rest, then the ratio of milk to water becomes 9:2, respectively. Find the initial quantity of water (in litres).",
+  "options": [
+   "5",
+   "4",
+   "20",
+   "6",
+   "15"
+  ],
+  "correctIndex": 0,
+  "explanation": "Let the initial water be w litres, so the milk is 3w/1. Taking out 12 litres removes milk and water in the ratio 3:1: 9 litres of milk and 3 litres of water. After adding 3 litres of milk, milk : water = 9:2. Solving gives w = 5. Check: milk = 15, after taking out = 6, after adding = 9; water left = 2; 9:2 = 9:2.",
+  "source": "generated, answer solved from the printed numbers"
+ },
+ {
+  "chapter": "Simple and Compound Interest",
+  "topic": "Compound interest",
+  "difficulty": "HARD",
+  "seconds": 90,
+  "text": "A man invested a sum of money in simple interest at 8% per annum for two years and received interest of Rs 460. If he invests Rs 700 more than the first sum in compound interest at the same rate for the same period, find the compound interest he receives (in Rs).",
+  "options": [
+   "572",
+   "594.88",
+   "576.48",
+   "478.4",
+   "664.88"
+  ],
+  "correctIndex": 1,
+  "explanation": "Simple interest for two years at 8% is 2 x 8 = 16% of the sum, so the first sum = 460 x 100/16 = 2875. The new sum = 2875 + 700 = 3575. Compound interest for two years = 3575 x ((1 + 8/100)^2 - 1) = 3575 x 0.1664 = 594.88.",
+  "source": "generated, answer solved from the printed numbers"
+ },
+ {
+  "chapter": "Ratio and Proportion",
+  "topic": "Partnership",
+  "difficulty": "HARD",
+  "seconds": 90,
+  "text": "A started a business with an investment of Rs 1500. After a few months, B joined the partnership with an investment of Rs 1500. At the end of the year, the total profit was Rs 4900, out of which B's share was Rs 980. Find the number of months for which B invested his money in the business.",
+  "options": [
+   "9",
+   "2",
+   "3",
+   "12",
+   "5"
+  ],
+  "correctIndex": 2,
+  "explanation": "A's share = 4900 - 980 = 3920. Profit is shared in the ratio of investment x time: 1500 x 12 : 1500 x t = 3920 : 980. So t = 1500 x 12 x 980 / (1500 x 3920) = 3 months.",
+  "source": "generated, answer solved from the printed numbers"
+ },
+ {
+  "chapter": "Time, Speed and Distance",
+  "topic": "Boats and streams",
+  "difficulty": "MEDIUM",
+  "seconds": 90,
+  "text": "The speed of a boat in still water is 6 km/hr and the ratio of downstream to upstream speed of the boat is 2:1, respectively. Find the time taken by the boat to cover 48 km downstream (in hours).",
+  "options": [
+   "12",
+   "8",
+   "6",
+   "4",
+   "10"
+  ],
+  "correctIndex": 2,
+  "explanation": "Let the stream speed be s km/hr. Then (6 + s) : (6 - s) = 2:1, so s = 6 x (2 - 1) / (2 + 1) = 2. Downstream speed = 8 km/hr and upstream speed = 4 km/hr. Time = 48 / 8 = 6 hours.",
+  "source": "generated, answer solved from the printed numbers"
+ },
+ {
+  "chapter": "Time and Work",
+  "topic": "Work and wages",
+  "difficulty": "HARD",
+  "seconds": 90,
+  "text": "A and B together can complete a work in 16 days, and B alone can complete the same work in 48 days. If 75% of the work is completed by A in (X + 12) days, then find X.",
+  "options": [
+   "8",
+   "6",
+   "24",
+   "18",
+   "12"
+  ],
+  "correctIndex": 1,
+  "explanation": "A's one-day work = 1/16 - 1/48 = 1/24, so A alone needs 24 days. 75% of the work takes A 24 x 75/100 = 18 days. So X + 12 = 18 and X = 6.",
+  "source": "generated, answer solved from the printed numbers"
+ },
+ {
+  "chapter": "Profit and Loss",
+  "topic": "Discount",
+  "difficulty": "MEDIUM",
+  "seconds": 90,
+  "text": "The ratio of the cost price to the selling price of an article is 4:5. The marked price of the article is Rs 6100, and it is sold after allowing a discount of 50%. Find the profit (in Rs).",
+  "options": [
+   "2440",
+   "671",
+   "610",
+   "3050",
+   "634"
+  ],
+  "correctIndex": 2,
+  "explanation": "Selling price = 6100 x (100 - 50)/100 = 3050. Cost price : selling price = 4:5, so the cost price = 3050 x 4/5 = 2440. Profit = 3050 - 2440 = 610.",
+  "source": "generated, answer solved from the printed numbers"
+ },
+ {
+  "chapter": "Ages",
+  "topic": "Past and future age",
+  "difficulty": "HARD",
+  "seconds": 90,
+  "text": "The age of Akash 1 year hence will be one-third of the present age of Ayush, and the present age of Akash is 50% less than the present age of Adarsh. If Adarsh is 30 years younger than Ayush, find the age of Akash 8 years ago.",
+  "options": [
+   "35",
+   "27",
+   "19",
+   "84",
+   "46"
+  ],
+  "correctIndex": 2,
+  "explanation": "Let Ayush be y years. Akash = y/3 - 1 and Adarsh = y - 30. Akash is 50% of Adarsh, so y/3 - 1 = 50/100 x (y - 30). Solving gives y = 84, so Akash is 84/3 - 1 = 27 years now, and 19 years 8 years ago.",
+  "source": "generated, answer solved from the printed numbers"
+ },
+ {
+  "chapter": "Time, Speed and Distance",
+  "topic": "Trains",
+  "difficulty": "HARD",
+  "seconds": 90,
+  "text": "The length of train A is 25% more than the length of train B, and the speed of train A is 72 km/hr. Train A crosses a pole in 10 seconds, and train B, running in the same direction, overtakes train A in 36 seconds. Find the time taken by train B to cross a 500 metre long platform (in seconds).",
+  "options": [
+   "17",
+   "26",
+   "66",
+   "22",
+   "23"
+  ],
+  "correctIndex": 3,
+  "explanation": "Speed of A = 72 x 5/18 = 20 m/s, so its length is 20 x 10 = 200 m. Length of B = 200 x 100/125 = 160 m. B overtakes A, so the relative speed = (200 + 160)/36 = 10 m/s and B's speed = 20 + 10 = 30 m/s. To cross the platform B covers 160 + 500 = 660 m, which takes 660/30 = 22 seconds.",
+  "source": "generated, answer solved from the printed numbers"
+ },
+ {
+  "chapter": "Ratio and Proportion",
+  "topic": "Mixtures and alligation",
+  "difficulty": "HARD",
+  "seconds": 90,
+  "text": "A vessel contains milk and water in the ratio of 4:1, respectively. If 10 litres of the mixture are taken out and 2 litres of milk are added to the rest, then the ratio of milk to water becomes 22:5, respectively. Find the initial quantity of water (in litres).",
+  "options": [
+   "8",
+   "28",
+   "6",
+   "7",
+   "35"
+  ],
+  "correctIndex": 3,
+  "explanation": "Let the initial water be w litres, so the milk is 4w/1. Taking out 10 litres removes milk and water in the ratio 4:1: 8 litres of milk and 2 litres of water. After adding 2 litres of milk, milk : water = 22:5. Solving gives w = 7. Check: milk = 28, after taking out = 20, after adding = 22; water left = 5; 22:5 = 22:5.",
+  "source": "generated, answer solved from the printed numbers"
+ },
+ {
+  "chapter": "Simple and Compound Interest",
+  "topic": "Compound interest",
+  "difficulty": "HARD",
+  "seconds": 90,
+  "text": "A man invested a sum of money in simple interest at 12% per annum for two years and received interest of Rs 1800. If he invests Rs 700 more than the first sum in compound interest at the same rate for the same period, find the compound interest he receives (in Rs).",
+  "options": [
+   "1908",
+   "2156.08",
+   "1978.08",
+   "2086.08",
+   "1968"
+  ],
+  "correctIndex": 3,
+  "explanation": "Simple interest for two years at 12% is 2 x 12 = 24% of the sum, so the first sum = 1800 x 100/24 = 7500. The new sum = 7500 + 700 = 8200. Compound interest for two years = 8200 x ((1 + 12/100)^2 - 1) = 8200 x 0.2544 = 2086.08.",
+  "source": "generated, answer solved from the printed numbers"
+ },
+ {
+  "chapter": "Ratio and Proportion",
+  "topic": "Partnership",
+  "difficulty": "HARD",
+  "seconds": 90,
+  "text": "A started a business with an investment of Rs 1000. After a few months, B joined the partnership with an investment of Rs 1500. At the end of the year, the total profit was Rs 10500, out of which B's share was Rs 2100. Find the number of months for which B invested his money in the business.",
+  "options": [
+   "2",
+   "4",
+   "12",
+   "1",
+   "10"
+  ],
+  "correctIndex": 0,
+  "explanation": "A's share = 10500 - 2100 = 8400. Profit is shared in the ratio of investment x time: 1000 x 12 : 1500 x t = 8400 : 2100. So t = 1000 x 12 x 2100 / (1500 x 8400) = 2 months.",
+  "source": "generated, answer solved from the printed numbers"
+ },
+ {
+  "chapter": "Time, Speed and Distance",
+  "topic": "Boats and streams",
+  "difficulty": "MEDIUM",
+  "seconds": 90,
+  "text": "The speed of a boat in still water is 20.8 km/hr and the ratio of downstream to upstream speed of the boat is 5:3, respectively. Find the time taken by the boat to cover 312 km downstream (in hours).",
+  "options": [
+   "14",
+   "15",
+   "20",
+   "12",
+   "24"
+  ],
+  "correctIndex": 3,
+  "explanation": "Let the stream speed be s km/hr. Then (20.8 + s) : (20.8 - s) = 5:3, so s = 20.8 x (5 - 3) / (5 + 3) = 5.2. Downstream speed = 26 km/hr and upstream speed = 15.6 km/hr. Time = 312 / 26 = 12 hours.",
+  "source": "generated, answer solved from the printed numbers"
+ },
+ {
+  "chapter": "Time and Work",
+  "topic": "Work and wages",
+  "difficulty": "HARD",
+  "seconds": 90,
+  "text": "A and B together can complete a work in 16 days, and B alone can complete the same work in 24 days. If 75% of the work is completed by A in (X + 8) days, then find X.",
+  "options": [
+   "36",
+   "48",
+   "30",
+   "8",
+   "28"
+  ],
+  "correctIndex": 4,
+  "explanation": "A's one-day work = 1/16 - 1/24 = 1/48, so A alone needs 48 days. 75% of the work takes A 48 x 75/100 = 36 days. So X + 8 = 36 and X = 28.",
+  "source": "generated, answer solved from the printed numbers"
+ },
+ {
+  "chapter": "Profit and Loss",
+  "topic": "Discount",
+  "difficulty": "MEDIUM",
+  "seconds": 90,
+  "text": "The ratio of the cost price to the selling price of an article is 4:5. The marked price of the article is Rs 4800, and it is sold after allowing a discount of 50%. Find the profit (in Rs).",
+  "options": [
+   "2400",
+   "528",
+   "499",
+   "480",
+   "1920"
+  ],
+  "correctIndex": 3,
+  "explanation": "Selling price = 4800 x (100 - 50)/100 = 2400. Cost price : selling price = 4:5, so the cost price = 2400 x 4/5 = 1920. Profit = 2400 - 1920 = 480.",
+  "source": "generated, answer solved from the printed numbers"
+ },
+ {
+  "chapter": "Ages",
+  "topic": "Past and future age",
+  "difficulty": "HARD",
+  "seconds": 90,
+  "text": "The age of Akash 4 years hence will be one-third of the present age of Ayush, and the present age of Akash is 50% less than the present age of Adarsh. If Adarsh is 30 years younger than Ayush, find the age of Akash 10 years ago.",
+  "options": [
+   "66",
+   "26",
+   "18",
+   "28",
+   "8"
+  ],
+  "correctIndex": 4,
+  "explanation": "Let Ayush be y years. Akash = y/3 - 4 and Adarsh = y - 30. Akash is 50% of Adarsh, so y/3 - 4 = 50/100 x (y - 30). Solving gives y = 66, so Akash is 66/3 - 4 = 18 years now, and 8 years 10 years ago.",
+  "source": "generated, answer solved from the printed numbers"
+ },
+ {
+  "chapter": "Time, Speed and Distance",
+  "topic": "Trains",
+  "difficulty": "HARD",
+  "seconds": 90,
+  "text": "The length of train A is 50% more than the length of train B, and the speed of train A is 108 km/hr. Train A crosses a pole in 20 seconds, and train B, running in the same direction, overtakes train A in 50 seconds. Find the time taken by train B to cross a 750 metre long platform (in seconds).",
+  "options": [
+   "23",
+   "15",
+   "58",
+   "25",
+   "27"
+  ],
+  "correctIndex": 0,
+  "explanation": "Speed of A = 108 x 5/18 = 30 m/s, so its length is 30 x 20 = 600 m. Length of B = 600 x 100/150 = 400 m. B overtakes A, so the relative speed = (600 + 400)/50 = 20 m/s and B's speed = 30 + 20 = 50 m/s. To cross the platform B covers 400 + 750 = 1150 m, which takes 1150/50 = 23 seconds.",
+  "source": "generated, answer solved from the printed numbers"
+ },
+ {
+  "chapter": "Ratio and Proportion",
+  "topic": "Mixtures and alligation",
+  "difficulty": "HARD",
+  "seconds": 90,
+  "text": "A vessel contains milk and water in the ratio of 4:1, respectively. If 40 litres of the mixture are taken out and 6 litres of milk are added to the rest, then the ratio of milk to water becomes 10:1, respectively. Find the initial quantity of water (in litres).",
+  "options": [
+   "10",
+   "8",
+   "36",
+   "45",
+   "9"
+  ],
+  "correctIndex": 4,
+  "explanation": "Let the initial water be w litres, so the milk is 4w/1. Taking out 40 litres removes milk and water in the ratio 4:1: 32 litres of milk and 8 litres of water. After adding 6 litres of milk, milk : water = 10:1. Solving gives w = 9. Check: milk = 36, after taking out = 4, after adding = 10; water left = 1; 10:1 = 10:1.",
+  "source": "generated, answer solved from the printed numbers"
+ },
+ {
+  "chapter": "Simple and Compound Interest",
+  "topic": "Compound interest",
+  "difficulty": "HARD",
+  "seconds": 90,
+  "text": "A man invested a sum of money in simple interest at 8% per annum for two years and received interest of Rs 1120. If he invests Rs 400 more than the first sum in compound interest at the same rate for the same period, find the compound interest he receives (in Rs).",
+  "options": [
+   "1186.56",
+   "1184",
+   "1231.36",
+   "1271.36",
+   "1164.8"
+  ],
+  "correctIndex": 2,
+  "explanation": "Simple interest for two years at 8% is 2 x 8 = 16% of the sum, so the first sum = 1120 x 100/16 = 7000. The new sum = 7000 + 400 = 7400. Compound interest for two years = 7400 x ((1 + 8/100)^2 - 1) = 7400 x 0.1664 = 1231.36.",
+  "source": "generated, answer solved from the printed numbers"
+ },
+ {
+  "chapter": "Ratio and Proportion",
+  "topic": "Partnership",
+  "difficulty": "HARD",
+  "seconds": 90,
+  "text": "A started a business with an investment of Rs 3000. After a few months, B joined the partnership with an investment of Rs 3500. At the end of the year, the total profit was Rs 9800, out of which B's share was Rs 2744. Find the number of months for which B invested his money in the business.",
+  "options": [
+   "3",
+   "12",
+   "6",
+   "8",
+   "4"
+  ],
+  "correctIndex": 4,
+  "explanation": "A's share = 9800 - 2744 = 7056. Profit is shared in the ratio of investment x time: 3000 x 12 : 3500 x t = 7056 : 2744. So t = 3000 x 12 x 2744 / (3500 x 7056) = 4 months.",
+  "source": "generated, answer solved from the printed numbers"
+ },
+ {
+  "chapter": "Time, Speed and Distance",
+  "topic": "Boats and streams",
+  "difficulty": "MEDIUM",
+  "seconds": 90,
+  "text": "The speed of a boat in still water is 6 km/hr and the ratio of downstream to upstream speed of the boat is 2:1, respectively. Find the time taken by the boat to cover 48 km upstream (in hours).",
+  "options": [
+   "14",
+   "6",
+   "12",
+   "8",
+   "24"
+  ],
+  "correctIndex": 2,
+  "explanation": "Let the stream speed be s km/hr. Then (6 + s) : (6 - s) = 2:1, so s = 6 x (2 - 1) / (2 + 1) = 2. Downstream speed = 8 km/hr and upstream speed = 4 km/hr. Time = 48 / 4 = 12 hours.",
+  "source": "generated, answer solved from the printed numbers"
+ },
+ {
+  "chapter": "Time and Work",
+  "topic": "Work and wages",
+  "difficulty": "HARD",
+  "seconds": 90,
+  "text": "A and B together can complete a work in 24 days, and B alone can complete the same work in 42 days. If 25% of the work is completed by A in (X + 9) days, then find X.",
+  "options": [
+   "7",
+   "14",
+   "9",
+   "56",
+   "5"
+  ],
+  "correctIndex": 4,
+  "explanation": "A's one-day work = 1/24 - 1/42 = 1/56, so A alone needs 56 days. 25% of the work takes A 56 x 25/100 = 14 days. So X + 9 = 14 and X = 5.",
+  "source": "generated, answer solved from the printed numbers"
+ },
+ {
+  "chapter": "Profit and Loss",
+  "topic": "Discount",
+  "difficulty": "MEDIUM",
+  "seconds": 90,
+  "text": "The ratio of the cost price to the selling price of an article is 9:10. The marked price of the article is Rs 8000, and it is sold after allowing a discount of 25%. Find the profit (in Rs).",
+  "options": [
+   "660",
+   "2000",
+   "6000",
+   "600",
+   "5400"
+  ],
+  "correctIndex": 3,
+  "explanation": "Selling price = 8000 x (100 - 25)/100 = 6000. Cost price : selling price = 9:10, so the cost price = 6000 x 9/10 = 5400. Profit = 6000 - 5400 = 600.",
+  "source": "generated, answer solved from the printed numbers"
+ },
+ {
+  "chapter": "Ages",
+  "topic": "Past and future age",
+  "difficulty": "HARD",
+  "seconds": 90,
+  "text": "The age of Akash 1 year hence will be one-third of the present age of Ayush, and the present age of Akash is 40% less than the present age of Adarsh. If Adarsh is 19 years younger than Ayush, find the age of Akash 7 years ago.",
+  "options": [
+   "13",
+   "39",
+   "12",
+   "19",
+   "5"
+  ],
+  "correctIndex": 4,
+  "explanation": "Let Ayush be y years. Akash = y/3 - 1 and Adarsh = y - 19. Akash is 60% of Adarsh, so y/3 - 1 = 60/100 x (y - 19). Solving gives y = 39, so Akash is 39/3 - 1 = 12 years now, and 5 years 7 years ago.",
+  "source": "generated, answer solved from the printed numbers"
+ },
+ {
+  "chapter": "Time, Speed and Distance",
+  "topic": "Trains",
+  "difficulty": "HARD",
+  "seconds": 90,
+  "text": "The length of train A is 20% more than the length of train B, and the speed of train A is 108 km/hr. Train A crosses a pole in 9 seconds, and train B, running in the same direction, overtakes train A in 45 seconds. Find the time taken by train B to cross a 800 metre long platform (in seconds).",
+  "options": [
+   "26",
+   "29",
+   "20",
+   "25",
+   "93"
+  ],
+  "correctIndex": 3,
+  "explanation": "Speed of A = 108 x 5/18 = 30 m/s, so its length is 30 x 9 = 270 m. Length of B = 270 x 100/120 = 225 m. B overtakes A, so the relative speed = (270 + 225)/45 = 11 m/s and B's speed = 30 + 11 = 41 m/s. To cross the platform B covers 225 + 800 = 1025 m, which takes 1025/41 = 25 seconds.",
+  "source": "generated, answer solved from the printed numbers"
+ },
+ {
+  "chapter": "Ratio and Proportion",
+  "topic": "Mixtures and alligation",
+  "difficulty": "HARD",
+  "seconds": 90,
+  "text": "A vessel contains milk and water in the ratio of 3:2, respectively. If 10 litres of the mixture are taken out and 12 litres of milk are added to the rest, then the ratio of milk to water becomes 7:2, respectively. Find the initial quantity of water (in litres).",
+  "options": [
+   "10",
+   "8",
+   "12",
+   "25",
+   "15"
+  ],
+  "correctIndex": 0,
+  "explanation": "Let the initial water be w litres, so the milk is 3w/2. Taking out 10 litres removes milk and water in the ratio 3:2: 6 litres of milk and 4 litres of water. After adding 12 litres of milk, milk : water = 7:2. Solving gives w = 10. Check: milk = 15, after taking out = 9, after adding = 21; water left = 6; 21:6 = 7:2.",
+  "source": "generated, answer solved from the printed numbers"
+ },
+ {
+  "chapter": "Simple and Compound Interest",
+  "topic": "Compound interest",
+  "difficulty": "HARD",
+  "seconds": 90,
+  "text": "A man invested a sum of money in simple interest at 20% per annum for two years and received interest of Rs 1300. If he invests Rs 800 more than the first sum in compound interest at the same rate for the same period, find the compound interest he receives (in Rs).",
+  "options": [
+   "1782",
+   "1652",
+   "1620",
+   "1862",
+   "1430"
+  ],
+  "correctIndex": 0,
+  "explanation": "Simple interest for two years at 20% is 2 x 20 = 40% of the sum, so the first sum = 1300 x 100/40 = 3250. The new sum = 3250 + 800 = 4050. Compound interest for two years = 4050 x ((1 + 20/100)^2 - 1) = 4050 x 0.44 = 1782.",
+  "source": "generated, answer solved from the printed numbers"
+ },
+ {
+  "chapter": "Ratio and Proportion",
+  "topic": "Partnership",
+  "difficulty": "HARD",
+  "seconds": 90,
+  "text": "A started a business with an investment of Rs 3500. After a few months, B joined the partnership with an investment of Rs 1000. At the end of the year, the total profit was Rs 9900, out of which B's share was Rs 450. Find the number of months for which B invested his money in the business.",
+  "options": [
+   "1",
+   "4",
+   "2",
+   "10",
+   "12"
+  ],
+  "correctIndex": 2,
+  "explanation": "A's share = 9900 - 450 = 9450. Profit is shared in the ratio of investment x time: 3500 x 12 : 1000 x t = 9450 : 450. So t = 3500 x 12 x 450 / (1000 x 9450) = 2 months.",
+  "source": "generated, answer solved from the printed numbers"
+ },
+ {
+  "chapter": "Time, Speed and Distance",
+  "topic": "Boats and streams",
+  "difficulty": "MEDIUM",
+  "seconds": 90,
+  "text": "The speed of a boat in still water is 8 km/hr and the ratio of downstream to upstream speed of the boat is 5:3, respectively. Find the time taken by the boat to cover 54 km upstream (in hours).",
+  "options": [
+   "7",
+   "5",
+   "11",
+   "18",
+   "9"
+  ],
+  "correctIndex": 4,
+  "explanation": "Let the stream speed be s km/hr. Then (8 + s) : (8 - s) = 5:3, so s = 8 x (5 - 3) / (5 + 3) = 2. Downstream speed = 10 km/hr and upstream speed = 6 km/hr. Time = 54 / 6 = 9 hours.",
+  "source": "generated, answer solved from the printed numbers"
+ },
+ {
+  "chapter": "Time and Work",
+  "topic": "Work and wages",
+  "difficulty": "HARD",
+  "seconds": 90,
+  "text": "A and B together can complete a work in 24 days, and B alone can complete the same work in 72 days. If 75% of the work is completed by A in (X + 9) days, then find X.",
+  "options": [
+   "9",
+   "36",
+   "20",
+   "18",
+   "27"
+  ],
+  "correctIndex": 3,
+  "explanation": "A's one-day work = 1/24 - 1/72 = 1/36, so A alone needs 36 days. 75% of the work takes A 36 x 75/100 = 27 days. So X + 9 = 27 and X = 18.",
+  "source": "generated, answer solved from the printed numbers"
+ },
+ {
+  "chapter": "Profit and Loss",
+  "topic": "Discount",
+  "difficulty": "MEDIUM",
+  "seconds": 90,
+  "text": "The ratio of the cost price to the selling price of an article is 9:10. The marked price of the article is Rs 3900, and it is sold after allowing a discount of 50%. Find the profit (in Rs).",
+  "options": [
+   "1950",
+   "203",
+   "195",
+   "215",
+   "1755"
+  ],
+  "correctIndex": 2,
+  "explanation": "Selling price = 3900 x (100 - 50)/100 = 1950. Cost price : selling price = 9:10, so the cost price = 1950 x 9/10 = 1755. Profit = 1950 - 1755 = 195.",
+  "source": "generated, answer solved from the printed numbers"
+ },
+ {
+  "chapter": "Ages",
+  "topic": "Past and future age",
+  "difficulty": "HARD",
+  "seconds": 90,
+  "text": "The age of Akash 3 years hence will be one-third of the present age of Ayush, and the present age of Akash is 50% less than the present age of Adarsh. If Adarsh is 37 years younger than Ayush, find the age of Akash 8 years ago.",
+  "options": [
+   "36",
+   "93",
+   "48",
+   "28",
+   "20"
+  ],
+  "correctIndex": 4,
+  "explanation": "Let Ayush be y years. Akash = y/3 - 3 and Adarsh = y - 37. Akash is 50% of Adarsh, so y/3 - 3 = 50/100 x (y - 37). Solving gives y = 93, so Akash is 93/3 - 3 = 28 years now, and 20 years 8 years ago.",
+  "source": "generated, answer solved from the printed numbers"
+ },
+ {
+  "chapter": "Time, Speed and Distance",
+  "topic": "Trains",
+  "difficulty": "HARD",
+  "seconds": 90,
+  "text": "The length of train A is 100% more than the length of train B, and the speed of train A is 72 km/hr. Train A crosses a pole in 16 seconds, and train B, running in the same direction, overtakes train A in 32 seconds. Find the time taken by train B to cross a 400 metre long platform (in seconds).",
+  "options": [
+   "21",
+   "20",
+   "16",
+   "37",
+   "11"
+  ],
+  "correctIndex": 2,
+  "explanation": "Speed of A = 72 x 5/18 = 20 m/s, so its length is 20 x 16 = 320 m. Length of B = 320 x 100/200 = 160 m. B overtakes A, so the relative speed = (320 + 160)/32 = 15 m/s and B's speed = 20 + 15 = 35 m/s. To cross the platform B covers 160 + 400 = 560 m, which takes 560/35 = 16 seconds.",
+  "source": "generated, answer solved from the printed numbers"
+ },
+ {
+  "chapter": "Ratio and Proportion",
+  "topic": "Mixtures and alligation",
+  "difficulty": "HARD",
+  "seconds": 90,
+  "text": "A vessel contains milk and water in the ratio of 5:3, respectively. If 8 litres of the mixture are taken out and 6 litres of milk are added to the rest, then the ratio of milk to water becomes 13:6, respectively. Find the initial quantity of water (in litres).",
+  "options": [
+   "40",
+   "15",
+   "12",
+   "18",
+   "25"
+  ],
+  "correctIndex": 1,
+  "explanation": "Let the initial water be w litres, so the milk is 5w/3. Taking out 8 litres removes milk and water in the ratio 5:3: 5 litres of milk and 3 litres of water. After adding 6 litres of milk, milk : water = 13:6. Solving gives w = 15. Check: milk = 25, after taking out = 20, after adding = 26; water left = 12; 26:12 = 13:6.",
+  "source": "generated, answer solved from the printed numbers"
+ },
+ {
+  "chapter": "Simple and Compound Interest",
+  "topic": "Compound interest",
+  "difficulty": "HARD",
+  "seconds": 90,
+  "text": "A man invested a sum of money in simple interest at 8% per annum for two years and received interest of Rs 1080. If he invests Rs 900 more than the first sum in compound interest at the same rate for the same period, find the compound interest he receives (in Rs).",
+  "options": [
+   "1229.76",
+   "1272.96",
+   "1224",
+   "1123.2",
+   "1362.96"
+  ],
+  "correctIndex": 1,
+  "explanation": "Simple interest for two years at 8% is 2 x 8 = 16% of the sum, so the first sum = 1080 x 100/16 = 6750. The new sum = 6750 + 900 = 7650. Compound interest for two years = 7650 x ((1 + 8/100)^2 - 1) = 7650 x 0.1664 = 1272.96.",
+  "source": "generated, answer solved from the printed numbers"
+ },
+ {
+  "chapter": "Ratio and Proportion",
+  "topic": "Partnership",
+  "difficulty": "HARD",
+  "seconds": 90,
+  "text": "A started a business with an investment of Rs 2500. After a few months, B joined the partnership with an investment of Rs 4000. At the end of the year, the total profit was Rs 11900, out of which B's share was Rs 3400. Find the number of months for which B invested his money in the business.",
+  "options": [
+   "2",
+   "5",
+   "12",
+   "9",
+   "3"
+  ],
+  "correctIndex": 4,
+  "explanation": "A's share = 11900 - 3400 = 8500. Profit is shared in the ratio of investment x time: 2500 x 12 : 4000 x t = 8500 : 3400. So t = 2500 x 12 x 3400 / (4000 x 8500) = 3 months.",
+  "source": "generated, answer solved from the printed numbers"
+ },
+ {
+  "chapter": "Time, Speed and Distance",
+  "topic": "Boats and streams",
+  "difficulty": "MEDIUM",
+  "seconds": 90,
+  "text": "The speed of a boat in still water is 21 km/hr and the ratio of downstream to upstream speed of the boat is 5:2, respectively. Find the time taken by the boat to cover 360 km downstream (in hours).",
+  "options": [
+   "14",
+   "24",
+   "12",
+   "17",
+   "30"
+  ],
+  "correctIndex": 2,
+  "explanation": "Let the stream speed be s km/hr. Then (21 + s) : (21 - s) = 5:2, so s = 21 x (5 - 2) / (5 + 2) = 9. Downstream speed = 30 km/hr and upstream speed = 12 km/hr. Time = 360 / 30 = 12 hours.",
+  "source": "generated, answer solved from the printed numbers"
+ },
+ {
+  "chapter": "Time and Work",
+  "topic": "Work and wages",
+  "difficulty": "HARD",
+  "seconds": 90,
+  "text": "A and B together can complete a work in 18 days, and B alone can complete the same work in 45 days. If 50% of the work is completed by A in (X + 10) days, then find X.",
+  "options": [
+   "7",
+   "10",
+   "5",
+   "30",
+   "15"
+  ],
+  "correctIndex": 2,
+  "explanation": "A's one-day work = 1/18 - 1/45 = 1/30, so A alone needs 30 days. 50% of the work takes A 30 x 50/100 = 15 days. So X + 10 = 15 and X = 5.",
+  "source": "generated, answer solved from the printed numbers"
+ },
+ {
+  "chapter": "Profit and Loss",
+  "topic": "Discount",
+  "difficulty": "MEDIUM",
+  "seconds": 90,
+  "text": "The ratio of the cost price to the selling price of an article is 3:4. The marked price of the article is Rs 6900, and it is sold after allowing a discount of 20%. Find the profit (in Rs).",
+  "options": [
+   "5520",
+   "1518",
+   "4140",
+   "1435",
+   "1380"
+  ],
+  "correctIndex": 4,
+  "explanation": "Selling price = 6900 x (100 - 20)/100 = 5520. Cost price : selling price = 3:4, so the cost price = 5520 x 3/4 = 4140. Profit = 5520 - 4140 = 1380.",
+  "source": "generated, answer solved from the printed numbers"
+ },
+ {
+  "chapter": "Ages",
+  "topic": "Past and future age",
+  "difficulty": "HARD",
+  "seconds": 90,
+  "text": "The age of Akash 3 years hence will be half of the present age of Ayush, and the present age of Akash is 40% less than the present age of Adarsh. If Adarsh is 18 years younger than Ayush, find the age of Akash 7 years ago.",
+  "options": [
+   "36",
+   "78",
+   "53",
+   "29",
+   "43"
+  ],
+  "correctIndex": 3,
+  "explanation": "Let Ayush be y years. Akash = y/2 - 3 and Adarsh = y - 18. Akash is 60% of Adarsh, so y/2 - 3 = 60/100 x (y - 18). Solving gives y = 78, so Akash is 78/2 - 3 = 36 years now, and 29 years 7 years ago.",
+  "source": "generated, answer solved from the printed numbers"
+ },
+ {
+  "chapter": "Time, Speed and Distance",
+  "topic": "Trains",
+  "difficulty": "HARD",
+  "seconds": 90,
+  "text": "The length of train A is 100% more than the length of train B, and the speed of train A is 36 km/hr. Train A crosses a pole in 14 seconds, and train B, running in the same direction, overtakes train A in 21 seconds. Find the time taken by train B to cross a 250 metre long platform (in seconds).",
+  "options": [
+   "32",
+   "20",
+   "13",
+   "16",
+   "18"
+  ],
+  "correctIndex": 3,
+  "explanation": "Speed of A = 36 x 5/18 = 10 m/s, so its length is 10 x 14 = 140 m. Length of B = 140 x 100/200 = 70 m. B overtakes A, so the relative speed = (140 + 70)/21 = 10 m/s and B's speed = 10 + 10 = 20 m/s. To cross the platform B covers 70 + 250 = 320 m, which takes 320/20 = 16 seconds.",
+  "source": "generated, answer solved from the printed numbers"
+ },
+ {
+  "chapter": "Ratio and Proportion",
+  "topic": "Mixtures and alligation",
+  "difficulty": "HARD",
+  "seconds": 90,
+  "text": "A vessel contains milk and water in the ratio of 5:3, respectively. If 8 litres of the mixture are taken out and 3 litres of milk are added to the rest, then the ratio of milk to water becomes 13:6, respectively. Find the initial quantity of water (in litres).",
+  "options": [
+   "6",
+   "24",
+   "15",
+   "9",
+   "12"
+  ],
+  "correctIndex": 3,
+  "explanation": "Let the initial water be w litres, so the milk is 5w/3. Taking out 8 litres removes milk and water in the ratio 5:3: 5 litres of milk and 3 litres of water. After adding 3 litres of milk, milk : water = 13:6. Solving gives w = 9. Check: milk = 15, after taking out = 10, after adding = 13; water left = 6; 13:6 = 13:6.",
+  "source": "generated, answer solved from the printed numbers"
+ },
+ {
+  "chapter": "Simple and Compound Interest",
+  "topic": "Compound interest",
+  "difficulty": "HARD",
+  "seconds": 90,
+  "text": "A man invested a sum of money in simple interest at 20% per annum for two years and received interest of Rs 2800. If he invests Rs 1000 more than the first sum in compound interest at the same rate for the same period, find the compound interest he receives (in Rs).",
+  "options": [
+   "3200",
+   "3080",
+   "3520",
+   "3240",
+   "3620"
+  ],
+  "correctIndex": 2,
+  "explanation": "Simple interest for two years at 20% is 2 x 20 = 40% of the sum, so the first sum = 2800 x 100/40 = 7000. The new sum = 7000 + 1000 = 8000. Compound interest for two years = 8000 x ((1 + 20/100)^2 - 1) = 8000 x 0.44 = 3520.",
+  "source": "generated, answer solved from the printed numbers"
+ },
+ {
+  "chapter": "Ratio and Proportion",
+  "topic": "Partnership",
+  "difficulty": "HARD",
+  "seconds": 90,
+  "text": "A started a business with an investment of Rs 2500. After a few months, B joined the partnership with an investment of Rs 5500. At the end of the year, the total profit was Rs 3100, out of which B's share was Rs 1100. Find the number of months for which B invested his money in the business.",
+  "options": [
+   "3",
+   "9",
+   "12",
+   "2",
+   "5"
+  ],
+  "correctIndex": 0,
+  "explanation": "A's share = 3100 - 1100 = 2000. Profit is shared in the ratio of investment x time: 2500 x 12 : 5500 x t = 2000 : 1100. So t = 2500 x 12 x 1100 / (5500 x 2000) = 3 months.",
+  "source": "generated, answer solved from the printed numbers"
+ },
+ {
+  "chapter": "Time, Speed and Distance",
+  "topic": "Boats and streams",
+  "difficulty": "MEDIUM",
+  "seconds": 90,
+  "text": "The speed of a boat in still water is 4 km/hr and the ratio of downstream to upstream speed of the boat is 3:1, respectively. Find the time taken by the boat to cover 72 km downstream (in hours).",
+  "options": [
+   "36",
+   "14",
+   "24",
+   "12",
+   "18"
+  ],
+  "correctIndex": 3,
+  "explanation": "Let the stream speed be s km/hr. Then (4 + s) : (4 - s) = 3:1, so s = 4 x (3 - 1) / (3 + 1) = 2. Downstream speed = 6 km/hr and upstream speed = 2 km/hr. Time = 72 / 6 = 12 hours.",
+  "source": "generated, answer solved from the printed numbers"
+ },
+ {
+  "chapter": "Time and Work",
+  "topic": "Work and wages",
+  "difficulty": "HARD",
+  "seconds": 90,
+  "text": "A and B together can complete a work in 9 days, and B alone can complete the same work in 12 days. If 75% of the work is completed by A in (X + 23) days, then find X.",
+  "options": [
+   "27",
+   "4",
+   "6",
+   "23",
+   "36"
+  ],
+  "correctIndex": 1,
+  "explanation": "A's one-day work = 1/9 - 1/12 = 1/36, so A alone needs 36 days. 75% of the work takes A 36 x 75/100 = 27 days. So X + 23 = 27 and X = 4.",
+  "source": "generated, answer solved from the printed numbers"
+ },
+ {
+  "chapter": "Profit and Loss",
+  "topic": "Discount",
+  "difficulty": "MEDIUM",
+  "seconds": 90,
+  "text": "The ratio of the cost price to the selling price of an article is 9:10. The marked price of the article is Rs 6600, and it is sold after allowing a discount of 10%. Find the profit (in Rs).",
+  "options": [
+   "5346",
+   "653",
+   "594",
+   "660",
+   "5940"
+  ],
+  "correctIndex": 2,
+  "explanation": "Selling price = 6600 x (100 - 10)/100 = 5940. Cost price : selling price = 9:10, so the cost price = 5940 x 9/10 = 5346. Profit = 5940 - 5346 = 594.",
+  "source": "generated, answer solved from the printed numbers"
+ },
+ {
+  "chapter": "Ages",
+  "topic": "Past and future age",
+  "difficulty": "HARD",
+  "seconds": 90,
+  "text": "The age of Akash 1 year hence will be half of the present age of Ayush, and the present age of Akash is 25% less than the present age of Adarsh. If Adarsh is 20 years younger than Ayush, find the age of Akash 8 years ago.",
+  "options": [
+   "27",
+   "35",
+   "28",
+   "56",
+   "19"
+  ],
+  "correctIndex": 4,
+  "explanation": "Let Ayush be y years. Akash = y/2 - 1 and Adarsh = y - 20. Akash is 75% of Adarsh, so y/2 - 1 = 75/100 x (y - 20). Solving gives y = 56, so Akash is 56/2 - 1 = 27 years now, and 19 years 8 years ago.",
+  "source": "generated, answer solved from the printed numbers"
+ },
+ {
+  "chapter": "Time, Speed and Distance",
+  "topic": "Trains",
+  "difficulty": "HARD",
+  "seconds": 90,
+  "text": "The length of train A is 100% more than the length of train B, and the speed of train A is 36 km/hr. Train A crosses a pole in 20 seconds, and train B, running in the same direction, overtakes train A in 20 seconds. Find the time taken by train B to cross a 150 metre long platform (in seconds).",
+  "options": [
+   "12",
+   "10",
+   "6",
+   "14",
+   "17"
+  ],
+  "correctIndex": 1,
+  "explanation": "Speed of A = 36 x 5/18 = 10 m/s, so its length is 10 x 20 = 200 m. Length of B = 200 x 100/200 = 100 m. B overtakes A, so the relative speed = (200 + 100)/20 = 15 m/s and B's speed = 10 + 15 = 25 m/s. To cross the platform B covers 100 + 150 = 250 m, which takes 250/25 = 10 seconds.",
+  "source": "generated, answer solved from the printed numbers"
+ },
+ {
+  "chapter": "Ratio and Proportion",
+  "topic": "Mixtures and alligation",
+  "difficulty": "HARD",
+  "seconds": 90,
+  "text": "A vessel contains milk and water in the ratio of 2:1, respectively. If 15 litres of the mixture are taken out and 8 litres of milk are added to the rest, then the ratio of milk to water becomes 4:1, respectively. Find the initial quantity of water (in litres).",
+  "options": [
+   "10",
+   "27",
+   "8",
+   "18",
+   "9"
+  ],
+  "correctIndex": 4,
+  "explanation": "Let the initial water be w litres, so the milk is 2w/1. Taking out 15 litres removes milk and water in the ratio 2:1: 10 litres of milk and 5 litres of water. After adding 8 litres of milk, milk : water = 4:1. Solving gives w = 9. Check: milk = 18, after taking out = 8, after adding = 16; water left = 4; 16:4 = 4:1.",
+  "source": "generated, answer solved from the printed numbers"
+ },
+ {
+  "chapter": "Simple and Compound Interest",
+  "topic": "Compound interest",
+  "difficulty": "HARD",
+  "seconds": 90,
+  "text": "A man invested a sum of money in simple interest at 8% per annum for two years and received interest of Rs 300. If he invests Rs 600 more than the first sum in compound interest at the same rate for the same period, find the compound interest he receives (in Rs).",
+  "options": [
+   "396",
+   "399.84",
+   "312",
+   "471.84",
+   "411.84"
+  ],
+  "correctIndex": 4,
+  "explanation": "Simple interest for two years at 8% is 2 x 8 = 16% of the sum, so the first sum = 300 x 100/16 = 1875. The new sum = 1875 + 600 = 2475. Compound interest for two years = 2475 x ((1 + 8/100)^2 - 1) = 2475 x 0.1664 = 411.84.",
+  "source": "generated, answer solved from the printed numbers"
+ },
+ {
+  "chapter": "Ratio and Proportion",
+  "topic": "Partnership",
+  "difficulty": "HARD",
+  "seconds": 90,
+  "text": "A started a business with an investment of Rs 3500. After a few months, B joined the partnership with an investment of Rs 1500. At the end of the year, the total profit was Rs 9300, out of which B's share was Rs 900. Find the number of months for which B invested his money in the business.",
+  "options": [
+   "12",
+   "2",
+   "9",
+   "5",
+   "3"
+  ],
+  "correctIndex": 4,
+  "explanation": "A's share = 9300 - 900 = 8400. Profit is shared in the ratio of investment x time: 3500 x 12 : 1500 x t = 8400 : 900. So t = 3500 x 12 x 900 / (1500 x 8400) = 3 months.",
+  "source": "generated, answer solved from the printed numbers"
+ },
+ {
+  "chapter": "Time, Speed and Distance",
+  "topic": "Boats and streams",
+  "difficulty": "MEDIUM",
+  "seconds": 90,
+  "text": "The speed of a boat in still water is 6 km/hr and the ratio of downstream to upstream speed of the boat is 2:1, respectively. Find the time taken by the boat to cover 64 km downstream (in hours).",
+  "options": [
+   "11",
+   "8",
+   "6",
+   "16",
+   "10"
+  ],
+  "correctIndex": 1,
+  "explanation": "Let the stream speed be s km/hr. Then (6 + s) : (6 - s) = 2:1, so s = 6 x (2 - 1) / (2 + 1) = 2. Downstream speed = 8 km/hr and upstream speed = 4 km/hr. Time = 64 / 8 = 8 hours.",
+  "source": "generated, answer solved from the printed numbers"
+ },
+ {
+  "chapter": "Time and Work",
+  "topic": "Work and wages",
+  "difficulty": "HARD",
+  "seconds": 90,
+  "text": "A and B together can complete a work in 9 days, and B alone can complete the same work in 12 days. If 25% of the work is completed by A in (X + 4) days, then find X.",
+  "options": [
+   "9",
+   "4",
+   "5",
+   "7",
+   "36"
+  ],
+  "correctIndex": 2,
+  "explanation": "A's one-day work = 1/9 - 1/12 = 1/36, so A alone needs 36 days. 25% of the work takes A 36 x 25/100 = 9 days. So X + 4 = 9 and X = 5.",
+  "source": "generated, answer solved from the printed numbers"
+ },
+ {
+  "chapter": "Profit and Loss",
+  "topic": "Discount",
+  "difficulty": "MEDIUM",
+  "seconds": 90,
+  "text": "The ratio of the cost price to the selling price of an article is 4:5. The marked price of the article is Rs 7900, and it is sold after allowing a discount of 10%. Find the profit (in Rs).",
+  "options": [
+   "1422",
+   "7110",
+   "790",
+   "1564",
+   "5688"
+  ],
+  "correctIndex": 0,
+  "explanation": "Selling price = 7900 x (100 - 10)/100 = 7110. Cost price : selling price = 4:5, so the cost price = 7110 x 4/5 = 5688. Profit = 7110 - 5688 = 1422.",
+  "source": "generated, answer solved from the printed numbers"
+ },
+ {
+  "chapter": "Ages",
+  "topic": "Past and future age",
+  "difficulty": "HARD",
+  "seconds": 90,
+  "text": "The age of Akash 1 year hence will be half of the present age of Ayush, and the present age of Akash is 25% less than the present age of Adarsh. If Adarsh is 24 years younger than Ayush, find the age of Akash 7 years ago.",
+  "options": [
+   "33",
+   "40",
+   "68",
+   "26",
+   "37"
+  ],
+  "correctIndex": 3,
+  "explanation": "Let Ayush be y years. Akash = y/2 - 1 and Adarsh = y - 24. Akash is 75% of Adarsh, so y/2 - 1 = 75/100 x (y - 24). Solving gives y = 68, so Akash is 68/2 - 1 = 33 years now, and 26 years 7 years ago.",
+  "source": "generated, answer solved from the printed numbers"
+ },
+ {
+  "chapter": "Time, Speed and Distance",
+  "topic": "Trains",
+  "difficulty": "HARD",
+  "seconds": 90,
+  "text": "The length of train A is 25% more than the length of train B, and the speed of train A is 18 km/hr. Train A crosses a pole in 20 seconds, and train B, running in the same direction, overtakes train A in 20 seconds. Find the time taken by train B to cross a 200 metre long platform (in seconds).",
+  "options": [
+   "20",
+   "24",
+   "14",
+   "31",
+   "21"
+  ],
+  "correctIndex": 0,
+  "explanation": "Speed of A = 18 x 5/18 = 5 m/s, so its length is 5 x 20 = 100 m. Length of B = 100 x 100/125 = 80 m. B overtakes A, so the relative speed = (100 + 80)/20 = 9 m/s and B's speed = 5 + 9 = 14 m/s. To cross the platform B covers 80 + 200 = 280 m, which takes 280/14 = 20 seconds.",
+  "source": "generated, answer solved from the printed numbers"
+ },
+ {
+  "chapter": "Ratio and Proportion",
+  "topic": "Mixtures and alligation",
+  "difficulty": "HARD",
+  "seconds": 90,
+  "text": "A vessel contains milk and water in the ratio of 5:3, respectively. If 24 litres of the mixture are taken out and 2 litres of milk are added to the rest, then the ratio of milk to water becomes 9:5, respectively. Find the initial quantity of water (in litres).",
+  "options": [
+   "40",
+   "24",
+   "21",
+   "27",
+   "64"
+  ],
+  "correctIndex": 1,
+  "explanation": "Let the initial water be w litres, so the milk is 5w/3. Taking out 24 litres removes milk and water in the ratio 5:3: 15 litres of milk and 9 litres of water. After adding 2 litres of milk, milk : water = 9:5. Solving gives w = 24. Check: milk = 40, after taking out = 25, after adding = 27; water left = 15; 27:15 = 9:5.",
+  "source": "generated, answer solved from the printed numbers"
+ },
+ {
+  "chapter": "Simple and Compound Interest",
+  "topic": "Compound interest",
+  "difficulty": "HARD",
+  "seconds": 90,
+  "text": "A man invested a sum of money in simple interest at 8% per annum for two years and received interest of Rs 280. If he invests Rs 800 more than the first sum in compound interest at the same rate for the same period, find the compound interest he receives (in Rs).",
+  "options": [
+   "424.32",
+   "413.12",
+   "408",
+   "291.2",
+   "504.32"
+  ],
+  "correctIndex": 0,
+  "explanation": "Simple interest for two years at 8% is 2 x 8 = 16% of the sum, so the first sum = 280 x 100/16 = 1750. The new sum = 1750 + 800 = 2550. Compound interest for two years = 2550 x ((1 + 8/100)^2 - 1) = 2550 x 0.1664 = 424.32.",
+  "source": "generated, answer solved from the printed numbers"
+ },
+ {
+  "chapter": "Ratio and Proportion",
+  "topic": "Partnership",
+  "difficulty": "HARD",
+  "seconds": 90,
+  "text": "A started a business with an investment of Rs 1000. After a few months, B joined the partnership with an investment of Rs 3500. At the end of the year, the total profit was Rs 10400, out of which B's share was Rs 5600. Find the number of months for which B invested his money in the business.",
+  "options": [
+   "4",
+   "12",
+   "8",
+   "6",
+   "3"
+  ],
+  "correctIndex": 0,
+  "explanation": "A's share = 10400 - 5600 = 4800. Profit is shared in the ratio of investment x time: 1000 x 12 : 3500 x t = 4800 : 5600. So t = 1000 x 12 x 5600 / (3500 x 4800) = 4 months.",
+  "source": "generated, answer solved from the printed numbers"
+ }
+]

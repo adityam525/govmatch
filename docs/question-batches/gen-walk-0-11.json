@@ -1,0 +1,614 @@
+[
+ {
+  "chapter": "Relations and Direction",
+  "topic": "Direction sense",
+  "difficulty": "MEDIUM",
+  "seconds": 75,
+  "text": "A person starts walking from his office and walks 2 m in the west direction and reaches point P. From point P, he takes a left turn and walks 7 m to reach point Q. From point Q, he takes a right turn and walks 2 m to reach point R. From point R, he takes a left turn and walks 6 m to reach point S. From point S, he takes a right turn and walks 10 m to reach point T. What is the direction of point T with respect to the office?",
+  "options": [
+   "North-east",
+   "South",
+   "North-west",
+   "East",
+   "South-west"
+  ],
+  "correctIndex": 4,
+  "explanation": "Take the office as (0, 0), east as the x direction and north as the y direction. The points are office (0, 0), P (-2, 0), Q (-2, -7), R (-4, -7), S (-4, -13), T (-14, -13). Point T is 14 m west and 13 m south of the office, so it is to the south-west.",
+  "source": "generated walk, positions checked two ways"
+ },
+ {
+  "chapter": "Relations and Direction",
+  "topic": "Direction sense",
+  "difficulty": "MEDIUM",
+  "seconds": 75,
+  "text": "A person starts walking from his office and walks 2 m in the west direction and reaches point P. From point P, he takes a left turn and walks 7 m to reach point Q. From point Q, he takes a right turn and walks 2 m to reach point R. From point R, he takes a left turn and walks 6 m to reach point S. From point S, he takes a right turn and walks 10 m to reach point T. If point G is 10 m north of point P, then what is the shortest distance between point Q and point G?",
+  "options": [
+   "19 m",
+   "21 m",
+   "13 m",
+   "17 m",
+   "15 m"
+  ],
+  "correctIndex": 3,
+  "explanation": "Take the office as (0, 0), east as the x direction and north as the y direction. The points are office (0, 0), P (-2, 0), Q (-2, -7), R (-4, -7), S (-4, -13), T (-14, -13). Point G is 10 m north of point P, so G is at (-2, 10). From point Q the straight-line gap is 0 m across and 17 m up or down, so the distance is the square root of (0^2 + 17^2) = 17 m.",
+  "source": "generated walk, positions checked two ways"
+ },
+ {
+  "chapter": "Relations and Direction",
+  "topic": "Direction sense",
+  "difficulty": "HARD",
+  "seconds": 75,
+  "text": "A person starts walking from his office and walks 2 m in the west direction and reaches point P. From point P, he takes a left turn and walks 7 m to reach point Q. From point Q, he takes a right turn and walks 2 m to reach point R. From point R, he takes a left turn and walks 6 m to reach point S. From point S, he takes a right turn and walks 10 m to reach point T. If the office is 9 m east of point M, then in which direction is point Q with respect to point M?",
+  "options": [
+   "South-east",
+   "East",
+   "North-east",
+   "North-west",
+   "North"
+  ],
+  "correctIndex": 0,
+  "explanation": "Take the office as (0, 0), east as the x direction and north as the y direction. The points are office (0, 0), P (-2, 0), Q (-2, -7), R (-4, -7), S (-4, -13), T (-14, -13). The office is 9 m east of M, so M is at (-9, 0). Point Q is at (-2, -7), which is 7 across and -7 up from M, so it is to the south-east of M.",
+  "source": "generated walk, positions checked two ways"
+ },
+ {
+  "chapter": "Relations and Direction",
+  "topic": "Direction sense",
+  "difficulty": "MEDIUM",
+  "seconds": 75,
+  "text": "A person starts walking from his office and walks 9 m in the west direction and reaches point P. From point P, he takes a left turn and walks 7 m to reach point Q. From point Q, he takes a left turn and walks 12 m to reach point R. From point R, he takes a right turn and walks 3 m to reach point S. From point S, he takes a right turn and walks 15 m to reach point T. What is the direction of point T with respect to the office?",
+  "options": [
+   "South-west",
+   "South-east",
+   "East",
+   "West",
+   "North-east"
+  ],
+  "correctIndex": 0,
+  "explanation": "Take the office as (0, 0), east as the x direction and north as the y direction. The points are office (0, 0), P (-9, 0), Q (-9, -7), R (3, -7), S (3, -10), T (-12, -10). Point T is 12 m west and 10 m south of the office, so it is to the south-west.",
+  "source": "generated walk, positions checked two ways"
+ },
+ {
+  "chapter": "Relations and Direction",
+  "topic": "Direction sense",
+  "difficulty": "MEDIUM",
+  "seconds": 75,
+  "text": "A person starts walking from his office and walks 9 m in the west direction and reaches point P. From point P, he takes a left turn and walks 7 m to reach point Q. From point Q, he takes a left turn and walks 12 m to reach point R. From point R, he takes a right turn and walks 3 m to reach point S. From point S, he takes a right turn and walks 15 m to reach point T. If point G is 25 m west of point Q, then what is the shortest distance between point R and point G?",
+  "options": [
+   "35 m",
+   "33 m",
+   "37 m",
+   "41 m",
+   "39 m"
+  ],
+  "correctIndex": 2,
+  "explanation": "Take the office as (0, 0), east as the x direction and north as the y direction. The points are office (0, 0), P (-9, 0), Q (-9, -7), R (3, -7), S (3, -10), T (-12, -10). Point G is 25 m west of point Q, so G is at (-34, -7). From point R the straight-line gap is 37 m across and 0 m up or down, so the distance is the square root of (37^2 + 0^2) = 37 m.",
+  "source": "generated walk, positions checked two ways"
+ },
+ {
+  "chapter": "Relations and Direction",
+  "topic": "Direction sense",
+  "difficulty": "HARD",
+  "seconds": 75,
+  "text": "A person starts walking from his office and walks 9 m in the west direction and reaches point P. From point P, he takes a left turn and walks 7 m to reach point Q. From point Q, he takes a left turn and walks 12 m to reach point R. From point R, he takes a right turn and walks 3 m to reach point S. From point S, he takes a right turn and walks 15 m to reach point T. If the office is 8 m west of point M, then in which direction is point P with respect to point M?",
+  "options": [
+   "West",
+   "South-west",
+   "South",
+   "North-east",
+   "South-east"
+  ],
+  "correctIndex": 0,
+  "explanation": "Take the office as (0, 0), east as the x direction and north as the y direction. The points are office (0, 0), P (-9, 0), Q (-9, -7), R (3, -7), S (3, -10), T (-12, -10). The office is 8 m west of M, so M is at (8, 0). Point P is at (-9, 0), which is -17 across and 0 up from M, so it is to the west of M.",
+  "source": "generated walk, positions checked two ways"
+ },
+ {
+  "chapter": "Relations and Direction",
+  "topic": "Direction sense",
+  "difficulty": "MEDIUM",
+  "seconds": 75,
+  "text": "A person starts walking from his office and walks 6 m in the west direction and reaches point P. From point P, he takes a right turn and walks 3 m to reach point Q. From point Q, he takes a left turn and walks 9 m to reach point R. From point R, he takes a left turn and walks 4 m to reach point S. From point S, he takes a left turn and walks 11 m to reach point T. What is the direction of point T with respect to the office?",
+  "options": [
+   "South",
+   "East",
+   "North-west",
+   "South-west",
+   "North-east"
+  ],
+  "correctIndex": 3,
+  "explanation": "Take the office as (0, 0), east as the x direction and north as the y direction. The points are office (0, 0), P (-6, 0), Q (-6, 3), R (-15, 3), S (-15, -1), T (-4, -1). Point T is 4 m west and 1 m south of the office, so it is to the south-west.",
+  "source": "generated walk, positions checked two ways"
+ },
+ {
+  "chapter": "Relations and Direction",
+  "topic": "Direction sense",
+  "difficulty": "HARD",
+  "seconds": 75,
+  "text": "A person starts walking from his office and walks 6 m in the west direction and reaches point P. From point P, he takes a right turn and walks 3 m to reach point Q. From point Q, he takes a left turn and walks 9 m to reach point R. From point R, he takes a left turn and walks 4 m to reach point S. From point S, he takes a left turn and walks 11 m to reach point T. If point G is 16 m north of point S, then what is the shortest distance between point Q and point G?",
+  "options": [
+   "13 m",
+   "17 m",
+   "15 m",
+   "21 m",
+   "12 m"
+  ],
+  "correctIndex": 2,
+  "explanation": "Take the office as (0, 0), east as the x direction and north as the y direction. The points are office (0, 0), P (-6, 0), Q (-6, 3), R (-15, 3), S (-15, -1), T (-4, -1). Point G is 16 m north of point S, so G is at (-15, 15). From point Q the straight-line gap is 9 m across and 12 m up or down, so the distance is the square root of (9^2 + 12^2) = 15 m.",
+  "source": "generated walk, positions checked two ways"
+ },
+ {
+  "chapter": "Relations and Direction",
+  "topic": "Direction sense",
+  "difficulty": "HARD",
+  "seconds": 75,
+  "text": "A person starts walking from his office and walks 6 m in the west direction and reaches point P. From point P, he takes a right turn and walks 3 m to reach point Q. From point Q, he takes a left turn and walks 9 m to reach point R. From point R, he takes a left turn and walks 4 m to reach point S. From point S, he takes a left turn and walks 11 m to reach point T. If the office is 17 m north of point M, then in which direction is point T with respect to point M?",
+  "options": [
+   "North-west",
+   "West",
+   "North-east",
+   "North",
+   "South"
+  ],
+  "correctIndex": 0,
+  "explanation": "Take the office as (0, 0), east as the x direction and north as the y direction. The points are office (0, 0), P (-6, 0), Q (-6, 3), R (-15, 3), S (-15, -1), T (-4, -1). The office is 17 m north of M, so M is at (0, -17). Point T is at (-4, -1), which is -4 across and 16 up from M, so it is to the north-west of M.",
+  "source": "generated walk, positions checked two ways"
+ },
+ {
+  "chapter": "Relations and Direction",
+  "topic": "Direction sense",
+  "difficulty": "MEDIUM",
+  "seconds": 75,
+  "text": "A person starts walking from his office and walks 11 m in the south direction and reaches point P. From point P, he takes a left turn and walks 14 m to reach point Q. From point Q, he takes a right turn and walks 7 m to reach point R. From point R, he takes a right turn and walks 10 m to reach point S. From point S, he takes a left turn and walks 15 m to reach point T. What is the direction of point T with respect to the office?",
+  "options": [
+   "North-east",
+   "North-west",
+   "South-west",
+   "West",
+   "South-east"
+  ],
+  "correctIndex": 4,
+  "explanation": "Take the office as (0, 0), east as the x direction and north as the y direction. The points are office (0, 0), P (0, -11), Q (14, -11), R (14, -18), S (4, -18), T (4, -33). Point T is 4 m east and 33 m south of the office, so it is to the south-east.",
+  "source": "generated walk, positions checked two ways"
+ },
+ {
+  "chapter": "Relations and Direction",
+  "topic": "Direction sense",
+  "difficulty": "MEDIUM",
+  "seconds": 75,
+  "text": "A person starts walking from his office and walks 11 m in the south direction and reaches point P. From point P, he takes a left turn and walks 14 m to reach point Q. From point Q, he takes a right turn and walks 7 m to reach point R. From point R, he takes a right turn and walks 10 m to reach point S. From point S, he takes a left turn and walks 15 m to reach point T. If point G is 25 m north of point P, then what is the shortest distance between the office and point G?",
+  "options": [
+   "16 m",
+   "15 m",
+   "12 m",
+   "14 m",
+   "18 m"
+  ],
+  "correctIndex": 3,
+  "explanation": "Take the office as (0, 0), east as the x direction and north as the y direction. The points are office (0, 0), P (0, -11), Q (14, -11), R (14, -18), S (4, -18), T (4, -33). Point G is 25 m north of point P, so G is at (0, 14). From the office the straight-line gap is 0 m across and 14 m up or down, so the distance is the square root of (0^2 + 14^2) = 14 m.",
+  "source": "generated walk, positions checked two ways"
+ },
+ {
+  "chapter": "Relations and Direction",
+  "topic": "Direction sense",
+  "difficulty": "HARD",
+  "seconds": 75,
+  "text": "A person starts walking from his office and walks 11 m in the south direction and reaches point P. From point P, he takes a left turn and walks 14 m to reach point Q. From point Q, he takes a right turn and walks 7 m to reach point R. From point R, he takes a right turn and walks 10 m to reach point S. From point S, he takes a left turn and walks 15 m to reach point T. If the office is 9 m north of point M, then in which direction is point P with respect to point M?",
+  "options": [
+   "North",
+   "South",
+   "West",
+   "South-east",
+   "North-west"
+  ],
+  "correctIndex": 1,
+  "explanation": "Take the office as (0, 0), east as the x direction and north as the y direction. The points are office (0, 0), P (0, -11), Q (14, -11), R (14, -18), S (4, -18), T (4, -33). The office is 9 m north of M, so M is at (0, -9). Point P is at (0, -11), which is 0 across and -2 up from M, so it is to the south of M.",
+  "source": "generated walk, positions checked two ways"
+ },
+ {
+  "chapter": "Relations and Direction",
+  "topic": "Direction sense",
+  "difficulty": "MEDIUM",
+  "seconds": 75,
+  "text": "A person starts walking from his office and walks 4 m in the east direction and reaches point P. From point P, he takes a right turn and walks 8 m to reach point Q. From point Q, he takes a left turn and walks 2 m to reach point R. From point R, he takes a left turn and walks 14 m to reach point S. What is the direction of point S with respect to the office?",
+  "options": [
+   "North",
+   "South-east",
+   "East",
+   "South",
+   "North-east"
+  ],
+  "correctIndex": 4,
+  "explanation": "Take the office as (0, 0), east as the x direction and north as the y direction. The points are office (0, 0), P (4, 0), Q (4, -8), R (6, -8), S (6, 6). Point S is 6 m east and 6 m north of the office, so it is to the north-east.",
+  "source": "generated walk, positions checked two ways"
+ },
+ {
+  "chapter": "Relations and Direction",
+  "topic": "Direction sense",
+  "difficulty": "MEDIUM",
+  "seconds": 75,
+  "text": "A person starts walking from his office and walks 4 m in the east direction and reaches point P. From point P, he takes a right turn and walks 8 m to reach point Q. From point Q, he takes a left turn and walks 2 m to reach point R. From point R, he takes a left turn and walks 14 m to reach point S. If point G is 39 m south of point P, then what is the shortest distance between point Q and point G?",
+  "options": [
+   "35 m",
+   "31 m",
+   "33 m",
+   "29 m",
+   "34 m"
+  ],
+  "correctIndex": 1,
+  "explanation": "Take the office as (0, 0), east as the x direction and north as the y direction. The points are office (0, 0), P (4, 0), Q (4, -8), R (6, -8), S (6, 6). Point G is 39 m south of point P, so G is at (4, -39). From point Q the straight-line gap is 0 m across and 31 m up or down, so the distance is the square root of (0^2 + 31^2) = 31 m.",
+  "source": "generated walk, positions checked two ways"
+ },
+ {
+  "chapter": "Relations and Direction",
+  "topic": "Direction sense",
+  "difficulty": "HARD",
+  "seconds": 75,
+  "text": "A person starts walking from his office and walks 4 m in the east direction and reaches point P. From point P, he takes a right turn and walks 8 m to reach point Q. From point Q, he takes a left turn and walks 2 m to reach point R. From point R, he takes a left turn and walks 14 m to reach point S. If the office is 13 m south of point M, then in which direction is point R with respect to point M?",
+  "options": [
+   "North-east",
+   "South",
+   "North",
+   "South-east",
+   "South-west"
+  ],
+  "correctIndex": 3,
+  "explanation": "Take the office as (0, 0), east as the x direction and north as the y direction. The points are office (0, 0), P (4, 0), Q (4, -8), R (6, -8), S (6, 6). The office is 13 m south of M, so M is at (0, 13). Point R is at (6, -8), which is 6 across and -21 up from M, so it is to the south-east of M.",
+  "source": "generated walk, positions checked two ways"
+ },
+ {
+  "chapter": "Relations and Direction",
+  "topic": "Direction sense",
+  "difficulty": "MEDIUM",
+  "seconds": 75,
+  "text": "A person starts walking from his office and walks 2 m in the south direction and reaches point P. From point P, he takes a left turn and walks 11 m to reach point Q. From point Q, he takes a right turn and walks 12 m to reach point R. From point R, he takes a left turn and walks 8 m to reach point S. From point S, he takes a right turn and walks 11 m to reach point T. What is the direction of point T with respect to the office?",
+  "options": [
+   "North-east",
+   "South-east",
+   "West",
+   "South-west",
+   "North-west"
+  ],
+  "correctIndex": 1,
+  "explanation": "Take the office as (0, 0), east as the x direction and north as the y direction. The points are office (0, 0), P (0, -2), Q (11, -2), R (11, -14), S (19, -14), T (19, -25). Point T is 19 m east and 25 m south of the office, so it is to the south-east.",
+  "source": "generated walk, positions checked two ways"
+ },
+ {
+  "chapter": "Relations and Direction",
+  "topic": "Direction sense",
+  "difficulty": "MEDIUM",
+  "seconds": 75,
+  "text": "A person starts walking from his office and walks 2 m in the south direction and reaches point P. From point P, he takes a left turn and walks 11 m to reach point Q. From point Q, he takes a right turn and walks 12 m to reach point R. From point R, he takes a left turn and walks 8 m to reach point S. From point S, he takes a right turn and walks 11 m to reach point T. If point G is 19 m north of point Q, then what is the shortest distance between point R and point G?",
+  "options": [
+   "33 m",
+   "34 m",
+   "29 m",
+   "31 m",
+   "35 m"
+  ],
+  "correctIndex": 3,
+  "explanation": "Take the office as (0, 0), east as the x direction and north as the y direction. The points are office (0, 0), P (0, -2), Q (11, -2), R (11, -14), S (19, -14), T (19, -25). Point G is 19 m north of point Q, so G is at (11, 17). From point R the straight-line gap is 0 m across and 31 m up or down, so the distance is the square root of (0^2 + 31^2) = 31 m.",
+  "source": "generated walk, positions checked two ways"
+ },
+ {
+  "chapter": "Relations and Direction",
+  "topic": "Direction sense",
+  "difficulty": "HARD",
+  "seconds": 75,
+  "text": "A person starts walking from his office and walks 2 m in the south direction and reaches point P. From point P, he takes a left turn and walks 11 m to reach point Q. From point Q, he takes a right turn and walks 12 m to reach point R. From point R, he takes a left turn and walks 8 m to reach point S. From point S, he takes a right turn and walks 11 m to reach point T. If the office is 18 m west of point M, then in which direction is point P with respect to point M?",
+  "options": [
+   "South-east",
+   "South",
+   "South-west",
+   "West",
+   "North-east"
+  ],
+  "correctIndex": 2,
+  "explanation": "Take the office as (0, 0), east as the x direction and north as the y direction. The points are office (0, 0), P (0, -2), Q (11, -2), R (11, -14), S (19, -14), T (19, -25). The office is 18 m west of M, so M is at (18, 0). Point P is at (0, -2), which is -18 across and -2 up from M, so it is to the south-west of M.",
+  "source": "generated walk, positions checked two ways"
+ },
+ {
+  "chapter": "Relations and Direction",
+  "topic": "Direction sense",
+  "difficulty": "MEDIUM",
+  "seconds": 75,
+  "text": "A person starts walking from his office and walks 7 m in the west direction and reaches point P. From point P, he takes a left turn and walks 13 m to reach point Q. From point Q, he takes a left turn and walks 15 m to reach point R. From point R, he takes a left turn and walks 2 m to reach point S. From point S, he takes a right turn and walks 4 m to reach point T. What is the direction of point T with respect to the office?",
+  "options": [
+   "South",
+   "West",
+   "North-east",
+   "South-east",
+   "North"
+  ],
+  "correctIndex": 3,
+  "explanation": "Take the office as (0, 0), east as the x direction and north as the y direction. The points are office (0, 0), P (-7, 0), Q (-7, -13), R (8, -13), S (8, -11), T (12, -11). Point T is 12 m east and 11 m south of the office, so it is to the south-east.",
+  "source": "generated walk, positions checked two ways"
+ },
+ {
+  "chapter": "Relations and Direction",
+  "topic": "Direction sense",
+  "difficulty": "MEDIUM",
+  "seconds": 75,
+  "text": "A person starts walking from his office and walks 7 m in the west direction and reaches point P. From point P, he takes a left turn and walks 13 m to reach point Q. From point Q, he takes a left turn and walks 15 m to reach point R. From point R, he takes a left turn and walks 2 m to reach point S. From point S, he takes a right turn and walks 4 m to reach point T. If point G is 8 m south of point Q, then what is the shortest distance between point P and point G?",
+  "options": [
+   "19 m",
+   "21 m",
+   "23 m",
+   "17 m",
+   "25 m"
+  ],
+  "correctIndex": 1,
+  "explanation": "Take the office as (0, 0), east as the x direction and north as the y direction. The points are office (0, 0), P (-7, 0), Q (-7, -13), R (8, -13), S (8, -11), T (12, -11). Point G is 8 m south of point Q, so G is at (-7, -21). From point P the straight-line gap is 0 m across and 21 m up or down, so the distance is the square root of (0^2 + 21^2) = 21 m.",
+  "source": "generated walk, positions checked two ways"
+ },
+ {
+  "chapter": "Relations and Direction",
+  "topic": "Direction sense",
+  "difficulty": "HARD",
+  "seconds": 75,
+  "text": "A person starts walking from his office and walks 7 m in the west direction and reaches point P. From point P, he takes a left turn and walks 13 m to reach point Q. From point Q, he takes a left turn and walks 15 m to reach point R. From point R, he takes a left turn and walks 2 m to reach point S. From point S, he takes a right turn and walks 4 m to reach point T. If the office is 20 m south of point M, then in which direction is point T with respect to point M?",
+  "options": [
+   "East",
+   "South-west",
+   "South-east",
+   "North",
+   "South"
+  ],
+  "correctIndex": 2,
+  "explanation": "Take the office as (0, 0), east as the x direction and north as the y direction. The points are office (0, 0), P (-7, 0), Q (-7, -13), R (8, -13), S (8, -11), T (12, -11). The office is 20 m south of M, so M is at (0, 20). Point T is at (12, -11), which is 12 across and -31 up from M, so it is to the south-east of M.",
+  "source": "generated walk, positions checked two ways"
+ },
+ {
+  "chapter": "Relations and Direction",
+  "topic": "Direction sense",
+  "difficulty": "MEDIUM",
+  "seconds": 75,
+  "text": "A person starts walking from his office and walks 5 m in the south direction and reaches point P. From point P, he takes a left turn and walks 7 m to reach point Q. From point Q, he takes a right turn and walks 5 m to reach point R. From point R, he takes a right turn and walks 7 m to reach point S. What is the direction of point S with respect to the office?",
+  "options": [
+   "South",
+   "West",
+   "North",
+   "South-east",
+   "East"
+  ],
+  "correctIndex": 0,
+  "explanation": "Take the office as (0, 0), east as the x direction and north as the y direction. The points are office (0, 0), P (0, -5), Q (7, -5), R (7, -10), S (0, -10). Point S is 0 m 10 m south of the office, so it is to the south.",
+  "source": "generated walk, positions checked two ways"
+ },
+ {
+  "chapter": "Relations and Direction",
+  "topic": "Direction sense",
+  "difficulty": "MEDIUM",
+  "seconds": 75,
+  "text": "A person starts walking from his office and walks 5 m in the south direction and reaches point P. From point P, he takes a left turn and walks 7 m to reach point Q. From point Q, he takes a right turn and walks 5 m to reach point R. From point R, he takes a right turn and walks 7 m to reach point S. If point G is 24 m south of the office, then what is the shortest distance between point P and point G?",
+  "options": [
+   "23 m",
+   "17 m",
+   "21 m",
+   "15 m",
+   "19 m"
+  ],
+  "correctIndex": 4,
+  "explanation": "Take the office as (0, 0), east as the x direction and north as the y direction. The points are office (0, 0), P (0, -5), Q (7, -5), R (7, -10), S (0, -10). Point G is 24 m south of the office, so G is at (0, -24). From point P the straight-line gap is 0 m across and 19 m up or down, so the distance is the square root of (0^2 + 19^2) = 19 m.",
+  "source": "generated walk, positions checked two ways"
+ },
+ {
+  "chapter": "Relations and Direction",
+  "topic": "Direction sense",
+  "difficulty": "HARD",
+  "seconds": 75,
+  "text": "A person starts walking from his office and walks 5 m in the south direction and reaches point P. From point P, he takes a left turn and walks 7 m to reach point Q. From point Q, he takes a right turn and walks 5 m to reach point R. From point R, he takes a right turn and walks 7 m to reach point S. If the office is 5 m west of point M, then in which direction is point Q with respect to point M?",
+  "options": [
+   "North",
+   "South-west",
+   "East",
+   "South-east",
+   "West"
+  ],
+  "correctIndex": 3,
+  "explanation": "Take the office as (0, 0), east as the x direction and north as the y direction. The points are office (0, 0), P (0, -5), Q (7, -5), R (7, -10), S (0, -10). The office is 5 m west of M, so M is at (5, 0). Point Q is at (7, -5), which is 2 across and -5 up from M, so it is to the south-east of M.",
+  "source": "generated walk, positions checked two ways"
+ },
+ {
+  "chapter": "Relations and Direction",
+  "topic": "Direction sense",
+  "difficulty": "MEDIUM",
+  "seconds": 75,
+  "text": "A person starts walking from his office and walks 15 m in the west direction and reaches point P. From point P, he takes a right turn and walks 4 m to reach point Q. From point Q, he takes a left turn and walks 5 m to reach point R. From point R, he takes a left turn and walks 5 m to reach point S. What is the direction of point S with respect to the office?",
+  "options": [
+   "South",
+   "South-west",
+   "North-west",
+   "North",
+   "West"
+  ],
+  "correctIndex": 1,
+  "explanation": "Take the office as (0, 0), east as the x direction and north as the y direction. The points are office (0, 0), P (-15, 0), Q (-15, 4), R (-20, 4), S (-20, -1). Point S is 20 m west and 1 m south of the office, so it is to the south-west.",
+  "source": "generated walk, positions checked two ways"
+ },
+ {
+  "chapter": "Relations and Direction",
+  "topic": "Direction sense",
+  "difficulty": "MEDIUM",
+  "seconds": 75,
+  "text": "A person starts walking from his office and walks 15 m in the west direction and reaches point P. From point P, he takes a right turn and walks 4 m to reach point Q. From point Q, he takes a left turn and walks 5 m to reach point R. From point R, he takes a left turn and walks 5 m to reach point S. If point G is 37 m north of point Q, then what is the shortest distance between point P and point G?",
+  "options": [
+   "43 m",
+   "39 m",
+   "41 m",
+   "37 m",
+   "45 m"
+  ],
+  "correctIndex": 2,
+  "explanation": "Take the office as (0, 0), east as the x direction and north as the y direction. The points are office (0, 0), P (-15, 0), Q (-15, 4), R (-20, 4), S (-20, -1). Point G is 37 m north of point Q, so G is at (-15, 41). From point P the straight-line gap is 0 m across and 41 m up or down, so the distance is the square root of (0^2 + 41^2) = 41 m.",
+  "source": "generated walk, positions checked two ways"
+ },
+ {
+  "chapter": "Relations and Direction",
+  "topic": "Direction sense",
+  "difficulty": "HARD",
+  "seconds": 75,
+  "text": "A person starts walking from his office and walks 15 m in the west direction and reaches point P. From point P, he takes a right turn and walks 4 m to reach point Q. From point Q, he takes a left turn and walks 5 m to reach point R. From point R, he takes a left turn and walks 5 m to reach point S. If the office is 14 m north of point M, then in which direction is point S with respect to point M?",
+  "options": [
+   "North",
+   "South",
+   "North-west",
+   "South-west",
+   "North-east"
+  ],
+  "correctIndex": 2,
+  "explanation": "Take the office as (0, 0), east as the x direction and north as the y direction. The points are office (0, 0), P (-15, 0), Q (-15, 4), R (-20, 4), S (-20, -1). The office is 14 m north of M, so M is at (0, -14). Point S is at (-20, -1), which is -20 across and 13 up from M, so it is to the north-west of M.",
+  "source": "generated walk, positions checked two ways"
+ },
+ {
+  "chapter": "Relations and Direction",
+  "topic": "Direction sense",
+  "difficulty": "MEDIUM",
+  "seconds": 75,
+  "text": "A person starts walking from his office and walks 9 m in the south direction and reaches point P. From point P, he takes a left turn and walks 12 m to reach point Q. From point Q, he takes a right turn and walks 3 m to reach point R. From point R, he takes a right turn and walks 2 m to reach point S. From point S, he takes a left turn and walks 5 m to reach point T. What is the direction of point T with respect to the office?",
+  "options": [
+   "West",
+   "South-east",
+   "North-west",
+   "North",
+   "North-east"
+  ],
+  "correctIndex": 1,
+  "explanation": "Take the office as (0, 0), east as the x direction and north as the y direction. The points are office (0, 0), P (0, -9), Q (12, -9), R (12, -12), S (10, -12), T (10, -17). Point T is 10 m east and 17 m south of the office, so it is to the south-east.",
+  "source": "generated walk, positions checked two ways"
+ },
+ {
+  "chapter": "Relations and Direction",
+  "topic": "Direction sense",
+  "difficulty": "MEDIUM",
+  "seconds": 75,
+  "text": "A person starts walking from his office and walks 9 m in the south direction and reaches point P. From point P, he takes a left turn and walks 12 m to reach point Q. From point Q, he takes a right turn and walks 3 m to reach point R. From point R, he takes a right turn and walks 2 m to reach point S. From point S, he takes a left turn and walks 5 m to reach point T. If point G is 20 m west of point Q, then what is the shortest distance between point P and point G?",
+  "options": [
+   "8 m",
+   "6 m",
+   "12 m",
+   "10 m",
+   "9 m"
+  ],
+  "correctIndex": 0,
+  "explanation": "Take the office as (0, 0), east as the x direction and north as the y direction. The points are office (0, 0), P (0, -9), Q (12, -9), R (12, -12), S (10, -12), T (10, -17). Point G is 20 m west of point Q, so G is at (-8, -9). From point P the straight-line gap is 8 m across and 0 m up or down, so the distance is the square root of (8^2 + 0^2) = 8 m.",
+  "source": "generated walk, positions checked two ways"
+ },
+ {
+  "chapter": "Relations and Direction",
+  "topic": "Direction sense",
+  "difficulty": "HARD",
+  "seconds": 75,
+  "text": "A person starts walking from his office and walks 9 m in the south direction and reaches point P. From point P, he takes a left turn and walks 12 m to reach point Q. From point Q, he takes a right turn and walks 3 m to reach point R. From point R, he takes a right turn and walks 2 m to reach point S. From point S, he takes a left turn and walks 5 m to reach point T. If the office is 8 m south of point M, then in which direction is point Q with respect to point M?",
+  "options": [
+   "North-west",
+   "South-west",
+   "North",
+   "East",
+   "South-east"
+  ],
+  "correctIndex": 4,
+  "explanation": "Take the office as (0, 0), east as the x direction and north as the y direction. The points are office (0, 0), P (0, -9), Q (12, -9), R (12, -12), S (10, -12), T (10, -17). The office is 8 m south of M, so M is at (0, 8). Point Q is at (12, -9), which is 12 across and -17 up from M, so it is to the south-east of M.",
+  "source": "generated walk, positions checked two ways"
+ },
+ {
+  "chapter": "Relations and Direction",
+  "topic": "Direction sense",
+  "difficulty": "MEDIUM",
+  "seconds": 75,
+  "text": "A person starts walking from his office and walks 14 m in the north direction and reaches point P. From point P, he takes a right turn and walks 7 m to reach point Q. From point Q, he takes a left turn and walks 8 m to reach point R. From point R, he takes a left turn and walks 10 m to reach point S. From point S, he takes a right turn and walks 5 m to reach point T. What is the direction of point T with respect to the office?",
+  "options": [
+   "North-west",
+   "South-west",
+   "West",
+   "North",
+   "South"
+  ],
+  "correctIndex": 0,
+  "explanation": "Take the office as (0, 0), east as the x direction and north as the y direction. The points are office (0, 0), P (0, 14), Q (7, 14), R (7, 22), S (-3, 22), T (-3, 27). Point T is 3 m west and 27 m north of the office, so it is to the north-west.",
+  "source": "generated walk, positions checked two ways"
+ },
+ {
+  "chapter": "Relations and Direction",
+  "topic": "Direction sense",
+  "difficulty": "MEDIUM",
+  "seconds": 75,
+  "text": "A person starts walking from his office and walks 14 m in the north direction and reaches point P. From point P, he takes a right turn and walks 7 m to reach point Q. From point Q, he takes a left turn and walks 8 m to reach point R. From point R, he takes a left turn and walks 10 m to reach point S. From point S, he takes a right turn and walks 5 m to reach point T. If point G is 14 m west of point P, then what is the shortest distance between point Q and point G?",
+  "options": [
+   "17 m",
+   "25 m",
+   "23 m",
+   "19 m",
+   "21 m"
+  ],
+  "correctIndex": 4,
+  "explanation": "Take the office as (0, 0), east as the x direction and north as the y direction. The points are office (0, 0), P (0, 14), Q (7, 14), R (7, 22), S (-3, 22), T (-3, 27). Point G is 14 m west of point P, so G is at (-14, 14). From point Q the straight-line gap is 21 m across and 0 m up or down, so the distance is the square root of (21^2 + 0^2) = 21 m.",
+  "source": "generated walk, positions checked two ways"
+ },
+ {
+  "chapter": "Relations and Direction",
+  "topic": "Direction sense",
+  "difficulty": "HARD",
+  "seconds": 75,
+  "text": "A person starts walking from his office and walks 14 m in the north direction and reaches point P. From point P, he takes a right turn and walks 7 m to reach point Q. From point Q, he takes a left turn and walks 8 m to reach point R. From point R, he takes a left turn and walks 10 m to reach point S. From point S, he takes a right turn and walks 5 m to reach point T. If the office is 10 m north of point M, then in which direction is point Q with respect to point M?",
+  "options": [
+   "South-west",
+   "North-east",
+   "South-east",
+   "South",
+   "East"
+  ],
+  "correctIndex": 1,
+  "explanation": "Take the office as (0, 0), east as the x direction and north as the y direction. The points are office (0, 0), P (0, 14), Q (7, 14), R (7, 22), S (-3, 22), T (-3, 27). The office is 10 m north of M, so M is at (0, -10). Point Q is at (7, 14), which is 7 across and 24 up from M, so it is to the north-east of M.",
+  "source": "generated walk, positions checked two ways"
+ },
+ {
+  "chapter": "Relations and Direction",
+  "topic": "Direction sense",
+  "difficulty": "MEDIUM",
+  "seconds": 75,
+  "text": "A person starts walking from his office and walks 3 m in the south direction and reaches point P. From point P, he takes a right turn and walks 2 m to reach point Q. From point Q, he takes a right turn and walks 8 m to reach point R. From point R, he takes a right turn and walks 11 m to reach point S. What is the direction of point S with respect to the office?",
+  "options": [
+   "West",
+   "South-west",
+   "North-east",
+   "East",
+   "North"
+  ],
+  "correctIndex": 2,
+  "explanation": "Take the office as (0, 0), east as the x direction and north as the y direction. The points are office (0, 0), P (0, -3), Q (-2, -3), R (-2, 5), S (9, 5). Point S is 9 m east and 5 m north of the office, so it is to the north-east.",
+  "source": "generated walk, positions checked two ways"
+ },
+ {
+  "chapter": "Relations and Direction",
+  "topic": "Direction sense",
+  "difficulty": "MEDIUM",
+  "seconds": 75,
+  "text": "A person starts walking from his office and walks 3 m in the south direction and reaches point P. From point P, he takes a right turn and walks 2 m to reach point Q. From point Q, he takes a right turn and walks 8 m to reach point R. From point R, he takes a right turn and walks 11 m to reach point S. If point G is 39 m south of point Q, then what is the shortest distance between point R and point G?",
+  "options": [
+   "47 m",
+   "52 m",
+   "45 m",
+   "49 m",
+   "51 m"
+  ],
+  "correctIndex": 0,
+  "explanation": "Take the office as (0, 0), east as the x direction and north as the y direction. The points are office (0, 0), P (0, -3), Q (-2, -3), R (-2, 5), S (9, 5). Point G is 39 m south of point Q, so G is at (-2, -42). From point R the straight-line gap is 0 m across and 47 m up or down, so the distance is the square root of (0^2 + 47^2) = 47 m.",
+  "source": "generated walk, positions checked two ways"
+ },
+ {
+  "chapter": "Relations and Direction",
+  "topic": "Direction sense",
+  "difficulty": "HARD",
+  "seconds": 75,
+  "text": "A person starts walking from his office and walks 3 m in the south direction and reaches point P. From point P, he takes a right turn and walks 2 m to reach point Q. From point Q, he takes a right turn and walks 8 m to reach point R. From point R, he takes a right turn and walks 11 m to reach point S. If the office is 8 m north of point M, then in which direction is point Q with respect to point M?",
+  "options": [
+   "South-west",
+   "North-west",
+   "North-east",
+   "East",
+   "West"
+  ],
+  "correctIndex": 1,
+  "explanation": "Take the office as (0, 0), east as the x direction and north as the y direction. The points are office (0, 0), P (0, -3), Q (-2, -3), R (-2, 5), S (9, 5). The office is 8 m north of M, so M is at (0, -8). Point Q is at (-2, -3), which is -2 across and 5 up from M, so it is to the north-west of M.",
+  "source": "generated walk, positions checked two ways"
+ }
+]
